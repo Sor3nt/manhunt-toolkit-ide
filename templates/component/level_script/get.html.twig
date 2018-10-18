@@ -1,0 +1,108 @@
+<div>
+
+    <div data-layout="MAIN_CONTENT">
+
+        <div class="editor" data-editor style="height: 100%; display: inline-block;">{{ levelscript|raw }}</div>
+
+    </div>
+
+
+    <div data-tab-title="Inspector" data-layout="SIDEBAR_RIGHT">
+
+        {#<div class="message" style="display: block;">#}
+            {#Registered Events#}
+        {#</div>#}
+
+
+        <div class="content">
+            <div class="panel tree-holder component-panel ">
+                <div class="content">
+                    <div class="list">
+
+
+                        <div class="option-group ">
+                            <p class="option-group-label">
+                                <span class="title">Registered Events</span>
+                            </p>
+
+
+                            <div class="item-folder">
+
+                                <div class="subtree" style="display: block">
+                                    {% for script in inspection.definedScripts if script.type == "event" %}
+                                        <span class="item">
+                                            <u></u>
+                                            <b class="name">{{ script.value }}</b>
+                                        </span>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="option-group ">
+                            <p class="option-group-label">
+                                <span class="title">Custom Scripts</span>
+                            </p>
+
+
+                            <div class="item-folder">
+
+                                <div class="subtree" style="display: block">
+                                    {% for script in inspection.definedScripts if script.type != "event" %}
+                                        <span class="item">
+                                            <u></u>
+                                            <b class="name">{{ script.value }}</b>
+                                        </span>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="option-group ">
+                            <p class="option-group-label">
+                                <span class="title">Referenced Scripts</span>
+                            </p>
+
+
+
+                            {#<div class="subtree" style="display: block">#}
+                                {% for key, scripts in inspection.scriptReferences  %}
+                                    <span class="item-folder">
+                                        <i class="right"></i>
+                                        <b class="name">{{ key }}</b>
+                                    </span>
+
+                                    <div class="subtree">
+                                        {% for script in scripts %}
+                                            <span class="item">
+                                                <u></u><b class="name">{{ script.scriptName }}</b>
+                                            </span>
+
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+
+                                {#<hr/>#}
+
+                                {#{% for script in inspection.scriptReferences if script.entityName != level  %}#}
+                                    {#<span class="item">#}
+                                            {#<u></u>#}
+                                            {#<b class="name">{{ script.entityName }}.{{ script.scriptName }}</b>#}
+                                        {#</span>#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

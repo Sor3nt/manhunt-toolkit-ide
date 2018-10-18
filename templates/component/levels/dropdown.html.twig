@@ -1,0 +1,10 @@
+<div class="game_initscripts_levels_get">
+    <select class="custom-select custom-select-sm">
+        <option>Select Level</option>
+        {% for level in levels %}
+            <option value="{{ level }}">{{ level }}</option>
+        {% endfor %}
+    </select>
+
+    <hr />
+</div>

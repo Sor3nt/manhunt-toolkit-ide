@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Bootstrap Studio</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+
+    <script type="text/javascript">
+        window.routes = {
+            component: {
+                levels : '{{ path('component_levels_dropdown') }}',
+                level : {
+                    levelScriptListing : '{{ path('component_levelscript_listing', { level : '--level--' }) }}',
+                    levelScript : '{{ path('component_levelscript_get', { level : '--level--', script : '--script--' }) }}'
+                }
+            }
+        };
+    </script>
+
+</head>
+<body>
+
+
+    <div id="main">
+
+    <div id="left-panel" class="panel-container">
+        <div class="panel-group">
+
+
+            <div class="content">
+                <div class="panel tree-holder component-panel">
+                    <div class="content">
+
+                        {#<div class="search">#}
+                            {#<input type="search" required="" placeholder="Search components">#}
+                            {#<i class="material-icons search-icon">search</i>#}
+                        {#</div>#}
+
+                        <div class="list">
+                            {# level tree #}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="center-panel" class="panel-container">
+        <div id="toolbars">
+
+            <div id="tab-bar" class="bar">
+                <div class="tab-scroll">
+                    <div class="tab-holder">
+                        {#<div class="tab active unsaved">#}
+                            {#<span class="title" title="">levelscript</span>#}
+                            {#<span class="close"></span>#}
+                        {#</div>#}
+                        {#<div class="tab unsaved">#}
+                            {#<span class="title" title="">levelscript</span>#}
+                            {#<span class="close"></span>#}
+                        {#</div>#}
+                    </div>
+                </div>
+            </div>
+
+            <div id="tool-bar" class="bar">
+                <span class="button-zoom zoom-in active" data-id="zoom-in" title="Zoom In"><i class="material-icons">keyboard</i></span>
+                {#<!--<span class="button-zoom zoom-out active" data-id="zoom-out" title="Zoom Out"><i class="material-icons">zoom_out</i></span>-->#}
+
+                {#<!--<span class="rotate-canvas active" data-id="zoom-out" title="Flip Canvas"><i class="material-icons">screen_rotation</i></span>-->#}
+
+                {#<span class="canvas-settings active" data-id="canvas-settings" title="View Options"><i#}
+                            {#class="material-icons">layers</i></span>#}
+
+                {#<!--<span class="info-container">-->#}
+                {#<!--<span class="info device-selection">768px × 683px @ 100%</span>-->#}
+                {#<!--</span>-->#}
+
+                {#<!--<div class="page-selection">index.html</div>-->#}
+
+
+            </div>
+
+        </div>
+
+        <section id="canvas" class="">
+
+
+
+        </section>
+
+
+    </div>
+
+    <div id="right-panel" class="panel-container">
+
+        <div class="panel-group">
+
+            <div class="tabs">
+                <div class="tab-squeeze">
+                    <div class="tab-holder">
+                        {#<div title="Look &amp; Feel" class="tab look-and-feel active">#}
+                            {#<div><i class="material-icons">color_lens</i><span>Inspector</span></div>#}
+                        {#</div>#}
+                        {#<div title="Options" class="tab settings">#}
+                            {#<div><i class="material-icons">settings</i><span>Options</span></div>#}
+                        {#</div>#}
+                        {#<div title="Animation" class="tab animation">#}
+                            {#<div><i class="material-icons">stars</i><span>Animation</span></div>#}
+                        {#</div>#}
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="panel options-panel">
+                    <div class="content">
+                        <div class="list">
+                            <div class="message" style="display: block;">No components selected</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    window.manhuntFunctions = {{ manhuntFunctionNames|raw }};
+    window.manhuntConstants = {{ manhuntConstants|raw }};
+</script>
+
+<script src="{{ asset('build/app.js') }}"></script>
+
+</body>
+</html>

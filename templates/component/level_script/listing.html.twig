@@ -1,0 +1,24 @@
+{% extends 'component/component.html.twig' %}
+
+{% block component %}
+
+    <div class="level_script_listing">
+
+        <span class="item-folder">
+            <i class="right"></i>
+            <b class="name" data-level="{{ level }}" data-script="{{ level }}">{{ level }}</b>
+        </span>
+
+        <div class="subtree">
+
+            {% for script in scriptList  %}
+
+                <span class="item">
+                    <u></u><b class="name" data-level="{{ level }}" data-script="{{ script }}">{{ script }}</b>
+                </span>
+
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
