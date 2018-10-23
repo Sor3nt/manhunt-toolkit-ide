@@ -13,9 +13,15 @@ var $ = require('jquery');
 //boot ACE Editor
 require('./vendor/ace/ace');
 require('./vendor/ace/ext-language_tools');
+require('./vendor/ace/ext-searchbox');
 require('./vendor/ace/theme-twilight');
 require('./Component/LevelScriptEditor/Mode');
 
+
+var Tokenizer = require('./Tokenizer/Tokenizer')();
+//
+// console.log(Tokenizer.tokenize('scriptmain LevelScript; entity A01_Escape_Asylum : et_level;'));
+console.log(Tokenizer.tokenize(localStorage.getItem('test')));
 
 /**
  * boot application

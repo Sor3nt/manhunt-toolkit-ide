@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
+use App\Service\Compiler\FunctionMap\ManhuntDefault;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,7 +20,7 @@ class DefaultController
 
 
         $manhuntFunctionNames = [];
-        foreach (Manhunt2::$functions as $lowerName => $manhuntFunction) {
+        foreach (array_merge(ManhuntDefault::$functions, Manhunt2::$functions) as $lowerName => $manhuntFunction) {
 
             if (isset($manhuntFunction['name'])){
                 $manhuntFunctionNames[] = $manhuntFunction['name'];

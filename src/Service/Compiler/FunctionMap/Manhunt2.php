@@ -302,6 +302,7 @@ class Manhunt2
         ],
 
         "setvector" => [
+            'name' => 'SetVector',
             'offset' => "84010000"
         ],
 
@@ -318,6 +319,7 @@ class Manhunt2
         ],
 
         "setlevelgoal" => [
+            'name' => 'SetLevelGoal',
             'offset' => "41020000"
         ],
 

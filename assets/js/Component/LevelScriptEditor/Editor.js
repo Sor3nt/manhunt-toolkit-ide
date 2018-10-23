@@ -3,6 +3,9 @@ module.exports = function( content ) {
     var $ = require('jquery');
     var LayoutTab = require('./../../LayoutTab');
 
+    var Tokenizer = require('./../../Tokenizer/Tokenizer')();
+
+
     var self = {
 
         _content : $(content),
@@ -33,21 +36,17 @@ module.exports = function( content ) {
 
                 if (componentElement.find('[data-editor]').length){
 
-                    var editor = ace.edit(componentElement.find('[data-editor]').get(0));
-                    editor.setTheme("ace/theme/twilight");
-                    editor.session.setMode("ace/mode/manhunt");
+                    $.each(componentElement.find('[data-editor]'), function (index, element) {
 
-                    //
-                    //
-                    // self._editor.push(
-                    //     CodeMirror.fromTextArea(componentElement.find('textarea').get(0), {
-                    //         lineNumbers: true,
-                    //         matchBrackets: true,
-                    //         lineWrapping: true,
-                    //         mode: 'simplemode',
-                    //         theme: 'darcula'
-                    //     })
-                    // );
+
+                        var editor = ace.edit(element);
+                        editor.setTheme("ace/theme/twilight");
+                        editor.session.setMode("ace/mode/manhunt");
+
+                        self._editor.push(editor);
+
+                    });
+
                 }
             });
 
@@ -55,14 +54,15 @@ module.exports = function( content ) {
 
         remove : function () {
 
+            $.each(self._editor, function (index, editor) {
+                editor.destroy();
+            });
+
             $.each(self._components, function (index, componentElement) {
                 componentElement = $(componentElement);
                 componentElement.remove();
             });
 
-            $.each(self._editor, function (index, editor) {
-                editor.toTextArea();
-            });
         },
 
         hide: function () {
