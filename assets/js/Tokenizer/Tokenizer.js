@@ -3,13 +3,66 @@ module.exports = function(  ) {
     var Token = require('./Token');
     var $ = require('jquery');
 
+    // do not save this token value, we know what the value are by the token type
+    var ignoreValueMap = [
+        Token.T_SPACE,
+        Token.T_NEWLINE,
+        Token.T_TRUE,
+        Token.T_FALSE,
+        Token.T_SEPERATOR,
+        Token.T_DEFINE,
+        Token.T_LINEEND,
+        Token.T_BRACKET_OPEN,
+        Token.T_BRACKET_CLOSE,
+        Token.T_DEFINE,
+        Token.T_SCRIPTMAIN,
+        Token.T_IF,
+        Token.T_THEN,
+        Token.T_IS_EQUAL,
+        Token.T_IS_NOT_EQUAL,
+        Token.T_IS_GREATER,
+        Token.T_IS_GREATER_EQUAL,
+        Token.T_IS_SMALLER,
+        Token.T_DEFINE_SECTION_VAR,
+        Token.T_DEFINE_SECTION_ENTITY,
+        Token.T_DEFINE_SECTION_TYPE,
+        Token.T_DEFINE,
+        Token.T_SCRIPT,
+        Token.T_SCRIPT_END,
+        Token.T_ASSIGN,
+        Token.T_BEGIN,
+        Token.T_END_CODE,
+        Token.T_PROCEDURE,
+        Token.T_FORWARD
+    ];
+
+    function parseNewLines(entry, result) {
+
+        var newLines = entry.match(/(\n)/g);
+        if (newLines !== null){
+
+            for(var i = 0; i < newLines.length; i++){
+                result.push({ type: Token.T_NEWLINE });
+            }
+        }
+    }
+
     var tokenHandlers = [
 
 
         // Sample: { this is a comment }
         {
             regex: /^((\{([^{^}])*)*\{([^{^}])*\}(([^{^}])*\})*)/,
-            map: [Token.T_COMMENT]
+            map: [function(entry){
+                var result = [
+                    { type: Token.T_COMMENT, value: entry}
+                ];
+
+                parseNewLines(entry, result);
+
+                return result;
+
+            }]
         },
 
 
@@ -133,11 +186,19 @@ module.exports = function(  ) {
 
         // Sample : var
         {
-            regex: /^(var)\s+/i ,
-            map: [Token.T_DEFINE_SECTION_VAR]
+            regex: /^(var)(\s+)/i ,
+            map: [Token.T_DEFINE_SECTION_VAR, function (entry) {
+
+                var result = [
+                    { type: Token.T_SPACE}
+                ];
+
+                parseNewLines(entry, result);
+
+                return result;
+
+            }]
         },
-
-
 
 
         // Sample : pos, pos2 : Vec3D;
@@ -152,11 +213,11 @@ module.exports = function(  ) {
                         entry = $.trim(entry);
 
                         result.push({ type: Token.T_VARIABLE, value: entry});
-                        result.push({ type: Token.T_DEFINE, value: ':'});
+                        result.push({ type: Token.T_DEFINE});
                         result.push({ type: Token.T_DEFINE_TYPE, value: matches[4]});
                     });
 
-                    result.push({ type: Token.T_LINEEND, value: ';' });
+                    result.push({ type: Token.T_LINEEND});
 
                     return result;
                 },
@@ -268,7 +329,17 @@ module.exports = function(  ) {
 
         {
             regex: /^(\s+)/,
-            map: [Token.T_SPACE]
+            // map: [Token.T_SPACE]
+            map: [function (entry) {
+                var result = [
+                    { type: Token.T_SPACE}
+                ];
+
+                parseNewLines(entry, result);
+
+                return result;
+
+            }]
         }
 
     ];
@@ -284,13 +355,12 @@ module.exports = function(  ) {
         for(var i in tokenHandlers){
             if (!tokenHandlers.hasOwnProperty(i)) continue;
 
-
+            var consumed = 0;
             var handler = tokenHandlers[i];
-// console.log(code, handler.regex);
+
             var matches = code.match(handler.regex);
             if (matches !== null){
                 // console.log("MAAATCH");
-                var consumed;
 
                 $.each(matches, function (index, match) {
                     if (index == 0){
@@ -312,18 +382,23 @@ module.exports = function(  ) {
                         });
 
                     }else{
-                        console.log({
-                            type: handler.map[ index - 1],
-                            value: match
-                        });
-                        result.push({
-                            type: handler.map[ index - 1],
-                            value: match
-                        });
+
+                        var entry = {
+                            type: handler.map[ index - 1]
+                        };
+
+                        if (ignoreValueMap.indexOf(entry.type) == -1){
+                            entry.value = match;
+                        }
+
+                        console.log(entry);
+
+                        result.push(entry);
 
                     }
                 });
 
+                // apply the line numbers to the result
                 $.each(result, function(index, entry){
                     if (entry.type == Token.T_NEWLINE){
                         lineNumber++;
@@ -341,8 +416,7 @@ module.exports = function(  ) {
 
         }
 
-        console.log('Unable to parse code: ' + code);
-        exit;
+        console.log('Unable to parse code: ' + code.substr(0, 30) + '...');
         return false;
     }
 
@@ -357,6 +431,8 @@ module.exports = function(  ) {
 
             while(sourceCode.length) {
                 var result = match(sourceCode);
+
+                if (result == false) return false;
 
                 $.each(result.tokens, function (index, token) {
                     tonkens.push(token);
