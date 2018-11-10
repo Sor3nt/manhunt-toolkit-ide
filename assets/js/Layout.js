@@ -11,6 +11,7 @@ module.exports = function() {
             SIDEBAR_RIGHT: $('#right-panel .list'),
             SIDEBAR_RIGHT_TABS : $('#right-panel .tab-holder'),
             MAIN_TABS : $('#center-panel .tab-holder'),
+            MAIN_TOOLBAR : $('#tool-bar'),
             MAIN_CONTENT : $('#canvas')
 
         },

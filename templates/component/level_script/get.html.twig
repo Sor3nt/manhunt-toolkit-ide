@@ -6,84 +6,90 @@
 
     </div>
 
+    <div data-layout="MAIN_TOOLBAR">
 
-    <div data-tab-title="Inspector" data-layout="SIDEBAR_RIGHT">
+        <span class="active" data-action="save"><i class="material-icons">save</i></span>
+
+    </div>
+
+
+    {#<div data-tab-title="Inspector" data-layout="SIDEBAR_RIGHT">#}
 
         {#<div class="message" style="display: block;">#}
             {#Registered Events#}
         {#</div>#}
 
 
-        <div class="content">
-            <div class="panel tree-holder component-panel ">
-                <div class="content">
-                    <div class="list">
+        {#<div class="content">#}
+            {#<div class="panel tree-holder component-panel ">#}
+                {#<div class="content">#}
+                    {#<div class="list">#}
 
 
-                        <div class="option-group ">
-                            <p class="option-group-label">
-                                <span class="title">Registered Events</span>
-                            </p>
+                        {#<div class="option-group ">#}
+                            {#<p class="option-group-label">#}
+                                {#<span class="title">Registered Events</span>#}
+                            {#</p>#}
 
 
-                            <div class="item-folder">
+                            {#<div class="item-folder">#}
 
-                                <div class="subtree" style="display: block">
-                                    {% for script in inspection.definedScripts if script.type == "event" %}
-                                        <span class="item">
-                                            <u></u>
-                                            <b class="name">{{ script.value }}</b>
-                                        </span>
-                                    {% endfor %}
-                                </div>
+                                {#<div class="subtree" style="display: block">#}
+                                    {#{% for script in inspection.definedScripts if script.type == "event" %}#}
+                                        {#<span class="item">#}
+                                            {#<u></u>#}
+                                            {#<b class="name">{{ script.value }}</b>#}
+                                        {#</span>#}
+                                    {#{% endfor %}#}
+                                {#</div>#}
 
-                            </div>
-                        </div>
-
-
-                        <div class="option-group ">
-                            <p class="option-group-label">
-                                <span class="title">Custom Scripts</span>
-                            </p>
+                            {#</div>#}
+                        {#</div>#}
 
 
-                            <div class="item-folder">
+                        {#<div class="option-group ">#}
+                            {#<p class="option-group-label">#}
+                                {#<span class="title">Custom Scripts</span>#}
+                            {#</p>#}
 
-                                <div class="subtree" style="display: block">
-                                    {% for script in inspection.definedScripts if script.type != "event" %}
-                                        <span class="item">
-                                            <u></u>
-                                            <b class="name">{{ script.value }}</b>
-                                        </span>
-                                    {% endfor %}
-                                </div>
 
-                            </div>
-                        </div>
+                            {#<div class="item-folder">#}
 
-                        <div class="option-group ">
-                            <p class="option-group-label">
-                                <span class="title">Referenced Scripts</span>
-                            </p>
+                                {#<div class="subtree" style="display: block">#}
+                                    {#{% for script in inspection.definedScripts if script.type != "event" %}#}
+                                        {#<span class="item">#}
+                                            {#<u></u>#}
+                                            {#<b class="name">{{ script.value }}</b>#}
+                                        {#</span>#}
+                                    {#{% endfor %}#}
+                                {#</div>#}
+
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="option-group ">#}
+                            {#<p class="option-group-label">#}
+                                {#<span class="title">Referenced Scripts</span>#}
+                            {#</p>#}
 
 
 
                             {#<div class="subtree" style="display: block">#}
-                                {% for key, scripts in inspection.scriptReferences  %}
-                                    <span class="item-folder">
-                                        <i class="right"></i>
-                                        <b class="name">{{ key }}</b>
-                                    </span>
+                                {#{% for key, scripts in inspection.scriptReferences  %}#}
+                                    {#<span class="item-folder">#}
+                                        {#<i class="right"></i>#}
+                                        {#<b class="name">{{ key }}</b>#}
+                                    {#</span>#}
 
-                                    <div class="subtree">
-                                        {% for script in scripts %}
-                                            <span class="item">
-                                                <u></u><b class="name">{{ script.scriptName }}</b>
-                                            </span>
+                                    {#<div class="subtree">#}
+                                        {#{% for script in scripts %}#}
+                                            {#<span class="item">#}
+                                                {#<u></u><b class="name">{{ script.scriptName }}</b>#}
+                                            {#</span>#}
 
-                                        {% endfor %}
-                                    </div>
-                                {% endfor %}
+                                        {#{% endfor %}#}
+                                    {#</div>#}
+                                {#{% endfor %}#}
 
                                 {#<hr/>#}
 
@@ -95,14 +101,14 @@
                                 {#{% endfor %}#}
                             {#</div>#}
 
-                        </div>
+                        {#</div>#}
 
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
 
 
 </div>

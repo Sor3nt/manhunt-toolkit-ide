@@ -35,9 +35,15 @@ class DefaultController
             $manhuntConstants[] = $name;
         }
 
+        $manhuntEvents = [];
+        foreach (ManhuntDefault::$functionEventDefinition as $name => $offset) {
+            $manhuntEvents[$name] = $offset;
+        }
+
         return [
             'manhuntFunctionNames' => \json_encode($manhuntFunctionNames),
-            'manhuntConstants' => \json_encode($manhuntConstants)
+            'manhuntConstants' => \json_encode($manhuntConstants),
+            'manhuntEvents' => \json_encode($manhuntEvents)
         ];
     }
 }

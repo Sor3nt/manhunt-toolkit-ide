@@ -8,7 +8,7 @@ module.exports = function() {
 
     var self = {
 
-        load: function ( level ) {
+        load: function ( level, callback ) {
             var link = window.routes.component.level.levelScriptListing.replace('--level--', level);
 
             $.get(link, function (levelScripts) {
@@ -19,6 +19,8 @@ module.exports = function() {
 
                 var component = new LayoutComponent('levelscript_listing', element);
                 window.layout.add(component, 'SIDEBAR_LEFT');
+
+                if (typeof callback !== "undefined") callback();
 
             });
 

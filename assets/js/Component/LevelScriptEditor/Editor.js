@@ -3,9 +3,6 @@ module.exports = function( content ) {
     var $ = require('jquery');
     var LayoutTab = require('./../../LayoutTab');
 
-    var Tokenizer = require('./../../Tokenizer/Tokenizer')();
-
-
     var self = {
 
         _content : $(content),
@@ -21,34 +18,57 @@ module.exports = function( content ) {
             $.each(self._components, function (index, componentElement) {
 
                 componentElement = $(componentElement);
+                //
+                // console.log(componentElement);
+                // if (componentElement.attr('data-layout') == "MAIN_TOOLBAR"){
+                //     var target = $('#tool-bar');
+                //     target.append(componentElement);
+                //
+                //     // self._components.push( componentElement );
+                // }
 
-                if (componentElement.attr('data-layout') == "SIDEBAR_RIGHT"){
+                // if (componentElement.attr('data-layout') == "SIDEBAR_RIGHT"){
+                //
+                //
+                //     var simpleTab = require('./../Simple')(componentElement);
+                //     var tab = new LayoutTab(componentElement.attr('data-tab-title'), simpleTab);
+                //
+                //     window.layoutRightTabs.addTab( tab );
+                //
+                //     self._components.push( tab.element );
+                //     self._components.push( simpleTab.element );
+                // }
 
 
-                    var simpleTab = require('./../Simple')(componentElement);
-                    var tab = new LayoutTab(componentElement.attr('data-tab-title'), simpleTab);
-
-                    window.layoutRightTabs.addTab( tab );
-
-                    self._components.push( tab.element );
-                    self._components.push( simpleTab.element );
-                }
-
-                if (componentElement.find('[data-editor]').length){
-
-                    $.each(componentElement.find('[data-editor]'), function (index, element) {
+                $.each(componentElement.find('[data-editor]'), function (index, element) {
 
 
-                        var editor = ace.edit(element);
-                        editor.setTheme("ace/theme/twilight");
-                        editor.session.setMode("ace/mode/manhunt");
+                    var editor = ace.edit(element);
+                    editor.setTheme("ace/theme/twilight");
+                    editor.session.setMode("ace/mode/manhunt");
 
-                        self._editor.push(editor);
-
+                    editor.on('change', function () {
+                        self._onChange(editor);
                     });
 
-                }
+
+                    self._editor.push(editor);
+
+                });
+
             });
+
+        },
+
+        _onChange: function (editor) {
+            var tokens = window.tokenizer.tokenize(editor.getValue());
+
+console.log(tokens);
+
+            console.log("ok", window.tokenInspector.inspect(tokens, [
+                'script_references',
+                'defined_scripts'
+            ]));
 
         },
 

@@ -4,10 +4,11 @@ ace.define("ace/mode/manhunt_highlight_rules",["require","exports","module","ace
     var oop = require("../lib/oop");
     var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
+
     var ManhuntHighlightRules = function() {
 
         var keywords = (
-            "else|elsif|for|foreach|if|while|entity|type|scriptmain|var"
+            "else|elsif|for|foreach|if|while|entity|type|scriptmain"
         );
 
 
@@ -17,24 +18,25 @@ ace.define("ace/mode/manhunt_highlight_rules",["require","exports","module","ace
         var keywordMapper = this.createKeywordMapper({
             "variable.language": "self", // extend um level name ?
             "keyword": keywords,
+            "storage.type": 'var',
+            "constant.language.boolean": 'TRUE|FALSE|true|false',
             "constant.language": buildinConstants,
             "support.function": builtinFunctions
         }, "identifier");
+
         this.$rules = {
             "start" : [
                 {
-                    token : "constant.language.boolean",
-                    regex : "(?:TRUE|FALSE|true|false)\\b"
+                    // lDebuggingFlag = TRUE
+                    token : [
+                        "storage.type", "punctuation.operator", "entity.name.function"
+                    ],
+                    regex : "(\w+)\s*([=><])\s*(\w+)",
                 },
+
                 {
-                    token : "string", // single line
-                    regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
-                },{
-                    token : "string", // single line
-                    regex : "['](?:(?:\\\\.)|(?:[^'\\\\]))*?[']"
-                }, {
-                    token : "constant.numeric", // hex
-                    regex : "0x[0-9a-fA-F]+\\b"
+                    token : "string",
+                    regex : '[\'\"](.*?)[\'\"]'
                 }, {
                     token : "constant.numeric", // float
                     regex : "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
@@ -43,19 +45,21 @@ ace.define("ace/mode/manhunt_highlight_rules",["require","exports","module","ace
                     regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
                 }, {
                     token : "keyword.operator",
-                    regex : "=|<>"
+                    regex : "[=<>]"
                 },
                 {
-                    token : "comment",
-                    regex : "({([^{^}])*)*{([^{^}])*}(([^{^}])*})*"
-                },
-                {
-                    token : "text",
-                    regex : "\\s+"
+                    token : "comment", // multi line comment
+                    regex : /\{/,
+                    next: [
+                        {token : "comment", regex : "}", next: 'pop'},
+                        {defaultToken : "comment", caseInsensitive: true}
+                    ]
                 }
             ]
 
         };
+
+        this.normalizeRules();
     };
 
     oop.inherits(ManhuntHighlightRules, TextHighlightRules);
@@ -265,29 +269,29 @@ ace.define("ace/mode/manhunt",["require","exports","module","ace/lib/oop","ace/m
         //
         // this.lineCommentStart = "#";
         // this.blockComment = [
-        //     {start: "{", end: "}"}
+        //     {start: "begin", end: "end;"}
         // ];
 
 
-        this.getNextLineIndent = function(state, line, tab) {
-            var indent = this.$getIndent(line);
-
-            var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
-            var tokens = tokenizedLine.tokens;
-
-            if (tokens.length && tokens[tokens.length-1].type == "comment") {
-                return indent;
-            }
-
-            if (state == "start") {
-                var match = line.match(/^.*[\{\(\[:]\s*$/);
-                if (match) {
-                    indent += tab;
-                }
-            }
-
-            return indent;
-        };
+        // this.getNextLineIndent = function(state, line, tab) {
+        //     var indent = this.$getIndent(line);
+        //
+        //     var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        //     var tokens = tokenizedLine.tokens;
+        //
+        //     if (tokens.length && tokens[tokens.length-1].type == "comment") {
+        //         return indent;
+        //     }
+        //
+        //     if (state == "start") {
+        //         var match = line.match(/^.*[\{\(\[:]\s*$/);
+        //         if (match) {
+        //             indent += tab;
+        //         }
+        //     }
+        //
+        //     return indent;
+        // };
 
         // this.checkOutdent = function(state, line, input) {
         //     return this.$outdent.checkOutdent(line, input);

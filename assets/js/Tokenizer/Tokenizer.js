@@ -3,6 +3,14 @@ module.exports = function(  ) {
     var Token = require('./Token');
     var $ = require('jquery');
 
+    var lineNumber = 1;
+
+
+    var ignoreTokenMap = [
+        Token.T_SPACE,
+        Token.T_SEPERATOR
+    ];
+
     // do not save this token value, we know what the value are by the token type
     var ignoreValueMap = [
         Token.T_SPACE,
@@ -36,20 +44,8 @@ module.exports = function(  ) {
         Token.T_FORWARD
     ];
 
-    function parseNewLines(entry, result) {
-
-        var newLines = entry.match(/(\n)/g);
-        if (newLines !== null){
-
-            for(var i = 0; i < newLines.length; i++){
-                result.push({ type: Token.T_NEWLINE });
-            }
-        }
-    }
 
     var tokenHandlers = [
-
-
         // Sample: { this is a comment }
         {
             regex: /^((\{([^{^}])*)*\{([^{^}])*\}(([^{^}])*\})*)/,
@@ -65,65 +61,77 @@ module.exports = function(  ) {
             }]
         },
 
-
-
         // Sample: true
         { regex: /^(true)/i, map: [ Token.T_TRUE ] },
         //
         // Sample: false
         { regex: /^(false)/i, map: [ Token.T_FALSE ] },
 
-
         // Sample: 1.00
-        {
-            regex: /^(-?\d+.?\d+)/,
-            map: [Token.T_FLOAT]
-        },
+        { regex: /^(-?\d+.?\d+)/, map: [ Token.T_FLOAT ] },
 
         // Sample: 123
-        {
-            regex: /^(-?\d+)/,
-            map: [Token.T_INT]
-        },
-
+        { regex: /^(-?\d+)/, map: [ Token.T_INT ] },
 
         // Sample: ,
-        {
-            regex: /^(\,)/,
-            map: [Token.T_SEPERATOR]
-        },
+        { regex: /^(\,)/,  map: [ Token.T_SEPERATOR ] },
 
         // Sample: :=
-        {
-            regex: /^(\:\=)/,
-            map: [
-                Token.T_DEFINE
-            ]
-        },
-
-        // Sample: ;
-        {
-            regex: /^(\;)/,
-            map: [Token.T_LINEEND]
-        },
-
-        // Sample: (
-        {
-            regex: /^(\()/,
-            map: [Token.T_BRACKET_OPEN]
-        },
-
-        // Sample: )
-        {
-            regex: /^(\))/,
-            map: [Token.T_BRACKET_CLOSE]
-        },
+        { regex: /^(\:\=)/,  map: [ Token.T_ASSIGN ] },
 
         // Sample: :
-        {
-            regex: /^(\:)/,
-            map: [Token.T_DEFINE]
-        },
+        { regex: /^(\:)/, map: [Token.T_DEFINE] },
+
+        // Sample: ;
+        { regex: /^(\;)/, map: [ Token.T_LINEEND ] },
+
+        // Sample: (
+        { regex: /^(\()/, map: [ Token.T_BRACKET_OPEN ] },
+
+        // Sample: )
+        { regex: /^(\))/, map: [ Token.T_BRACKET_CLOSE ] },
+
+
+        // Sample (strings): "test"
+        { regex: /^['"](.*?)['"]/, map: [ Token.T_STRING ] },
+
+        // Sample : &lt;&gt;
+        { regex: /^(\&lt\;\&gt\;)/, map: [ Token.T_IS_NOT_EQUAL ] },
+        { regex: /^(\<\>)/, map: [ Token.T_IS_NOT_EQUAL ] },
+
+        // Sample: "end;"
+        { regex: /^(end;)\s/i, map: [ Token.T_SCRIPT_END ] },
+
+        // Sample: ":="
+        { regex: /^(\:\=)\s/i, map: [ Token.T_ASSIGN ] },
+
+        // Sample: "+"
+        { regex: /^(\+)/, map: [ Token.T_ADDITION ] },
+
+        // Sample: "begin"
+        { regex: /^(begin)\s+/i, map: [ Token.T_BEGIN ] },
+
+        // Sample: "end."
+        { regex: /^\s(end\.)/i, map: [ Token.T_END_CODE ] },
+
+        // Sample: "function("
+        { regex: /^(\w+)(\()/, map: [ Token.T_FUNCTION, Token.T_BRACKET_OPEN ] },
+
+        // Sample: "function;"
+        { regex: /^(\w+)(;)/, map: [ Token.T_FUNCTION, Token.T_LINEEND ] },
+
+        //sample: if (
+        { regex: /^(if)\s*(\()/i, map: [ Token.T_IF, Token.T_BRACKET_OPEN ] },
+
+        //sample: if
+        { regex: /^(if)\s+/i, map: [ Token.T_IF ] },
+
+        //sample: then
+        { regex: /^(then)\s+/i, map: [ Token.T_THEN ] },
+
+        //sample: and
+        { regex: /^(and)\s+/i, map: [ Token.T_AND ] },
+
 
         // Sample: scriptmain LevelScript;
         {
@@ -132,18 +140,6 @@ module.exports = function(  ) {
                 Token.T_SCRIPTMAIN,
                 Token.T_SCRIPTMAIN_NAME
             ]
-        },
-
-        //sample: if
-        {
-            regex: /^(if)\s?/i,
-            map: [Token.T_IF]
-        },
-
-        //sample: then
-        {
-            regex: /^(then)\s?/i,
-            map: [Token.T_THEN]
         },
 
         //sample : lDebuggingFlag = TRUE
@@ -155,9 +151,6 @@ module.exports = function(  ) {
                 Token.T_VARIABLE
             ]
         },
-
-
-
 
         // Sample: tElevatorLevel = (ElevatorUp, ElevatorDown );
         {
@@ -241,10 +234,6 @@ module.exports = function(  ) {
         },
 
 
-
-
-
-
         // Sample: script OnCreate;
         {
             regex: /^(script)\s*(\w+)\s*(;)/i,
@@ -266,32 +255,6 @@ module.exports = function(  ) {
             ]
         },
 
-        // Sample (strings): "test"
-        { regex: /^(['"].*['"])/, map: [ Token.T_STRING ] },
-
-        // Sample : &lt;&gt;
-        { regex: /^(\&lt\;\&gt\;)/, map: [ Token.T_IS_NOT_EQUAL ] },
-        { regex: /^(\<\>)/, map: [ Token.T_IS_NOT_EQUAL ] },
-
-
-        // Sample: "end;"
-        { regex: /^(end;)\s/i, map: [ Token.T_SCRIPT_END ] },
-
-        // Sample: ":="
-        { regex: /^(\:\=)\s/i, map: [ Token.T_ASSIGN ] },
-
-        // Sample: "begin"
-        { regex: /^(begin)\s+/i, map: [ Token.T_BEGIN ] },
-
-        // Sample: "end."
-        { regex: /^\s(end\.)/i, map: [ Token.T_END_CODE ] },
-
-        // Sample: "function("
-        { regex: /^(\w+)(\()/, map: [ Token.T_FUNCTION, Token.T_BRACKET_OPEN ] },
-
-        // Sample: "function;"
-        { regex: /^(\w+)(;)/, map: [ Token.T_FUNCTION, Token.T_LINEEND ] },
-
         // Sample : procedure InitAI; FORWARD;
         { regex: /^(procedure)\s*(\w+)(;)\s*(forward)\s*(;)/i, map: [
             Token.T_PROCEDURE,
@@ -302,34 +265,20 @@ module.exports = function(  ) {
         ] },
 
 
-
-
         // Sample: entity
-        {
-            regex: /^(entity)/i,
-            map: [Token.T_DEFINE_SECTION_ENTITY]
-        },
+        { regex: /^(entity)/i,  map: [ Token.T_DEFINE_SECTION_ENTITY ] },
 
-        {
-            regex: /^(type)/i,
-            map: [Token.T_DEFINE_SECTION_TYPE]
-        },
-
+        { regex: /^(type)/i, map: [ Token.T_DEFINE_SECTION_TYPE ] },
 
         // Sample: "varname "
         { regex: /^([\w_]+)/, map: [ Token.T_VARIABLE ] },
 
 
-
-
-        {
-            regex: /^(\n)/,
-            map: [Token.T_NEWLINE]
-        },
+        // spaces and new line
+        { regex: /^(\n)/, map: [Token.T_NEWLINE] },
 
         {
             regex: /^(\s+)/,
-            // map: [Token.T_SPACE]
             map: [function (entry) {
                 var result = [
                     { type: Token.T_SPACE}
@@ -344,9 +293,17 @@ module.exports = function(  ) {
 
     ];
 
-    var results = [];
 
-    var lineNumber = 1;
+    function parseNewLines(entry, result) {
+
+        var newLines = entry.match(/(\n)/g);
+        if (newLines !== null){
+
+            for(var i = 0; i < newLines.length; i++){
+                result.push({ type: Token.T_NEWLINE });
+            }
+        }
+    }
 
     function match(code) {
 
@@ -377,24 +334,26 @@ module.exports = function(  ) {
                         var _matches = handler.map[ index - 1](match, matches);
 
                         $.each(_matches, function (index, match) {
-                            console.log(match);
-                            result.push(match);
+                            if (ignoreTokenMap.indexOf(match.type) == -1){
+                                result.push(match);
+                            }
                         });
 
                     }else{
 
-                        var entry = {
-                            type: handler.map[ index - 1]
-                        };
+                        var entry = { type: handler.map[ index - 1] };
 
-                        if (ignoreValueMap.indexOf(entry.type) == -1){
-                            entry.value = match;
+                        if (
+                            ignoreTokenMap.indexOf(entry.type) == -1
+                        ) {
+
+                            if (ignoreValueMap.indexOf(entry.type) == -1) {
+                                entry.value = match;
+                            }
+
+                            result.push(entry);
+
                         }
-
-                        console.log(entry);
-
-                        result.push(entry);
-
                     }
                 });
 
@@ -441,7 +400,7 @@ module.exports = function(  ) {
                 sourceCode = sourceCode.substr(result.consumed);
             }
 
-            console.log(tonkens);
+            // console.log(tonkens);
             return tonkens;
         }
     }

@@ -27,13 +27,19 @@ class Levels
     public $enableLevelOrder = 1;
 
 
-    public function __construct( Resources $resources )
-    {
+    /**
+     * Levels constructor.
+     * @param Resources $resources
+     */
+    public function __construct( Resources $resources ){
 
         $this->content = $resources->load($this->file);
         $this->parseContent();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function parseContent(){
 
         $attributes = Ini::attributes($this->content->getContent());
@@ -59,8 +65,10 @@ class Levels
         }
     }
 
-    public function getLevels()
-    {
+    /**
+     * @return array
+     */
+    public function getLevels(){
         return $this->levels;
     }
 }

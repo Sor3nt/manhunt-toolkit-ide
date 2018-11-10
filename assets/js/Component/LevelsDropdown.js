@@ -2,7 +2,6 @@ module.exports = function() {
 
     var $ = require('jquery');
 
-    var levelScript = require('./LevelScriptListing')();
     var LayoutComponent = require('./../LayoutComponent');
 
     var self = {
@@ -11,7 +10,7 @@ module.exports = function() {
             $.get(window.routes.component.levels, callback);
         },
 
-        load: function () {
+        load: function ( onLoad ) {
 
             self.get(function (levels) {
 
@@ -21,12 +20,14 @@ module.exports = function() {
 
                 var component = new LayoutComponent('levels_dropdown', element);
                 window.layout.add(component, 'SIDEBAR_LEFT');
+
+                if (typeof onLoad != "undefined") onLoad();
             });
 
         },
 
         _onLevelChange: function () {
-            levelScript.load($(this).val());
+            window.levelScript.load($(this).val(), undefined);
         }
 
     };

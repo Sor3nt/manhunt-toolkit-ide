@@ -16,6 +16,9 @@ class LevelsController
     /**
      * @Route("/", name="component_levels_dropdown")
      * @Template()
+     *
+     * @param Levels $level
+     * @return array
      */
     public function dropdown( Levels $level )
     {
