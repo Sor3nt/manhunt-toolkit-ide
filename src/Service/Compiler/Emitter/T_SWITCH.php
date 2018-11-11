@@ -1,9 +1,8 @@
 <?php
 namespace App\Service\Compiler\Emitter;
 
-
-use App\Bytecode\Helper;
 use App\Service\Compiler\Token;
+use App\Service\Helper;
 
 class T_SWITCH {
 

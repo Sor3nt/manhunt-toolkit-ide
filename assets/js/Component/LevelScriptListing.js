@@ -29,13 +29,15 @@ module.exports = function() {
         _openLevelScript: function () {
 
             var script = $(this).attr('data-script');
+            var level = $(this).attr('data-level');
+
             var link = window.routes.component.level.levelScript
-                .replace('--level--', $(this).attr('data-level'))
+                .replace('--level--', level)
                 .replace('--script--', script);
 
             $.get(link, function (levelScript) {
 
-                var componentHandler = new LevelScriptEditor(levelScript);
+                var componentHandler = new LevelScriptEditor(levelScript, level, script);
                 var tab = new LayoutTab(script, componentHandler);
 
                 window.layoutTabs.addTab( tab );

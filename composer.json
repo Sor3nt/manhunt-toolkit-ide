@@ -8,6 +8,7 @@
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "*",
+        "symfony/cache": "*",
         "symfony/console": "*",
         "symfony/expression-language": "*",
         "symfony/flex": "^1.1",

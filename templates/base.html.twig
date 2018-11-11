@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Bootstrap Studio</title>
+    <title>Manhunt Toolkit IDE</title>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,8 @@
                 levels : '{{ path('component_levels_dropdown') }}',
                 level : {
                     levelScriptListing : '{{ path('component_levelscript_listing', { level : '--level--' }) }}',
-                    levelScript : '{{ path('component_levelscript_get', { level : '--level--', script : '--script--' }) }}'
+                    levelScript : '{{ path('component_levelscript_get', { level : '--level--', script : '--script--' }) }}',
+                    levelScriptSave : '{{ path('component_levelscript_save', { level : '--level--', script : '--script--' }) }}'
                 }
             }
         };

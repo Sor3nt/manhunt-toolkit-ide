@@ -1,9 +1,7 @@
 <?php
 namespace App\Service\Compiler\Emitter;
 
-use App\Bytecode\Helper;
-use App\Service\Compiler\Evaluate;
-use App\Service\Compiler\EvaluateAssign;
+use App\Service\Helper;
 use App\Service\Compiler\Token;
 
 class T_ASSIGN {

@@ -60,7 +60,7 @@ $(document).ready(function() {
                 var LevelScriptEditor = require('./Component/LevelScriptEditor/Editor');
                 var LayoutTab = require('./LayoutTab');
 
-                var componentHandler = new LevelScriptEditor(levelScript);
+                var componentHandler = new LevelScriptEditor(levelScript, 'A01_Escape_Asylum', 'A01_Escape_Asylum');
                 var tab = new LayoutTab("A01_Escape_Asylum", componentHandler);
 
                 window.layoutTabs.addTab( tab );

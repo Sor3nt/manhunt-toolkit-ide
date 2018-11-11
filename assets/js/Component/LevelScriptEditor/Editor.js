@@ -1,4 +1,4 @@
-module.exports = function( content ) {
+module.exports = function( content, level, script ) {
 
     var $ = require('jquery');
     var LayoutTab = require('./../../LayoutTab');
@@ -6,7 +6,7 @@ module.exports = function( content ) {
     var self = {
 
         _content : $(content),
-        _editor : [],
+        _editor : {},
         _components : [],
 
         _init : function () {
@@ -15,53 +15,42 @@ module.exports = function( content ) {
 
         init : function () {
 
-            $.each(self._components, function (index, componentElement) {
+            var editorElement = self._components.find('[data-editor]');
 
-                componentElement = $(componentElement);
-                //
-                // console.log(componentElement);
-                // if (componentElement.attr('data-layout') == "MAIN_TOOLBAR"){
-                //     var target = $('#tool-bar');
-                //     target.append(componentElement);
-                //
-                //     // self._components.push( componentElement );
-                // }
+            var editor = ace.edit(editorElement.get(0));
+            editor.setTheme("ace/theme/twilight");
+            editor.session.setMode("ace/mode/manhunt");
+            editor.on('change', self._onChange);
 
-                // if (componentElement.attr('data-layout') == "SIDEBAR_RIGHT"){
-                //
-                //
-                //     var simpleTab = require('./../Simple')(componentElement);
-                //     var tab = new LayoutTab(componentElement.attr('data-tab-title'), simpleTab);
-                //
-                //     window.layoutRightTabs.addTab( tab );
-                //
-                //     self._components.push( tab.element );
-                //     self._components.push( simpleTab.element );
-                // }
+            self._editor = editor;
 
+            self._createEvents();
+        },
 
-                $.each(componentElement.find('[data-editor]'), function (index, element) {
+        _createEvents: function () {
+
+            self._components.find('[data-action="save"]').click(self._doSave);
+        },
+
+        _doSave: function () {
+
+            var link = window.routes.component.level.levelScriptSave
+                .replace('--level--', level)
+                .replace('--script--', script);
 
 
-                    var editor = ace.edit(element);
-                    editor.setTheme("ace/theme/twilight");
-                    editor.session.setMode("ace/mode/manhunt");
+            $.post(link, {
+                srce: self._editor.getValue()
+            }, function (response) {
 
-                    editor.on('change', function () {
-                        self._onChange(editor);
-                    });
-
-
-                    self._editor.push(editor);
-
-                });
+                console.log(response);
 
             });
 
         },
 
-        _onChange: function (editor) {
-            var tokens = window.tokenizer.tokenize(editor.getValue());
+        _onChange: function () {
+            var tokens = window.tokenizer.tokenize(self._editor.getValue());
 
 console.log(tokens);
 

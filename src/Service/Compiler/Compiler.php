@@ -377,6 +377,8 @@ class Compiler {
             define('GAME', $game);
         }
 
+        $originalSource = $source;
+
         // cleanup the source code
         $source = $this->prepare($source);
 
@@ -592,10 +594,12 @@ class Compiler {
             'STAB' => $this->generateSTAB($headerVariables),
             'SCPT' => $this->generateSCPT($scriptBlockSizes),
             'ENTT' => $this->getEntitity($tokens),
-//            'NAME' => $scriptName,
+            'SRCE' => $originalSource,
 
             //todo: value did not match...
-            'SMEM' => 78596
+            'SMEM' => 78596,
+            'DMEM' => 78596,
+            'LINE' => [],
 //            'SMEM' => ($smemOffset + $smemOffset2Tmp) * 4
 
         ];

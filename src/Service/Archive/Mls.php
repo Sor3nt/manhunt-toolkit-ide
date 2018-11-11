@@ -262,8 +262,7 @@ class Mls {
 
                     list(, , $sectionCode) = $this->getLabelSizeData( $code, $code, 4, $platform);
 
-                    $unpacked['DBUG']['SRCE'] = $sectionCode->toBinary();
-                    break;
+                    $unpacked['SRCE'] = $sectionCode->toBinary();
 
                     list(, , $lineCode) = $this->getLabelSizeData( $code, $code, 4, $platform);
 
@@ -271,27 +270,27 @@ class Mls {
 
                     // add TRCE record
                     if ($platform == "wii"){
-                        $unpacked['DBUG']['TRCE'] = [
+                        $unpacked['TRCE'] = [
                             'size' => Helper::toBigEndian($trce[1]->toHex()),
                             'data' => Helper::toBigEndian($trce[2]->toHex())
                         ];
 
                     }else{
-                        $unpacked['DBUG']['TRCE'] = [
+                        $unpacked['TRCE'] = [
                             'size' => $trce[1]->toHex(),
                             'data' => $trce[2]->toHex()
                         ];
                     }
 
-                    $unpacked['DBUG']['LINE'] = [];
+                    $unpacked['LINE'] = [];
 
 
                     //umstellen auf ->split(4)
                     do{
                         if ($platform == "wii") {
-                            $unpacked['DBUG']['LINE'][] = Helper::toBigEndian( $lineCode->substr(0, 4, $lineCode)->toHex() );
+                            $unpacked['LINE'][] = Helper::toBigEndian( $lineCode->substr(0, 4, $lineCode)->toHex() );
                         }else{
-                            $unpacked['DBUG']['LINE'][] = $lineCode->substr(0, 4, $lineCode)->toHex();
+                            $unpacked['LINE'][] = $lineCode->substr(0, 4, $lineCode)->toHex();
                         }
                     }while($lineCode->length() > 0);
 
@@ -301,7 +300,6 @@ class Mls {
                     break;
 
                 case 'DMEM':                                    // memory allocation for debug
-                    break;
 
                     if ($platform == "wii"){
                         $dmem = new Binary(Helper::toBigEndian($data->toHex()), true);
@@ -315,7 +313,6 @@ class Mls {
                     break;
 
                 case 'STAB':                                    // data like : acellhaschanged aiinited blockertutdisplayed bmeleetutdone....
-                    break;
                     $code = $data;
 
                     $unpacked['STAB_RAW'] = $code->toBinary();
@@ -605,9 +602,8 @@ class Mls {
 
     private function buildDATA( $records ){
 
-        if (!is_array($records['DATA'])) $records['DATA'] = explode("\n", $records['DATA']);
-
         if (isset($records['DATA'])){
+            if (!is_array($records['DATA'])) $records['DATA'] = explode("\n", $records['DATA']);
 
             $stringArraySizes = 0;
 
@@ -700,6 +696,10 @@ class Mls {
         /*
          * Build DBUG sub section SRCE
          */
+        if (!isset($records['SRCE'])){
+            var_dump($records);
+            exit;
+        }
 
         // add SRCE size
         $data = current(unpack("H*", $records['SRCE']));
@@ -716,7 +716,8 @@ class Mls {
          * Build DBUG sub section LINE
          */
 
-        $lineData = implode("", explode("\n", $records['LINE']));
+//
+        $lineData = implode("", $records['LINE']);
 
         // LINE header
         $lineCode = "\x4C\x49\x4E\x45";
@@ -737,9 +738,11 @@ class Mls {
 
         // DBUG Size
 
+//        $section .= (pack("L", strlen(bin2hex($srceCode . $trceCode )) / 2));
         $section .= (pack("L", strlen(bin2hex($srceCode . $lineCode . $trceCode )) / 2));
 
         // DBUG value
+//        $section .= $srceCode . $trceCode;
         $section .= $srceCode . $lineCode . $trceCode;
 
         /*********************
@@ -887,14 +890,13 @@ class Mls {
         return "";
     }
 
+
     /**
      * @param $scripts
-     * @param string $game
      * @param bool $withDebug
-     * @param OutputInterface|null $output
      * @return string
      */
-    public function pack( $scripts, $game = "mh1", $withDebug = true, OutputInterface $output = null){
+    public function pack( $scripts, $withDebug = true){
         $mls =
             "\x4D\x48\x4C\x53" .      // MHLS
             "\x03\x00\x09\x00"        // MHLS Version (3.9)
@@ -902,15 +904,7 @@ class Mls {
 
         ksort($scripts);
 
-        $progressBar = null;
-        if (!is_null($output)){
-            $progressBar = new ProgressBar($output);
-            $progressBar->start(count($scripts));
-        }
-
         foreach ($scripts as $index => $records) {
-
-            !is_null($output) && $output->writeln(sprintf(" > <comment>%s</comment>", $records['NAME']));
 
             $scriptCode = $this->buildSCPT( $records );
             $scriptCode .= $this->buildNAME( $records );
@@ -931,9 +925,6 @@ class Mls {
             $header .= (pack("L", strlen(bin2hex($scriptCode )) / 2));
 
             $mls .= $header . $scriptCode;
-
-            !is_null($progressBar) && $progressBar->advance();
-
         }
 
         return $mls;

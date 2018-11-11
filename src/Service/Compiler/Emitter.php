@@ -1,9 +1,8 @@
 <?php
 namespace App\Service\Compiler;
 
-use App\Bytecode\Helper;
 
-class Emitter extends Helper {
+class Emitter {
 
     private $variables = [];
 

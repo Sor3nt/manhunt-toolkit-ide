@@ -59,4 +59,8 @@ class Resources
 
     }
 
+    public function saveMls( Resource $resource ){
+
+    }
+
 }

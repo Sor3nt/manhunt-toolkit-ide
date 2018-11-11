@@ -2,6 +2,7 @@
 
 namespace App\Service\Element;
 
+use App\Service\Archive\Mls;
 use App\Service\Compiler\Compiler;
 use App\Service\Compiler\Token;
 use App\Service\Compiler\Tokenizer;
@@ -20,13 +21,29 @@ class LevelScript
     /** @var Resources  */
     private $resources;
 
+    /** @var Compiler  */
+    private $compiler;
+
+    /** @var Mls  */
+    private $mls;
 
     /**
      * LevelScript constructor.
      * @param Resources $resources
+     * @param Compiler $compiler
+     * @param Mls $mls
      */
-    public function __construct( Resources $resources ) {
+    public function __construct( Resources $resources, Compiler $compiler, Mls $mls ) {
         $this->resources = $resources;
+        $this->mls = $mls;
+        $this->compiler = $compiler;
+    }
+
+    public function getMls( $level ){
+
+        $levelFile = sprintf('/levels/%s/%s.mls', $level, $level);
+
+        return $this->resources->load($levelFile);
     }
 
     /**
@@ -35,16 +52,14 @@ class LevelScript
      */
     public function getScriptList( $level )
     {
-        $levelFile = sprintf('/levels/%s/%s.mls', $level, $level);
-
-        $resource = $this->resources->load($levelFile);
+        $resource = $this->getMls($level);
 
         /** @var array $levelScripts */
         $levelScripts = $resource->getContent();
 
         $results = [];
         foreach ($levelScripts as $index => $mhsc) {
-            $results[] = $this->getEntityName($mhsc['DBUG']['SRCE']);
+            $results[] = $this->getEntityName($mhsc['SRCE']);
         }
 
         sort($results);
@@ -58,21 +73,50 @@ class LevelScript
      * @return bool
      */
     public function getScript($level, $script){
-        $levelFile = sprintf('/levels/%s/%s.mls', $level, $level);
-
-        $resource = $this->resources->load($levelFile);
+        $resource = $this->getMls($level);
 
         /** @var array $levelScripts */
         $levelScripts = $resource->getContent();
 
         foreach ($levelScripts as $index => $mhsc) {
 
-            $entityName = $this->getEntityName($mhsc['DBUG']['SRCE']);
+            $entityName = $this->getEntityName($mhsc['SRCE']);
 
-            if ($entityName == $script) return $mhsc['DBUG']['SRCE'];
+            if ($entityName == $script) return $mhsc['SRCE'];
         }
 
         return false;
+    }
+
+    public function replaceScript($level, $script, $newMhsc){
+        $resource = $this->getMls($level);
+
+        /** @var array $levelScripts */
+        $levelScripts = $resource->getContent();
+
+        foreach ($levelScripts as $index => &$mhsc) {
+
+            $entityName = $this->getEntityName($mhsc['SRCE']);
+
+            if ($entityName == $script){
+                $mhsc = $newMhsc;
+            }
+        }
+
+        $resource->setContent($levelScripts);
+
+        return $resource;
+    }
+
+    public function compile($source, $levelScript = false, $game = "mh2"){
+        $compiled = $this->compiler->parse($source, $levelScript, $game);
+
+        return $compiled;
+    }
+
+    public function pack($scripts){
+        $packed = $this->mls->pack($scripts, true);
+        return $packed;
     }
 
 
