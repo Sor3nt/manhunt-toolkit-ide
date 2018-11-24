@@ -14,7 +14,6 @@ class Extract {
 
     public function __construct( $binaryData, $game = "mh2")
     {
-
         $this->game = $game;
         $this->binary = new Binary( $binaryData );
     }
@@ -123,6 +122,7 @@ class Extract {
     private function parseENTT( Binary $data, $levelName ){
 
         /** @var Binary $name */
+
         //skip the type
         $data->substr(0, 4, $name);
 

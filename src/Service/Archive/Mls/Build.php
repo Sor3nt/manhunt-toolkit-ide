@@ -40,7 +40,7 @@ class Build {
 
         foreach ($records['SCPT'] as $scptEntry) {
 
-            // add the name - section is 32-byte long
+            // add the name - section is 64-byte long
             $code .= hex2bin(Helper::pad(current(unpack("H*", $scptEntry['name'])), 128));
             $code .= hex2bin($scptEntry['onTrigger']);
             $code .= hex2bin(Helper::fromIntToHex($scptEntry['scriptStart']));

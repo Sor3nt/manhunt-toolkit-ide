@@ -99,13 +99,9 @@ class Compiler {
                 return $vars;
             }
 
-            if ($token['type'] == Token::T_SCRIPT || $token['type'] == Token::T_PROCEDURE) {
-                return $vars;
-            }
+            if ($token['type'] == Token::T_SCRIPT || $token['type'] == Token::T_PROCEDURE) return $vars;
 
-            if ($token['type'] == Token::T_DEFINE_SECTION_VAR) {
-                $inside = true;
-            }
+            if ($token['type'] == Token::T_DEFINE_SECTION_VAR) $inside = true;
 
             if ($inside == false){
                 $current++;
@@ -129,33 +125,19 @@ class Compiler {
                 $variables = array_reverse($variables);
 
                 foreach ($variables as $variable) {
-                    $variable = $variable['value'];
-                    if (!$this->isVariableInUse($tokens, $variable)){
-                        continue;
-                    }
+                    if (!$this->isVariableInUse($tokens, $variable['value'])) continue;
 
                     $variableType = strtolower($tokens[$current + 2]['value']);
 
-                    if (isset($types[ $variableType ] )){
-                        $row = [
-                            'section' => $currentSection,
-                            'type' => $variableType,
-                            'abstract' => 'state'
-                        ];
-                    }else{
-                        $row = [
-                            'section' => $currentSection,
-                            'type' => $variableType
-                        ];
-                    }
+                    $row = [
+                        'section' => $currentSection,
+                        'type' => substr($variableType, 0, 7) == "string[" ? 'stringarray' : $variableType,
+                        'size' => $this->getMemorySizeByType($variableType)
+                    ];
 
-                    if (substr($variableType, 0, 7) == "string["){
-                        $row['type'] = 'stringarray';
-                    }
+                    if (isset($types[ $variableType ] )) $row['abstract'] = 'state';
 
-                    $row['size'] = $this->getMemorySizeByType($variableType);
-
-                    $vars[$variable] = $row;
+                    $vars[$variable['value']] = $row;
                 }
             }
 
@@ -391,17 +373,15 @@ class Compiler {
             foreach ($levelScript['extra']['headerVariables'] as $levelHeaderVariableName => $levelHeaderVariable) {
 
                 foreach ($headerVariables as $headerVariableName => &$headerVariable) {
+
                     if (strpos(strtolower($headerVariable['type']), 'level_var') !== false){
 
                         if ($levelHeaderVariableName == $headerVariableName){
                             $headerVariable['offset'] = $levelHeaderVariable['offset'];
-
                         }
                     }
                 }
-
             }
-
         }
 
         $smemOffset = 0;
@@ -548,11 +528,10 @@ class Compiler {
 
                 $lastScriptEnd = count($code) * 4;
 
-
                 foreach ($code as $line) {
                     if ($line->lineNumber !== $start){
                         var_dump( $line, $start);
-                        throw new \Exception('Calulated line number did not match with the generated one');
+                        throw new \Exception('Calculated line number did not match with the generated one');
                     }
 
                     $start++;
@@ -575,7 +554,7 @@ class Compiler {
             'CODE' => $sectionCode,
             'DATA' => $this->generateDATA($strings4Scripts),
             'STAB' => $this->generateSTAB($headerVariables),
-            'SCPT' => $this->generateSCPT($scriptBlockSizes),
+            'SCPT' => $this->generateSCPT($scriptBlockSizes, $game),
             'ENTT' => $this->getEntity($tokens),
             'SRCE' => $originalSource,
 
@@ -692,9 +671,7 @@ class Compiler {
 
             if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE_TYPE){
 
-                $variables = [
-                    $token
-                ];
+                $variables = [ $token ];
 
                 $oriPos = $current;
                 if (isset($tokens[ $current - 1])){
@@ -710,8 +687,7 @@ class Compiler {
 
                 $variables = array_reverse($variables);
 
-                $current = $oriPos;
-                $current = $current + 1;
+                $current = $oriPos + 1;
 
                 $variableType = strtolower($tokens[$current]['value']);
 
@@ -722,6 +698,7 @@ class Compiler {
                         'section' => 'script',
                         'type' => $variableType
                     ];
+
                     if (substr($variableType, 0, 7) == "string["){
                         $row['type'] = 'stringarray';
                     }
@@ -738,7 +715,7 @@ class Compiler {
         return $vars;
     }
 
-    public function generateSCPT( $scriptBlockSizes ){
+    public function generateSCPT( $scriptBlockSizes, $game ){
 
         $scpt = [];
         $scriptSize = 0;
@@ -747,7 +724,7 @@ class Compiler {
 
             $functionEventDefinitionDefault = ManhuntDefault::$functionEventDefinition;
             $functionEventDefinition = Manhunt2::$functionEventDefinition;
-            if (GAME == "mh1") $functionEventDefinition = Manhunt::$functionEventDefinition;
+            if ($game == "mh1") $functionEventDefinition = Manhunt::$functionEventDefinition;
 
             if (isset($functionEventDefinitionDefault[strtolower($name)])) {
                 $onTrigger = $functionEventDefinitionDefault[strtolower($name)];
@@ -775,7 +752,6 @@ class Compiler {
 
         foreach ($strings4Scripts as $strings) {
             foreach ($strings as $value => $string) {
-
                 $result[] = $value;
             }
         }
@@ -794,13 +770,12 @@ class Compiler {
 
             if ($varType == "stringarray") $varType = "string";
 
-            /*
-             *
-             * TODO: HACKS... damit ich erstma lvl1 compilen kann...
+            /**
+             * todo: not important, the type should say tLevelState but its messed up by the state handling
              */
-
-            if ($varType == "televatorlevel") $varType = "tLevelState";
-            if ($varType == "tlevelstate") $varType = "tLevelState";
+            if (isset($variable['abstract']) && $variable['abstract'] == "state") {
+                $varType = "tLevelState";
+            }
 
             $row = [
                 'name' => strtolower($name),
