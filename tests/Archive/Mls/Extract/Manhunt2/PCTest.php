@@ -12,7 +12,7 @@ class PCTest extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PC/A01_Escape_Asylum.mls');
+        $mlsContent = $resources->load('/Archive/Mls/Manhunt2/PC/A01_Escape_Asylum.mls');
 
         $mhls = $mlsContent->getContent();
 
@@ -40,7 +40,7 @@ class PCTest extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PC/game.scc');
+        $mlsContent = $resources->load('/Archive/Mls/Manhunt2/PC/game.scc');
 
         $mhls = $mlsContent->getContent();
 

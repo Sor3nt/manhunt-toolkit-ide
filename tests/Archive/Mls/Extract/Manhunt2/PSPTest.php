@@ -12,7 +12,7 @@ class PSPTest extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PSP/A01_ES.MLS');
+        $mlsContent = $resources->load('/Archive/Mls/Manhunt2/PSP/A01_ES.MLS');
 
         $mhls = $mlsContent->getContent();
 

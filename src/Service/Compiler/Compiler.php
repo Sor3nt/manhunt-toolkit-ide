@@ -792,11 +792,13 @@ class Compiler {
 
             $varType = $variable['type'];
 
+            if ($varType == "stringarray") $varType = "string";
+
             /*
              *
              * TODO: HACKS... damit ich erstma lvl1 compilen kann...
              */
-            if ($varType == "stringarray") $varType = "string";
+
             if ($varType == "televatorlevel") $varType = "tLevelState";
             if ($varType == "tlevelstate") $varType = "tLevelState";
 
@@ -814,11 +816,9 @@ class Compiler {
             ];
 
             //todo...
-            if (strtolower($name) == "ldebuggingflag"){
-                $row['unknown'] = '012000b6012000dd03200072192000b319';
-
-            }
-
+//            if (strtolower($name) == "ldebuggingflag"){
+//                $row['unknown'] = '012000b6012000dd03200072192000b319';
+//            }
 
             $result[] = $row;
         }

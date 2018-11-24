@@ -63,8 +63,8 @@ class Binary {
     }
 
 
-    public function toHex(){
-        return bin2hex($this->buffer);
+    public function toHex( $toBigEndian = false){
+        return $toBigEndian ? Helper::toBigEndian(bin2hex($this->buffer)) : bin2hex($this->buffer);
     }
 
     public function toBinary(){
@@ -77,9 +77,14 @@ class Binary {
     }
 
 
-    public function toInt(){
+    public function toInt($toBigEndian = false){
         if ($this->length() == 0) return null;
-        return (int) current(unpack("L", $this->buffer));
+
+        if ($toBigEndian){
+            return (int) current(unpack("L", hex2bin($this->toHex(true))));
+        }else{
+            return (int) current(unpack("L", $this->buffer));
+        }
     }
 
     public function toFloat(){

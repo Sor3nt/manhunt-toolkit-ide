@@ -16,9 +16,7 @@ class Extract {
     {
 
         $this->game = $game;
-
         $this->binary = new Binary( $binaryData );
-
     }
 
     public function get(){
@@ -66,37 +64,24 @@ class Extract {
         /** @var Binary $sectionCode */
         /** @var Binary $data */
 
-        $unpacked = [];
+        $results = [];
 
         do{
             list($scriptLabel, $data) = $this->getLabelSizeData( $remain, $remain);
 
-            $unpacked[$scriptLabel] = [];
+            $results[$scriptLabel] = [];
 
             switch($scriptLabel){
 
                 case 'DMEM': break;
-                case 'SCPT': $unpacked['SCPT'] = $this->parseSCPT($data); break;
-                case 'NAME': $unpacked['NAME'] = $this->parseNAME($data); break;
-                case 'ENTT': $unpacked['ENTT'] = $this->parseENTT($data, $unpacked['NAME']); break;
-                case 'CODE': $unpacked['CODE'] = $this->parseCODE($data); break;
-                case 'SMEM': $unpacked['SMEM'] = $this->parseSMEM($data); break;
-                case 'DBUG': $unpacked['SRCE'] = $this->parseDBUG($data); break;
-
-                case 'DATA':
-
-                    //keep until mh1 is implemented
-                    $unpacked['DATARAW'] = $data->toHex();
-                    $unpacked['DATA'] = $this->parseDATA($data);
-
-                    break;
-
-                case 'STAB':
-                    //keep until mh1 is implemented
-                    $unpacked['STAB_RAW'] = $data->toBinary();
-                    $unpacked['STAB'] = $this->parseSTAB($data);
-
-                    break;
+                case 'SCPT': $results['SCPT'] = $this->parseSCPT($data); break;
+                case 'NAME': $results['NAME'] = $this->parseNAME($data); break;
+                case 'ENTT': $results['ENTT'] = $this->parseENTT($data, $results['NAME']); break;
+                case 'CODE': $results['CODE'] = $this->parseCODE($data); break;
+                case 'SMEM': $results['SMEM'] = $this->parseSMEM($data); break;
+                case 'DBUG': $results['SRCE'] = $this->parseDBUG($data); break;
+                case 'DATA': $results['DATA'] = $this->parseDATA($data); break;
+                case 'STAB': $results['STAB'] = $this->parseSTAB($data); break;
 
                 default:
                     throw new \Exception(sprintf('Unknown Script Section %s', $scriptLabel ));
@@ -105,7 +90,7 @@ class Extract {
 
         }while($remain->length() > 0);
 
-        return $unpacked;
+        return $results;
     }
 
     private function parseSCPT( Binary $data ){
@@ -135,13 +120,15 @@ class Extract {
         return $data->substr(0, "\x00", $data)->toString();
     }
 
-    private function parseENTT( Binary $data, $name ){
+    private function parseENTT( Binary $data, $levelName ){
 
-        $data->skipBytes(4);
+        /** @var Binary $name */
+        //skip the type
+        $data->substr(0, 4, $name);
 
         return [
-            'name' => $data->toString(),
-            'type' => $name == "levelscript" ? "levelscript" : "other"
+            'name' => $name->toString(),
+            'type' => $levelName == "levelscript" ? "levelscript" : "other"
         ];
 
     }
@@ -211,13 +198,7 @@ class Extract {
             $section1 = $data->substr(0, 32, $data);
             $section2 = $data->substr(0, $this->game == "mh1" ? 16 : 20, $data);
 
-            $unknown1 = new Binary();
-            $name = $section1->substr(0, "\x00", $unknown1);
-
-            $entry['name'] = $name->toString();
-
-            /** @var Binary $unknown1 */
-            $unknown1 = $unknown1->skipBytes(1);
+            $entry['name'] = $section1->substr(0, "\x00")->toString();
 
             $section2 = $section2->split(4);
 
@@ -226,20 +207,13 @@ class Extract {
             if ($section2[0]->toHex() == "ffffffff"){
                 $entry['offset'] = false;
             }else{
-                $entry['offset'] = $section2[0]->toHex();
-                if ($this->platform == "wii") {
-                    $entry['offset'] = Helper::toBigEndian($entry['offset']);
-                }
+                $entry['offset'] = $section2[0]->toHex($this->platform == "wii");
             }
 
             if ($section2[1]->toHex() == "ffffffff"){
                 $entry['size'] = false;
             }else{
-                if ($this->platform == "wii") {
-                    $entry['size'] = (new Binary(Helper::toBigEndian($section2[1]->toHex()), true))->toInt();
-                }else{
-                    $entry['size'] = $section2[1]->toInt();
-                }
+                $entry['size'] = $section2[1]->toInt($this->platform == "wii");
             }
 
             if ($this->game == "mh1"){
@@ -247,16 +221,9 @@ class Extract {
                 $occurrenceCount = $section2[3]->toInt();
 
             }else{
-                if ($this->platform == "wii") {
-                    $entry['unknownType'] = Helper::toBigEndian($section2[2]->toHex());
-                    $valueType = Helper::toBigEndian($section2[3]->toHex());
-                    $occurrenceCount = (new Binary(Helper::toBigEndian($section2[4]->toHex())))->toInt();
-
-                }else{
-                    $entry['unknownType'] = $section2[2]->toHex();
-                    $valueType = $section2[3]->toHex();
-                    $occurrenceCount = $section2[4]->toInt();
-                }
+                $entry['unknownType'] = $section2[2]->toHex($this->platform == "wii");
+                $valueType = $section2[3]->toHex($this->platform == "wii");
+                $occurrenceCount = $section2[4]->toInt($this->platform == "wii");
             }
 
             switch ($valueType){
@@ -318,7 +285,7 @@ class Extract {
                     break;
 
                 default:
-                    var_dump($name->toBinary());
+                    var_dump($entry['name']);
                     throw new \Exception(sprintf('Unknown object type sequence: %s', $valueType ));
                     break;
 
@@ -331,16 +298,6 @@ class Extract {
                 $occurrencesRaw = $data->substr(0, $occurrenceCount * 4, $data)->split(4);
                 foreach ($occurrencesRaw as $occurrence) {
                     $entry['occurrences'][] = $occurrence->toInt();
-                }
-            }
-
-            //these are the values inside the first 32-byte name section, appear right after the name -- looks like garbage
-            if ($unknown1->toString() != ""){
-                $entry['unknown'] = "";
-
-                $split = $unknown1->split(4, $this->platform == "wii");
-                foreach ($split as $item) {
-                    $entry['unknown'] .= $item->toHex();
                 }
             }
 

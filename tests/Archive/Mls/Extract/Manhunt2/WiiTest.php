@@ -12,7 +12,7 @@ class WiiTest extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/Wii/A01_Escape_Asylum.mls');
+        $mlsContent = $resources->load('/Archive/Mls/Manhunt2/Wii/A01_Escape_Asylum.mls');
 
         $mhls = $mlsContent->getContent();
 
