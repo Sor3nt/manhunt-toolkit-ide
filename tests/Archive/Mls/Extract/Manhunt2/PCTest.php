@@ -4,7 +4,7 @@ namespace App\Tests\Archive\Mls\Extract\Manhunt2;
 use App\Service\Resources;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PS2Test extends KernelTestCase
+class PCTest extends KernelTestCase
 {
 
     public function testLevel1()
@@ -12,10 +12,9 @@ class PS2Test extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PS2/A01_ES.MLS');
+        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PC/A01_Escape_Asylum.mls');
 
         $mhls = $mlsContent->getContent();
-
 
         //98 scripts inside level 1
         $this->assertEquals(98, count($mhls));
@@ -33,7 +32,29 @@ class PS2Test extends KernelTestCase
         $this->assertEquals('newmeleetut2', $mhls[1]['NAME']);
         $this->assertEquals('objectscript', $mhls[97]['NAME']);
 
+
     }
 
+    public function testGlobalScc()
+    {
+
+        $resources = new Resources();
+        $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
+        $mlsContent = $resources->load('/Manhunt2/Archive/Mls/PC/game.scc');
+
+        $mhls = $mlsContent->getContent();
+
+        $this->assertEquals(1, count($mhls));
+
+        $this->assertEquals(true, isset($mhls[0]['SCPT']));
+        $this->assertEquals(true, isset($mhls[0]['NAME']));
+        $this->assertEquals(true, isset($mhls[0]['ENTT']));
+        $this->assertEquals(true, isset($mhls[0]['CODE']));
+        $this->assertEquals(true, isset($mhls[0]['DATA']));
+        $this->assertEquals(true, isset($mhls[0]['SMEM']));
+        $this->assertEquals(true, isset($mhls[0]['STAB']));
+
+        $this->assertEquals('gamescript', $mhls[0]['NAME']);
+    }
 
 }
