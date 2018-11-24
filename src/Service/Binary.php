@@ -95,7 +95,7 @@ class Binary {
      * @param $bytes
      * @return Binary[]
      */
-    public function split( $bytes ){
+    public function split( $bytes, $toBigEndian = false){
         $parts = str_split(
             $this->toHex(),
             $bytes * 2
@@ -103,7 +103,7 @@ class Binary {
 
         $return = [];
         foreach ($parts as $index => $part) {
-            $return[$index] = new Binary($part, true);
+            $return[$index] = new Binary($toBigEndian ? Helper::toBigEndian($part) : $part, true);
         }
 
         return $return;
@@ -151,7 +151,12 @@ class Binary {
         );
     }
 
-    public function substr($startOrSearchHexPos, $lengthOrSearchHexPos = null, Binary &$remain = null){
+    public function read( $length, $offset = 0 ){
+        return $this->substr($offset, $length);
+
+    }
+
+    public function substr($startOrSearchHexPos, $lengthOrSearchHexPos = null, Binary &$remain = null, $bigEndian = false){
 
         $length = $lengthOrSearchHexPos;
         $start = $startOrSearchHexPos;
@@ -173,14 +178,21 @@ class Binary {
         );
 
         if (!is_null($length) ){
-
             $remain = new Binary(substr(
                 $this->toHex(),
                 ($start * 2) + (is_null($length) ? $hexLength : $length * 2)
             ), true);
         }
 
-        return new Binary($hex, true);
+
+//        $this->buffer = $remain;
+
+        if ($bigEndian == true){
+            return new Binary(Helper::toBigEndian($hex), true);
+        }else{
+            return new Binary($hex, true);
+
+        }
     }
 
     private static function int8($i) {

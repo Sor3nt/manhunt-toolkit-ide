@@ -43,7 +43,7 @@ class LevelScriptController
     public function get( LevelScript $levelScript, $level, $script )
     {
 
-        $source = $levelScript->getScript( $level, $script );
+        $mhsc = $levelScript->getScript( $level, $script );
 //        $preparedsource = Compiler::prepare($source);
 //
 //        $tokenizer = new Tokenizer();
@@ -52,7 +52,7 @@ class LevelScriptController
         return [
             'level' => $level,
             'script' => $script,
-            'levelscript' => $source
+            'levelscript' => $mhsc['SRCE']
         ];
     }
     /**
@@ -70,7 +70,10 @@ class LevelScriptController
         $srce = $request->get('srce');
 
         $parentScript = false;
-        if ($level != $script) $parentScript = $level;
+        if ($level != $script){
+            $parentMhsc = $levelScript->getScript($level, $level);
+            $parentScript = $levelScript->compile($parentMhsc['SRCE'], false, 'mh2');
+        }
 
         $mhsc = $levelScript->compile($srce, $parentScript, 'mh2');
         unset($mhsc['extra']);
@@ -88,21 +91,6 @@ class LevelScriptController
         var_dump("OK");
         exit;
 
-
-//        $source = $levelScript->getScript( $level, $script );
-//        var_dump($request->get('srce'));
-        exit;
-
-//        $preparedsource = Compiler::prepare($source);
-//
-//        $tokenizer = new Tokenizer();
-//        $tokens = $tokenizer->run($preparedsource);
-//
-        return [
-            'level' => $level,
-            'script' => $script,
-            'levelscript' => $source
-        ];
     }
 
 }

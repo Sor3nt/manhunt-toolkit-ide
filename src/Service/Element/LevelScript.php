@@ -82,7 +82,7 @@ class LevelScript
 
             $entityName = $this->getEntityName($mhsc['SRCE']);
 
-            if ($entityName == $script) return $mhsc['SRCE'];
+            if ($entityName == $script) return $mhsc;
         }
 
         return false;
@@ -109,14 +109,11 @@ class LevelScript
     }
 
     public function compile($source, $levelScript = false, $game = "mh2"){
-        $compiled = $this->compiler->parse($source, $levelScript, $game);
-
-        return $compiled;
+        return $this->compiler->parse($source, $levelScript, $game);
     }
 
     public function pack($scripts){
-        $packed = $this->mls->pack($scripts, true);
-        return $packed;
+        return $this->mls->pack($scripts);
     }
 
 

@@ -3,110 +3,57 @@ namespace App\Service\Archive;
 
 use App\Service\Helper;
 use App\Service\Binary;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class Mls {
 
+    private function getLabelSizeData( Binary $data, Binary &$remain = null, $platform = "pc"){
 
-    private $loopIndex = 0;
-
-    private function getLabelSizeData( Binary $data, Binary &$remain = null, $labelEndPos = 4, $platform = "pc"){
-
-        $label = $data->substr(0, $labelEndPos, $data);
-
-        if ($platform == "wii"){
-            $size = $data->substr(0, $labelEndPos, $data);
-            $size = new Binary(Helper::toBigEndian($size->toHex()), true);
-        }else{
-            $size = $data->substr(0, $labelEndPos, $data);
-        }
-
-        $data = $data->substr(0, $size->toInt(), $remain);
+        $label = $data->substr(0, 4, $data);
+        $size = $data->substr(0, 4, $data, $platform == "wii");
 
         return [
             $label->toString(),
-            $size->toInt(),
-            $data
+            $data->substr(0, $size->toInt(), $remain)
         ];
     }
 
     /**
      * @param $data
      * @param string $game
-     * @param OutputInterface|null $output
      * @return array
      */
-    public function unpack($data, $game = "mh1", OutputInterface $output = null){
+    public function unpack($data, $game = "mh1"){
 
 
         /** @var Binary $remain */
         $binary = new Binary( $data );
 
-        $platform = "pc";
-
-        /**
-         * Parse file header (MHLS)
-         */
-        $mhlsHeader = $binary->substr(0, 4, $remain);
-
-        !is_null($output) && $output->writeln(' ' . str_repeat('_', 20));
-        !is_null($output) && $output->writeln(sprintf('| <info>Header:</info> %s', $mhlsHeader->toString()));
-
-        $mhlsVersion = $remain->substr(0, 4, $remain);
-
-        if ($mhlsVersion == "00090003"){
-            $platform = "wii";
-
-            $mhlsVersion = new Binary(Helper::toBigEndian($mhlsVersion->toHex()), true);
-        }
-
-
-        $version = (int) $mhlsVersion->substr(0,1)->toHex() . '.';
-        $version .= (int) $mhlsVersion->substr(2,1)->toHex();
-
-        !is_null($output) && $output->writeln(sprintf("| <info>Version:</info> %s", $version));
-        !is_null($output) && $output->writeln(' ' . str_repeat('¯', 20));
+        // detect the current version, wii or pc/ps2/psp?
+        $platform = $binary->substr(4, 4, $remain) == "00090003" ? "wii" : "pc";
 
         $nextSection = $remain->substr(0, 4)->toString();
 
         $mhscs = [];
 
-        $progressBar = null;
-        if (!is_null($output)){
-            $progressBar = new ProgressBar($output);
-            $progressBar->start();
-        }
-
         // there is only one script inside the MLS
         if ($nextSection === "SCPT"){
-            $mhscs[] = $this->parseBody($remain, $game, $output, $progressBar);
+            $mhscs[] = $this->parseBody($remain, $game);
 
             // there is multiple scripts inside the MLS
         }else if ($nextSection === "MHSC"){
             do{
-                !is_null($output) && $output->writeln("");
-                !is_null($output) && $output->writeln("Progress next script...");
-                !is_null($output) && $output->writeln("");
 
-                list(,, $data) = $this->getLabelSizeData( $remain, $remain, 4, $platform);
+                list(,$data) = $this->getLabelSizeData( $remain, $remain, $platform);
 
-                $mhscs[] = $this->parseBody($data, $game, $output, $progressBar, $platform);
+                $mhscs[] = $this->parseBody($data, $game, $platform);
 
             }while($remain->length() > 0);
         }
 
-        !is_null($progressBar) && $progressBar->finish();
-
-
-        !is_null($output) && $output->writeln(sprintf(" == <comment>%s</comment> Scripts extracted", count($mhscs)));
-
-
         return $mhscs;
-
     }
 
-    private function parseBody( Binary $remain, $game = "mh1", OutputInterface $output = null, ProgressBar $progressBar = null, $platform = "pc" ){
+    private function parseBody( Binary $remain, $game = "mh1", $platform = "pc" ){
         /** @var Binary $code */
         /** @var Binary $sectionCode */
         /** @var Binary $data */
@@ -114,22 +61,11 @@ class Mls {
         $unpacked = [];
 
         do{
-            list($scriptLabel, , $data) = $this->getLabelSizeData( $remain, $remain, 4, $platform);
-
-            !is_null($progressBar) && $progressBar->advance();
+            list($scriptLabel, $data) = $this->getLabelSizeData( $remain, $remain, $platform);
 
             $unpacked[$scriptLabel] = [];
 
-            !is_null($output) && $output->write(sprintf(" > <info>%s</info> ... ", $scriptLabel));
-
             switch($scriptLabel){
-
-                /**
-                 *
-                 * hmmm the TRCE section is missed, i do not know how its skipped -.-
-                 *
-                 */
-
 
                 case 'SCPT':
                     /** @var Binary $part */
@@ -139,16 +75,9 @@ class Mls {
                     foreach ($scptParts as $index =>  $part) {
 
                         $name = $part->substr(0, 64, $part);
-                        /**
-                         * first entry has always int 0
-                         * and all other has 104
-                         */
-                        $onTriggerOffset = $part->substr(0, 4, $part);
-                        $position = $part->substr(0, 4, $part);
-                        if ($platform == "wii"){
-                            $onTriggerOffset = new Binary(Helper::toBigEndian($onTriggerOffset->toHex()), true);
-                            $position = new Binary(Helper::toBigEndian($position->toHex()), true);
-                        }
+
+                        $onTriggerOffset = $part->substr(0, 4, $part, $platform == "wii");
+                        $position = $part->substr(0, 4, $part, $platform == "wii");
 
                         $unpacked[$scriptLabel][] = [
                             'name' => $name->toString(),
@@ -157,162 +86,63 @@ class Mls {
                         ];
                     }
 
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s entries</comment>", count($scptParts)));
-
                     break;
 
-                case 'NAME':                                    // just the name of this script
+                case 'NAME':
 
                     $unpacked['NAME'] = $data->substr(0, "\x00", $data)->toString();
-                    // contains garbage
-//                    $unpacked['NAME_remain'] = $data->toHex();
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s</comment>", $unpacked['NAME']));
 
                     break;
 
-                case 'ENTT':                                    // entity name
+                case 'ENTT':
 
-                    /** @var Binary $name */
-                    $type = $data->substr(0, 4, $name);
-
-
-                    $typeName = "other";
-                    if ($unpacked['NAME'] == "levelscript") {
-                        $typeName = "levelscript";
-                    }
+                    $data->skipBytes(4);
 
                     $unpacked['ENTT'] = [
-                        'name' => $name->toString(),
-                        'type' => $typeName
+                        'name' => $data->toString(),
+                        'type' => $unpacked['NAME'] == "levelscript" ? "levelscript" : "other"
                     ];
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s</comment>", $name->toString()));
 
                     break;
 
-                case 'CODE':                                    // bytecode -> https://docs.google.com/spreadsheets/d/1HgZ_K9Yp-KobflyKdVqZiF8aF819AGHbOg_b1YUbfz0/edit?usp=sharing
-
+                case 'CODE':
 
                     $unpacked['CODE'] = [];
 
-                    $split = $data->split(4);
+                    $split = $data->split(4, $platform == "wii");
                     foreach ($split as $value) {
-                        if ($platform == "wii"){
-                            $unpacked['CODE'][] = Helper::toBigEndian($value->toHex());
-                        }else{
-                            $unpacked['CODE'][] = $value->toHex();
-                        }
+                        $unpacked['CODE'][] = $value->toHex();
                     }
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s entries</comment>", count($unpacked['CODE'])));
 
                     break;
 
-                case 'DATA':                                    // string name storage
-                    $code = $data;
+                case 'DATA':
 
                     //keep until mh1 is implemented
                     $unpacked['DATARAW'] = $data->toHex();
-
-
 
                     /*
                      * No fixed space ? we need to search and grab the stuff
                      */
 
                     do{
-                        $name = $code->substr(0, "\x00", $code);
+                        $name = $data->substr(0, "\x00", $data);
 
-                        while($code->substr(0,1)->toBinary() == "\xBC" || $code->substr(0,1)->toBinary() == "\x20" || $code->substr(0,1)->toBinary() == "\xDA" || $code->substr(0,1)->toBinary() == "\x00"){
-                            $code = $code->substr(1);
+                        $nextByte = $data->substr(0,1)->toBinary();
+
+                        while($nextByte == "\xBC" || $nextByte == "\x20" || $nextByte == "\xDA" || $nextByte == "\x00"){
+                            $data = $data->skipBytes(1);
+                            $nextByte = $data->substr(0,1)->toBinary();
                         }
-
 
                         $unpacked['DATA'][] = $name->toString();
 
-
-                    }while($code->length() > 0);
-
-                    /**
-                     * Note:
-                     * if we have string variables declared as array, the length of them will be converted into DA and appended to the block end
-                     */
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s entries</comment>", count($unpacked['DATA'])));
+                    }while($data->length() > 0);
 
                     break;
 
-                case 'SMEM':                                    // hm
 
-
-                    if ($platform == "wii"){
-                        $smem = new Binary(Helper::toBigEndian($data->toHex()), true);
-                        $unpacked['SMEM'] = $smem->toInt();
-                    }else{
-                        $unpacked['SMEM'] = $data->toInt();
-                    }
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s Byte</comment>", $unpacked['SMEM']));
-
-                    break;
-
-                case 'DBUG':                                    // source code, match 1:1 the bytecode
-                    $code = $data;
-
-                    list(, , $sectionCode) = $this->getLabelSizeData( $code, $code, 4, $platform);
-
-                    $unpacked['SRCE'] = $sectionCode->toBinary();
-
-                    list(, , $lineCode) = $this->getLabelSizeData( $code, $code, 4, $platform);
-
-                    $trce = $code->split(4);
-
-                    // add TRCE record
-                    if ($platform == "wii"){
-                        $unpacked['TRCE'] = [
-                            'size' => Helper::toBigEndian($trce[1]->toHex()),
-                            'data' => Helper::toBigEndian($trce[2]->toHex())
-                        ];
-
-                    }else{
-                        $unpacked['TRCE'] = [
-                            'size' => $trce[1]->toHex(),
-                            'data' => $trce[2]->toHex()
-                        ];
-                    }
-
-                    $unpacked['LINE'] = [];
-
-
-                    //umstellen auf ->split(4)
-                    do{
-                        if ($platform == "wii") {
-                            $unpacked['LINE'][] = Helper::toBigEndian( $lineCode->substr(0, 4, $lineCode)->toHex() );
-                        }else{
-                            $unpacked['LINE'][] = $lineCode->substr(0, 4, $lineCode)->toHex();
-                        }
-                    }while($lineCode->length() > 0);
-
-
-                    !is_null($output) && $output->writeln("<comment>ok</comment>");
-
-                    break;
-
-                case 'DMEM':                                    // memory allocation for debug
-
-                    if ($platform == "wii"){
-                        $dmem = new Binary(Helper::toBigEndian($data->toHex()), true);
-                        $unpacked['DMEM'] = $dmem->toInt();
-                    }else{
-                        $unpacked['DMEM'] = $data->toInt();
-                    }
-
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s Byte</comment>", $unpacked['DMEM']));
-
-                    break;
-
-                case 'STAB':                                    // data like : acellhaschanged aiinited blockertutdisplayed bmeleetutdone....
+                case 'STAB':
                     $code = $data;
 
                     $unpacked['STAB_RAW'] = $code->toBinary();
@@ -334,11 +164,11 @@ class Mls {
                          * - 4-bytes Length
                          * - 4-bytes ???         wenn Occurrence vorhanden sind is das immer FFFF
                          * - 4-bytes Value Type (int,bool,float, string, tLevelState ....)
-                         * - 4-bytes Occurrence Count
-                         * - [4-bytes ... ] byte offset of the occured call in CODE section (MH2 only)
+                         * - 4-bytes Occurrence/Usage Count
+                         * - [4-bytes ... ] byte offset of the occurred call in CODE section (MH2 only)
                          *
                          *
-                         * the name "me" has always the same setup, except the 4-byte defined for the offset
+                         * the name "me" has always the same setup, except the 4-byte which define the offset
                          */
 
                         /** @var Binary $section2 */
@@ -364,7 +194,6 @@ class Mls {
                             $entry['offset'] = $section2[0]->toHex();
                             if ($platform == "wii") {
                                 $entry['offset'] = Helper::toBigEndian($entry['offset']);
-
                             }
                         }
 
@@ -379,23 +208,23 @@ class Mls {
                         }
 
                         if ($game == "mh1"){
-                            $entry['valueType'] = $section2[2]->toHex();
-                            $entry['occurrenceCount'] = $section2[3]->toInt();
+                            $valueType = $section2[2]->toHex();
+                            $occurrenceCount = $section2[3]->toInt();
 
                         }else{
                             if ($platform == "wii") {
                                 $entry['unknownType'] = Helper::toBigEndian($section2[2]->toHex());
-                                $entry['valueType'] = Helper::toBigEndian($section2[3]->toHex());
-                                $entry['occurrenceCount'] = (new Binary(Helper::toBigEndian($section2[4]->toHex())))->toInt();
+                                $valueType = Helper::toBigEndian($section2[3]->toHex());
+                                $occurrenceCount = (new Binary(Helper::toBigEndian($section2[4]->toHex())))->toInt();
 
                             }else{
                                 $entry['unknownType'] = $section2[2]->toHex();
-                                $entry['valueType'] = $section2[3]->toHex();
-                                $entry['occurrenceCount'] = $section2[4]->toInt();
+                                $valueType = $section2[3]->toHex();
+                                $occurrenceCount = $section2[4]->toInt();
                             }
                         }
 
-                        switch ($entry['valueType']){
+                        switch ($valueType){
                             case "00000000";
                                 $objectType = "integer";
                                 break;
@@ -441,7 +270,6 @@ class Mls {
                                 $objectType = "unknown ff";
                                 break;
 
-
                             case "50bf2b02";
                                 $objectType = "unknown 50bf2b02";
                                 break;
@@ -456,7 +284,7 @@ class Mls {
 
                             default:
                                 var_dump($name->toBinary());
-                                throw new \Exception(sprintf('Unknown object type sequence: %s', $entry['valueType'] ));
+                                throw new \Exception(sprintf('Unknown object type sequence: %s', $valueType ));
                                 break;
 
                         }
@@ -464,8 +292,8 @@ class Mls {
                         $entry['objectType'] = $objectType;
                         $entry['occurrences'] = [];
 
-                        if ($entry['occurrenceCount'] > 0){
-                            $occurrencesRaw = $code->substr(0, $entry['occurrenceCount'] * 4, $code)->split(4);
+                        if ($occurrenceCount > 0){
+                            $occurrencesRaw = $code->substr(0, $occurrenceCount * 4, $code)->split(4);
                             foreach ($occurrencesRaw as $occurrence) {
                                 $entry['occurrences'][] = $occurrence->toInt();
                             }
@@ -475,18 +303,11 @@ class Mls {
                         if ($unknown1->toString() != ""){
                             $entry['unknown'] = "";
 
-                            $split = $unknown1->split(4);
+                            $split = $unknown1->split(4, $platform == "wii");
                             foreach ($split as $item) {
-                                if ($platform == "wii") {
-                                    $entry['unknown'] .= Helper::toBigEndian($item->toHex());
-                                }else{
-                                    $entry['unknown'] .= $item->toHex();
-                                }
+                                $entry['unknown'] .= $item->toHex();
                             }
                         }
-
-                        unset($entry['valueType']);
-                        unset($entry['occurrenceCount']);
 
                         $entries[] = $entry;
 
@@ -494,18 +315,30 @@ class Mls {
                     }while($code->length());
 
                     $unpacked['STAB'] = $entries;
-                    !is_null($output) && $output->writeln(sprintf("<comment>%s entries</comment>", count($entries)));
 
                     break;
 
+                case 'SMEM':
+
+                    if ($platform == "wii") $data = new Binary(Helper::toBigEndian($data->toHex()), true);
+                    $unpacked['SMEM'] = $data->toInt();
+
+                    break;
+
+                case 'DMEM': break;
+
+                case 'DBUG':
+
+                    list(,$sectionCode) = $this->getLabelSizeData( $data, $data, $platform);
+                    $unpacked['SRCE'] = $sectionCode->toBinary();
+
+                    break;
                 default:
                     throw new \Exception(sprintf('Unknown Script Section %s', $scriptLabel ));
                     break;
             }
 
         }while($remain->length() > 0);
-
-        $this->loopIndex++;
 
         return $unpacked;
     }
@@ -692,15 +525,15 @@ class Mls {
      * @return string
      */
     private function buildDebug( $records ){
-
         /*
          * Build DBUG sub section SRCE
          */
-        if (!isset($records['SRCE'])){
-            var_dump($records);
-            exit;
-        }
 
+        /*********************
+         *
+         * Build SRCE section
+         *
+         *********************/
         // add SRCE size
         $data = current(unpack("H*", $records['SRCE']));
 
@@ -711,56 +544,7 @@ class Mls {
 
         // add SRCE value
         $srceCode .= hex2bin($data);
-
-        /*
-         * Build DBUG sub section LINE
-         */
-
-//
-        $lineData = implode("", $records['LINE']);
-
-        // LINE header
-        $lineCode = "\x4C\x49\x4E\x45";
-
-        // add LINE size
-        $lineCode .= (pack("L", strlen($lineData) / 2));
-
-        // add LINE value
-        $lineCode .= hex2bin($lineData);
-
-
-
-        // TRCE header (TRCE \x04 \x00)
-        $trceCode = "\x54\x52\x43\x45\x04\x00\x00\x00\x00\x00\x00\x00";
-
-        // DBUG Header
-        $section = "\x44\x42\x55\x47";
-
-        // DBUG Size
-
-//        $section .= (pack("L", strlen(bin2hex($srceCode . $trceCode )) / 2));
-        $section .= (pack("L", strlen(bin2hex($srceCode . $lineCode . $trceCode )) / 2));
-
-        // DBUG value
-//        $section .= $srceCode . $trceCode;
-        $section .= $srceCode . $lineCode . $trceCode;
-
-        /*********************
-         *
-         * Build DMEM section
-         *
-         *********************/
-
-        // DMEM Header
-        $section .= "\x44\x4D\x45\x4D";
-
-        // add DMEM size (always 4 bytes)
-        $section .= "\x04\x00\x00\x00";
-
-        // add DMEM value
-        $section .= (pack("L", $records['DMEM']));
-
-        return $section;
+        return $srceCode;
     }
 
     /**
@@ -804,7 +588,6 @@ class Mls {
                 }else{
                     $stabCode .= hex2bin(Helper::fromIntToHex( $record['size']));
                 }
-
 
                 if (isset($record['unknownType'])){
                     // add type2 ( still unknown )
@@ -877,7 +660,6 @@ class Mls {
             // STAB Header
             $scriptCode = "\x53\x54\x41\x42";
 
-
             // add STAB size
             $scriptCode .= (pack("L", strlen(bin2hex($stabCode )) / 2));
 
@@ -893,10 +675,9 @@ class Mls {
 
     /**
      * @param $scripts
-     * @param bool $withDebug
      * @return string
      */
-    public function pack( $scripts, $withDebug = true){
+    public function pack( $scripts){
         $mls =
             "\x4D\x48\x4C\x53" .      // MHLS
             "\x03\x00\x09\x00"        // MHLS Version (3.9)
@@ -912,11 +693,7 @@ class Mls {
             $scriptCode .= $this->buildCODE( $records );
             $scriptCode .= $this->buildDATA( $records );
             $scriptCode .= $this->buildSMEM( $records );
-
-            if ($withDebug){
-                $scriptCode .= $this->buildDebug( $records );
-            }
-
+            $scriptCode .= $this->buildDebug( $records );
             $scriptCode .= $this->buildSTAB( $records );
 
             $header = "\x4D\x48\x53\x43";
@@ -929,7 +706,4 @@ class Mls {
 
         return $mls;
     }
-
-
-
 }

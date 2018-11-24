@@ -8,7 +8,7 @@ use App\Service\Archive\ZLib;
 class Resources
 {
 
-    private $workDirectory = '/Users/matthias/mh2';
+    public $workDirectory = '/Users/matthias/mh2';
 
     /**
      * @param $relativeFile
@@ -42,6 +42,7 @@ class Resources
                     $relativeFile
                 );
                 break;
+            case 'scc':
             case 'mls':
                 $mlsHandler = new Mls();
                 $mlsContent = $mlsHandler->unpack($content, 'mh2');

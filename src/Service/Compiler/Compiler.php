@@ -30,6 +30,7 @@ class Compiler {
             // result of this replacement is, the bytecode length did not match anymore
         ], $source);
 
+
         // remove double whitespaces
         $source = preg_replace("/\s+/", ' ', $source);
 
@@ -46,6 +47,28 @@ class Compiler {
         $source = preg_replace("/;/", ";\n", $source);
 
         return trim($source);
+    }
+
+    /**
+     * @param $type
+     * @return int
+     */
+    private function getMemorySizeByType($type ){
+
+        if (substr($type, 0, 7) == "string[") {
+            return (int)explode("]", substr($type, 7))[0];
+        }
+
+        switch ($type){
+            case 'vec3d':
+                return 12; // 3 floats a 4-bytes
+                break;
+
+            default:
+                return 4;
+                break;
+
+        }
     }
 
     private function getHeaderVariables( $tokens, $types ){
@@ -111,7 +134,6 @@ class Compiler {
                         continue;
                     }
 
-
                     $variableType = strtolower($tokens[$current + 2]['value']);
 
                     if (isset($types[ $variableType ] )){
@@ -128,35 +150,10 @@ class Compiler {
                     }
 
                     if (substr($variableType, 0, 7) == "string["){
-                        $size = (int) explode("]", substr($variableType, 7))[0];
                         $row['type'] = 'stringarray';
-                        $row['size'] = $size;
-
-                    }else{
-
-//                        try{
-//                            $mapping = T_VARIABLE::getMapping($tokens[$current], null, []);
-//
-//                            $row['force_offset'] = $mapping['offset'];
-//
-//                        }catch(\Exception $e){
-//                            $mapping = false;
-//                        }
-
-
-                        switch ($variableType){
-                            case 'vec3d':
-                                $size = 12; // 3 floats a 4-bytes
-                                break;
-
-                            default:
-                                $size = 4;
-                                break;
-
-                        }
-
-                        $row['size'] = $size;
                     }
+
+                    $row['size'] = $this->getMemorySizeByType($variableType);
 
                     $vars[$variable] = $row;
                 }
@@ -220,9 +217,9 @@ class Compiler {
                     $current = $current + 3;
 
                     $varVal = $vars[$variable]['value'];
+
                     if (substr($varVal, 0, 7) == "string["){
-                        $size = (int) explode("]", substr($varVal, 7))[0];
-                        $smemOffset += $size;
+                        $smemOffset += $this->getMemorySizeByType($varVal);;
                     }else if (
                         $vars[$variable]['type'] == Token::T_INT ||
                         $vars[$variable]['type'] == Token::T_FLOAT
@@ -339,33 +336,29 @@ class Compiler {
         return $types;
     }
 
-    private function getEntitity($tokens){
-
-        $found = false;
+    /**
+     * @param $tokens
+     * @return array
+     * @throws \Exception
+     */
+    private function getEntity($tokens){
         $current = 0;
 
         $scriptName = strtolower($tokens[1]['value']);
-
 
         while($current < count($tokens)){
 
             $token = $tokens[$current];
 
             if ($token['type'] == Token::T_DEFINE_SECTION_ENTITY){
-                $found = true;
-                $current++;
-                continue;
+
+                return [
+                    'name' => strtolower($tokens[$current + 1]['value']),
+                    'type' => $scriptName == "levelscript" ? "levelscript" : "other"
+                ];
             }
 
-            if (!$found){
-                $current++;
-                continue;
-            }
-
-            return [
-                'name' => strtolower($token['value']),
-                'type' => $scriptName == "levelscript" ? "levelscript" : "other"
-            ];
+            $current++;
         }
 
         throw new \Exception('Compiler could not find / parse the Entity section');
@@ -391,6 +384,10 @@ class Compiler {
         $headerVariables = $this->getHeaderVariables($tokens, $types);
 
         if ($levelScript != false){
+            /**
+             * the given script is not the level script but maybe use also the levelscript variables (globals)
+             * overwrite the given variables to correct the offsets
+             */
             foreach ($levelScript['extra']['headerVariables'] as $levelHeaderVariableName => $levelHeaderVariable) {
 
                 foreach ($headerVariables as $headerVariableName => &$headerVariable) {
@@ -404,6 +401,7 @@ class Compiler {
                 }
 
             }
+
         }
 
         $smemOffset = 0;
@@ -549,22 +547,7 @@ class Compiler {
                 }
 
                 $lastScriptEnd = count($code) * 4;
-//
-//                //TODO: logic recode, what a mess....
-//                if ($token['type'] == Token::T_SCRIPT){
-//                    if ($scriptBlockSizesAdditional > 0){
-//                        echo "ja drin";
-//                        $scriptBlockSizes[$scriptName] = $scriptBlockSizesAdditional;
-//                        $scriptBlockSizesAdditional = count($code) * 4;
-//                    }else{
-//                        echo "add2";
-//                        $scriptBlockSizesAdditional = 0;
-//                    }
-//                }else{
-//                    $scriptBlockSizesAdditional = count($code) * 4;
-//                    echo "add1";
-//
-//                }
+
 
                 foreach ($code as $line) {
                     if ($line->lineNumber !== $start){
@@ -593,14 +576,13 @@ class Compiler {
             'DATA' => $this->generateDATA($strings4Scripts),
             'STAB' => $this->generateSTAB($headerVariables),
             'SCPT' => $this->generateSCPT($scriptBlockSizes),
-            'ENTT' => $this->getEntitity($tokens),
+            'ENTT' => $this->getEntity($tokens),
             'SRCE' => $originalSource,
 
             //todo: value did not match...
             'SMEM' => 78596,
             'DMEM' => 78596,
-            'LINE' => [],
-//            'SMEM' => ($smemOffset + $smemOffset2Tmp) * 4
+            'LINE' => []
 
         ];
     }
@@ -741,22 +723,10 @@ class Compiler {
                         'type' => $variableType
                     ];
                     if (substr($variableType, 0, 7) == "string["){
-                        $size = (int) explode("]", substr($variableType, 7))[0];
                         $row['type'] = 'stringarray';
-                        $row['size'] = $size;
-                    }else{
-                        switch ($variableType){
-                            case 'vec3d':
-                                $size = 12; // 3 floats a 4-bytes
-                                break;
-                            default:
-                                $size = 4;
-                                break;
-
-                        }
-
-                        $row['size'] = $size;
                     }
+
+                    $row['size'] = $this->getMemorySizeByType($variableType);
 
                     $vars[$variable] = $row;
                 }

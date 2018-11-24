@@ -16,6 +16,9 @@ class Resource
         $this->relativeFile = $relativeFile;
     }
 
+    /**
+     * @return mixed
+     */
     public function getContent(){
         return $this->content;
     }
