@@ -174,9 +174,8 @@ class Build {
             // add size
             $stabCode .= $record['size']   === false ? "\xff\xff\xff\xff" : hex2bin(Helper::fromIntToHex( $record['size']));
 
-            if (isset($record['unknownType'])){
-                // add type2 ( still unknown )
-                $stabCode .= hex2bin($record['unknownType']);
+            if (isset($record['hierarchieType'])){
+                $stabCode .= hex2bin($record['hierarchieType']);
             }
 
             switch ($record['objectType']){

@@ -19,10 +19,10 @@ class PCTest extends KernelTestCase
         $builder = new Build();
         $binary = $builder->build($mhls);
 
-
+//
         $this->assertEquals(
             md5($binary),
-            'a3b90b413661d5fb11fbec8a629223d1'
+            '1ec56da31ba13cea0e5fb73424e6c392'
         );
 
         file_put_contents('/Users/matthias/mh2/levels/A01_Escape_Asylum/A01_Escape_Asylum.mls', $binary);

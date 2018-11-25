@@ -3,7 +3,6 @@ namespace App\Service\Archive\Mls;
 
 
 use App\Service\Binary;
-use App\Service\Helper;
 
 class Extract {
 
@@ -80,7 +79,7 @@ class Extract {
                 case 'SMEM': $results['SMEM'] = $this->parseSMEM($data); break;
                 case 'DBUG': $results['SRCE'] = $this->parseDBUG($data); break;
                 case 'DATA': $results['DATA'] = $this->parseDATA($data); break;
-                case 'STAB': $results['STAB'] = $this->parseSTAB($data); break;
+                case 'STAB': $results['STAB'] = $this->parseSTAB($data, $results['NAME']); break;
 
                 default:
                     throw new \Exception(sprintf('Unknown Script Section %s', $scriptLabel ));
@@ -146,29 +145,19 @@ class Extract {
     }
 
     private function parseDATA( Binary $data ){
-        /*
-         * No fixed space ? we need to search and grab the stuff
-         */
+
+        $rows = preg_split("/(?:00)(?:da)+/", $data->toHex());
 
         $result = [];
-        do{
-            $name = $data->substr(0, "\x00", $data);
-
-            $nextByte = $data->substr(0,1)->toBinary();
-
-            while($nextByte == "\xBC" || $nextByte == "\x20" || $nextByte == "\xDA" || $nextByte == "\x00"){
-                $data = $data->skipBytes(1);
-                $nextByte = $data->substr(0,1)->toBinary();
-            }
-
-            $result[] = $name->toString();
-
-        }while($data->length() > 0);
+        foreach ($rows as $row) {
+            if (!$row) continue;
+            $result[] = hex2bin($row);
+        }
 
         return $result;
     }
 
-    private function parseSTAB( Binary $data ){
+    private function parseSTAB( Binary $data, $levelName ){
         $entries = [];
         do {
 
@@ -177,51 +166,34 @@ class Extract {
             /**
              * section 1 is 32 byte long
              *
-             * - name (dynamic length) terminated by \x00
-             * - unknown data
+             * - name terminated by \x00 (remaining data is garbage from the r* compiler)
+             */
+            $entry['name'] = $data->substr(0, 32, $data)->substr(0, "\x00")->toString();
+
+
+            /**
+             * section 2 is 16 (MH1) or 20 (MH2) bytes long
              *
-             * section 2 is 20 byte long + extra bytes ( 4-byte blocks )
-             *
-             * - 4-bytes defined at (byte offset from CODE) or FF FF FF FF
-             * - 4-bytes Length
-             * - 4-bytes ???         wenn Occurrence vorhanden sind is das immer FFFF
+             * - 4-bytes defined at (byte offset from CODE) or ffffffff
+             * - 4-bytes size
+             * - 4-bytes hierarchie access type; 01000000 - a local variable; 02000000 - a local VEC3d; ffffffff - a global variable
              * - 4-bytes Value Type (int,bool,float, string, tLevelState ....)
              * - 4-bytes Occurrence/Usage Count
              * - [4-bytes ... ] byte offset of the occurred call in CODE section (MH2 only)
-             *
-             *
-             * the name "me" has always the same setup, except the 4-byte which define the offset
              */
 
-            /** @var Binary $section2 */
+            $section2 = $data->substr(0, $this->game == "mh1" ? 16 : 20, $data)->split(4);
 
-            $section1 = $data->substr(0, 32, $data);
-            $section2 = $data->substr(0, $this->game == "mh1" ? 16 : 20, $data);
-
-            $entry['name'] = $section1->substr(0, "\x00")->toString();
-
-            $section2 = $section2->split(4);
-
-            /** @var Binary[] $section2 */
-
-            if ($section2[0]->toHex() == "ffffffff"){
-                $entry['offset'] = false;
-            }else{
-                $entry['offset'] = $section2[0]->toHex($this->platform == "wii");
-            }
-
-            if ($section2[1]->toHex() == "ffffffff"){
-                $entry['size'] = false;
-            }else{
-                $entry['size'] = $section2[1]->toInt($this->platform == "wii");
-            }
+            $entry['offset'] = $section2[0]->toHex($this->platform == "wii");
+            $entry['size']   = $section2[1]->toHex() == "ffffffff" ? 'ffffffff' : $section2[1]->toInt($this->platform == "wii");
 
             if ($this->game == "mh1"){
                 $valueType = $section2[2]->toHex();
                 $occurrenceCount = $section2[3]->toInt();
 
             }else{
-                $entry['unknownType'] = $section2[2]->toHex($this->platform == "wii");
+                $entry['hierarchieType'] = $section2[2]->toHex($this->platform == "wii");
+
                 $valueType = $section2[3]->toHex($this->platform == "wii");
                 $occurrenceCount = $section2[4]->toInt($this->platform == "wii");
             }
@@ -310,9 +282,7 @@ class Extract {
     }
 
     private function parseSMEM( Binary $data ){
-        if ($this->platform == "wii") $data = new Binary(Helper::toBigEndian($data->toHex()), true);
-        return $data->toInt();
-
+        return $data->toInt($this->platform == "wii");
     }
 
     private function parseDBUG( Binary $data ){

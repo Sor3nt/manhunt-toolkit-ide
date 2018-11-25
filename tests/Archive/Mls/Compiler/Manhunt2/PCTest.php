@@ -38,15 +38,12 @@ class PCTest extends KernelTestCase
             );
         }
 
-
-
-
-
+        $testScript = $mhls[4];
 
         //compile a other script based on the levelscript
-        $compiled = $compiler->parse($mhls[1]['SRCE'], $compiled, 'mh2');
+        $compiled = $compiler->parse($testScript['SRCE'], $compiled, 'mh2');
         $this->assertEquals(
-            $mhls[1]['CODE'],
+            $testScript['CODE'],
             $compiled['CODE']
         );
 
@@ -61,9 +58,10 @@ class PCTest extends KernelTestCase
 
             //we do not generate the LINE (debug stuff)
             if ($index == "LINE") continue;
+            if ($index == "STAB" && count($section) == 0) continue;
 
             $this->assertEquals(
-                $mhls[1][$index],
+                $testScript[$index],
                 $section,
                 $index . " Mismatch"
             );

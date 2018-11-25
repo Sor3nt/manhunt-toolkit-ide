@@ -371,7 +371,6 @@ class Compiler {
              * overwrite the given variables to correct the offsets
              */
             foreach ($levelScript['extra']['headerVariables'] as $levelHeaderVariableName => $levelHeaderVariable) {
-
                 foreach ($headerVariables as $headerVariableName => &$headerVariable) {
 
                     if (strpos(strtolower($headerVariable['type']), 'level_var') !== false){
@@ -499,7 +498,6 @@ class Compiler {
                 foreach ($headerVariables as $_name => $_item) {
 
                     if ($this->isVariableInUse($token['body'], $_name)){
-
                         $scriptVarFinal[$_name ] = $_item;
                     }
                 }
@@ -553,7 +551,7 @@ class Compiler {
             ],
             'CODE' => $sectionCode,
             'DATA' => $this->generateDATA($strings4Scripts),
-            'STAB' => $this->generateSTAB($headerVariables),
+            'STAB' => $this->generateSTAB($headerVariables, $sectionCode),
             'SCPT' => $this->generateSCPT($scriptBlockSizes, $game),
             'ENTT' => $this->getEntity($tokens),
             'SRCE' => $originalSource,
@@ -760,15 +758,36 @@ class Compiler {
     }
 
 
-    public function generateSTAB( $headerVariables ){
+    public function generateSTAB( $headerVariables, $sectionCode ){
 
         $result = [];
 
+
         foreach ($headerVariables as $name => $variable) {
 
+            $occur = [];
+
             $varType = $variable['type'];
+            $hierarchieType = '01000000';
 
             if ($varType == "stringarray") $varType = "string";
+
+            if ($varType == "level_var boolean"){
+                $varType = "boolean";
+
+                foreach ($sectionCode as $index => $code) {
+
+                    if ($code == $variable['offset']){
+                        $occur[] = $index * 4;
+                    }
+
+                }
+
+
+                $hierarchieType = "ffffffff";
+                $variable['offset'] = "ffffffff";
+                $variable['size'] = "ffffffff";
+            }
 
             /**
              * todo: not important, the type should say tLevelState but its messed up by the state handling
@@ -782,13 +801,13 @@ class Compiler {
                 'offset' => $variable['offset'],
                 'size' => $variable['size'],
 
-                //TODO lvl1 verwendet 01 ja aber der rest nicht
-                'unknownType' => '01000000',
+                'hierarchieType' => $hierarchieType,
                 'objectType' => $varType,
 
                 //todo: mh1 brauch das
-                'occurrences' => []
+                'occurrences' => $occur
             ];
+
 
             //todo...
 //            if (strtolower($name) == "ldebuggingflag"){
@@ -797,7 +816,6 @@ class Compiler {
 
             $result[] = $row;
         }
-
         usort($result, function($a,$b){
             return $a['name'] > $b['name'];
         });
