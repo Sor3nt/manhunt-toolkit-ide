@@ -17,9 +17,9 @@ class PCTest extends KernelTestCase
 
         // compile levelscript
         $compiler = new Compiler();
-        $compiled = $compiler->parse($mhls[0]['SRCE'], false, 'mh2');
+        $levelScriptCompiled = $compiler->parse($mhls[0]['SRCE'], false, 'mh2');
 
-        foreach ($compiled as $index => $section) {
+        foreach ($levelScriptCompiled as $index => $section) {
 
             //only used inside the compiler
             if ($index == "extra") continue;
@@ -38,36 +38,36 @@ class PCTest extends KernelTestCase
             );
         }
 
-        $testScript = $mhls[4];
+        for($i = 1; $i < 37; $i++){
+            $testScript = $mhls[$i];
 
-        //compile a other script based on the levelscript
-        $compiled = $compiler->parse($testScript['SRCE'], $compiled, 'mh2');
-        $this->assertEquals(
-            $testScript['CODE'],
-            $compiled['CODE']
-        );
-
-        foreach ($compiled as $index => $section) {
-
-            //only used inside the compiler
-            if ($index == "extra") continue;
-
-            //memory is not correct but works...
-            if ($index == "DMEM") continue;
-            if ($index == "SMEM") continue;
-
-            //we do not generate the LINE (debug stuff)
-            if ($index == "LINE") continue;
-            if ($index == "STAB" && count($section) == 0) continue;
-
+            //compile a other script based on the levelscript
+            $compiled = $compiler->parse($testScript['SRCE'], $levelScriptCompiled, 'mh2');
             $this->assertEquals(
-                $testScript[$index],
-                $section,
-                $index . " Mismatch"
+                $testScript['CODE'],
+                $compiled['CODE']
             );
+
+            foreach ($compiled as $index => $section) {
+
+                //only used inside the compiler
+                if ($index == "extra") continue;
+
+                //memory is not correct but works...
+                if ($index == "DMEM") continue;
+                if ($index == "SMEM") continue;
+
+                //we do not generate the LINE (debug stuff)
+                if ($index == "LINE") continue;
+                if ($index == "STAB" && count($section) == 0) continue;
+
+                $this->assertEquals(
+                    $testScript[$index],
+                    $section,
+                    $index . " Mismatch " . $testScript['NAME']
+                );
+            }
+
         }
-
-
     }
-
 }

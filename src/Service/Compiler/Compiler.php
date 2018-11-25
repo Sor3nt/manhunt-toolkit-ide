@@ -27,7 +27,7 @@ class Compiler {
             "if (",
             "while (",
             "PLAYING__TWITCH"  // we replace this because the next operation will remove the whitespaces
-            // result of this replacement is, the bytecode length did not match anymore
+
         ], $source);
 
 
@@ -38,8 +38,10 @@ class Compiler {
         $source = preg_replace("/({([^{^}])*)*{([^{^}])*}(([^{^}])*})*/m", "", $source);
 
         $source = str_replace([
+            "PLAYING__TWITCH",
             "end end"
         ],[
+            "PLAYING  TWITCH",
             "end; end",
         ], $source);
 
@@ -745,7 +747,6 @@ class Compiler {
 
 
     public function generateDATA( $strings4Scripts ){
-
         $result = [];
 
         foreach ($strings4Scripts as $strings) {
@@ -770,24 +771,23 @@ class Compiler {
             $varType = $variable['type'];
             $hierarchieType = '01000000';
 
-            if ($varType == "stringarray") $varType = "string";
-
-            if ($varType == "level_var boolean"){
-                $varType = "boolean";
+            if (substr($varType, 0, 9) == "level_var"){
+                $varType = substr($varType, 10);
 
                 foreach ($sectionCode as $index => $code) {
 
                     if ($code == $variable['offset']){
                         $occur[] = $index * 4;
                     }
-
                 }
-
 
                 $hierarchieType = "ffffffff";
                 $variable['offset'] = "ffffffff";
                 $variable['size'] = "ffffffff";
             }
+
+            if (strtolower($varType) == "tlevelstate") $varType = "tLevelState";
+            if ($varType == "stringarray") $varType = "string";
 
             /**
              * todo: not important, the type should say tLevelState but its messed up by the state handling
@@ -802,9 +802,8 @@ class Compiler {
                 'size' => $variable['size'],
 
                 'hierarchieType' => $hierarchieType,
-                'objectType' => $varType,
+                'objectType' => ($varType),
 
-                //todo: mh1 brauch das
                 'occurrences' => $occur
             ];
 

@@ -91,7 +91,7 @@ class Build {
         if (isset($records['STAB'])){
 
             foreach ($records['STAB'] as $item) {
-                if ($item["size"] !== false){
+                if ($item["size"] !== "ffffffff"){
                     $stringArraySizes += $item["size"];
                 }else{
                     if (isset($item['occurrences']) && count($item['occurrences']) > 0) {
@@ -169,10 +169,10 @@ class Build {
             $stabCode .= hex2bin(Helper::pad(current(unpack("H*", $record['name'])) , 64)) ;
 
             // add offset
-            $stabCode .= $record['offset'] === false ? "\xff\xff\xff\xff" : hex2bin( $record['offset'] );
+            $stabCode .= hex2bin( $record['offset'] );
 
             // add size
-            $stabCode .= $record['size']   === false ? "\xff\xff\xff\xff" : hex2bin(Helper::fromIntToHex( $record['size']));
+            $stabCode .= $record['size'] === "ffffffff" ? "\xff\xff\xff\xff" : hex2bin(Helper::fromIntToHex( $record['size']));
 
             if (isset($record['hierarchieType'])){
                 $stabCode .= hex2bin($record['hierarchieType']);

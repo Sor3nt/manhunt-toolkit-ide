@@ -151,7 +151,17 @@ class Extract {
         $result = [];
         foreach ($rows as $row) {
             if (!$row) continue;
-            $result[] = hex2bin($row);
+
+            /*
+             * I dont know. this is garbage, we can throw it away
+             */
+            if (substr($row, 0, 8) == "2c010000"){
+                $result[] = hex2bin(substr($row, 8));
+
+            }else{
+                $result[] = hex2bin($row);
+
+            }
         }
 
         return $result;
