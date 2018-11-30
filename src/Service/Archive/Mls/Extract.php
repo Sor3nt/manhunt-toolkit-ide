@@ -79,7 +79,7 @@ class Extract {
                 case 'SMEM': $results['SMEM'] = $this->parseSMEM($data); break;
                 case 'DBUG': $results['SRCE'] = $this->parseDBUG($data); break;
                 case 'DATA': $results['DATA'] = $this->parseDATA($data); break;
-                case 'STAB': $results['STAB'] = $this->parseSTAB($data, $results['NAME']); break;
+                case 'STAB': $results['STAB'] = $this->parseSTAB($data); break;
 
                 default:
                     throw new \Exception(sprintf('Unknown Script Section %s', $scriptLabel ));
@@ -101,8 +101,7 @@ class Extract {
 
             $name = $part->substr(0, 64, $part);
 
-            $onTriggerOffset = $part->substr(0, 4, $part, $this->platform == "wii");
-            $position = $part->substr(0, 4, $part, $this->platform == "wii");
+            list($onTriggerOffset, $position) = $part->split(4, $this->platform == "wii");
 
             $result[] = [
                 'name' => $name->toString(),
@@ -167,7 +166,7 @@ class Extract {
         return $result;
     }
 
-    private function parseSTAB( Binary $data, $levelName ){
+    private function parseSTAB( Binary $data ){
         $entries = [];
         do {
 
@@ -197,15 +196,13 @@ class Extract {
             $entry['offset'] = $section2[0]->toHex($this->platform == "wii");
             $entry['size']   = $section2[1]->toHex() == "ffffffff" ? 'ffffffff' : $section2[1]->toInt($this->platform == "wii");
 
-            if ($this->game == "mh1"){
-                $valueType = $section2[2]->toHex();
-                $occurrenceCount = $section2[3]->toInt();
 
-            }else{
+            $valueType = $section2[$this->game == "mh1" ? 2 : 3]->toHex($this->platform == "wii");
+            $occurrenceCount = $section2[$this->game == "mh1" ? 3 : 4]->toInt($this->platform == "wii");
+
+
+            if ($this->game == "mh2"){
                 $entry['hierarchieType'] = $section2[2]->toHex($this->platform == "wii");
-
-                $valueType = $section2[3]->toHex($this->platform == "wii");
-                $occurrenceCount = $section2[4]->toInt($this->platform == "wii");
             }
 
             switch ($valueType){
@@ -241,30 +238,31 @@ class Extract {
                     $objectType = "game_var integer";
                     break;
 
-                case "0a000000";
-                    $objectType = "unknown 0a";
-                    break;
-
-
-                case "feffffff";
-                    $objectType = "unknown fe";
-                    break;
-
-                case "ffffffff";
-                    $objectType = "unknown ff";
-                    break;
-
-                case "50bf2b02";
-                    $objectType = "unknown 50bf2b02";
-                    break;
-
-                case "20536372";
-                    $objectType = "unknown 20536372";
-                    break;
-
                 case "08000000";
                     $objectType = "tLevelState";
                     break;
+
+//                case "0a000000";
+//                    $objectType = "unknown 0a";
+//                    break;
+
+//
+//                case "feffffff";
+//                    $objectType = "unknown fe";
+//                    break;
+//
+//                case "ffffffff";
+//                    $objectType = "unknown ff";
+//                    break;
+//
+//                case "50bf2b02";
+//                    $objectType = "unknown 50bf2b02";
+//                    break;
+//
+//                case "20536372";
+//                    $objectType = "unknown 20536372";
+//                    break;
+
 
                 default:
                     var_dump($entry['name']);

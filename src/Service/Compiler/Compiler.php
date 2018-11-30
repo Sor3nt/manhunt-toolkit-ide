@@ -4,10 +4,17 @@ namespace App\Service\Compiler;
 use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
+use App\Service\Compiler\Services\Procedure;
 use App\Service\Helper;
 
 class Compiler {
 
+    private $procedureService;
+
+    public function __construct()
+    {
+        $this->procedureService = new Procedure();
+    }
 
     /**
      * @param $source
@@ -450,6 +457,15 @@ class Compiler {
 
         $ast = $parser->handleForward($ast);
 
+
+
+        $this->procedureService->clear();
+
+        $procedures = $parser->getProcedures($ast);
+        $this->procedureService->add($procedures);
+
+
+
         foreach ($headerVariables as $name => &$item) {
 
             if (!isset($item['offset'])){
@@ -520,7 +536,7 @@ class Compiler {
                     'body' => [
                         $token
                     ]
-                ]);
+                ], true, [ 'procedureService' => $this->procedureService ]);
 
                 if ($token['type'] == Token::T_SCRIPT){
                     $scriptBlockSizes[$scriptName] = $lastScriptEnd;

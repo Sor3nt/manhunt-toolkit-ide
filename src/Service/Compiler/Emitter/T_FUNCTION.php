@@ -5,12 +5,24 @@ use App\Service\Compiler\Evaluate;
 use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
+use App\Service\Compiler\Services\Procedure;
 use App\Service\Compiler\Token;
+use App\Service\Helper;
 
 class T_FUNCTION {
 
+    /** @var  Procedure */
+    private $procedureService;
+
+    public function __construct( $customData )
+    {
+        $this->procedureService = $customData['procedureService'];
+    }
+
     static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false ){
 
+//        var_dump($this->procedureService);
+//        exit;
         switch ($node['type']){
             case Token::T_ADDITION:
             case Token::T_FUNCTION:
@@ -290,12 +302,13 @@ class T_FUNCTION {
         return $funtions[ $functioName ];
     }
 
-    static public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
+    public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
         $code = [ ];
 
 
+
         /**
-         * sometimes is the mapping not correct, validate if this is not a variable
+         * sometimes is the mapping not correct, validate it
          */
         try {
             T_VARIABLE::getMapping($node, null, $data);
@@ -315,29 +328,6 @@ class T_FUNCTION {
          */
         if (strtolower($node['value']) == "writedebug"){
             return self::handleWriteDebugCall($node, $getLine, $emitter, $data);
-        }
-
-
-        //HACK
-        //todo: das hier müsste custom function calls code sein...
-        if ($node['value'] == "InitAI"){
-
-            return [
-
-                $getLine('10000000'), //unknown
-                $getLine('04000000'), //unknown
-                $getLine('11000000'), //unknown
-                $getLine('02000000'), //unknown
-                $getLine('00000000'), //unknown
-                $getLine('32000000'), //unknown
-                $getLine('02000000'), //unknown
-                $getLine('1c000000'), //unknown
-                $getLine('10000000'), //unknown
-                $getLine('02000000'), //unknown
-                $getLine('39000000'), //unknown
-                $getLine('00000000'), //unknown
-            ];
-
         }
 
         $forceFloatOrder = self::getForceFloat($node['value']);
@@ -425,7 +415,33 @@ class T_FUNCTION {
         /**
          * Translate function call
          */
-        $function = self::getFunction($node['value']);
+        try{
+            $function = self::getFunction($node['value']);
+
+        }catch (\Exception $e){
+            $procedureOffset = $this->procedureService->get($node['value']);
+
+            if ($procedureOffset !== false){
+
+                return [
+                    $getLine('10000000'), //procedure
+                    $getLine('04000000'), //procedure
+                    $getLine('11000000'), //procedure
+                    $getLine('02000000'), //procedure
+                    $getLine('00000000'), //procedure
+                    $getLine('32000000'), //procedure
+                    $getLine('02000000'), //procedure
+                    $getLine('1c000000'), //procedure
+                    $getLine('10000000'), //procedure
+                    $getLine('02000000'), //procedure
+                    $getLine('39000000'), //procedure
+                    $getLine( Helper::fromIntToHex($procedureOffset) ), //procedure offset
+                ];
+            }
+
+            throw $e;
+        }
+
         $code[] = $getLine($function['offset']);
 
 

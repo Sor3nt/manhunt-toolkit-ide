@@ -26,7 +26,11 @@ return;
 
             procedure MakeHunterGotoGoal(GoalNodeName : string); FORWARD;
 
-            
+            script Patrol;
+            begin
+                MakeHunterGotoGoal('WalkByDoor1');
+            end;
+
             procedure MakeHunterGotoGoal;
             begin
                 StringCopy(gMyGoalNodeName, GoalNodeName);
@@ -37,11 +41,12 @@ return;
         ";
 
         $expected = [
-            "10000000", //Script start block
-            "0a000000", //Script start block
-            "11000000", //Script start block
-            "0a000000", //Script start block
-            "09000000", //Script start block
+
+            "10000000", //procedure start block
+            "0a000000", //procedure start block
+            "11000000", //procedure start block
+            "0a000000", //procedure start block
+            "09000000", //procedure start block
 
             //StringCopy(gMyGoalNodeName, GoalNodeName);
 
@@ -76,13 +81,44 @@ return;
             "6d000000", //StringCopy Call
 
 
+            "11000000", //procedure end block
+            "09000000", //procedure end block
+            "0a000000", //procedure end block
+            "0f000000", //procedure end block
+            "0a000000", //procedure end block
+            "3a000000", //procedure end block
+            "08000000", //procedure end block
+
+
+            "10000000", //Script start block
+            "0a000000", //Script start block
+            "11000000", //Script start block
+            "0a000000", //Script start block
+            "09000000", //Script start block
+
+            //call procedure, first one (initAI call vom levelscript hat exakt den selben call...)
+            "10000000", //unknown
+            "04000000", //unknown
             "11000000", //unknown
-            "09000000", //unknown
-            "0a000000", //unknown
-            "0f000000", //unknown
-            "0a000000", //unknown
-            "3a000000", //unknown
-            "08000000", //unknown
+            "02000000", //unknown
+            "00000000", //unknown
+            "32000000", //unknown
+            "02000000", //unknown
+            "1c000000", //unknown
+            "10000000", //unknown
+            "02000000", //unknown
+            "39000000", //unknown
+            "00000000", // <--- procedure offset
+
+
+            "11000000", //Script end block
+            "09000000", //Script end block
+            "0a000000", //Script end block
+            "0f000000", //Script end block
+            "0a000000", //Script end block
+            "3b000000", //Script end block
+            "00000000", //Script end block
+
         ];
 
         $compiler = new Compiler();

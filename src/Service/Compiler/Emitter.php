@@ -47,22 +47,22 @@ class Emitter {
 
     public function emitter( $node, $calculateLineNumber = true, $customData = [] ){
 
-        if($node['type'] == "root") return $this->emitRoot($node);
+        if($node['type'] == "root") return $this->emitRoot($node, $calculateLineNumber, $customData);
 
         if (!isset($this->emitters[ $node['type'] ])) {
 //            echo sprintf("Emitter not found for type %s\n", $node['type']);
             return [];
         }
 
-        return (new $this->emitters[ $node['type'] ]())->map(
+        return (new $this->emitters[ $node['type'] ]($customData))->map(
             $node,
 
             function( $hex, $forceNewIndex = false ) use ($calculateLineNumber){
                 return $this->lines->get($hex, $calculateLineNumber, $forceNewIndex);
             },
 
-            function($token, $calculateLineNumber = true, $customData = []) {
-                return $this->emitter($token, $calculateLineNumber, $customData);
+            function($token, $calculateLineNumber = true, $customDataInner = []) use ($customData) {
+                return $this->emitter($token, $calculateLineNumber, array_merge($customDataInner,$customData));
             },
 
             [
@@ -76,11 +76,11 @@ class Emitter {
         );
     }
 
-    private function emitRoot( $root ){
+    private function emitRoot( $root, $calculateLineNumber, $customData ){
 
         $code = [];
         foreach ($root['body'] as $node) {
-            $resultCode = $this->emitter( $node );
+            $resultCode = $this->emitter( $node, $calculateLineNumber, $customData );
             foreach ($resultCode as $line) {
                 $code[] = $line;
             }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests\Block;
+namespace App\Tests\Procedure;
 
 use App\Service\Archive\Glg;
 use App\Service\Archive\Mls;

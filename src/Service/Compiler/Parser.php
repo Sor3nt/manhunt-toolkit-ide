@@ -45,6 +45,26 @@ class Parser {
         return $ast;
     }
 
+    public function getProcedures( $ast ){
+
+        $result = [];
+
+        $offset = 0;
+
+        foreach ($ast['body'] as $token) {
+            if ($token['type'] == Token::T_PROCEDURE){
+
+                $result[$token['value']] = $offset;
+
+                $offset++;
+            }
+        }
+
+        return $result;
+    }
+
+
+
     public function handleForward( $ast ){
 
         foreach ($ast['body'] as &$token) {

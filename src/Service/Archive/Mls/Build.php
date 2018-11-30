@@ -204,19 +204,19 @@ class Build {
                 case 'game_var integer':
                     $stabCode .= "\x07\x00\x00\x00";
                     break;
-                case 'level_var tlevelstate':
+//                case 'level_var tlevelstate':
                 case 'tLevelState':
                     $stabCode .= "\x08\x00\x00\x00";
                     break;
-                case 'unknown 0a':
-                    $stabCode .= "\x0a\x00\x00\x00";
-                    break;
-                case 'unknown fe':
-                    $stabCode .= "\xfe\xff\xff\xff";
-                    break;
-                case 'unknown ff':
-                    $stabCode .= "\xff\xff\xff\xff";
-                    break;
+//                case 'unknown 0a':
+//                    $stabCode .= "\x0a\x00\x00\x00";
+//                    break;
+//                case 'unknown fe':
+//                    $stabCode .= "\xfe\xff\xff\xff";
+//                    break;
+//                case 'unknown ff':
+//                    $stabCode .= "\xff\xff\xff\xff";
+//                    break;
                 default:
                     throw new \Exception(sprintf('Unknown object type requested: %s', ($record['objectType']) ));
                     break;
