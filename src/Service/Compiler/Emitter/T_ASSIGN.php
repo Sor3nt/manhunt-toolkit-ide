@@ -180,6 +180,7 @@ class T_ASSIGN {
                         switch (strtolower($mapped['type'])) {
                             case 'boolean':
                             case 'integer':
+
                                 self::toHeaderBoolean( $mapped['offset'], $code, $getLine);
                                 break;
 //                            self::toHeaderInteger( $mapped['offset'], $code, $getLine);
@@ -188,6 +189,9 @@ class T_ASSIGN {
                             case 'level_var boolean':
                                 self::toHeaderLevelVarBoolean( $mapped['offset'], $code, $getLine);
                                 break;
+                            case 'entityptr':
+                                self::toHeaderentityptr( $mapped['offset'], $code, $getLine);
+                                break;
                             case 'level_var tlevelstate':
                                 self::toHeaderTLevelState( $mapped['offset'], $code, $getLine);
                                 break;
@@ -195,7 +199,7 @@ class T_ASSIGN {
                                 self::toHeaderStringArray( $mapped['offset'], $mapped['size'], $code, $getLine);
                                 break;
                             default:
-//                                var_dump($mapped);
+                                var_dump($mapped);
                                 throw new \Exception("Not implemented!");
                         }
 
@@ -381,6 +385,12 @@ class T_ASSIGN {
         $code[] = $getLine('01000000');
     }
 
+    static public function toHeaderentityptr( $offset, &$code, \Closure $getLine){
+        $code[] = $getLine('16000000');
+        $code[] = $getLine('04000000');
+        $code[] = $getLine( $offset );
+        $code[] = $getLine('01000000');
+    }
     static public function toHeaderLevelVarBoolean( $offset, &$code, \Closure $getLine){
         $code[] = $getLine('1a000000');
         $code[] = $getLine('01000000');

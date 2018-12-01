@@ -190,6 +190,20 @@ class Manhunt2
 
     public static $functions = [
 
+        "aiassociatefouractiveareaswithplayerarea" => [
+            'name' => 'AIAssociateFourActiveAreasWithPlayerArea',
+            'offset' => "be010000"
+        ],
+
+        "aiassociatethreeactiveareaswithplayerarea" => [
+            'name' => 'AIAssociateThreeActiveAreasWithPlayerArea',
+            'offset' => "bd010000"
+        ],
+
+        "aiassociatetwoactiveareaswithplayerarea" => [
+            'name' => 'AiAssociateTwoActiveAreasWithPlayerArea',
+            'offset' => "bc010000"
+        ],
         "stringcopy" => [
             'name' => 'stringcopy',
             'offset' => "6d000000"

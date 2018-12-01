@@ -65,6 +65,7 @@ class T_FUNCTION {
                     $data
                 );
 
+
                 switch ($mappedTo['section']) {
                     case 'header':
 
@@ -91,6 +92,10 @@ class T_FUNCTION {
 
                                 break;
                             case 'vec3d':
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('01000000');
+                                break;
+                            case 'entityptr':
                                 $code[] = $getLine('10000000');
                                 $code[] = $getLine('01000000');
                                 break;
@@ -127,16 +132,33 @@ class T_FUNCTION {
                                 $code[] = $getLine('01000000');
                                 break;
                             case 'procedure':
-                                $code[] = $getLine('12000000');
-                                $code[] = $getLine('02000000');
 
-                                $code[] = $getLine('00000000'); // 0 always ?
+                                switch ($mappedTo['valueType']){
+                                    case 'string':
+                                        $code[] = $getLine('12000000');
+                                        $code[] = $getLine('02000000');
 
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
 
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('02000000');
+
+                                        $code[] = $getLine('00000000'); // 0 always ?
+
+                                        $code[] = $getLine('10000000');
+                                        $code[] = $getLine('01000000');
+
+                                        $code[] = $getLine('10000000');
+                                        $code[] = $getLine('02000000');
+                                        break;
+                                    case 'real':
+                                        $code[] = $getLine('10000000');
+                                        $code[] = $getLine('01000000');
+                                        break;
+
+                                    default:
+                                        throw new \Exception($mappedTo['valueType'] . " Not implemented!");
+                                        break;
+
+                                }
+
                                 break;
                             case 'real':
                                 if ($writeDebug == false){
@@ -235,6 +257,9 @@ class T_FUNCTION {
                         break;
                     case 'stringarray':
                         $code[] = $getLine(self::getFunction('WriteDebugString')['offset']);
+                        break;
+                    case 'procedure':
+                        $code[] = $getLine(self::getFunction('WriteDebug')['offset']);
                         break;
                     default:
                         throw new \Exception(sprintf('T_VARIABLE: mapping type %s is unknown', $mapping['type']));

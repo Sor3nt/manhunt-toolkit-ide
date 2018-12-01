@@ -390,10041 +390,5032 @@ end.
 ";
 
         $expected = [
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '66669f42', //value 1117742694
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004040', //value 1077936128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007842', //value 1115160576
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0329a742', //value 1118251267
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000c040', //value 1086324736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '150c1f42', //value 1109330965
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '66669f42', //value 1117742694
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000e040', //value 1088421888
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '713d7142', //value 1114717553
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '45000000', //value 69
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003842', //value 1110966272
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006041', //value 1096810496
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00001042', //value 1108344832
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007042', //value 1114636288
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00808542', //value 1116045312
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '1a000000', //value 26
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00809f42', //value 1117749248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004040', //value 1077936128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000c841', //value 1103626240
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00809f42', //value 1117749248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006042', //value 1113587712
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '2c050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008642', //value 1116078080
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007041', //value 1097859072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '44050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000a041', //value 1101004800
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007041', //value 1097859072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000442', //value 1107558400
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '5c050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '5f279c42', //value 1117529951
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0a5c1441', //value 1091853322
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '062a0d41', //value 1091381766
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '74000000', //value 116
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '08060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3d3cf41', //value 1104139203
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f5392e42', //value 1110325749
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '1c060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3d3cf41', //value 1104139203
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3b533a40', //value 1077564219
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2c658e41', //value 1099851052
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2a3aa141', //value 1101085226
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '44060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc4c40', //value 1078774989
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f841', //value 1106771968
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '58060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '4c000000', //value 76
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b8060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'db0a3842', //value 1110969051
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'dbf93142', //value 1110571483
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '22ec3642', //value 1110895650
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4c375a42', //value 1113208652
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '5f583442', //value 1110726751
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cc5d7c42', //value 1115446732
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'dc060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd9fd2442', //value 1109720537
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2c257b42', //value 1115366700
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e8060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '9a592542', //value 1109744026
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '237b8b42', //value 1116437283
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fd473c42', //value 1111246845
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '85cb8d42', //value 1116588933
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7d105c42', //value 1113329789
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '981d8942', //value 1116282264
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '8e355c42', //value 1113339278
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '86b85542', //value 1112914054
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'df207442', //value 1114906847
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '53855242', //value 1112704339
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4ca65c42', //value 1113368140
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2f9d3d42', //value 1111334191
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4ca65c42', //value 1113368140
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'beb01842', //value 1108914366
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c2975442', //value 1112840130
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '40642c42', //value 1110205504
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '39343c42', //value 1111241785
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd46b8942', //value 1116302292
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c4c25f42', //value 1113572036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b81e5242', //value 1112678072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '11000000', //value 17
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '74070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '80000000', //value 128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f8070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '33333b40', //value 1077621555
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b840', //value 1085800448
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '33333b40', //value 1077621555
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000803e', //value 1048576000
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003642', //value 1110835200
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '4c080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '94d9b640', //value 1085725076
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003b42', //value 1111162880
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '94d9de40', //value 1088346516
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006f42', //value 1114570752
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '86498841', //value 1099450758
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007f42', //value 1115619328
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a0080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3242042', //value 1109402819
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc3e41', //value 1094634701
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a2c57a42', //value 1115342242
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'bc080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            'a8000000', //value 168
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '7c090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f041', //value 1106247680
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '94090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003442', //value 1110704128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b0090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007042', //value 1114636288
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'db6a9742', //value 1117219547
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e8090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f8090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '5f000000', //value 95
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '580a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006042', //value 1113587712
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007442', //value 1114898432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '700a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00009e42', //value 1117650944
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008040', //value 1082130432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00009542', //value 1117061120
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '880a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c0a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '2a000000', //value 42
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c80a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '05235d42', //value 1113400069
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a21642', //value 1108779545
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd40a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c1598842', //value 1116232129
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a21642', //value 1108779545
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e00a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'da9b8a42', //value 1116380122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'ebb33d42', //value 1111340011
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'ec0a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3dca8a42', //value 1116391997
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0c026b42', //value 1114309132
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f80a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4df58542', //value 1116075341
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '107a6c42', //value 1114405392
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '040b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4df58542', //value 1116075341
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19138c42', //value 1116476185
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '100b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '41315c42', //value 1113338177
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '73b78842', //value 1116256115
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '1c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd5a74542', //value 1111861205
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '73b78842', //value 1116256115
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '280b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00513d42', //value 1111314688
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7a858d42', //value 1116571002
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '340b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '764f3442', //value 1110724470
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '48e17842', //value 1115218248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '400b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '841e3442', //value 1110711940
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '22bd3742', //value 1110949154
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '4c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '5c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '63000000', //value 99
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e4031a42', //value 1109001188
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f6a82942', //value 1110026486
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '09391842', //value 1108883721
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '1cbc2342', //value 1109638172
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'accb1542', //value 1108724652
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4cc68142', //value 1115801164
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3d1b2242', //value 1109531453
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '05457f42', //value 1115636997
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '000c0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '100c0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '3c000000', //statement (init statement start offset)
-            '10000000', //Offset (line number 4)
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '04000000', //Offset in byte
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'ecffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '15000000', //unknown
-            '04000000', //unknown
-            '04000000', //unknown
-            '01000000', //unknown
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f0ffffff', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'd4010000', //SetDoorOpenAngleOut Call
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'd3010000', //SetDoorOpenAngleIn Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '10000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '2c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '12000000', //value 18
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '12000000', //value 18
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '19000000', //value 25
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '1b000000', //value 27
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '18000000', //Offset in byte
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fc692442', //value 1109682684
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'aa024742', //value 1111949994
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fc692442', //value 1109682684
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b6444942', //value 1112097974
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'dec23042', //value 1110491870
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e7bb6d42', //value 1114487783
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c7a92e42', //value 1110354375
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e7bb6d42', //value 1114487783
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b0030000', //IsFrisbeeSpeechCompleted Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e9a66f42', //value 1114613481
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f027ad41', //value 1101866992
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a26d42', //value 1114481177
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f027ad41', //value 1101866992
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a73ff73f', //value 1073168295
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c51be13f', //value 1071717317
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '444b0742', //value 1107774276
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f9312e40', //value 1076769273
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c51be13f', //value 1071717317
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '444b0742', //value 1107774276
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0030000', //PlayScriptAudioStreamFromEntityAux Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b5268841', //value 1099441845
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a5bd3340', //value 1077132709
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '832f0742', //value 1107767171
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '12148241', //value 1099043858
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a5bd3340', //value 1077132709
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '832f0742', //value 1107767171
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '04000000', //Offset in byte
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '15000000', //unknown
-            '04000000', //unknown
-            '04000000', //unknown
-            '01000000', //unknown
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '4c280000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '7c280000', //Offset (line number 2591)
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '08000000', //value 8
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '08000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '30000000', //value 48
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '59030000', //SetMaxScoreForLevel Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008c42', //value 1116471296
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ac030000', //SetQTMBaseProbability Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcccc3f', //value 1070386381
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ad030000', //SetQTMLength Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '02000000', //value 2
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ae030000', //SetQTMPresses Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '01000000', //value 1
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008040', //value 1082130432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ab030000', //SetColourRamp Call
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '00000000', //unknown
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '01000000', //value 1
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a4020000', //switchlitteron Call
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'cc0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'ac0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a80c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a00c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '9c0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '900c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '940c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '980c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a40c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'd40c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '880c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '8c0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'bc0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'c00c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'c40c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '10000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '34000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '64000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '74000000', //WriteDebugFlush Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84000000', //GetDamage Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '94000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c8000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4c030000', //SetNextLevelByName Call
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '20010000', //ShowTriggers Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '5c0c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'dc000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '600c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4000000', //RunScript Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '640c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'ec000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '680c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            '58300000', //Offset (line number 3094)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'a4300000', //Offset (line number 3113)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '03000000', //value 3
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            'fc300000', //Offset (line number 3135)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '48310000', //Offset (line number 3154)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '04000000', //value 4
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            'a0310000', //Offset (line number 3176)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'ec310000', //Offset (line number 3195)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '07000000', //value 7
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            '44320000', //Offset (line number 3217)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '90320000', //Offset (line number 3236)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '09000000', //value 9
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            'e8320000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '18330000', //Offset (line number 3270)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '70330000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'a0330000', //Offset (line number 3304)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            'f8330000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '28340000', //Offset (line number 3338)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '80340000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'b0340000', //Offset (line number 3372)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '5b010000', //aiaddplayer Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30010000', //IsNamedItemInInventory Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40010000', //SetMoverSpeed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '50010000', //aiaddsubpackforleader Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '70010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '80010000', //AISetHunterIdleActionMinMax Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90010000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f042', //value 1123024896
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f042', //value 1123024896
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c010000', //AISetHunterIdleDirection Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000be42', //value 1119748096
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000be42', //value 1119748096
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8010000', //aisethunteronradar Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b442', //value 1119092736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b442', //value 1119092736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '601e0000', //unknown
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            'b8200000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4010000', //AIEntityPlayAnimLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4d010000', //aiaddentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a8010000', //aisethunteronradar Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4f010000', //aisetentityasleader Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '6d020000', //aisetleaderinvisible Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bf010000', //aientityalwaysenabled Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '54010000', //aiaddleaderenemy Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4010000', //SetDoorOpenAngleOut Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '58010000', //aidefinegoalhuntenemy Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000', //Script end block
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            'ba010000', //AIClearAllActiveAreaAssociations Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000', //Script end block
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '18000000', //Offset in byte
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '13e1e841', //value 1105781011
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'eefcd842', //value 1121516782
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '6f410a42', //value 1107968367
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '55309840', //value 1083715669
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '504de042', //value 1121996112
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc020000', //DecreaseCounter Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '28010000', //CreateBoxTrigger Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000', //Script end block
-            '
-            10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '66669f42', //value 1117742694
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004040', //value 1077936128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007842', //value 1115160576
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0329a742', //value 1118251267
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000c040', //value 1086324736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '150c1f42', //value 1109330965
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '66669f42', //value 1117742694
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000e040', //value 1088421888
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '713d7142', //value 1114717553
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '45000000', //value 69
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003842', //value 1110966272
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006041', //value 1096810496
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00001042', //value 1108344832
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007042', //value 1114636288
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00808542', //value 1116045312
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '1a000000', //value 26
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc040000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00809f42', //value 1117749248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004040', //value 1077936128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000c841', //value 1103626240
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00809f42', //value 1117749248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006042', //value 1113587712
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '2c050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008642', //value 1116078080
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007041', //value 1097859072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '44050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000a041', //value 1101004800
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007041', //value 1097859072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000442', //value 1107558400
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '5c050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '5f279c42', //value 1117529951
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0a5c1441', //value 1091853322
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '062a0d41', //value 1091381766
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90050000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '74000000', //value 116
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '08060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3d3cf41', //value 1104139203
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f5392e42', //value 1110325749
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '1c060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3d3cf41', //value 1104139203
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3b533a40', //value 1077564219
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2c658e41', //value 1099851052
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2a3aa141', //value 1101085226
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '44060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc4c40', //value 1078774989
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f841', //value 1106771968
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '58060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '4c000000', //value 76
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b8060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'db0a3842', //value 1110969051
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'dbf93142', //value 1110571483
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '22ec3642', //value 1110895650
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4c375a42', //value 1113208652
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '5f583442', //value 1110726751
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cc5d7c42', //value 1115446732
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'dc060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd9fd2442', //value 1109720537
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2c257b42', //value 1115366700
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e8060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '9a592542', //value 1109744026
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '237b8b42', //value 1116437283
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4060000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fd473c42', //value 1111246845
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '85cb8d42', //value 1116588933
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7d105c42', //value 1113329789
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '981d8942', //value 1116282264
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '8e355c42', //value 1113339278
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '86b85542', //value 1112914054
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'df207442', //value 1114906847
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '53855242', //value 1112704339
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4ca65c42', //value 1113368140
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '2f9d3d42', //value 1111334191
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4ca65c42', //value 1113368140
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'beb01842', //value 1108914366
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c2975442', //value 1112840130
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '40642c42', //value 1110205504
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '39343c42', //value 1111241785
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd46b8942', //value 1116302292
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c4c25f42', //value 1113572036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b81e5242', //value 1112678072
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '11000000', //value 17
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '74070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '80000000', //value 128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f8070000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '33333b40', //value 1077621555
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b840', //value 1085800448
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '33333b40', //value 1077621555
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000803e', //value 1048576000
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7ab6a341', //value 1101248122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003642', //value 1110835200
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '4c080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '94d9b640', //value 1085725076
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003b42', //value 1111162880
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '94d9de40', //value 1088346516
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006f42', //value 1114570752
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '86498841', //value 1099450758
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc1e41', //value 1092537549
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007f42', //value 1115619328
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a0080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c3242042', //value 1109402819
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcc3e41', //value 1094634701
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a2c57a42', //value 1115342242
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'bc080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0080000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            'a8000000', //value 168
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '7c090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '17000000', //value 23
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f041', //value 1106247680
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '94090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00003442', //value 1110704128
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b0090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007042', //value 1114636288
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '18000000', //value 24
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'db6a9742', //value 1117219547
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00004843', //value 1128792064
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e8090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f8090000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '5f000000', //value 95
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '580a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00006042', //value 1113587712
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000041', //value 1090519040
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00007442', //value 1114898432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '700a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '15000000', //value 21
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00009e42', //value 1117650944
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008040', //value 1082130432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00009542', //value 1117061120
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '880a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c0a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '2a000000', //value 42
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c80a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '05235d42', //value 1113400069
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a21642', //value 1108779545
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd40a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c1598842', //value 1116232129
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a21642', //value 1108779545
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e00a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'da9b8a42', //value 1116380122
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'ebb33d42', //value 1111340011
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'ec0a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3dca8a42', //value 1116391997
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0c026b42', //value 1114309132
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f80a0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4df58542', //value 1116075341
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '107a6c42', //value 1114405392
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '040b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4df58542', //value 1116075341
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19138c42', //value 1116476185
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '100b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '41315c42', //value 1113338177
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '73b78842', //value 1116256115
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '1c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'd5a74542', //value 1111861205
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '73b78842', //value 1116256115
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '280b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00513d42', //value 1111314688
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '7a858d42', //value 1116571002
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '340b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '764f3442', //value 1110724470
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '48e17842', //value 1115218248
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '400b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '841e3442', //value 1110711940
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '22bd3742', //value 1110949154
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '4c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '5c0b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '63000000', //value 99
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e4031a42', //value 1109001188
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f6a82942', //value 1110026486
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '09391842', //value 1108883721
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '1cbc2342', //value 1109638172
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'accb1542', //value 1108724652
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '4cc68142', //value 1115801164
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f00b0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '3d1b2242', //value 1109531453
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00002041', //value 1092616192
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '05457f42', //value 1115636997
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'b1030000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '000c0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '100c0000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '3c000000', //statement (init statement start offset)
-            '10000000', //Offset (line number 4)
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'b2030000', //unknown
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '04000000', //Offset in byte
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'ecffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '15000000', //unknown
-            '04000000', //unknown
-            '04000000', //unknown
-            '01000000', //unknown
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f0ffffff', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'd4010000', //SetDoorOpenAngleOut Call
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'd3010000', //SetDoorOpenAngleIn Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '10000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '2c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '12000000', //value 18
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '12000000', //value 18
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '68030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '19000000', //value 25
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '1b000000', //value 27
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd9010000', //SetEntityScriptsFromEntity Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '18000000', //Offset in byte
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fc692442', //value 1109682684
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'aa024742', //value 1111949994
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'fc692442', //value 1109682684
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b6444942', //value 1112097974
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'dec23042', //value 1110491870
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e7bb6d42', //value 1114487783
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c7a92e42', //value 1110354375
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e7bb6d42', //value 1114487783
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b0030000', //IsFrisbeeSpeechCompleted Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'e9a66f42', //value 1114613481
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f027ad41', //value 1101866992
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '19a26d42', //value 1114481177
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0cc9f13e', //value 1056033036
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f027ad41', //value 1101866992
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a73ff73f', //value 1073168295
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c51be13f', //value 1071717317
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '444b0742', //value 1107774276
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'f9312e40', //value 1076769273
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'c51be13f', //value 1071717317
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '444b0742', //value 1107774276
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd0030000', //PlayScriptAudioStreamFromEntityAux Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'b5268841', //value 1099441845
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a5bd3340', //value 1077132709
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '832f0742', //value 1107767171
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '12148241', //value 1099043858
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'a5bd3340', //value 1077132709
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '832f0742', //value 1107767171
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '4f000000', //turn prev number into negative
-            '32000000', //turn prev number into negative
-            '09000000', //turn prev number into negative
-            '04000000', //turn prev number into negative
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'd8030000', //CreateCrawlTrigger Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '04000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '04000000', //Offset in byte
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '15000000', //unknown
-            '04000000', //unknown
-            '04000000', //unknown
-            '01000000', //unknown
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '4c280000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '7c280000', //Offset (line number 2591)
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            '04000000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '13000000', //read from script var
-            '01000000', //read from script var
-            '04000000', //read from script var
-            'f4ffffff', //Offset
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0030000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '08000000', //value 8
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '11000000', //unknown
-            '09000000', //unknown
-            '0a000000', //unknown
-            '0f000000', //unknown
-            '0a000000', //unknown
-            '3a000000', //unknown
-            '08000000', //unknown
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '30000000', //value 48
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '59030000', //SetMaxScoreForLevel Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008c42', //value 1116471296
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ac030000', //SetQTMBaseProbability Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'cdcccc3f', //value 1070386381
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ad030000', //SetQTMLength Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '02000000', //value 2
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ae030000', //SetQTMPresses Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '01000000', //value 1
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00008040', //value 1082130432
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'ab030000', //SetColourRamp Call
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '00000000', //unknown
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '01000000', //value 1
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a4020000', //switchlitteron Call
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'cc0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'ac0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a80c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a00c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '9c0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '900c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '940c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '980c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'a40c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'd40c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '880c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '8c0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'bc0c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'c00c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            'c40c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '10000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '34000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '83000000', //hideentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '64000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '74000000', //WriteDebugFlush Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84000000', //GetDamage Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '94000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '94270000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c8000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4c030000', //SetNextLevelByName Call
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '00000000', //value 0
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '20010000', //ShowTriggers Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '5c0c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'dc000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '600c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4000000', //RunScript Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '640c0000', //unknown
-            '01000000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'ec000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '06000000', //value 6
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '16000000', //unknown
-            '04000000', //unknown
-            '680c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            '58300000', //Offset (line number 3094)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'a4300000', //Offset (line number 3113)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '03000000', //value 3
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            'fc300000', //Offset (line number 3135)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '48310000', //Offset (line number 3154)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '04000000', //value 4
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            'a0310000', //Offset (line number 3176)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'ec310000', //Offset (line number 3195)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '07000000', //value 7
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '3f000000', //statement (init start offset)
-            '44320000', //Offset (line number 3217)
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '90320000', //Offset (line number 3236)
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '09000000', //value 9
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '500c0000', //unknown
-            '01000000', //unknown
-            '12000000', //parameter (access script var)
-            '01000000', //parameter (access script var)
-            '01000000', //value 1
-            '16000000', //parameter (access script var)
-            '04000000', //parameter (access script var)
-            '540c0000', //unknown
-            '01000000', //unknown
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            'e8320000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '18330000', //Offset (line number 3270)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '5c0c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '70330000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'a0330000', //Offset (line number 3304)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '600c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            'f8330000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            '28340000', //Offset (line number 3338)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '640c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (temp int)
-            '01000000', //parameter (temp int)
-            '00000000', //value 0
-            '0f000000', //parameter (temp int)
-            '04000000', //parameter (temp int)
-            '23000000', //statement (core)
-            '04000000', //statement (core)
-            '01000000', //statement (core)
-            '12000000', //statement (core)
-            '01000000', //statement (core)
-            '01000000', //statement (core)
-            '40000000', //statement (core)(operator un-equal)
-            '80340000', //statement (core)( Offset )
-            '33000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '01000000', //statement (compare mode INT/FLOAT)
-            '24000000', //statement (end sequence)
-            '01000000', //statement (end sequence)
-            '00000000', //statement (end sequence)
-            '3f000000', //statement (init start offset)
-            'b0340000', //Offset (line number 3372)
-            '14000000', //Read VAR from header
-            '01000000', //Read VAR from header
-            '04000000', //Read VAR from header
-            '680c0000', //Offset
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12030000', //DeactivateSavePoint Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0d000000', //value 13
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4000000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '5b010000', //aiaddplayer Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '14010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30010000', //IsNamedItemInInventory Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '40010000', //SetMoverSpeed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '50010000', //aiaddsubpackforleader Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '70010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '80010000', //AISetHunterIdleActionMinMax Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0e000000', //value 14
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '77000000', //getentity Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a1010000', //EntityPlayAnim Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90010000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f042', //value 1123024896
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000f042', //value 1123024896
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c010000', //AISetHunterIdleDirection Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000be42', //value 1119748096
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000be42', //value 1119748096
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8010000', //aisethunteronradar Call
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b442', //value 1119092736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '0000b442', //value 1119092736
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '7c1d0000', //unknown
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            '601e0000', //unknown
-            '10000000', //unknown
-            '04000000', //unknown
-            '11000000', //unknown
-            '02000000', //unknown
-            '00000000', //unknown
-            '32000000', //unknown
-            '02000000', //unknown
-            '1c000000', //unknown
-            '10000000', //unknown
-            '02000000', //unknown
-            '39000000', //unknown
-            'b8200000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4010000', //AIEntityPlayAnimLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0c000000', //value 12
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '73000000', //WriteDebugString Call
-            '74000000', //WriteDebugFlush Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4d010000', //aiaddentity Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            'a8010000', //aisethunteronradar Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '4f010000', //aisetentityasleader Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '6d020000', //aisetleaderinvisible Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bf010000', //aientityalwaysenabled Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '54010000', //aiaddleaderenemy Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd4010000', //SetDoorOpenAngleOut Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '04010000', //DisplayGameText Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '10000000', //value 16
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '58010000', //aidefinegoalhuntenemy Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e0010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '13000000', //value 19
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'e4000000', //RunScript Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000', //Script end block
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            'ba010000', //AIClearAllActiveAreaAssociations Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f4010000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '00020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '0c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '18020000', //AIEntityGoHomeIfIdle Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '24020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '30020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '60020000', //EndAudioLooped Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '3c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '54020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '48020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '6c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '78020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '84020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '90020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            '9c020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'a8020000', //setmaxnumberofrats Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0b000000', //value 11
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'b4020000', //PlayerDropBody Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'c0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '09000000', //value 9
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'be010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bc010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'cc020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'd8020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bd010000', //unknown
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'f0020000', //Offset in byte
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'e4020000', //IsPlayerWallSquashed Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0a000000', //value 10
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000', //Script end block
-            '10000000', //Script start block
-            '0a000000', //Script start block
-            '11000000', //Script start block
-            '0a000000', //Script start block
-            '09000000', //Script start block
-            '34000000', //reserve bytes
-            '09000000', //reserve bytes
-            '18000000', //Offset in byte
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '13e1e841', //value 1105781011
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '00000000', //value 0
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            'eefcd842', //value 1121516782
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '6f410a42', //value 1107968367
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '55309840', //value 1083715669
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '12000000', //parameter (read simple type (int/float...))
-            '01000000', //parameter (read simple type (int/float...))
-            '504de042', //value 1121996112
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '84010000', //setvector Call
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '0c000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '22000000', //Prepare string read (3)
-            '04000000', //Prepare string read (3)
-            '01000000', //Prepare string read (3)
-            '18000000', //Offset in byte
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '21000000', //Prepare string read (DATA table)
-            '04000000', //Prepare string read (DATA table)
-            '01000000', //Prepare string read (DATA table)
-            'fc020000', //DecreaseCounter Call
-            '12000000', //parameter (Read String var)
-            '02000000', //parameter (Read String var)
-            '0f000000', //value 15
-            '10000000', //nested call return result
-            '01000000', //nested call return result
-            '10000000', //nested string return result
-            '02000000', //nested string return result
-            '28010000', //CreateBoxTrigger Call
-            '11000000', //Script end block
-            '09000000', //Script end block
-            '0a000000', //Script end block
-            '0f000000', //Script end block
-            '0a000000', //Script end block
-            '3b000000', //Script end block
-            '00000000' //Script end block
+
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'fc030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'73000000', //WriteDebugString Call
+'74000000', //WriteDebugFlush Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'66669f42', //value 1117742694
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004040', //value 1077936128
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007842', //value 1115160576
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0329a742', //value 1118251267
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000c040', //value 1086324736
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'150c1f42', //value 1109330965
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'66669f42', //value 1117742694
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000e040', //value 1088421888
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'713d7142', //value 1114717553
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'15000000', //value 21
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'45000000', //value 69
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0c000000', //value 12
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00003842', //value 1110966272
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00006041', //value 1096810496
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00001042', //value 1108344832
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007042', //value 1114636288
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000041', //value 1090519040
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00808542', //value 1116045312
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d4040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e0040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'1a000000', //value 26
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'fc040000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00809f42', //value 1117749248
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004040', //value 1077936128
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000c841', //value 1103626240
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'14050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00809f42', //value 1117749248
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00006042', //value 1113587712
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'2c050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00008642', //value 1116078080
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007041', //value 1097859072
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000041', //value 1090519040
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'44050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000a041', //value 1101004800
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007041', //value 1097859072
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000442', //value 1107558400
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'5c050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'5f279c42', //value 1117529951
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0a5c1441', //value 1091853322
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'062a0d41', //value 1091381766
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'15000000', //value 21
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'90050000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'74000000', //value 116
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'08060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c3d3cf41', //value 1104139203
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'f5392e42', //value 1110325749
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'1c060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c3d3cf41', //value 1104139203
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'3b533a40', //value 1077564219
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'2c658e41', //value 1099851052
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'2a3aa141', //value 1101085226
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'44060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc4c40', //value 1078774989
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000f841', //value 1106771968
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'58060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'68060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'4c000000', //value 76
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b8060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'db0a3842', //value 1110969051
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'dbf93142', //value 1110571483
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'22ec3642', //value 1110895650
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4c375a42', //value 1113208652
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d0060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'5f583442', //value 1110726751
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cc5d7c42', //value 1115446732
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'dc060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'d9fd2442', //value 1109720537
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'2c257b42', //value 1115366700
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e8060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'9a592542', //value 1109744026
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'237b8b42', //value 1116437283
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f4060000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'fd473c42', //value 1111246845
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'85cb8d42', //value 1116588933
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'7d105c42', //value 1113329789
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'981d8942', //value 1116282264
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'8e355c42', //value 1113339278
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'86b85542', //value 1112914054
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'18070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'df207442', //value 1114906847
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'53855242', //value 1112704339
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4ca65c42', //value 1113368140
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'2f9d3d42', //value 1111334191
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4ca65c42', //value 1113368140
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'beb01842', //value 1108914366
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c2975442', //value 1112840130
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'40642c42', //value 1110205504
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'39343c42', //value 1111241785
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'d46b8942', //value 1116302292
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c4c25f42', //value 1113572036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'b81e5242', //value 1112678072
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'60070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'11000000', //value 17
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'74070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'80000000', //value 128
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f8070000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'7ab6a341', //value 1101248122
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'33333b40', //value 1077621555
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000b840', //value 1085800448
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'14080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'7ab6a341', //value 1101248122
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'33333b40', //value 1077621555
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000803e', //value 1048576000
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'7ab6a341', //value 1101248122
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc1e41', //value 1092537549
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00003642', //value 1110835200
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'4c080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'94d9b640', //value 1085725076
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc1e41', //value 1092537549
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00003b42', //value 1111162880
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'68080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'94d9de40', //value 1088346516
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc1e41', //value 1092537549
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00006f42', //value 1114570752
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'86498841', //value 1099450758
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc1e41', //value 1092537549
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007f42', //value 1115619328
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a0080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c3242042', //value 1109402819
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcc3e41', //value 1094634701
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'a2c57a42', //value 1115342242
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'bc080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'10000000', //value 16
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d0080000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'a8000000', //value 168
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'7c090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'17000000', //value 23
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000f041', //value 1106247680
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004843', //value 1128792064
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'94090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00003442', //value 1110704128
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004843', //value 1128792064
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b0090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007042', //value 1114636288
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004843', //value 1128792064
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'18000000', //value 24
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'db6a9742', //value 1117219547
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00004843', //value 1128792064
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e8090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f8090000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'5f000000', //value 95
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'580a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'15000000', //value 21
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00006042', //value 1113587712
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000041', //value 1090519040
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00007442', //value 1114898432
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'700a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'15000000', //value 21
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00009e42', //value 1117650944
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00008040', //value 1082130432
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00009542', //value 1117061120
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'880a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c0a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'2a000000', //value 42
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c80a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'05235d42', //value 1113400069
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'19a21642', //value 1108779545
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d40a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c1598842', //value 1116232129
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'19a21642', //value 1108779545
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e00a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'da9b8a42', //value 1116380122
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'ebb33d42', //value 1111340011
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'ec0a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'3dca8a42', //value 1116391997
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0c026b42', //value 1114309132
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f80a0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4df58542', //value 1116075341
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'107a6c42', //value 1114405392
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'040b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4df58542', //value 1116075341
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'19138c42', //value 1116476185
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'100b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'41315c42', //value 1113338177
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'73b78842', //value 1116256115
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'1c0b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'d5a74542', //value 1111861205
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'73b78842', //value 1116256115
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'280b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00513d42', //value 1111314688
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'7a858d42', //value 1116571002
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'340b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'764f3442', //value 1110724470
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'48e17842', //value 1115218248
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'400b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'841e3442', //value 1110711940
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'22bd3742', //value 1110949154
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'4c0b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'5c0b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'63000000', //value 99
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c00b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'e4031a42', //value 1109001188
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'f6a82942', //value 1110026486
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d00b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'09391842', //value 1108883721
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'1cbc2342', //value 1109638172
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e00b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'accb1542', //value 1108724652
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'4cc68142', //value 1115801164
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f00b0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'3d1b2242', //value 1109531453
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00002041', //value 1092616192
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'05457f42', //value 1115636997
+'10000000', //nested call return result
+'01000000', //nested call return result
+'b1030000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'000c0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0d000000', //value 13
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'100c0000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'3c000000', //statement (init statement start offset)
+'10000000', //Offset (line number 4)
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'b2030000', //unknown
+'11000000', //unknown
+'09000000', //unknown
+'0a000000', //unknown
+'0f000000', //unknown
+'0a000000', //unknown
+'3a000000', //unknown
+'04000000', //unknown
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'34000000', //reserve bytes
+'09000000', //reserve bytes
+'04000000', //Offset in byte
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'ecffffff', //Offset
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'15000000', //unknown
+'04000000', //unknown
+'04000000', //unknown
+'01000000', //unknown
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'04000000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'f0ffffff', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'d4010000', //SetDoorOpenAngleOut Call
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'04000000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'f4ffffff', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'d3010000', //SetDoorOpenAngleIn Call
+'11000000', //unknown
+'09000000', //unknown
+'0a000000', //unknown
+'0f000000', //unknown
+'0a000000', //unknown
+'3a000000', //unknown
+'10000000', //unknown
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'18030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'10000000', //value 16
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'2c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'12000000', //value 18
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'40030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'10000000', //value 16
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'12000000', //value 18
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'68030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'19000000', //value 25
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'1b000000', //value 27
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d9010000', //SetEntityScriptsFromEntity Call
+'11000000', //unknown
+'09000000', //unknown
+'0a000000', //unknown
+'0f000000', //unknown
+'0a000000', //unknown
+'3a000000', //unknown
+'04000000', //unknown
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'34000000', //reserve bytes
+'09000000', //reserve bytes
+'18000000', //Offset in byte
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'fc692442', //value 1109682684
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'aa024742', //value 1111949994
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'fc692442', //value 1109682684
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'b6444942', //value 1112097974
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a0030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d8030000', //CreateCrawlTrigger Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'dec23042', //value 1110491870
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'e7bb6d42', //value 1114487783
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c7a92e42', //value 1110354375
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'e7bb6d42', //value 1114487783
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b0030000', //IsFrisbeeSpeechCompleted Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d8030000', //CreateCrawlTrigger Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'e9a66f42', //value 1114613481
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'f027ad41', //value 1101866992
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'19a26d42', //value 1114481177
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0cc9f13e', //value 1056033036
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'f027ad41', //value 1101866992
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c0030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d8030000', //CreateCrawlTrigger Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'a73ff73f', //value 1073168295
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c51be13f', //value 1071717317
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'444b0742', //value 1107774276
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'f9312e40', //value 1076769273
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'c51be13f', //value 1071717317
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'444b0742', //value 1107774276
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d0030000', //PlayScriptAudioStreamFromEntityAux Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d8030000', //CreateCrawlTrigger Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'b5268841', //value 1099441845
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'a5bd3340', //value 1077132709
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'832f0742', //value 1107767171
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'12148241', //value 1099043858
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'a5bd3340', //value 1077132709
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'832f0742', //value 1107767171
+'10000000', //nested call return result
+'01000000', //nested call return result
+'4f000000', //turn prev number into negative
+'32000000', //turn prev number into negative
+'09000000', //turn prev number into negative
+'04000000', //turn prev number into negative
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e0030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'d8030000', //CreateCrawlTrigger Call
+'11000000', //unknown
+'09000000', //unknown
+'0a000000', //unknown
+'0f000000', //unknown
+'0a000000', //unknown
+'3a000000', //unknown
+'04000000', //unknown
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'34000000', //reserve bytes
+'09000000', //reserve bytes
+'04000000', //Offset in byte
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'f4ffffff', //Offset
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'15000000', //unknown
+'04000000', //unknown
+'04000000', //unknown
+'01000000', //unknown
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'04000000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'40000000', //statement (core)(operator un-equal)
+'4c280000', //statement (core)( Offset )
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'7c280000', //Offset (line number 2591)
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'04000000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'83000000', //hideentity Call
+'13000000', //read from script var
+'01000000', //read from script var
+'04000000', //read from script var
+'f4ffffff', //Offset
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'73000000', //WriteDebugString Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f0030000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'08000000', //value 8
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'73000000', //WriteDebugString Call
+'74000000', //WriteDebugFlush Call
+'11000000', //unknown
+'09000000', //unknown
+'0a000000', //unknown
+'0f000000', //unknown
+'0a000000', //unknown
+'3a000000', //unknown
+'08000000', //unknown
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'30000000', //value 48
+'10000000', //nested call return result
+'01000000', //nested call return result
+'59030000', //SetMaxScoreForLevel Call
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00008c42', //value 1116471296
+'10000000', //nested call return result
+'01000000', //nested call return result
+'ac030000', //SetQTMBaseProbability Call
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'cdcccc3f', //value 1070386381
+'10000000', //nested call return result
+'01000000', //nested call return result
+'ad030000', //SetQTMLength Call
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'02000000', //value 2
+'10000000', //nested call return result
+'01000000', //nested call return result
+'ae030000', //SetQTMPresses Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0c000000', //value 12
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'01000000', //value 1
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00008040', //value 1082130432
+'10000000', //nested call return result
+'01000000', //nested call return result
+'ab030000', //SetColourRamp Call
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'00000000', //unknown
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a8020000', //setmaxnumberofrats Call
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'01000000', //value 1
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a4020000', //switchlitteron Call
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'cc0c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'ac0c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'a80c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'a00c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'9c0c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'900c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'940c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'980c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'a40c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'d40c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'880c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'8c0c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'bc0c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'c00c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'c40c0000', //unknown
+'01000000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'10000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'10000000', //value 16
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'83000000', //hideentity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'83000000', //hideentity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'34000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'83000000', //hideentity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'40000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'83000000', //hideentity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'94270000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'64000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'94270000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'74000000', //WriteDebugFlush Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'94270000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84000000', //GetDamage Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'94270000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'94000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'94270000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a4000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0d000000', //value 13
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'e4000000', //RunScript Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c8000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'4c030000', //SetNextLevelByName Call
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'540c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'00000000', //value 0
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'500c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'20010000', //ShowTriggers Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d4000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'06000000', //value 6
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'16000000', //unknown
+'04000000', //unknown
+'5c0c0000', //unknown
+'01000000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'dc000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'06000000', //value 6
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'16000000', //unknown
+'04000000', //unknown
+'600c0000', //unknown
+'01000000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e4000000', //RunScript Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'06000000', //value 6
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'16000000', //unknown
+'04000000', //unknown
+'640c0000', //unknown
+'01000000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'ec000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'06000000', //value 6
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'16000000', //unknown
+'04000000', //unknown
+'680c0000', //unknown
+'01000000', //unknown
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'5c0c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'3f000000', //statement (init start offset)
+'58300000', //Offset (line number 3094)
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'a4300000', //Offset (line number 3113)
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'03000000', //value 3
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'500c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'01000000', //value 1
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'540c0000', //unknown
+'01000000', //unknown
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'600c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'3f000000', //statement (init start offset)
+'fc300000', //Offset (line number 3135)
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'48310000', //Offset (line number 3154)
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'04000000', //value 4
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'500c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'01000000', //value 1
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'540c0000', //unknown
+'01000000', //unknown
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'680c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'3f000000', //statement (init start offset)
+'a0310000', //Offset (line number 3176)
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'ec310000', //Offset (line number 3195)
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'07000000', //value 7
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'500c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'01000000', //value 1
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'540c0000', //unknown
+'01000000', //unknown
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'640c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'3f000000', //statement (init start offset)
+'44320000', //Offset (line number 3217)
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'90320000', //Offset (line number 3236)
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'09000000', //value 9
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'500c0000', //unknown
+'01000000', //unknown
+'12000000', //parameter (access script var)
+'01000000', //parameter (access script var)
+'01000000', //value 1
+'16000000', //parameter (access script var)
+'04000000', //parameter (access script var)
+'540c0000', //unknown
+'01000000', //unknown
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'5c0c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'40000000', //statement (core)(operator un-equal)
+'e8320000', //statement (core)( Offset )
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'18330000', //Offset (line number 3270)
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'5c0c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12030000', //DeactivateSavePoint Call
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'600c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'40000000', //statement (core)(operator un-equal)
+'70330000', //statement (core)( Offset )
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'a0330000', //Offset (line number 3304)
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'600c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12030000', //DeactivateSavePoint Call
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'640c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'40000000', //statement (core)(operator un-equal)
+'f8330000', //statement (core)( Offset )
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'28340000', //Offset (line number 3338)
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'640c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12030000', //DeactivateSavePoint Call
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'680c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (temp int)
+'01000000', //parameter (temp int)
+'00000000', //value 0
+'0f000000', //parameter (temp int)
+'04000000', //parameter (temp int)
+'23000000', //statement (core)
+'04000000', //statement (core)
+'01000000', //statement (core)
+'12000000', //statement (core)
+'01000000', //statement (core)
+'01000000', //statement (core)
+'40000000', //statement (core)(operator un-equal)
+'80340000', //statement (core)( Offset )
+'33000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'01000000', //statement (compare mode INT/FLOAT)
+'24000000', //statement (end sequence)
+'01000000', //statement (end sequence)
+'00000000', //statement (end sequence)
+'3f000000', //statement (init start offset)
+'b0340000', //Offset (line number 3372)
+'14000000', //Read VAR from header
+'01000000', //Read VAR from header
+'04000000', //Read VAR from header
+'680c0000', //Offset
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12030000', //DeactivateSavePoint Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a4000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0d000000', //value 13
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f4000000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'e4000000', //RunScript Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'04010000', //DisplayGameText Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'5b010000', //aiaddplayer Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'14010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30010000', //IsNamedItemInInventory Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'40010000', //SetMoverSpeed Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'50010000', //aiaddsubpackforleader Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'60010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'70010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'80010000', //AISetHunterIdleActionMinMax Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0e000000', //value 14
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'77000000', //getentity Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a1010000', //EntityPlayAnim Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'90010000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000f042', //value 1123024896
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000f042', //value 1123024896
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'7c1d0000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c010000', //AISetHunterIdleDirection Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000be42', //value 1119748096
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000be42', //value 1119748096
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'7c1d0000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a8010000', //aisethunteronradar Call
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000b442', //value 1119092736
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'0000b442', //value 1119092736
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'7c1d0000', //unknown
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'601e0000', //unknown
+'10000000', //unknown
+'04000000', //unknown
+'11000000', //unknown
+'02000000', //unknown
+'00000000', //unknown
+'32000000', //unknown
+'02000000', //unknown
+'1c000000', //unknown
+'10000000', //unknown
+'02000000', //unknown
+'39000000', //unknown
+'b8200000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4010000', //AIEntityPlayAnimLooped Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0c000000', //value 12
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'73000000', //WriteDebugString Call
+'74000000', //WriteDebugFlush Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'4d010000', //aiaddentity Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'a8010000', //aisethunteronradar Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'4f010000', //aisetentityasleader Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'6d020000', //aisetleaderinvisible Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bf010000', //aientityalwaysenabled Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'04010000', //DisplayGameText Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'54010000', //aiaddleaderenemy Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d4010000', //SetDoorOpenAngleOut Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'04010000', //DisplayGameText Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'10000000', //value 16
+'10000000', //nested call return result
+'01000000', //nested call return result
+'58010000', //aidefinegoalhuntenemy Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e0010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'13000000', //value 19
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'e4000000', //RunScript Call
+'11000000', //Script end block
+'09000000', //Script end block
+'0a000000', //Script end block
+'0f000000', //Script end block
+'0a000000', //Script end block
+'3b000000', //Script end block
+'00000000', //Script end block
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'ba010000', //AIClearAllActiveAreaAssociations Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f4010000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //AIAssociateTwoActiveAreasWithPlayerArea
+
+
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'18020000', //AIEntityGoHomeIfIdle Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //AIAssociateTwoActiveAreasWithPlayerArea
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'18020000', //AIEntityGoHomeIfIdle Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'00020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //AIAssociateThreeActiveAreasWithPlayerArea
+
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'0c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'18020000', //AIEntityGoHomeIfIdle Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //AIAssociateThreeActiveAreasWithPlayerArea
+
+
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'be010000', //AIAssociateFourActiveAreasWithPlayerArea
+
+
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'be010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'60020000', //EndAudioLooped Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'be010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'60020000', //EndAudioLooped Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'24020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'30020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'60020000', //EndAudioLooped Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'be010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'3c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'54020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'48020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'6c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'78020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'90020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'90020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'84020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'90020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a8020000', //setmaxnumberofrats Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'9c020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4020000', //PlayerDropBody Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4020000', //PlayerDropBody Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a8020000', //setmaxnumberofrats Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c0020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c0020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'a8020000', //setmaxnumberofrats Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0b000000', //value 11
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4020000', //PlayerDropBody Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'b4020000', //PlayerDropBody Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'c0020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'09000000', //value 9
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d8020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e4020000', //IsPlayerWallSquashed Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'be010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d8020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e4020000', //IsPlayerWallSquashed Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bc010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e4020000', //IsPlayerWallSquashed Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'cc020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'d8020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f0020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bd010000', //unknown
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'f0020000', //Offset in byte
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'e4020000', //IsPlayerWallSquashed Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0a000000', //value 10
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'bb010000', //AIAssociateOneActiveAreaWithPlayerArea Call
+'11000000', //Script end block
+'09000000', //Script end block
+'0a000000', //Script end block
+'0f000000', //Script end block
+'0a000000', //Script end block
+'3b000000', //Script end block
+'00000000', //Script end block
+'10000000', //Script start block
+'0a000000', //Script start block
+'11000000', //Script start block
+'0a000000', //Script start block
+'09000000', //Script start block
+'34000000', //reserve bytes
+'09000000', //reserve bytes
+'18000000', //Offset in byte
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'13e1e841', //value 1105781011
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'00000000', //value 0
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'eefcd842', //value 1121516782
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'6f410a42', //value 1107968367
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'55309840', //value 1083715669
+'10000000', //nested call return result
+'01000000', //nested call return result
+'12000000', //parameter (read simple type (int/float...))
+'01000000', //parameter (read simple type (int/float...))
+'504de042', //value 1121996112
+'10000000', //nested call return result
+'01000000', //nested call return result
+'84010000', //setvector Call
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'0c000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'22000000', //Prepare string read (3)
+'04000000', //Prepare string read (3)
+'01000000', //Prepare string read (3)
+'18000000', //Offset in byte
+'10000000', //nested call return result
+'01000000', //nested call return result
+'21000000', //Prepare string read (DATA table)
+'04000000', //Prepare string read (DATA table)
+'01000000', //Prepare string read (DATA table)
+'fc020000', //DecreaseCounter Call
+'12000000', //parameter (Read String var)
+'02000000', //parameter (Read String var)
+'0f000000', //value 15
+'10000000', //nested call return result
+'01000000', //nested call return result
+'10000000', //nested string return result
+'02000000', //nested string return result
+'28010000', //CreateBoxTrigger Call
+'11000000', //Script end block
+'09000000', //Script end block
+'0a000000', //Script end block
+'0f000000', //Script end block
+'0a000000', //Script end block
+'3b000000', //Script end block
+'00000000', //Script end block
+
 
         ];
 
