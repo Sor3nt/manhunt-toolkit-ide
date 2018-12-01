@@ -11,18 +11,16 @@ use App\Service\Helper;
 
 class T_FUNCTION {
 
-    /** @var  Procedure */
-    private $procedureService;
+    private $procedures;
 
     public function __construct( $customData )
     {
-        $this->procedureService = $customData['procedureService'];
+        $this->procedures = $customData['procedures'];
     }
 
-    static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false ){
+    static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false, $isProcedure = false ){
 
-//        var_dump($this->procedureService);
-//        exit;
+
         switch ($node['type']){
             case Token::T_ADDITION:
             case Token::T_FUNCTION:
@@ -51,11 +49,13 @@ class T_FUNCTION {
 
             case Token::T_STRING:
 
-                $code[] = $getLine('10000000');
-                $code[] = $getLine('01000000');
+                if ($isProcedure == false){
+                    $code[] = $getLine('10000000');
+                    $code[] = $getLine('01000000');
 
-                $code[] = $getLine('10000000');
-                $code[] = $getLine('02000000');
+                    $code[] = $getLine('10000000');
+                    $code[] = $getLine('02000000');
+                }
                 break;
 
             case Token::T_VARIABLE:
@@ -125,6 +125,18 @@ class T_FUNCTION {
                             case 'integer':
                                 $code[] = $getLine('10000000');
                                 $code[] = $getLine('01000000');
+                                break;
+                            case 'procedure':
+                                $code[] = $getLine('12000000');
+                                $code[] = $getLine('02000000');
+
+                                $code[] = $getLine('00000000'); // 0 always ?
+
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('01000000');
+
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('02000000');
                                 break;
                             case 'real':
                                 if ($writeDebug == false){
@@ -332,6 +344,10 @@ class T_FUNCTION {
 
         $forceFloatOrder = self::getForceFloat($node['value']);
 
+        $isProcedure = false;
+        $isProcedure = isset($this->procedures[strtolower($node['value'])]);
+
+
 
         if (isset($node['params']) && count($node['params'])){
             $skipNext = false;
@@ -364,15 +380,14 @@ class T_FUNCTION {
 
                     $skipNext = true;
                 }else{
-                    $resultCode = $emitter( $param );
+                    $resultCode = $emitter( $param, true, ['isProcedure' => $isProcedure] );
                     foreach ($resultCode as $line) {
                         $code[] = $line;
                     }
 
                 }
 
-
-                self::finalize($param, $data, $code, $getLine);
+                self::finalize($param, $data, $code, $getLine, false, $isProcedure);
 
                 /**
                  * When the input value is a negative float
@@ -389,7 +404,6 @@ class T_FUNCTION {
                     $code[] = $getLine('04000000');
                     $code[] = $getLine('10000000');
                     $code[] = $getLine('01000000');
-//
                 }
 
 
@@ -411,7 +425,6 @@ class T_FUNCTION {
             }
         }
 
-
         /**
          * Translate function call
          */
@@ -419,24 +432,24 @@ class T_FUNCTION {
             $function = self::getFunction($node['value']);
 
         }catch (\Exception $e){
-            $procedureOffset = $this->procedureService->get($node['value']);
 
-            if ($procedureOffset !== false){
+            if ($isProcedure){
+                $procedureOffset = $this->procedures[strtolower($node['value'])];
 
-                return [
-                    $getLine('10000000'), //procedure
-                    $getLine('04000000'), //procedure
-                    $getLine('11000000'), //procedure
-                    $getLine('02000000'), //procedure
-                    $getLine('00000000'), //procedure
-                    $getLine('32000000'), //procedure
-                    $getLine('02000000'), //procedure
-                    $getLine('1c000000'), //procedure
-                    $getLine('10000000'), //procedure
-                    $getLine('02000000'), //procedure
-                    $getLine('39000000'), //procedure
-                    $getLine( Helper::fromIntToHex($procedureOffset) ), //procedure offset
-                ];
+                $code[] = $getLine('10000000'); //procedure
+                $code[] = $getLine('04000000'); //procedure
+                $code[] = $getLine('11000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('00000000'); //procedure
+                $code[] = $getLine('32000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('1c000000'); //procedure
+                $code[] = $getLine('10000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('39000000'); //procedure
+                $code[] = $getLine( Helper::fromIntToHex($procedureOffset) ); //procedure offset
+
+                return $code;
             }
 
             throw $e;

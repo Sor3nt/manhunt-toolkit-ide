@@ -190,6 +190,21 @@ class Manhunt2
 
     public static $functions = [
 
+        "stringcopy" => [
+            'name' => 'stringcopy',
+            'offset' => "6d000000"
+        ],
+
+        "helicreatehelipath" => [
+            'name' => 'HeliCreateHeliPath',
+            'offset' => "b2030000"
+        ],
+
+        "helicreatehelinode" => [
+            'name' => 'HeliCreateHeliNode',
+            'offset' => "b1030000"
+        ],
+
         "randnum" => [
             'name' => 'RandNum',
             'offset' => "69000000"

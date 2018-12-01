@@ -9,12 +9,6 @@ use App\Service\Helper;
 
 class Compiler {
 
-    private $procedureService;
-
-    public function __construct()
-    {
-        $this->procedureService = new Procedure();
-    }
 
     /**
      * @param $source
@@ -42,7 +36,12 @@ class Compiler {
         $source = preg_replace("/\s+/", ' ', $source);
 
         // remove comments / unused code
+
         $source = preg_replace("/({([^{^}])*)*{([^{^}])*}(([^{^}])*})*/m", "", $source);
+
+        if (preg_last_error() == PREG_JIT_STACKLIMIT_ERROR){
+            die("PHP7 issue, pls disable pcre.jit=0 in your php.ini");
+        }
 
         $source = str_replace([
             "PLAYING__TWITCH",
@@ -365,6 +364,8 @@ class Compiler {
 
         // cleanup the source code
         $source = $this->prepare($source);
+//        var_dump($source);
+//        exit;
 
         // convert script code into tokens
         $tokenizer = new Tokenizer();
@@ -434,6 +435,7 @@ class Compiler {
         $parser = new Parser( );
         $ast = $parser->toAST($tokens);
 
+
         $header = [];
         $currentSection = "header";
 
@@ -457,14 +459,7 @@ class Compiler {
 
         $ast = $parser->handleForward($ast);
 
-
-
-        $this->procedureService->clear();
-
         $procedures = $parser->getProcedures($ast);
-        $this->procedureService->add($procedures);
-
-
 
         foreach ($headerVariables as $name => &$item) {
 
@@ -492,6 +487,13 @@ class Compiler {
                 $token['type'] == Token::T_PROCEDURE ||
                 $token['type'] == Token::T_FUNCTION
             ){
+
+                if ($token['type'] == Token::T_PROCEDURE){
+                    $procedures[strtolower($token['value'])] = $lineCount - 1;
+                }
+
+
+
                 $currentSection = "script";
                 $scriptName = $token['value'];
 
@@ -536,7 +538,7 @@ class Compiler {
                     'body' => [
                         $token
                     ]
-                ], true, [ 'procedureService' => $this->procedureService ]);
+                ], true, [ 'procedures' => $procedures ]);
 
                 if ($token['type'] == Token::T_SCRIPT){
                     $scriptBlockSizes[$scriptName] = $lastScriptEnd;
@@ -546,6 +548,8 @@ class Compiler {
 
                 foreach ($code as $line) {
                     if ($line->lineNumber !== $start){
+                        var_dump( $token);
+                        var_dump( $code);
                         var_dump( $line, $start);
                         throw new \Exception('Calculated line number did not match with the generated one');
                     }
@@ -555,6 +559,7 @@ class Compiler {
                 }
 
                 if (isset($line)) $lineCount = $line->lineNumber + 1;
+
 
             }else if ($currentSection == "header"){
                 $header[] = $token;

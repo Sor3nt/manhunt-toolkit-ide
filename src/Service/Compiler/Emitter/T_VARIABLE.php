@@ -18,7 +18,13 @@ class T_VARIABLE {
 
         $value = $node['value'];
 
-        if (isset($data['variables'][ $value ])){
+        if (isset($data['customData']['procedureVars']) && isset($data['customData']['procedureVars'][ $value ])) {
+            $mapped = $data['customData']['procedureVars'][$value];
+
+            $mapped['section'] = 'script';
+            $mapped['type'] = 'procedure';
+
+        }else if (isset($data['variables'][ $value ])){
             $mapped = $data['variables'][ $value ];
 
         }else if (isset($constantsDefault[ $value ])) {

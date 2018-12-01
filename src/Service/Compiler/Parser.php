@@ -49,14 +49,11 @@ class Parser {
 
         $result = [];
 
-        $offset = 0;
 
         foreach ($ast['body'] as $token) {
             if ($token['type'] == Token::T_PROCEDURE){
 
-                $result[$token['value']] = $offset;
-
-                $offset++;
+                $result[strtolower($token['value'])] = false;
             }
         }
 
@@ -66,7 +63,6 @@ class Parser {
 
 
     public function handleForward( $ast ){
-
         foreach ($ast['body'] as &$token) {
             if ($token['type'] == Token::T_FORWARD){
 
@@ -76,6 +72,8 @@ class Parser {
                         $tokenInner['type'] == $token['section'] &&
                         $tokenInner['value'] == $token['to']
                     ){
+
+                        $tokenInner['vars'] = $token['params'];
 
                         $token = $tokenInner;
 
