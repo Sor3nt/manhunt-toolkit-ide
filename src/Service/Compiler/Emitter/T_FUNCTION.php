@@ -22,11 +22,20 @@ class T_FUNCTION {
 
 
         switch ($node['type']){
+            case Token::T_SELF:
+//                if ($isProcedure == true){
+                    $code[] = $getLine('10000000');
+                    $code[] = $getLine('01000000');
+
+//                }
+                break;
+
+
             case Token::T_ADDITION:
             case Token::T_FUNCTION:
                 break;
             case Token::T_FLOAT:
-            case Token::T_SELF:
+//            case Token::T_SELF:
             case Token::T_FALSE:
             case Token::T_TRUE:
                 $code[] = $getLine('10000000');
@@ -501,6 +510,7 @@ class T_FUNCTION {
 
                 $code[] = $getLine('10000000');
                 $code[] = $getLine('01000000');
+
             }
         }
 

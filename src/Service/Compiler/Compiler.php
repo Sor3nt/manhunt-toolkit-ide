@@ -145,7 +145,8 @@ class Compiler {
                         'size' => $this->getMemorySizeByType($variableType)
                     ];
 
-                    if (isset($types[ $variableType ] )) $row['abstract'] = 'state';
+                    if (isset($types[  $variableType ] )) $row['abstract'] = 'state';
+//                    if (isset($types[ str_replace('level_var ', '', $variableType) ] )) $row['abstract'] = 'state';
 
                     $vars[$variable['value']] = $row;
                 }

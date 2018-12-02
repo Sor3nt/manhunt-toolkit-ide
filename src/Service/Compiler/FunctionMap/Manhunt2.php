@@ -17,7 +17,8 @@ class Manhunt2
     public static $functionForceFloar = [];
 
     public static $functionNoReturn = [
-        'getentityname'
+        'getentityname',
+        'aigethunterlastnodename'
     ];
 
     public static $functionEventDefinition = [
@@ -189,6 +190,11 @@ class Manhunt2
     ];
 
     public static $functions = [
+
+        "isentitydying" => [
+            'name' => 'IsEntityDying',
+            'offset' => "52020000"
+        ],
 
         "aiassociatefouractiveareaswithplayerarea" => [
             'name' => 'AIAssociateFourActiveAreasWithPlayerArea',
