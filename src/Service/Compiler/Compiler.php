@@ -64,7 +64,9 @@ class Compiler {
     private function getMemorySizeByType($type ){
 
         if (substr($type, 0, 7) == "string[") {
-            return (int)explode("]", substr($type, 7))[0];
+            $len = (int)explode("]", substr($type, 7))[0];
+
+            return $len;
         }
 
         switch ($type){

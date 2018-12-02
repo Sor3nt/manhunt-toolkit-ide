@@ -145,6 +145,7 @@ class Parser {
             case Token::T_MULTIPLY:
             case Token::T_OR:
             case Token::T_AND:
+            case Token::T_SWITCH_END:
             case Token::T_OF:
 //            case Token::T_BRACKET_CLOSE:
                 return [

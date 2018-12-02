@@ -91,6 +91,9 @@ class T_PROCEDURE {
                 $var['offset'] = $varOffset;
                 $varOffset -= 4;
             }
+
+//            var_dump($vars);
+//            exit;
         }
 
 

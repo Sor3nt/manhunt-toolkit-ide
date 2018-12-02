@@ -472,7 +472,7 @@ class T_FUNCTION {
                 $code[] = $getLine('10000000'); //procedure
                 $code[] = $getLine('02000000'); //procedure
                 $code[] = $getLine('39000000'); //procedure
-                $code[] = $getLine( Helper::fromIntToHex($procedureOffset) ); //procedure offset
+                $code[] = $getLine( Helper::fromIntToHex($procedureOffset * 4 ) ); //procedure offset
 
                 return $code;
             }
