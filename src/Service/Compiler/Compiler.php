@@ -547,7 +547,11 @@ class Compiler {
                     $scriptBlockSizes[$scriptName] = $lastScriptEnd;
                 }
 
-                $lastScriptEnd = count($code) * 4;
+                if ($token['type'] == Token::T_PROCEDURE){
+                    $lastScriptEnd += count($code) * 4;
+                }else{
+                    $lastScriptEnd = count($code) * 4;
+                }
 
                 foreach ($code as $line) {
                     if ($line->lineNumber !== $start){

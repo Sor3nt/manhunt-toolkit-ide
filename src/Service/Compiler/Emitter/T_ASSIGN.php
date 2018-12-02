@@ -186,6 +186,7 @@ class T_ASSIGN {
 //                            self::toHeaderInteger( $mapped['offset'], $code, $getLine);
 //                            break;
 
+                            case 'level_var integer':
                             case 'level_var boolean':
                                 self::toHeaderLevelVarBoolean( $mapped['offset'], $code, $getLine);
                                 break;
@@ -372,12 +373,6 @@ class T_ASSIGN {
     }
 
     static public function toHeaderInteger( $offset, &$code, \Closure $getLine){
-
-        //TODO: das ist hier falscher platz
-        //gehhört nicht dazu
-//        $code[] = $getLine('11000000');
-//        $code[] = $getLine('01000000');
-//        $code[] = $getLine('04000000');
 
         $code[] = $getLine('15000000');
         $code[] = $getLine('04000000');

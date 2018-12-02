@@ -17,6 +17,7 @@ class Manhunt2
     public static $functionForceFloar = [];
 
     public static $functionNoReturn = [
+        'getcameraposition',
         'getentityname',
         'aigethunterlastnodename'
     ];
@@ -190,6 +191,11 @@ class Manhunt2
     ];
 
     public static $functions = [
+
+        "aidefinegoalgotonodestayonpath" => [
+            'name' => 'AiDefineGoalGotoNodeStayOnPath',
+            'offset' => "f2010000"
+        ],
 
         "isentitydying" => [
             'name' => 'IsEntityDying',
