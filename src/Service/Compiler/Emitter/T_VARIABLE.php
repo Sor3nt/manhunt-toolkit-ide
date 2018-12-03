@@ -67,7 +67,6 @@ class T_VARIABLE {
             $variableType = $data['types'][$node['target']];
             $mapped = $variableType[ strtolower($value) ];
         }else{
-
             throw new \Exception(sprintf("T_VARIABLE: unable to find variable offset for %s", $value));
         }
 

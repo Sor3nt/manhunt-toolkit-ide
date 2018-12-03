@@ -28,6 +28,9 @@ class Manhunt2
 
     public static $constants = [
 
+        'HID_HEALTHBAR_PLAYER' => [
+            'offset' => "03000000"
+        ],
         'CT_SYRINGE' => [
             'offset' => "71000000"
         ],
@@ -191,6 +194,32 @@ class Manhunt2
     ];
 
     public static $functions = [
+
+        "scripthogprocessorend" => [
+            'name' => 'ScriptHogProcessorEnd',
+            'offset' => "16020000"
+        ],
+
+        "aidefinegoalgotovector" => [
+            'name' => 'AiDefineGoalGotoVector',
+            'offset' => "70010000"
+        ],
+
+        "setspotlighttransitiontime" => [
+            'name' => 'SetSpotlightTransitionTime',
+            'offset' => "a1030000"
+        ],
+
+        "setspotlighttarget" => [
+            'name' => 'SetSpotLightTarget',
+            'offset' => "a0030000"
+        ],
+
+        "initspotlight" => [
+            'name' => 'InitSpotlight',
+            'offset' => "9f030000"
+        ],
+
 
         "aidefinegoalgotonodestayonpath" => [
             'name' => 'AiDefineGoalGotoNodeStayOnPath',

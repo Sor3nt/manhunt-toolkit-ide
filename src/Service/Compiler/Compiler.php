@@ -4,7 +4,6 @@ namespace App\Service\Compiler;
 use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
-use App\Service\Compiler\Services\Procedure;
 use App\Service\Helper;
 
 class Compiler {
@@ -21,13 +20,18 @@ class Compiler {
             "if (GetEntity('Syringe_(CT)')) = nil then",
             "if(",
             "while(",
-            "PLAYING  TWITCH"
+            "PLAYING  TWITCH",
+            "if bMeleeTutDone AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
+            "if (NOT IsPlayerPositionKnown) AND IsScriptAudioStreamCompleted then"
         ],[
             "if GetEntity('Syringe_(CT)') <> NIL then",
             "if GetEntity('Syringe_(CT)') = nil then",
             "if (",
             "while (",
-            "PLAYING__TWITCH"  // we replace this because the next operation will remove the whitespaces
+            "PLAYING__TWITCH",  // we replace this because the next operation will remove the whitespaces
+
+            "if (bMeleeTutDone) AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
+            "if (NOT IsPlayerPositionKnown) AND (IsScriptAudioStreamCompleted) then"
 
         ], $source);
 
@@ -240,16 +244,31 @@ class Compiler {
         foreach ($response as $item) {
 
             $value = str_replace('"', '', $item['value']);
+            $value = str_replace("'", '', $value);
 
-            $result[$value] = $value;
+            if ($value == ""){
+                $result["__empty__"] = '';
+
+            }else{
+
+                $result[$value] = $value;
+            }
         }
 
         $strings = array_unique($result);
         foreach ($strings as &$string) {
 
+//            if ($string == "''"){
+//                $string = "";
+//            }
+//            $string = str_replace("''", '', $string);
+
             $length = strlen($string) + 1;
+
             $string = [
                 'offset' => Helper::fromIntToHex($smemOffset),
+
+                //todo check, not in use at all ?!
                 'length' => strlen($string)
             ];
 

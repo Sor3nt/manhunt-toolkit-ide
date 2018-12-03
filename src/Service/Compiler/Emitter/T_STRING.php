@@ -32,6 +32,11 @@ class T_STRING {
         // we have quotes around the string, come from the tokenizer
         $value = substr($node['value'], 1, -1);
 
+        //hack for empty strings
+        if ($value == ""){
+            $value = "__empty__";
+        }
+
         $offset = $data['strings'][$value]['offset'];
 
 
@@ -49,7 +54,9 @@ class T_STRING {
         ];
 
         if ($isProcedure == false){
-            $result[] = $getLine(Helper::fromIntToHex( strlen($value) + 1 ));
+            $result[] = $getLine(Helper::fromIntToHex(
+                $value == "__empty__" ? 1 : strlen($value) + 1
+            ));
         }
 
         return $result;
