@@ -38,11 +38,30 @@ class PCTest extends KernelTestCase
             );
         }
 
-        for($i = 1; $i < 37; $i++){
+        $test = 37;
+//        $test = 47;
+        for($i = 0; $i < 37 ; $i++){
+//        for($i = $test; $i < $test+1 ; $i++){
             $testScript = $mhls[$i];
+
+            var_dump($testScript['NAME'], $i);
 
             //compile a other script based on the levelscript
             $compiled = $compiler->parse($testScript['SRCE'], $levelScriptCompiled, 'mh2');
+
+
+
+            if ($testScript['CODE'] != $compiled['CODE']){
+                foreach ($testScript['CODE'] as $index => $item) {
+                    if ($compiled['CODE'][$index] == $item){
+                        echo ($index + 1) . '->' . $item . "\n";
+                    }else{
+                        echo "MISMATCH need |" . $item . "| got |" . $compiled['CODE'][$index] . "|\n";
+                    }
+                }
+                exit;
+            }
+//exit;
             $this->assertEquals(
                 $testScript['CODE'],
                 $compiled['CODE']

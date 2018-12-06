@@ -65,10 +65,14 @@ class Compiler {
      * @param $type
      * @return int
      */
-    private function getMemorySizeByType($type ){
+    private function getMemorySizeByType($type, $add4Bytes = true ){
 
         if (substr($type, 0, 7) == "string[") {
             $len = (int)explode("]", substr($type, 7))[0];
+
+            if ($add4Bytes){
+                if ($len % 4 == 0) $len += 4;
+            }
 
             return $len;
         }
@@ -143,10 +147,13 @@ class Compiler {
 
                     $variableType = strtolower($tokens[$current + 2]['value']);
 
+                    $variableTypeWihtoutLevel = str_replace('level_var ', '', $variableType);
+
                     $row = [
                         'section' => $currentSection,
-                        'type' => substr($variableType, 0, 7) == "string[" ? 'stringarray' : $variableType,
-                        'size' => $this->getMemorySizeByType($variableType)
+                        'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? 'stringarray' : $variableType,
+                        'length' => $this->getMemorySizeByType($variableType),
+                        'size' => $this->getMemorySizeByType($variableType, false)
                     ];
 
                     if (isset($types[  $variableType ] )) $row['abstract'] = 'state';
@@ -216,7 +223,7 @@ class Compiler {
                     $varVal = $vars[$variable]['value'];
 
                     if (substr($varVal, 0, 7) == "string["){
-                        $smemOffset += $this->getMemorySizeByType($varVal);;
+                        $smemOffset += $this->getMemorySizeByType($varVal);
                     }else if (
                         $vars[$variable]['type'] == Token::T_INT ||
                         $vars[$variable]['type'] == Token::T_FLOAT
@@ -447,7 +454,6 @@ class Compiler {
             $smemOffset += $length;
         }
 
-
         $tokens = $tokenizer->fixShortStatementMissedLineEnd($tokens);
         $tokens = $tokenizer->fixProcedureEndCall($tokens);
         $tokens = $tokenizer->fixTypeMapping($tokens, $types);
@@ -490,7 +496,7 @@ class Compiler {
 
             }
 
-            $size = $item['size'];
+            $size = $item['length'];
 
             if ($size % 4 !== 0){
                 $size += $size % 4;
@@ -536,11 +542,12 @@ class Compiler {
                     $scriptVarFinal[$name ] = $item;
                 }
 
-
                 foreach ($headerVariables as $_name => $_item) {
 
                     if ($this->isVariableInUse($token['body'], $_name)){
-                        $scriptVarFinal[$_name ] = $_item;
+                        if (!isset($scriptVarFinal[$_name ])){
+                            $scriptVarFinal[$_name ] = $_item;
+                        }
                     }
                 }
 
@@ -798,7 +805,7 @@ class Compiler {
 
         foreach ($strings4Scripts as $strings) {
             foreach ($strings as $value => $string) {
-                $result[] = $value;
+                if ($value !== '__empty__') $result[] = $value;
             }
         }
 
@@ -809,7 +816,6 @@ class Compiler {
     public function generateSTAB( $headerVariables, $sectionCode ){
 
         $result = [];
-
 
         foreach ($headerVariables as $name => $variable) {
 
