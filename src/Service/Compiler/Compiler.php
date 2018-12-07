@@ -422,6 +422,7 @@ class Compiler {
             }
         }
 
+
         $smemOffset = 0;
 
         $const = $this->getConstants($tokens, $smemOffset);
@@ -508,6 +509,8 @@ class Compiler {
         $scriptBlockSizes = [];
         $lastScriptEnd = 0;
 
+        $variablesOverAllScripts = [];
+
         foreach ($ast["body"] as $index => $token) {
 
             if (
@@ -540,6 +543,7 @@ class Compiler {
                         $smemOffset2 += $smemOffset2 % 4;
                     }
                     $scriptVarFinal[$name ] = $item;
+                    $variablesOverAllScripts[$name ] = $item;
                 }
 
                 foreach ($headerVariables as $_name => $_item) {
@@ -607,7 +611,7 @@ class Compiler {
             ],
             'CODE' => $sectionCode,
             'DATA' => $this->generateDATA($strings4Scripts),
-            'STAB' => $this->generateSTAB($headerVariables, $sectionCode),
+            'STAB' => $this->generateSTAB($headerVariables, $sectionCode, $variablesOverAllScripts),
             'SCPT' => $this->generateSCPT($scriptBlockSizes, $game),
             'ENTT' => $this->getEntity($tokens),
             'SRCE' => $originalSource,
@@ -813,7 +817,7 @@ class Compiler {
     }
 
 
-    public function generateSTAB( $headerVariables, $sectionCode ){
+    public function generateSTAB( $headerVariables, $sectionCode, $variablesOverAllScripts ){
 
         $result = [];
 
@@ -838,6 +842,18 @@ class Compiler {
                 $variable['offset'] = "ffffffff";
                 $variable['size'] = "ffffffff";
             }
+
+
+            /**
+             * when the variable is defined inside the HEADER and also in one or multiple scripts, we need to give him the 02 sequence
+             */
+            foreach ($variablesOverAllScripts as $varScriptName => $variablesOverAllScript) {
+                if ($varScriptName == $name){
+                    $hierarchieType = '02000000';
+                    $variable['offset'] = "00000000";
+                }
+            }
+
 
             if (strtolower($varType) == "tlevelstate") $varType = "tLevelState";
             if ($varType == "stringarray") $varType = "string";

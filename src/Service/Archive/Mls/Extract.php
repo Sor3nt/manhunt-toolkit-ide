@@ -185,7 +185,7 @@ class Extract {
              *
              * - 4-bytes defined at (byte offset from CODE) or ffffffff
              * - 4-bytes size
-             * - 4-bytes hierarchie access type; 01000000 - a local variable; 02000000 - a local VEC3d; ffffffff - a global variable
+             * - 4-bytes hierarchie access type; 01000000 - header variable; 02000000 - header + script var; ffffffff - a global variable
              * - 4-bytes Value Type (int,bool,float, string, tLevelState ....)
              * - 4-bytes Occurrence/Usage Count
              * - [4-bytes ... ] byte offset of the occurred call in CODE section (MH2 only)
