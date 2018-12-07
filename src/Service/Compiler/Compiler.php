@@ -152,8 +152,8 @@ class Compiler {
                     $row = [
                         'section' => $currentSection,
                         'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? 'stringarray' : $variableType,
-                        'length' => $this->getMemorySizeByType($variableType),
-                        'size' => $this->getMemorySizeByType($variableType, false)
+                        'length' => $this->getMemorySizeByType($variableTypeWihtoutLevel),
+                        'size' => $this->getMemorySizeByType($variableTypeWihtoutLevel, false)
                     ];
 
                     if (isset($types[  $variableType ] )) $row['abstract'] = 'state';
@@ -405,6 +405,7 @@ class Compiler {
         $headerVariables = $this->getHeaderVariables($tokens, $types);
 
         if ($levelScript != false){
+
             /**
              * the given script is not the level script but maybe use also the levelscript variables (globals)
              * overwrite the given variables to correct the offsets
@@ -439,6 +440,9 @@ class Compiler {
             }
         }
 
+        /**
+         * this are constant string handling...
+         */
         $strings = array_unique($result);
         foreach ($strings as $string) {
 
@@ -454,6 +458,7 @@ class Compiler {
 
             $smemOffset += $length;
         }
+
 
         $tokens = $tokenizer->fixShortStatementMissedLineEnd($tokens);
         $tokens = $tokenizer->fixProcedureEndCall($tokens);
@@ -490,6 +495,7 @@ class Compiler {
 
         $procedures = $parser->getProcedures($ast);
 
+
         foreach ($headerVariables as $name => &$item) {
 
             if (!isset($item['offset'])){
@@ -502,6 +508,7 @@ class Compiler {
             if ($size % 4 !== 0){
                 $size += $size % 4;
             }
+
 
             $smemOffset += $size;
         }
