@@ -1635,7 +1635,7 @@ class Manhunt2
              * 1: Player
              */
             'params' => ['Player'],
-            'return' => 'Void',
+            'return' => 'Integer',
             'desc' => ''
         ],
 

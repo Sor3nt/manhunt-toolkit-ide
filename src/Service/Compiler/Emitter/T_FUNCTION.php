@@ -92,6 +92,14 @@ class T_FUNCTION {
                                 $code[] = $getLine('10000000');
                                 $code[] = $getLine('01000000');
                                 break;
+                            case 'level_var stringarray':
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('01000000');
+
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('02000000');
+
+                                break;
                             case 'stringarray':
                                 $code[] = $getLine('10000000');
                                 $code[] = $getLine('01000000');
@@ -294,7 +302,8 @@ class T_FUNCTION {
                         $code[] = $getLine(self::getFunction('WriteDebugReal')['offset']);
                         break;
                     default:
-                        throw new \Exception(sprintf('T_FUNCTION: Return type %s is unknown', $param['return']));
+                        var_dump($function);
+                        throw new \Exception(sprintf('T_FUNCTION: Return type %s is unknown', $function['return']));
                         break;
                 }
 

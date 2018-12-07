@@ -147,11 +147,13 @@ class Compiler {
 
                     $variableType = strtolower($tokens[$current + 2]['value']);
 
+
+                    $isLevelVar = strpos($variableType, 'level_var') !== false;
                     $variableTypeWihtoutLevel = str_replace('level_var ', '', $variableType);
 
                     $row = [
                         'section' => $currentSection,
-                        'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? 'stringarray' : $variableType,
+                        'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? ($isLevelVar ? 'level_var stringarray' : 'stringarray') : $variableType,
                         'length' => $this->getMemorySizeByType($variableTypeWihtoutLevel),
                         'size' => $this->getMemorySizeByType($variableTypeWihtoutLevel, false)
                     ];
@@ -818,6 +820,10 @@ class Compiler {
             foreach ($strings as $value => $string) {
                 if ($value !== '__empty__') $result[] = $value;
             }
+        }
+
+        if (count($result) == 0){
+            $result[] = hex2bin('dadadadadadadada');
         }
 
         return $result;
