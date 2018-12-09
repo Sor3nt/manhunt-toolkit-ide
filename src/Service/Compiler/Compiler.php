@@ -16,6 +16,7 @@ class Compiler {
     static public function prepare($source){
 
         $source = str_replace([
+
             "if (GetEntity('Syringe_(CT)')) <> NIL then",
             "if (GetEntity('Syringe_(CT)')) = nil then",
             "if(",
@@ -24,6 +25,7 @@ class Compiler {
             "if bMeleeTutDone AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
             "if (NOT IsPlayerPositionKnown) AND IsScriptAudioStreamCompleted then"
         ],[
+
             "if GetEntity('Syringe_(CT)') <> NIL then",
             "if GetEntity('Syringe_(CT)') = nil then",
             "if (",
@@ -158,7 +160,12 @@ class Compiler {
                         'size' => $this->getMemorySizeByType($variableTypeWihtoutLevel, false)
                     ];
 
-                    if (isset($types[  $variableType ] )) $row['abstract'] = 'state';
+
+//                    var_dump($variableType, $variableTypeWihtoutLevel);
+                    if (isset($types[  $variableTypeWihtoutLevel ] )){
+                        $row['isLevelVar'] = $isLevelVar;
+                        $row['abstract'] = 'state';
+                    }
 //                    if (isset($types[ str_replace('level_var ', '', $variableType) ] )) $row['abstract'] = 'state';
 
                     $vars[$variable['value']] = $row;
@@ -316,6 +323,7 @@ class Compiler {
                     $token['type'] == Token::T_SCRIPT
                 )
             ){
+
                 return $types;
 
             }else if (
@@ -429,6 +437,7 @@ class Compiler {
         $smemOffset = 0;
 
         $const = $this->getConstants($tokens, $smemOffset);
+
         $headerStrings = [];
 
         $result = [];
@@ -496,7 +505,6 @@ class Compiler {
         $ast = $parser->handleForward($ast);
 
         $procedures = $parser->getProcedures($ast);
-
 
         foreach ($headerVariables as $name => &$item) {
 

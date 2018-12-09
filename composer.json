@@ -11,6 +11,7 @@
         "symfony/cache": "*",
         "symfony/console": "*",
         "symfony/expression-language": "*",
+        "symfony/finder": "*",
         "symfony/flex": "^1.1",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",

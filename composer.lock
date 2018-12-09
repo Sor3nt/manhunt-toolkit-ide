@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "358b5b0b831d5f9effdc375477a724a8",
+    "content-hash": "b582f059b06bbba568d117d58ef8bf80",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2735,16 +2735,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.1.6",
+            "version": "v4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "1f17195b44543017a9c9b2d437c670627e96ad06"
+                "reference": "68fbdcafe915db67adb13fddaec4532e684f6689"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/1f17195b44543017a9c9b2d437c670627e96ad06",
-                "reference": "1f17195b44543017a9c9b2d437c670627e96ad06",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/68fbdcafe915db67adb13fddaec4532e684f6689",
+                "reference": "68fbdcafe915db67adb13fddaec4532e684f6689",
                 "shasum": ""
             },
             "require": {
@@ -2780,7 +2780,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-03T08:47:56+00:00"
+            "time": "2018-11-11T19:51:29+00:00"
         },
         {
             "name": "symfony/flex",

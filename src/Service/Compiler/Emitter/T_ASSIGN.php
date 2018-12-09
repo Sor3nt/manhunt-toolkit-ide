@@ -27,7 +27,14 @@ class T_ASSIGN {
         }
 
         if ($mapped['type'] == "vec3d"){
-            $code[] = $getLine('22000000');
+
+            if ($mapped['section'] == "header"){
+                $code[] = $getLine('21000000');
+
+            }else{
+                $code[] = $getLine('22000000');
+
+            }
             $code[] = $getLine('04000000');
             $code[] = $getLine('01000000');
             $code[] = $getLine($mapped['offset']);
@@ -121,9 +128,11 @@ class T_ASSIGN {
                 $code[] = $getLine('01000000');
 
                 if ($operator['type'] == Token::T_ADDITION) {
+
                     $code[] = $getLine('50000000');
-                }else{
-                    throw new \Exception('Float substration not implemented');
+                }else if ($operator['type'] == Token::T_SUBSTRACTION) {
+
+                    $code[] = $getLine('51000000');
                 }
 
 
@@ -171,7 +180,15 @@ class T_ASSIGN {
         if (isset($node['body'][1]) == false){
 
             if (isset($mapped['abstract']) && $mapped['abstract'] == "state"){
-                self::toTLevelState( $mapped['offset'], $code, $getLine);
+
+                if (isset($mapped['isLevelVar']) && $mapped['isLevelVar'] == true){
+                    self::toHeaderTLevelState( $mapped['offset'], $code, $getLine);
+
+                }else{
+
+                    self::toTLevelState( $mapped['offset'], $code, $getLine);
+                }
+
             }else{
                 switch ($mapped['section']) {
 
@@ -194,11 +211,18 @@ class T_ASSIGN {
                                 self::toHeaderentityptr( $mapped['offset'], $code, $getLine);
                                 break;
                             case 'level_var tlevelstate':
+//                                var_dump($mapped);
+//                                die("s");
                                 self::toHeaderTLevelState( $mapped['offset'], $code, $getLine);
                                 break;
                             case 'stringarray':
                                 self::toHeaderStringArray( $mapped['offset'], $mapped['size'], $code, $getLine);
                                 break;
+
+                            case 'vec3d':
+                                self::toHeaderVec3D( $mapped['offset'], $code, $getLine);
+                                break;
+
                             default:
                                 var_dump($mapped);
                                 throw new \Exception("Not implemented!");
@@ -332,6 +356,19 @@ class T_ASSIGN {
     }
 
     static public function toScriptVec3D( $offset, &$code, \Closure $getLine){
+        $code[] = $getLine('12000000');
+        $code[] = $getLine('03000000');
+        $code[] = $getLine( $offset );
+
+        $code[] = $getLine('0f000000');
+        $code[] = $getLine('01000000');
+        $code[] = $getLine('0f000000');
+        $code[] = $getLine('04000000');
+        $code[] = $getLine('44000000');
+
+    }
+
+    static public function toHeaderVec3D( $offset, &$code, \Closure $getLine){
         $code[] = $getLine('12000000');
         $code[] = $getLine('03000000');
         $code[] = $getLine( $offset );

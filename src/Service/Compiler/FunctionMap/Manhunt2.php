@@ -17,6 +17,7 @@ class Manhunt2
     public static $functionForceFloar = [];
 
     public static $functionNoReturn = [
+        'getentityposition',
         'getcameraposition',
         'getentityname',
         'aigethunterlastnodename'
@@ -195,6 +196,18 @@ class Manhunt2
 
     public static $functions = [
 
+        "getmoverstate" => [
+            'name' => 'GetMoverState',
+            'offset' => "39010000"
+        ],
+        "radarcreateblip" => [
+            'name' => 'RadarCreateBlip',
+            'offset' => "aa030000"
+        ],
+        "closecutsceneplayed" => [
+            'name' => 'CloseCutscenePlayed',
+            'offset' => "closeCutscenePlayed"
+        ],
         "scripthogprocessorend" => [
             'name' => 'ScriptHogProcessorEnd',
             'offset' => "16020000"

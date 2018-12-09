@@ -180,6 +180,7 @@ class Tokenizer {
                     $tokens[ $current + 1] = [
                         'type' => Token::T_VARIABLE,
                         'value' => $nextToken['value'],
+                        'abstract' => 'state',
                         'target' => $prevToken['value']
                     ];
                 }

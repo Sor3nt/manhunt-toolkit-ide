@@ -422,6 +422,10 @@ class T_FUNCTION {
                     $code[] = $getLine('01000000');
 
                     $skipNext = true;
+                }else if ($param['type'] == Token::T_SUBSTRACTION){
+                    throw new \Exception('T_SUBSTRACTION not iplemented');
+
+
                 }else{
                     $resultCode = $emitter( $param, true, ['isProcedure' => $isProcedure] );
                     foreach ($resultCode as $line) {

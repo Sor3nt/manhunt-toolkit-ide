@@ -81,6 +81,11 @@ class T_VARIABLE {
         $typeHandler .= "T_";
         $typeHandler .= strtoupper($mapped['section']);
 
+        if (isset($mapped['isLevelVar']) && $mapped['isLevelVar'] == true){
+            $typeHandler .= "_LEVEL_VAR";
+
+        }
+
         if (isset($mapped['abstract'])){
             $typeHandler .= "_" . strtoupper($mapped['abstract']);
 
@@ -93,6 +98,7 @@ class T_VARIABLE {
         if (class_exists($typeHandler)){
             $code = $typeHandler::map($node, $getLine, $emitter, $data);
         }else{
+            var_dump($mapped, $data);
             throw new \Exception($typeHandler . " Not implemented!");
         }
 
