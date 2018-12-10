@@ -12,13 +12,15 @@ use App\Service\Helper;
 class T_FUNCTION {
 
     private $procedures;
+    private $customFunctions;
 
     public function __construct( $customData )
     {
         $this->procedures = $customData['procedures'];
+        $this->customFunctions = $customData['customFunctions'];
     }
 
-    static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false, $isProcedure = false ){
+    static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false, $isProcedure = false, $isCustomFunction = false ){
 
 
         switch ($node['type']){
@@ -387,8 +389,8 @@ class T_FUNCTION {
 
         $forceFloatOrder = self::getForceFloat($node['value']);
 
-        $isProcedure = false;
         $isProcedure = isset($this->procedures[strtolower($node['value'])]);
+        $isCustomFunction = isset($this->customFunctions[strtolower($node['value'])]);
 
 
 
@@ -427,14 +429,14 @@ class T_FUNCTION {
 
 
                 }else{
-                    $resultCode = $emitter( $param, true, ['isProcedure' => $isProcedure] );
+                    $resultCode = $emitter( $param, true, ['isProcedure' => $isProcedure, 'isCustomFunction' => $isCustomFunction] );
                     foreach ($resultCode as $line) {
                         $code[] = $line;
                     }
 
                 }
 
-                self::finalize($param, $data, $code, $getLine, false, $isProcedure);
+                self::finalize($param, $data, $code, $getLine, false, $isProcedure, $isCustomFunction);
 
                 /**
                  * When the input value is a negative float
@@ -480,7 +482,7 @@ class T_FUNCTION {
 
         }catch (\Exception $e){
 
-            if ($isProcedure){
+            if ($isProcedure) {
                 $procedureOffset = $this->procedures[strtolower($node['value'])];
 
                 $code[] = $getLine('10000000'); //procedure
@@ -494,7 +496,26 @@ class T_FUNCTION {
                 $code[] = $getLine('10000000'); //procedure
                 $code[] = $getLine('02000000'); //procedure
                 $code[] = $getLine('39000000'); //procedure
-                $code[] = $getLine( Helper::fromIntToHex($procedureOffset * 4 ) ); //procedure offset
+                $code[] = $getLine(Helper::fromIntToHex($procedureOffset * 4)); //procedure offset
+
+                return $code;
+
+            }else if ($isCustomFunction){
+
+                $procedureOffset = $this->customFunctions[strtolower($node['value'])];
+
+                $code[] = $getLine('10000000'); //procedure
+                $code[] = $getLine('04000000'); //procedure
+                $code[] = $getLine('11000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('00000000'); //procedure
+                $code[] = $getLine('32000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('1c000000'); //procedure
+                $code[] = $getLine('10000000'); //procedure
+                $code[] = $getLine('02000000'); //procedure
+                $code[] = $getLine('39000000'); //procedure
+                $code[] = $getLine( Helper::fromIntToHex($procedureOffset * 4 ) ); // customFunction offset
 
                 return $code;
             }

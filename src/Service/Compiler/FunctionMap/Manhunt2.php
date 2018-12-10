@@ -196,6 +196,10 @@ class Manhunt2
 
     public static $functions = [
 
+        "ishunterinshadow" => [
+            'name' => 'IsHunterInShadow',
+            'offset' => "ca030000"
+        ],
         "getmoverstate" => [
             'name' => 'GetMoverState',
             'offset' => "39010000"

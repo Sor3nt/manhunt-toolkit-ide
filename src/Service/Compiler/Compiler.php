@@ -51,10 +51,12 @@ class Compiler {
 
         $source = str_replace([
             "PLAYING__TWITCH",
-            "end end"
+            "end end",
+            "if IsEntityAlive('TruckGuard1(hunter)') or IsEntityAlive('TruckGuard2(hunter)') then",
         ],[
             "PLAYING  TWITCH",
             "end; end",
+            "if (IsEntityAlive('TruckGuard1(hunter)')) or (IsEntityAlive('TruckGuard2(hunter)')) then",
         ], $source);
 
         // replace line ends with new lines
@@ -112,6 +114,7 @@ class Compiler {
                     $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
                     $token['type'] == Token::T_DEFINE_SECTION_CONST ||
                     $token['type'] == Token::T_PROCEDURE ||
+                    $token['type'] == Token::T_CUSTOM_FUNCTION ||
                     $token['type'] == Token::T_SCRIPT
                 )
 
@@ -119,7 +122,11 @@ class Compiler {
                 return $vars;
             }
 
-            if ($token['type'] == Token::T_SCRIPT || $token['type'] == Token::T_PROCEDURE) return $vars;
+            if (
+                $token['type'] == Token::T_SCRIPT ||
+                $token['type'] == Token::T_CUSTOM_FUNCTION ||
+                $token['type'] == Token::T_PROCEDURE)
+                return $vars;
 
             if ($token['type'] == Token::T_DEFINE_SECTION_VAR) $inside = true;
 
@@ -219,6 +226,8 @@ class Compiler {
                     $token['type'] == Token::T_DEFINE_SECTION_VAR ||
                     $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
                     $token['type'] == Token::T_DEFINE_SECTION_TYPE ||
+                    $token['type'] == Token::T_PROCEDURE ||
+                    $token['type'] == Token::T_CUSTOM_FUNCTION ||
                     $token['type'] == Token::T_SCRIPT
                 ){
                     break;
@@ -320,6 +329,8 @@ class Compiler {
                     $token['type'] == Token::T_DEFINE_SECTION_VAR ||
                     $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
                     $token['type'] == Token::T_DEFINE_SECTION_CONST ||
+                    $token['type'] == Token::T_PROCEDURE ||
+                    $token['type'] == Token::T_CUSTOM_FUNCTION ||
                     $token['type'] == Token::T_SCRIPT
                 )
             ){
@@ -473,13 +484,13 @@ class Compiler {
 
         $tokens = $tokenizer->fixShortStatementMissedLineEnd($tokens);
         $tokens = $tokenizer->fixProcedureEndCall($tokens);
+        $tokens = $tokenizer->fixCustomFunctionEndCall($tokens);
         $tokens = $tokenizer->fixTypeMapping($tokens, $types);
         $tokens = $tokenizer->fixHeaderBracketMismatches($tokens);
 
         // parse the token list to a ast
         $parser = new Parser( );
         $ast = $parser->toAST($tokens);
-
 
         $header = [];
         $currentSection = "header";
@@ -490,21 +501,22 @@ class Compiler {
         $lineCount = 1;
 
         $strings4Scripts = [];
-
         foreach ($ast["body"] as $index => $token) {
 
             if (
                 $token['type'] == Token::T_SCRIPT ||
                 $token['type'] == Token::T_PROCEDURE ||
-                $token['type'] == Token::T_FUNCTION
+                $token['type'] == Token::T_CUSTOM_FUNCTION
             ){
                 $strings4Scripts[$token['value']] = $this->getStrings($token['body'], $smemOffset);
             }
         }
+//var_dump($strings4Scripts);
 
         $ast = $parser->handleForward($ast);
 
         $procedures = $parser->getProcedures($ast);
+        $customFunctions = $parser->getCustomFunctions($ast);
 
         foreach ($headerVariables as $name => &$item) {
 
@@ -528,16 +540,22 @@ class Compiler {
 
         $variablesOverAllScripts = [];
 
+
         foreach ($ast["body"] as $index => $token) {
 
             if (
                 $token['type'] == Token::T_SCRIPT ||
                 $token['type'] == Token::T_PROCEDURE ||
-                $token['type'] == Token::T_FUNCTION
+                $token['type'] == Token::T_CUSTOM_FUNCTION
             ){
 
                 if ($token['type'] == Token::T_PROCEDURE){
                     $procedures[strtolower($token['value'])] = $lineCount - 1;
+                }
+
+
+                if ($token['type'] == Token::T_CUSTOM_FUNCTION){
+                    $customFunctions[strtolower($token['value'])] = $lineCount - 1;
                 }
 
 
@@ -583,18 +601,19 @@ class Compiler {
                     $lineCount
                 );
 
+
                 $code = $emitter->emitter([
                     'type' => "root",
                     'body' => [
                         $token
                     ]
-                ], true, [ 'procedures' => $procedures ]);
+                ], true, [ 'procedures' => $procedures, 'customFunctions' => $customFunctions ]);
 
                 if ($token['type'] == Token::T_SCRIPT){
                     $scriptBlockSizes[$scriptName] = $lastScriptEnd;
                 }
 
-                if ($token['type'] == Token::T_PROCEDURE){
+                if ($token['type'] == Token::T_PROCEDURE || $token['type'] == Token::T_CUSTOM_FUNCTION){
                     $lastScriptEnd += count($code) * 4;
                 }else{
                     $lastScriptEnd = count($code) * 4;

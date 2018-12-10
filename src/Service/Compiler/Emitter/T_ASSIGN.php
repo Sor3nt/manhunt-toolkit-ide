@@ -18,6 +18,32 @@ class T_ASSIGN {
         //when we have a type usage, we have no variable entry
         //so the compiler think its a function...
         if ($leftHand['type'] == Token::T_FUNCTION ){
+
+
+
+
+            if (isset($data['customData']['customFunctions'][strtolower($node['value'])])){
+//                $leftHand['type'] = Token::T_CUSTOM_FUNCTION;
+                $code[] = $getLine('10000000');
+                $code[] = $getLine('02000000');
+                $code[] = $getLine('11000000');
+                $code[] = $getLine('02000000');
+                $code[] = $getLine('0a000000');
+                $code[] = $getLine('34000000');
+                $code[] = $getLine('02000000');
+                $code[] = $getLine('04000000');
+                $code[] = $getLine('20000000');
+                $code[] = $getLine('01000000');
+                $code[] = $getLine('04000000');
+                $code[] = $getLine('02000000');
+                $code[] = $getLine('0f000000');
+                $code[] = $getLine('02000000');
+                $code[] = $getLine('10000000');
+                $code[] = $getLine('01000000');
+
+            }
+
+
             $stateVar = str_replace('level_var ', '',$mapped['type']);
 
             if (isset($data['types'][$stateVar])){
@@ -174,12 +200,21 @@ class T_ASSIGN {
         /*
          * Assign TO variable handling
          *
-         * wee need here to difference between sindlge param or multi param
+         * wee need here to difference between single param or multi param
          * mutli params are always math operators and need other return codes
          */
         if (isset($node['body'][1]) == false){
 
-            if (isset($mapped['abstract']) && $mapped['abstract'] == "state"){
+
+            //we are inside a function and want to return a value
+//            if (isset($data['customData']['customFunctions'][strtolower($node['value'])])){
+////                $leftHand['type'] = Token::T_CUSTOM_FUNCTION;
+//
+//                $code[] = $getLine('ka');
+//
+//
+//            }else
+                if (isset($mapped['abstract']) && $mapped['abstract'] == "state"){
 
                 if (isset($mapped['isLevelVar']) && $mapped['isLevelVar'] == true){
                     self::toHeaderTLevelState( $mapped['offset'], $code, $getLine);
@@ -241,17 +276,22 @@ class T_ASSIGN {
                                 break;
 
                             case 'vec3d':
+
                                 self::toScriptVec3D( $mapped['offset'], $code, $getLine);
                                 break;
 
                             case 'object':
                                 self::toObject( $code, $getLine);
                                 break;
+
+                            case 'custom_functions':
+                                self::toCustomFunctions( $code, $getLine);
+                                break;
                             case 'real':
                                 self::toReal($mapped['offset'], $code, $getLine);
                                 break;
                             default:
-//                                var_dump($mapped);
+                                var_dump($mapped);
                                 throw new \Exception("Not implemented!");
 
                         }
@@ -346,6 +386,20 @@ class T_ASSIGN {
         $code[] = $getLine('04000000');
         $code[] = $getLine('02000000');
         $code[] = $getLine('01000000');
+    }
+
+
+    static public function toCustomFunctions( &$code, \Closure $getLine){
+        $code[] = $getLine('0f000000');
+        $code[] = $getLine('02000000');
+        $code[] = $getLine('17000000');
+        $code[] = $getLine('04000000');
+        $code[] = $getLine('02000000');
+        $code[] = $getLine('01000000');
+        $code[] = $getLine('13000000');
+        $code[] = $getLine('01000000');
+        $code[] = $getLine('04000000');
+        $code[] = $getLine('04000000'); //offset?
     }
 
     static public function toReal($offset,&$code, \Closure $getLine){

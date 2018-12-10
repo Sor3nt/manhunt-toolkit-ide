@@ -94,6 +94,7 @@ class T_IF {
 
 
                 $tree = [$tree];
+
                 self::remapCondition( $tree, $isNot );
                 self::extendConditionInformation( $tree );
 

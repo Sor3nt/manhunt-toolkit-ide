@@ -38,9 +38,16 @@ class PCTest extends KernelTestCase
             );
         }
 
-        $test = 37;
-//        $test = 47;
-        for($i = 0; $i < 37 ; $i++){
+        $test = 58; // operator not found
+//        $test = 68; // unable to handle T_ASSIGN
+//        $test = 82; // T_VARIABLE: unable to find variable offset for bLockerTutDisplayed
+//        $test = 83; // T_VARIABLE: unable to find variable offset for bLockerTutDisplayed
+//        $test = 94;
+//        $test = 97;
+
+
+//        $test = 37;
+        for($i = 0; $i < 40 ; $i++){
 //        for($i = $test; $i < $test+1 ; $i++){
             $testScript = $mhls[$i];
 
@@ -79,6 +86,12 @@ class PCTest extends KernelTestCase
                 //we do not generate the LINE (debug stuff)
                 if ($index == "LINE") continue;
                 if ($index == "STAB" && count($section) == 0) continue;
+
+                if ($index == "DATA"){
+                    if ($testScript[$index] != $section){
+                        var_dump(bin2hex($testScript[$index][0]), $section);
+                    }
+                }
 
                 $this->assertEquals(
                     $testScript[$index],

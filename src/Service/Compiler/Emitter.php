@@ -19,6 +19,7 @@ class Emitter {
         'T_NIL' => Emitter\T_NIL::class,
         'T_SCRIPT' => Emitter\T_SCRIPT::class,
         'T_PROCEDURE' => Emitter\T_PROCEDURE::class,
+        'T_CUSTOM_FUNCTION' => Emitter\T_CUSTOM_FUNCTION::class,
         'T_WHILE' => Emitter\T_WHILE::class,
         'T_ASSIGN' => Emitter\T_ASSIGN::class,
         'T_INT' => Emitter\T_INT::class,

@@ -17,12 +17,31 @@ class T_VARIABLE {
 
 
         $value = $node['value'];
+        $valueLower = strtolower($value);
 
-        if (isset($data['customData']['procedureVars']) && isset($data['customData']['procedureVars'][ $value ])) {
+
+        if (isset($data['customData']['customFunctions']) && isset($data['customData']['customFunctions'][ $valueLower ])) {
+            $mapped = [
+                'offset' => $data['customData']['customFunctions'][$valueLower],
+                'section' => 'script',
+                'type' => 'custom_functions'
+            ];
+
+//            $mapped['section'] = 'script';
+//            $mapped['type'] = 'customFunction';
+
+
+        }else if (isset($data['customData']['procedureVars']) && isset($data['customData']['procedureVars'][ $value ])) {
             $mapped = $data['customData']['procedureVars'][$value];
 
             $mapped['section'] = 'script';
             $mapped['type'] = 'procedure';
+
+        }else if (isset($data['customData']['customFunctionVars']) && isset($data['customData']['customFunctionVars'][ $value ])) {
+            $mapped = $data['customData']['customFunctionVars'][$value];
+
+            $mapped['section'] = 'script';
+            $mapped['type'] = 'customFunction';
 
         }else if (isset($data['variables'][ $value ])){
             $mapped = $data['variables'][ $value ];
