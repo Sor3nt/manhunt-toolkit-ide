@@ -108,7 +108,7 @@ class T_IF {
             $innerTokens = $case['isTrue'];
 
             while($innerCurrent < count($innerTokens)){
-                list($innerCurrent, $tree)= $parseToken($innerTokens, $innerCurrent);
+                list($innerCurrent, $tree) = $parseToken($innerTokens, $innerCurrent);
 
                 if ($tree) $parsedIsTrue[] = $tree;
 
@@ -169,13 +169,17 @@ class T_IF {
          */
         if ($shortStatement){
 
-
             while ($current < count($tokens)) {
                 $token = $tokens[$current];
 
-                if ($token['type'] == Token::T_LINEEND) {
+                if ($token['type'] == Token::T_LINEEND || $token['type'] == Token::T_ELSE) {
 
                     $node['cases'][] = $case;
+
+                    //some short codes did not end with lineend
+                    if ($token['type'] == Token::T_ELSE){
+                        $current--;
+                    }
 
                     if (isset($tokens[$current + 1])){
                         if (

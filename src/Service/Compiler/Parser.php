@@ -96,6 +96,10 @@ class Parser {
                             $tokenInner['returnType'] = $token['returnType'];
                         }
 
+                        if (isset($token['parameters'])){
+                            $tokenInner['parameters'] = $token['parameters'];
+                        }
+
                         $token = $tokenInner;
 
                         unset($ast['body'][$index]);

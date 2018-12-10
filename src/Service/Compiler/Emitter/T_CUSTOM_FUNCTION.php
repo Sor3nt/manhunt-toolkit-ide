@@ -119,8 +119,8 @@ class T_CUSTOM_FUNCTION {
         }
 
 
-        foreach ($node['body'] as $node) {
-            $resultCode = $emitter( $node, true, [ 'customFunctionVars' => $vars ] );
+        foreach ($node['body'] as $innerNode) {
+            $resultCode = $emitter( $innerNode, true, [ 'customFunctionVars' => $vars, 'parameters' => $node['parameters'] ] );
 
             if (is_null($resultCode)){
                 throw new \Exception('Return was null, a emitter missed a return statement ?');

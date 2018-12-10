@@ -13,7 +13,7 @@ class T_CUSTOM_FUNCTION_NAME {
             while($current < strlen($input)) {
                 $char = substr($input, $current, 1);
 
-                if ($char === ";" || $char === "("){
+                if ($char === ";" || $char === "(" || $char === " "){
                     return [
                         'type' => 'T_CUSTOM_FUNCTION_NAME',
                         'value' => $value
