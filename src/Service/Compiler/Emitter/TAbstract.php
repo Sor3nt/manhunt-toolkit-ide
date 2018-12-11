@@ -9,9 +9,11 @@ use App\Service\Compiler\Token;
 
 class TAbstract {
 
-    public function __construct()
-    {
+    public $data;
 
+    public function __construct( $data )
+    {
+        $this->data = $data;
     }
 
 }

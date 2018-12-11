@@ -6,7 +6,8 @@ use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
 use App\Service\Helper;
 
-class NewCompiler {
+class NewCompiler
+{
 
     private $parentScript = false;
 
@@ -27,7 +28,6 @@ class NewCompiler {
     protected $customFunction = [];
 
 
-
     protected $memoryOffset = 0;
     protected $blockOffsets = [];
     protected $scriptBlockSizes = [];
@@ -41,7 +41,7 @@ class NewCompiler {
     protected $ast = false;
     protected $tokens = [];
 
-    public function __construct( $source, $parentScript = false )
+    public function __construct($source, $parentScript = false)
     {
 
         $this->untouchedSource = $source;
@@ -54,7 +54,7 @@ class NewCompiler {
 
         $this->parentScript = $parentScript;
 
-        $this->types = $this->getTypes( $tokens );
+        $this->types = $this->getTypes($tokens);
         list($this->constants, $this->headerStrings) = $this->getConstants($tokens);
 
         /**
@@ -92,7 +92,8 @@ class NewCompiler {
         $this->tokens = $tokens;
     }
 
-    public function compile(){
+    public function compile()
+    {
 
         $result = [];
 
@@ -102,7 +103,7 @@ class NewCompiler {
                 $token['type'] == Token::T_SCRIPT ||
                 $token['type'] == Token::T_PROCEDURE ||
                 $token['type'] == Token::T_CUSTOM_FUNCTION
-            ){
+            ) {
                 $code = $this->processBlock($token);
                 foreach ($code as $line) {
                     $result[] = $line->hex;
@@ -134,7 +135,8 @@ class NewCompiler {
      *
      */
 
-    private function processBlock( $token ){
+    private function processBlock($token)
+    {
 
 
         $scriptName = strtolower($token['value']);
@@ -143,7 +145,7 @@ class NewCompiler {
          * Save the start point of each block
          * We need this for procedures and functions, there called by the start point.
          */
-        $this->blockOffsets[ $scriptName ] = [
+        $this->blockOffsets[$scriptName] = [
             'blockType' => $token['type'],
             'offset' => $this->lineCount - 1,
             'section' => 'script',
@@ -152,23 +154,21 @@ class NewCompiler {
 
 
         // OLD CODE; DO REFACTOR
-        if ($token['type'] == Token::T_PROCEDURE){
-            $this->procedures[ $scriptName ] = $this->lineCount - 1;
-        }else if ($token['type'] == Token::T_CUSTOM_FUNCTION){
-            $this->customFunction[ $scriptName ] = $this->lineCount - 1;
+        if ($token['type'] == Token::T_PROCEDURE) {
+            $this->procedures[$scriptName] = $this->lineCount - 1;
+        } else if ($token['type'] == Token::T_CUSTOM_FUNCTION) {
+            $this->customFunction[$scriptName] = $this->lineCount - 1;
         }
         // OLD CODE; DO REFACTOR
 
         $scriptVar = $this->getScriptVar($token['body']);
-
 
         /**
          * Translate Token AST to Bytecode
          */
         $emitter = new Emitter(
             array_merge($this->combinedVariables, $scriptVar),
-            array_merge($this->stringsForScript[ $scriptName ], $this->headerStrings),
-
+            array_merge($this->stringsForScript[$scriptName], $this->headerStrings),
 
 
             $scriptVar,
@@ -189,14 +189,15 @@ class NewCompiler {
 
         /**
          * Calculate the end of each SCRIPT block
-         * Any procedure or function will just count up the size
+         * Any PROCEDURE or FUNCTION will just count up the size
          */
-        if ($token['type'] == Token::T_SCRIPT){
-            $this->scriptBlockSizes[ $scriptName ] = $this->lastScriptEnd;
+        if ($token['type'] == Token::T_SCRIPT) {
+            $this->scriptBlockSizes[$scriptName] = $this->lastScriptEnd;
             $this->lastScriptEnd = count($code) * 4;
-        }else if (
+        } else if (
             $token['type'] == Token::T_PROCEDURE ||
-            $token['type'] == Token::T_CUSTOM_FUNCTION){
+            $token['type'] == Token::T_CUSTOM_FUNCTION
+        ) {
 
             $this->lastScriptEnd += count($code) * 4;
         }
@@ -209,7 +210,8 @@ class NewCompiler {
         return $code;
     }
 
-    private function combine(){
+    private function combine()
+    {
 
         $combinedVariables = [];
 
@@ -233,7 +235,8 @@ class NewCompiler {
     /**
      * Helper
      */
-    private function isVariableInUse($tokens, $var){
+    private function isVariableInUse($tokens, $var)
+    {
 
         $result = $this->recursiveSearch($tokens, [
             Token::T_VARIABLE,
@@ -242,7 +245,7 @@ class NewCompiler {
 
         foreach ($result as $token) {
 
-            if ($token['value'] == $var){
+            if ($token['value'] == $var) {
                 return true;
             }
         }
@@ -250,56 +253,57 @@ class NewCompiler {
         return false;
     }
 
-    private function recursiveSearch($tokens, $searchType, $ignoreTypes = []){
+    private function recursiveSearch($tokens, $searchType, $ignoreTypes = [])
+    {
 
 
         $result = [];
         foreach ($tokens as $token) {
 
-            if (count($searchType) == 0 || in_array($token['type'],$searchType)){
-                if (in_array($token['type'],$ignoreTypes)){
+            if (count($searchType) == 0 || in_array($token['type'], $searchType)) {
+                if (in_array($token['type'], $ignoreTypes)) {
                     continue;
-                }else{
+                } else {
                     $result[] = $token;
                 }
             }
 
-            if (isset($token['variable'])){
-                $response =  $this->recursiveSearch([$token['variable']], $searchType, $ignoreTypes);
+            if (isset($token['variable'])) {
+                $response = $this->recursiveSearch([$token['variable']], $searchType, $ignoreTypes);
                 foreach ($response as $item) {
                     $result[] = $item;
                 }
             }
 
-            if (isset($token['start'])){
-                $response =  $this->recursiveSearch([$token['start']], $searchType, $ignoreTypes);
+            if (isset($token['start'])) {
+                $response = $this->recursiveSearch([$token['start']], $searchType, $ignoreTypes);
                 foreach ($response as $item) {
                     $result[] = $item;
                 }
             }
 
-            if (isset($token['end'])){
-                $response =  $this->recursiveSearch([$token['end']], $searchType, $ignoreTypes);
+            if (isset($token['end'])) {
+                $response = $this->recursiveSearch([$token['end']], $searchType, $ignoreTypes);
                 foreach ($response as $item) {
                     $result[] = $item;
                 }
             }
 
             if (isset($token['params'])) {
-                $response =  $this->recursiveSearch($token['params'], $searchType, $ignoreTypes);
+                $response = $this->recursiveSearch($token['params'], $searchType, $ignoreTypes);
                 foreach ($response as $item) {
                     $result[] = $item;
                 }
 
-            }else if (isset($token['body'])){
-                $response =   $this->recursiveSearch($token['body'], $searchType, $ignoreTypes);
+            } else if (isset($token['body'])) {
+                $response = $this->recursiveSearch($token['body'], $searchType, $ignoreTypes);
                 foreach ($response as $item) {
                     $result[] = $item;
                 }
-            }else if (isset($token['cases'])){
+            } else if (isset($token['cases'])) {
 
-                if (isset($token['switch'])){
-                    $response =   $this->recursiveSearch([$token['switch']], $searchType, $ignoreTypes);
+                if (isset($token['switch'])) {
+                    $response = $this->recursiveSearch([$token['switch']], $searchType, $ignoreTypes);
                     foreach ($response as $item) {
                         $result[] = $item;
                     }
@@ -307,14 +311,14 @@ class NewCompiler {
 
                 foreach ($token['cases'] as $case) {
 
-                    if (!isset($case['condition'])){
+                    if (!isset($case['condition'])) {
                         $response = $this->recursiveSearch($case['body'], $searchType, $ignoreTypes);
                         foreach ($response as $item) {
                             $result[] = $item;
                         }
                     }
 
-                    if (isset($case['condition'])){
+                    if (isset($case['condition'])) {
                         $response = $this->recursiveSearch($case['condition'], $searchType, $ignoreTypes);
                         foreach ($response as $item) {
                             $result[] = $item;
@@ -332,19 +336,20 @@ class NewCompiler {
         return $result;
     }
 
-    private function getMemorySizeByType($type, $add4Bytes = true ){
+    private function getMemorySizeByType($type, $add4Bytes = true)
+    {
 
         if (substr($type, 0, 7) == "string[") {
             $len = (int)explode("]", substr($type, 7))[0];
 
-            if ($add4Bytes){
+            if ($add4Bytes) {
                 if ($len % 4 == 0) $len += 4;
             }
 
             return $len;
         }
 
-        switch ($type){
+        switch ($type) {
             case 'vec3d':
                 return 12; // 3 floats a 4-bytes
                 break;
@@ -356,12 +361,25 @@ class NewCompiler {
         }
     }
 
-    private function searchScriptType( $type ){
+    private function calculateMissedStringSize($length)
+    {
+        if (4 - $length % 4 != 0) return 4 - $length % 4;
+        return 0;
+    }
+
+    private function calculateMissedIntegerSize($length)
+    {
+        if ($length % 4 != 0) return $length % 4;
+        return 0;
+    }
+
+    private function searchScriptType($type)
+    {
 
         $result = [];
 
         foreach ($this->ast['body'] as $token) {
-            if ($token['type'] == $type){
+            if ($token['type'] == $type) {
 
                 $result[strtolower($token['value'])] = false;
             }
@@ -370,9 +388,10 @@ class NewCompiler {
         return $result;
     }
 
-    private function validateLineCount( $code ){
+    private function validateLineCount($code)
+    {
         foreach ($code as $line) {
-            if ($line->lineNumber !== $this->calculatedLineCount){
+            if ($line->lineNumber !== $this->calculatedLineCount) {
                 throw new \Exception('Calculated line number did not match with the generated one');
             }
 
@@ -380,7 +399,8 @@ class NewCompiler {
         }
     }
 
-    private function prepare($source){
+    private function prepare($source)
+    {
 
         $source = str_replace([
 
@@ -391,7 +411,7 @@ class NewCompiler {
             "PLAYING  TWITCH",
             "if bMeleeTutDone AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
             "if (NOT IsPlayerPositionKnown) AND IsScriptAudioStreamCompleted then"
-        ],[
+        ], [
 
             "if GetEntity('Syringe_(CT)') <> NIL then",
             "if GetEntity('Syringe_(CT)') = nil then",
@@ -412,7 +432,7 @@ class NewCompiler {
 
         $source = preg_replace("/({([^{^}])*)*{([^{^}])*}(([^{^}])*})*/m", "", $source);
 
-        if (preg_last_error() == PREG_JIT_STACKLIMIT_ERROR){
+        if (preg_last_error() == PREG_JIT_STACKLIMIT_ERROR) {
             die("PHP7 issue, pls disable pcre.jit=0 in your php.ini");
         }
 
@@ -420,7 +440,7 @@ class NewCompiler {
             "PLAYING__TWITCH",
             "end end",
             "if IsEntityAlive('TruckGuard1(hunter)') or IsEntityAlive('TruckGuard2(hunter)') then",
-        ],[
+        ], [
             "PLAYING  TWITCH",
             "end; end",
             "if (IsEntityAlive('TruckGuard1(hunter)')) or (IsEntityAlive('TruckGuard2(hunter)')) then",
@@ -436,7 +456,8 @@ class NewCompiler {
     /**
      * Getter
      */
-    private function getTypes($tokens){
+    private function getTypes($tokens)
+    {
 
         $types = [];
 
@@ -445,14 +466,14 @@ class NewCompiler {
         $inside = false;
         $currentTypeSection = false;
 
-        while( $current < count($tokens)){
+        while ($current < count($tokens)) {
 
-            $token = $tokens[ $current ];
+            $token = $tokens[$current];
 
             if ($token['type'] == Token::T_DEFINE_SECTION_TYPE) {
                 $inside = true;
 
-            }else if (
+            } else if (
                 $inside && (
                     $token['type'] == Token::T_DEFINE_SECTION_VAR ||
                     $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
@@ -461,34 +482,34 @@ class NewCompiler {
                     $token['type'] == Token::T_CUSTOM_FUNCTION ||
                     $token['type'] == Token::T_SCRIPT
                 )
-            ){
+            ) {
 
                 return $types;
 
-            }else if (
+            } else if (
                 $token['type'] == Token::T_BRACKET_OPEN ||
                 $token['type'] == Token::T_BRACKET_CLOSE
-            ){
+            ) {
                 // do nothing
-            }else if (
+            } else if (
                 $token['type'] == Token::T_LINEEND
-            ){
+            ) {
 
                 $currentTypeSection = false;
-            }else if ($inside){
+            } else if ($inside) {
 
-                if ($token['type'] == Token::T_IS_EQUAL){
-                    $beforeToken = $tokens[ $current - 1 ];
+                if ($token['type'] == Token::T_IS_EQUAL) {
+                    $beforeToken = $tokens[$current - 1];
 
                     $offset = 0;
                     $currentTypeSection = strtolower($beforeToken['value']);
 
-                    $types[ $currentTypeSection ]  = [];
+                    $types[$currentTypeSection] = [];
 
 
-                }else if ($currentTypeSection && $token['type'] == Token::T_VARIABLE){
+                } else if ($currentTypeSection && $token['type'] == Token::T_VARIABLE) {
 
-                    $types[ $currentTypeSection ][ strtolower($token['value']) ] = [
+                    $types[$currentTypeSection][strtolower($token['value'])] = [
                         'type' => 'level_var state',
                         'section' => "header",
                         'offset' => Helper::fromIntToHex($offset)
@@ -504,7 +525,8 @@ class NewCompiler {
         return $types;
     }
 
-    private function getHeaderVariables( $tokens ){
+    private function getHeaderVariables($tokens)
+    {
 
         $current = 0;
         $currentSection = 'header';
@@ -515,7 +537,7 @@ class NewCompiler {
 
         while ($current < count($tokens)) {
 
-            $token = $tokens[ $current ];
+            $token = $tokens[$current];
 
             // we need to know the current section for the defined vars
             if (
@@ -529,35 +551,36 @@ class NewCompiler {
                     $token['type'] == Token::T_SCRIPT
                 )
 
-            ){
+            ) {
                 break;
             }
 
             if (
                 $token['type'] == Token::T_SCRIPT ||
                 $token['type'] == Token::T_CUSTOM_FUNCTION ||
-                $token['type'] == Token::T_PROCEDURE)
+                $token['type'] == Token::T_PROCEDURE
+            )
                 break;
 
             if ($token['type'] == Token::T_DEFINE_SECTION_VAR) $inside = true;
 
-            if ($inside == false){
+            if ($inside == false) {
                 $current++;
                 continue;
             }
 
-            if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE){
+            if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE) {
 
                 $variables = [
                     $token
                 ];
 
-                $prevToken = $tokens[ $current - 1];
+                $prevToken = $tokens[$current - 1];
                 $innerCurrent = $current;
-                while($prevToken['type'] == Token::T_VARIABLE){
+                while ($prevToken['type'] == Token::T_VARIABLE) {
                     $variables[] = $prevToken;
                     $innerCurrent--;
-                    $prevToken = $tokens[ $innerCurrent - 1];
+                    $prevToken = $tokens[$innerCurrent - 1];
                 }
 
                 $variables = array_reverse($variables);
@@ -580,7 +603,7 @@ class NewCompiler {
 
 
 //                    var_dump($variableType, $variableTypeWihtoutLevel);
-                    if (isset($this->types[  $variableTypeWihtoutLevel ] )){
+                    if (isset($this->types[$variableTypeWihtoutLevel])) {
                         $row['isLevelVar'] = $isLevelVar;
                         $row['abstract'] = 'state';
                     }
@@ -597,7 +620,7 @@ class NewCompiler {
         /**
          * Apply variables from parent script
          */
-        if ($this->parentScript != false){
+        if ($this->parentScript != false) {
             $parentVariables = $this->parentScript['extra']['headerVariables'];
 
             // loop over the parent variables
@@ -620,15 +643,14 @@ class NewCompiler {
          */
         foreach ($vars as $name => &$item) {
 
-            if (!isset($item['offset'])){
+            if (!isset($item['offset'])) {
                 $item['offset'] = Helper::fromIntToHex($this->memoryOffset);
             }
 
             $size = $item['length'];
 
-            if ($size % 4 !== 0){
-                $size += $size % 4;
-            }
+            $size += $this->calculateMissedIntegerSize($size);
+
 
             $this->memoryOffset += $size;
         }
@@ -636,25 +658,26 @@ class NewCompiler {
         return $vars;
     }
 
-    private function getConstants($tokens){
+    private function getConstants($tokens)
+    {
 
         $current = 0;
 
-        $scriptConstants = [];
+        $constants = [];
         $currentSection = false;
 
         while ($current < count($tokens)) {
 
-            $token = $tokens[ $current ];
+            $token = $tokens[$current];
 
             // we need to know the current section for the defined vars
-            if ($token['type'] == Token::T_DEFINE_SECTION_CONST){
-                $currentSection = 'const';
+            if ($token['type'] == Token::T_DEFINE_SECTION_CONST) {
+                $currentSection = Token::T_DEFINE_SECTION_CONST;
                 $current++;
                 continue;
             }
 
-            if ($currentSection == "const"){
+            if ($currentSection == Token::T_DEFINE_SECTION_CONST) {
 
                 if (
                     $token['type'] == Token::T_DEFINE_SECTION_VAR ||
@@ -663,77 +686,68 @@ class NewCompiler {
                     $token['type'] == Token::T_PROCEDURE ||
                     $token['type'] == Token::T_CUSTOM_FUNCTION ||
                     $token['type'] == Token::T_SCRIPT
-                ){
+                ) {
                     break;
-                }else{
+                } else {
                     $variable = $token['value'];
 
-                    $scriptConstants[$variable] = $tokens[$current + 2];
+                    $constants[$variable] = $tokens[$current + 2];
 
-                    $current = $current + 3;
-
-                    $varVal = $scriptConstants[$variable]['value'];
-
-                    if (substr($varVal, 0, 7) == "string["){
-                        $this->memoryOffset += $this->getMemorySizeByType($varVal);
-                    }else if (
-                        $scriptConstants[$variable]['type'] == Token::T_INT ||
-                        $scriptConstants[$variable]['type'] == Token::T_FLOAT
+                    if (
+                        $constants[$variable]['type'] == Token::T_INT ||
+                        $constants[$variable]['type'] == Token::T_FLOAT
                     ) {
+                        //just rais the memory, we dont need to save a offset for numerics
                         $this->memoryOffset += 4;
-
                     }
 
+                    $current = $current + 3;
                 }
             }
 
             $current++;
         }
 
-        $result = [];
+
+        /**
+         * Caclulate string offsets
+         */
+
+        $tmpArray = [];
+        $strings = [];
+        foreach ($constants as $item) {
+
+            if ($item['type'] == Token::T_STRING) {
+                $string = str_replace('"', '', $item['value']);
+
+                if(!isset($tmpArray[$string])){
+                    $tmpArray[$string] = $string;
+
+                    $length = strlen($string) + 1;
+                    $strings[$string] = [
+                        'offset' => Helper::fromIntToHex($this->memoryOffset),
+                        'length' => strlen($string)
+                    ];
 
 
-        //Caclulate string offsets
-        foreach ($scriptConstants as $item) {
+                    $this->memoryOffset += $length + $this->calculateMissedStringSize($length);
 
-            if ($item['type'] == Token::T_STRING){
-                $value = str_replace('"', '', $item['value']);
-
-                $result[$value] = $value;
+                }
             }
         }
 
-        $headerStrings = [];
 
-        $strings = array_unique($result);
-        foreach ($strings as $string) {
-
-            $length = strlen($string) + 1;
-            $headerStrings[$string] = [
-                'offset' => Helper::fromIntToHex($this->memoryOffset),
-                'length' => strlen($string)
-            ];
-
-            if (4 - $length % 4 != 0){
-                $length += 4 - $length % 4;
-            }
-
-            $this->memoryOffset += $length;
-        }
-
-
-
-        foreach ($scriptConstants as &$var) {
+        foreach ($constants as &$var) {
 
             $var['section'] = 'script';
 
             if ($var['type'] == Token::T_INT) {
                 $var['valueType'] = "integer";
 
-            }else if ($var['type'] == Token::T_STRING){
+            } else if ($var['type'] == Token::T_STRING) {
                 $var['valueType'] = "string";
 
-            }else if ($var['type'] == Token::T_FLOAT){
+            } else if ($var['type'] == Token::T_FLOAT) {
                 $var['valueType'] = "float";
 
             }
@@ -755,13 +769,14 @@ class NewCompiler {
 
             $hardCodedConstant['section'] = 'header';
             $hardCodedConstant['type'] = 'constant';
-            $scriptConstants[$index] = $hardCodedConstant;
+            $constants[$index] = $hardCodedConstant;
         }
 
-        return [$scriptConstants, $headerStrings];
+        return [$constants, $strings];
     }
 
-    private function getStrings4Script(){
+    private function getStrings4Script()
+    {
         $strings4Scripts = [];
         foreach ($this->ast["body"] as $index => $token) {
 
@@ -769,7 +784,7 @@ class NewCompiler {
                 $token['type'] == Token::T_SCRIPT ||
                 $token['type'] == Token::T_PROCEDURE ||
                 $token['type'] == Token::T_CUSTOM_FUNCTION
-            ){
+            ) {
 
                 $scriptName = strtolower($token['value']);
 
@@ -783,10 +798,10 @@ class NewCompiler {
                     $value = str_replace('"', '', $item['value']);
                     $value = str_replace("'", '', $value);
 
-                    if ($value == ""){
+                    if ($value == "") {
                         $result["__empty__"] = '';
 
-                    }else{
+                    } else {
 
                         $result[$value] = $value;
                     }
@@ -798,28 +813,24 @@ class NewCompiler {
                     $length = strlen($string) + 1;
 
                     $string = [
-                        'offset' => Helper::fromIntToHex($this->memoryOffset),
-
-                        //todo check, not in use at all ?!
-                        'length' => strlen($string)
+                        'offset' => Helper::fromIntToHex($this->memoryOffset)
                     ];
 
-                    if (4 - $length % 4 != 0){
-                        $length += 4 - $length % 4;
-                    }
+                    $length += $this->calculateMissedStringSize($length);
 
                     $this->memoryOffset += $length;
 
                 }
 
-                $strings4Scripts[ $scriptName ] = $strings;
+                $strings4Scripts[$scriptName] = $strings;
             }
         }
 
         return $strings4Scripts;
     }
 
-    private function getScriptVar( $tokens ){
+    private function getScriptVar($tokens)
+    {
 
         $originalTokens = $tokens;
 
@@ -829,7 +840,7 @@ class NewCompiler {
         foreach ($tokens as $token) {
             if ($token['type'] == Token::T_DEFINE_SECTION_VAR) {
                 $varSection = $token['body'];
-            }else{
+            } else {
                 $otherTokens[] = $token;
             }
         }
@@ -840,21 +851,21 @@ class NewCompiler {
 
         while ($current < count($tokens)) {
 
-            $token = $tokens[ $current ];
+            $token = $tokens[$current];
 
-            if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE_TYPE){
+            if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE_TYPE) {
 
-                $variables = [ $token ];
+                $variables = [$token];
 
                 $oriPos = $current;
-                if (isset($tokens[ $current - 1])){
+                if (isset($tokens[$current - 1])) {
 
-                    $prevToken = $tokens[ $current - 1];
-                    while($prevToken['type'] == Token::T_VARIABLE){
+                    $prevToken = $tokens[$current - 1];
+                    while ($prevToken['type'] == Token::T_VARIABLE) {
                         $variables[] = $prevToken;
                         $current--;
-                        if (!isset($tokens[ $current - 1])) break;
-                        $prevToken = $tokens[ $current - 1];
+                        if (!isset($tokens[$current - 1])) break;
+                        $prevToken = $tokens[$current - 1];
                     }
                 }
 
@@ -872,7 +883,7 @@ class NewCompiler {
                         'type' => $variableType
                     ];
 
-                    if (substr($variableType, 0, 7) == "string["){
+                    if (substr($variableType, 0, 7) == "string[") {
                         $row['type'] = 'stringarray';
                     }
 
@@ -895,18 +906,18 @@ class NewCompiler {
             $blockMemory += $item['size'];
 
             $item['offset'] = Helper::fromIntToHex($blockMemory);
-            if ($blockMemory % 4 !== 0){
-                $blockMemory += $blockMemory % 4;
-            }
-            $scriptVarFinal[$name ] = $item;
-            $this->variablesOverAllScripts[$name ] = $item;
+
+            $blockMemory += $this->calculateMissedIntegerSize($blockMemory);
+
+            $scriptVarFinal[$name] = $item;
+            $this->variablesOverAllScripts[$name] = $item;
         }
 
         foreach ($this->headerVariables as $_name => $_item) {
 
-            if ($this->isVariableInUse($originalTokens, $_name)){
-                if (!isset($scriptVarFinal[$_name ])){
-                    $scriptVarFinal[$_name ] = $_item;
+            if ($this->isVariableInUse($originalTokens, $_name)) {
+                if (!isset($scriptVarFinal[$_name])) {
+                    $scriptVarFinal[$_name] = $_item;
                 }
             }
         }
@@ -915,12 +926,12 @@ class NewCompiler {
     }
 
 
-
     /**
      * generate MLS blocks
      */
 
-    private function generateSCPT( $game ){
+    private function generateSCPT($game)
+    {
 
         $scpt = [];
         $scriptSize = 0;
@@ -933,9 +944,9 @@ class NewCompiler {
 
             if (isset($functionEventDefinitionDefault[strtolower($name)])) {
                 $onTrigger = $functionEventDefinitionDefault[strtolower($name)];
-            }else if (isset($functionEventDefinition[strtolower($name)])){
+            } else if (isset($functionEventDefinition[strtolower($name)])) {
                 $onTrigger = $functionEventDefinition[strtolower($name)];
-            }else{
+            } else {
                 $onTrigger = $functionEventDefinition['__default__'];
             }
 
@@ -950,7 +961,8 @@ class NewCompiler {
         return $scpt;
     }
 
-    private function generateDATA( $strings4Scripts ){
+    private function generateDATA($strings4Scripts)
+    {
         $result = [];
 
         foreach ($strings4Scripts as $strings) {
@@ -959,14 +971,15 @@ class NewCompiler {
             }
         }
 
-        if (count($result) == 0){
+        if (count($result) == 0) {
             $result[] = hex2bin('dadadadadadadada');
         }
 
         return $result;
     }
 
-    private function generateSTAB( $headerVariables, $sectionCode, $variablesOverAllScripts ){
+    private function generateSTAB($headerVariables, $sectionCode, $variablesOverAllScripts)
+    {
 
         $result = [];
 
@@ -977,12 +990,12 @@ class NewCompiler {
             $varType = $variable['type'];
             $hierarchieType = '01000000';
 
-            if (substr($varType, 0, 9) == "level_var"){
+            if (substr($varType, 0, 9) == "level_var") {
                 $varType = substr($varType, 10);
 
                 foreach ($sectionCode as $index => $code) {
 
-                    if ($code == $variable['offset']){
+                    if ($code == $variable['offset']) {
                         $occur[] = $index * 4;
                     }
                 }
@@ -997,7 +1010,7 @@ class NewCompiler {
              * when the variable is defined inside the HEADER and also in one or multiple scripts, we need to give him the 02 sequence
              */
             foreach ($variablesOverAllScripts as $varScriptName => $variablesOverAllScript) {
-                if ($varScriptName == $name){
+                if ($varScriptName == $name) {
                     $hierarchieType = '02000000';
                     $variable['offset'] = "00000000";
                 }
@@ -1033,25 +1046,26 @@ class NewCompiler {
 
             $result[] = $row;
         }
-        usort($result, function($a,$b){
+        usort($result, function ($a, $b) {
             return $a['name'] > $b['name'];
         });
 
         return $result;
     }
 
-    private function generateEntity(){
+    private function generateEntity()
+    {
 
         $tokens = $this->tokens;
         $current = 0;
 
         $scriptName = strtolower($tokens[1]['value']);
 
-        while($current < count($tokens)){
+        while ($current < count($tokens)) {
 
             $token = $tokens[$current];
 
-            if ($token['type'] == Token::T_DEFINE_SECTION_ENTITY){
+            if ($token['type'] == Token::T_DEFINE_SECTION_ENTITY) {
 
                 return [
                     'name' => strtolower($tokens[$current + 1]['value']),

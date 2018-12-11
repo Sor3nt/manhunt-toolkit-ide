@@ -6,7 +6,7 @@ use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
 
-class T_VARIABLE {
+class T_VARIABLE extends TAbstract {
 
     static public function getMapping( $node, \Closure $emitter = null , $data ){
 
@@ -70,7 +70,7 @@ class T_VARIABLE {
         return $mapped;
     }
 
-    static public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
+    public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
 
         $mapped = self::getMapping($node, $emitter, $data);
 
