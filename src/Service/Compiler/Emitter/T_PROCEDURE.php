@@ -89,6 +89,8 @@ class T_PROCEDURE {
             $varOffset = -12;
             foreach ($vars as &$var) {
                 $var['offset'] = $varOffset;
+                $var['section'] = 'script';
+                $var['type'] = 'procedure';
                 $varOffset -= 4;
             }
 

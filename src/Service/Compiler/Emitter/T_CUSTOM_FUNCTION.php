@@ -111,6 +111,8 @@ class T_CUSTOM_FUNCTION {
             $varOffset = -12;
             foreach ($vars as &$var) {
                 $var['offset'] = $varOffset;
+                $var['section'] = 'script';
+                $var['type'] = 'customFunction';
                 $varOffset -= 4;
             }
 

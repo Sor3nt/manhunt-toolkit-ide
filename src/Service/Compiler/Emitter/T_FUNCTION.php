@@ -348,7 +348,7 @@ class T_FUNCTION {
 
             $mappedToBlock = $this->blockOffsets[ strtolower($node['value']) ];
 
-            switch ($this->blockOffsets[ strtolower($node['value']) ]['type']){
+            switch ($this->blockOffsets[ strtolower($node['value']) ]['blockType']){
 
                 case Token::T_PROCEDURE:
                     $isProcedure = true;

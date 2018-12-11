@@ -142,8 +142,10 @@ class NewCompiler {
          * We need this for procedures and functions, there called by the start point.
          */
         $this->blockOffsets[ $scriptName ] = [
-            'type' => $token['type'],
-            'offset' => $this->lineCount - 1
+            'blockType' => $token['type'],
+            'offset' => $this->lineCount - 1,
+            'section' => 'script',
+            'type' => 'custom_functions'
         ];
 
         if (isset($this->combinedVariables[ $scriptName ])){
@@ -630,7 +632,7 @@ class NewCompiler {
 
         $current = 0;
 
-        $vars = [];
+        $scriptConstants = [];
         $currentSection = false;
 
         while ($current < count($tokens)) {
@@ -658,17 +660,17 @@ class NewCompiler {
                 }else{
                     $variable = $token['value'];
 
-                    $vars[$variable] = $tokens[$current + 2];
+                    $scriptConstants[$variable] = $tokens[$current + 2];
 
                     $current = $current + 3;
 
-                    $varVal = $vars[$variable]['value'];
+                    $varVal = $scriptConstants[$variable]['value'];
 
                     if (substr($varVal, 0, 7) == "string["){
                         $this->memoryOffset += $this->getMemorySizeByType($varVal);
                     }else if (
-                        $vars[$variable]['type'] == Token::T_INT ||
-                        $vars[$variable]['type'] == Token::T_FLOAT
+                        $scriptConstants[$variable]['type'] == Token::T_INT ||
+                        $scriptConstants[$variable]['type'] == Token::T_FLOAT
                     ) {
                         $this->memoryOffset += 4;
 
@@ -681,8 +683,10 @@ class NewCompiler {
         }
 
         $result = [];
-        //Caclulate offsets
-        foreach ($vars as $item) {
+
+
+        //Caclulate string offsets
+        foreach ($scriptConstants as $item) {
 
             if ($item['type'] == Token::T_STRING){
                 $value = str_replace('"', '', $item['value']);
@@ -709,7 +713,44 @@ class NewCompiler {
             $this->memoryOffset += $length;
         }
 
-        return [$vars, $headerStrings];
+
+
+        foreach ($scriptConstants as &$var) {
+
+            $var['section'] = 'script';
+
+            if ($var['type'] == Token::T_INT) {
+                $var['valueType'] = "integer";
+
+            }else if ($var['type'] == Token::T_STRING){
+                $var['valueType'] = "string";
+
+            }else if ($var['type'] == Token::T_FLOAT){
+                $var['valueType'] = "float";
+
+            }
+
+            //todo: hmm ich brauch den richtigen type in T_SCRIPT_CONSTANT -.-
+//            $var['type'] = 'constant';
+
+        }
+
+        /**
+         * apply the hardcoded constants
+         */
+
+        foreach (
+            array_merge(
+                ManhuntDefault::$constants,
+                Manhunt2::$constants
+            ) as $index => $hardCodedConstant) {
+
+            $hardCodedConstant['section'] = 'header';
+            $hardCodedConstant['type'] = 'constant';
+            $scriptConstants[$index] = $hardCodedConstant;
+        }
+
+        return [$scriptConstants, $headerStrings];
     }
 
     private function getStrings4Script(){
