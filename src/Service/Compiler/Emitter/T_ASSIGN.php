@@ -276,7 +276,6 @@ class T_ASSIGN {
                                 break;
 
                             case 'vec3d':
-
                                 self::toScriptVec3D( $mapped['offset'], $code, $getLine);
                                 break;
 

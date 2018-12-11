@@ -11,13 +11,12 @@ use App\Service\Helper;
 
 class T_FUNCTION {
 
-    private $procedures;
-    private $customFunctions;
+
+    private $blockOffsets;
 
     public function __construct( $customData )
     {
-        $this->procedures = $customData['procedures'];
-        $this->customFunctions = $customData['customFunctions'];
+        $this->blockOffsets = $customData['blockOffsets'];
     }
 
     static public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false, $isProcedure = false, $isCustomFunction = false ){
@@ -339,9 +338,27 @@ class T_FUNCTION {
 
         $forceFloatOrder = self::getForceFloat($node['value']);
 
-        $isProcedure = isset($this->procedures[strtolower($node['value'])]);
-        $isCustomFunction = isset($this->customFunctions[strtolower($node['value'])]);
 
+
+        $isProcedure = false;
+        $isCustomFunction = false;
+
+        $mappedToBlock = false;
+        if (isset($this->blockOffsets[ strtolower($node['value']) ]) ){
+
+            $mappedToBlock = $this->blockOffsets[ strtolower($node['value']) ];
+
+            switch ($this->blockOffsets[ strtolower($node['value']) ]['type']){
+
+                case Token::T_PROCEDURE:
+                    $isProcedure = true;
+                    break;
+                case Token::T_CUSTOM_FUNCTION:
+                    $isCustomFunction = true;
+                    break;
+            }
+
+        }
 
 
         if (isset($node['params']) && count($node['params'])){
@@ -433,7 +450,7 @@ class T_FUNCTION {
         }catch (\Exception $e){
 
             if ($isProcedure) {
-                $procedureOffset = $this->procedures[strtolower($node['value'])];
+                $procedureOffset = $mappedToBlock['offset'];
 
                 $code[] = $getLine('10000000'); //procedure
                 $code[] = $getLine('04000000'); //procedure
@@ -452,7 +469,7 @@ class T_FUNCTION {
 
             }else if ($isCustomFunction){
 
-                $procedureOffset = $this->customFunctions[strtolower($node['value'])];
+                $procedureOffset = $mappedToBlock['offset'];
 
                 $code[] = $getLine('10000000'); //procedure
                 $code[] = $getLine('04000000'); //procedure
