@@ -4,11 +4,15 @@ namespace App\Service\Compiler;
 
 class Emitter {
 
+    private $combinedVariables = [];
+    private $combinedStrings = [];
+
+
     private $variables = [];
 
     /** @var Lines */
     private $lines;
-    private $strings;
+
     private $types;
     private $const;
 
@@ -35,11 +39,14 @@ class Emitter {
         'T_SWITCH' => Emitter\T_SWITCH::class,
     ];
 
-    public function __construct( $variables, $strings, $types, $const, $lineCount = 1 )
+    public function __construct( $combinedVariables, $combinedStrings, $variables, $types, $const, $lineCount = 1 )
     {
 
+        $this->combinedVariables = $combinedVariables;
+        $this->combinedStrings = $combinedStrings;
+
+
         $this->variables = $variables;
-        $this->strings = $strings;
         $this->types = $types;
         $this->const = $const;
 
@@ -48,12 +55,7 @@ class Emitter {
 
     public function emitter( $node, $calculateLineNumber = true, $customData = [] ){
 
-        if($node['type'] == "root") return $this->emitRoot($node, $calculateLineNumber, $customData);
-
-        if (!isset($this->emitters[ $node['type'] ])) {
-//            echo sprintf("Emitter not found for type %s\n", $node['type']);
-            return [];
-        }
+        if (!isset($this->emitters[ $node['type'] ])) return [];
 
         return (new $this->emitters[ $node['type'] ]($customData))->map(
             $node,
@@ -67,8 +69,12 @@ class Emitter {
             },
 
             [
+                'combinedVariables' => $this->combinedVariables,
+                'combinedStrings' => $this->combinedStrings,
+
+
                 'calculateLineNumber' => $calculateLineNumber,
-                'strings' => $this->strings,
+
                 'types' => $this->types,
                 'variables' => $this->variables,
                 'const' => $this->const,
@@ -77,16 +83,4 @@ class Emitter {
         );
     }
 
-    private function emitRoot( $root, $calculateLineNumber, $customData ){
-
-        $code = [];
-        foreach ($root['body'] as $node) {
-            $resultCode = $this->emitter( $node, $calculateLineNumber, $customData );
-            foreach ($resultCode as $line) {
-                $code[] = $line;
-            }
-        }
-
-        return $code;
-    }
 }

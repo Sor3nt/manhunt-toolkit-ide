@@ -16,6 +16,8 @@ class NewCompiler {
     protected $stringsForScript = [];
     protected $variablesOverAllScripts = [];
 
+    protected $combinedVariables = [];
+
     /**
      * TODO: renamen, thats constant strings
      */
@@ -82,6 +84,9 @@ class NewCompiler {
         $this->customFunction = $this->searchScriptType(Token::T_CUSTOM_FUNCTION);
         $this->headerVariables = $this->getHeaderVariables($tokens);
 
+        $this->combine();
+
+
         $this->tokens = $tokens;
     }
 
@@ -121,6 +126,98 @@ class NewCompiler {
             'LINE' => []
 
         ];
+    }
+
+    /**
+     *
+     */
+
+    private function processBlock( $token ){
+
+
+        $scriptName = strtolower($token['value']);
+
+        /**
+         * Save the start point of each block
+         * We need this for procedures and functions, there called by the start point.
+         */
+        $this->blockOffsets[ $scriptName ] = [
+            'type' => $token['type'],
+            'offset' => $this->lineCount - 1
+        ];
+
+        if (isset($this->combinedVariables[ $scriptName ])){
+            $this->combinedVariables[ $scriptName ] = $this->lineCount - 1;
+        }
+
+        // OLD CODE; DO REFACTOR
+        if ($token['type'] == Token::T_PROCEDURE){
+            $this->procedures[strtolower($token['value'])] = $this->lineCount - 1;
+        }else if ($token['type'] == Token::T_CUSTOM_FUNCTION){
+            $this->customFunction[strtolower($token['value'])] = $this->lineCount - 1;
+        }
+        // OLD CODE; DO REFACTOR
+
+        $scriptVar = $this->getScriptVar($token['body']);
+
+
+        /**
+         * Translate Token AST to Bytecode
+         */
+        $emitter = new Emitter(
+            array_merge($this->combinedVariables, $scriptVar),
+            array_merge($this->stringsForScript[ $scriptName ], $this->headerStrings),
+
+
+
+            $scriptVar,
+            $this->types,
+            $this->constants,
+            $this->lineCount
+        );
+
+        $code = $emitter->emitter($token, true, [
+
+            // OLD CODE; DO REFACTOR
+            'procedures' => $this->procedures,
+            'customFunctions' => $this->customFunction,
+            // OLD CODE; DO REFACTOR
+
+            'blockOffsets' => $this->blockOffsets
+        ]);
+
+        /**
+         * Calculate the end of each SCRIPT block
+         * Any procedure or function will just count up the size
+         */
+        if ($token['type'] == Token::T_SCRIPT){
+            $this->scriptBlockSizes[ $scriptName ] = $this->lastScriptEnd;
+            $this->lastScriptEnd = count($code) * 4;
+        }else if ($token['type'] == Token::T_PROCEDURE || $token['type'] == Token::T_CUSTOM_FUNCTION){
+            $this->lastScriptEnd += count($code) * 4;
+        }
+
+        /** Validate actual line number with calculated one */
+        $this->validateLineCount($code);
+
+        if (count($code)) $this->lineCount = end($code)->lineNumber + 1;
+
+        return $code;
+    }
+
+    private function combine(){
+
+        $combinedVariables = [];
+
+        $combinedVariables = array_merge($combinedVariables, $this->types);
+        $combinedVariables = array_merge($combinedVariables, $this->constants);
+        $combinedVariables = array_merge($combinedVariables, $this->headerVariables);
+        $combinedVariables = array_merge($combinedVariables, $this->procedures);
+        $combinedVariables = array_merge($combinedVariables, $this->customFunction);
+
+        $this->combinedVariables = $combinedVariables;
+
+
     }
 
     /**
@@ -768,87 +865,11 @@ class NewCompiler {
         return $scriptVarFinal;
     }
 
-    /**
-     *
-     */
-
-    private function processBlock( $token ){
-
-
-        $scriptName = strtolower($token['value']);
-
-        /**
-         * Save the start point of each block
-         * We need this for procedures and functions, there called by the start point.
-         */
-        $this->blockOffsets[ $scriptName ] = [
-            'type' => $token['type'],
-            'offset' => $this->lineCount - 1
-        ];
-
-        // OLD CODE; DO REFACTOR
-
-        if ($token['type'] == Token::T_PROCEDURE){
-            $this->procedures[strtolower($token['value'])] = $this->lineCount - 1;
-        }
-
-
-        if ($token['type'] == Token::T_CUSTOM_FUNCTION){
-            $this->customFunction[strtolower($token['value'])] = $this->lineCount - 1;
-        }
-        // OLD CODE; DO REFACTOR
-
-        $scriptVarFinal = $this->getScriptVar($token['body']);
-
-
-        /**
-         * Translate Token AST to Bytecode
-         */
-        $emitter = new Emitter(
-            $scriptVarFinal,
-            array_merge($this->stringsForScript[ $scriptName ], $this->headerStrings),
-            $this->types,
-            $this->constants,
-            $this->lineCount
-        );
-
-        $code = $emitter->emitter([
-            'type' => "root",
-            'body' => [
-                $token
-            ]
-        ], true, [
-            'procedures' => $this->procedures,
-            'customFunctions' => $this->customFunction,
-
-
-            'blockOffsets' => $this->blockOffsets
-        ]);
-
-        /**
-         * Calculate the end of each SCRIPT block
-         * Any procedure or function will just count up the size
-         */
-        if ($token['type'] == Token::T_SCRIPT){
-            $this->scriptBlockSizes[ $scriptName ] = $this->lastScriptEnd;
-            $this->lastScriptEnd = count($code) * 4;
-        }else if ($token['type'] == Token::T_PROCEDURE || $token['type'] == Token::T_CUSTOM_FUNCTION){
-            $this->lastScriptEnd += count($code) * 4;
-        }
-
-        /** Validate actual line number with calculated one */
-        $this->validateLineCount($code);
-
-        if (count($code)) $this->lineCount = end($code)->lineNumber + 1;
-
-        return $code;
-    }
 
 
     /**
      * generate MLS blocks
      */
-
 
     private function generateSCPT( $game ){
 
@@ -879,6 +900,7 @@ class NewCompiler {
 
         return $scpt;
     }
+
     private function generateDATA( $strings4Scripts ){
         $result = [];
 
@@ -894,6 +916,7 @@ class NewCompiler {
 
         return $result;
     }
+
     private function generateSTAB( $headerVariables, $sectionCode, $variablesOverAllScripts ){
 
         $result = [];

@@ -49,7 +49,7 @@ class T_PROCEDURE {
         $varCurrent = 0;
         $vars = [];
         if (isset($node['vars'])){
-
+//var_dump($node['vars']);
             while ($varCurrent < count($node['vars'])) {
                 $varToken = $node['vars'][$varCurrent];
 
