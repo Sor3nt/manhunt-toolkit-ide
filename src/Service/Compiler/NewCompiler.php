@@ -56,6 +56,7 @@ class NewCompiler {
 
         $this->types = $this->getTypes( $tokens );
         list($this->constants, $this->headerStrings) = $this->getConstants($tokens);
+
         /**
          * Fix some parsing errors
          *
@@ -82,6 +83,7 @@ class NewCompiler {
 
         $this->procedures = $this->searchScriptType(Token::T_PROCEDURE);
         $this->customFunction = $this->searchScriptType(Token::T_CUSTOM_FUNCTION);
+
         $this->headerVariables = $this->getHeaderVariables($tokens);
 
         $this->combine();
@@ -148,15 +150,12 @@ class NewCompiler {
             'type' => 'custom_functions'
         ];
 
-        if (isset($this->combinedVariables[ $scriptName ])){
-            $this->combinedVariables[ $scriptName ] = $this->lineCount - 1;
-        }
 
         // OLD CODE; DO REFACTOR
         if ($token['type'] == Token::T_PROCEDURE){
-            $this->procedures[strtolower($token['value'])] = $this->lineCount - 1;
+            $this->procedures[ $scriptName ] = $this->lineCount - 1;
         }else if ($token['type'] == Token::T_CUSTOM_FUNCTION){
-            $this->customFunction[strtolower($token['value'])] = $this->lineCount - 1;
+            $this->customFunction[ $scriptName ] = $this->lineCount - 1;
         }
         // OLD CODE; DO REFACTOR
 
@@ -180,10 +179,10 @@ class NewCompiler {
 
         $code = $emitter->emitter($token, true, [
 
-            // OLD CODE; DO REFACTOR
             'procedures' => $this->procedures,
             'customFunctions' => $this->customFunction,
-            // OLD CODE; DO REFACTOR
+
+            'combinedVariables' => array_merge($this->combinedVariables, $scriptVar),
 
             'blockOffsets' => $this->blockOffsets
         ]);
@@ -195,7 +194,10 @@ class NewCompiler {
         if ($token['type'] == Token::T_SCRIPT){
             $this->scriptBlockSizes[ $scriptName ] = $this->lastScriptEnd;
             $this->lastScriptEnd = count($code) * 4;
-        }else if ($token['type'] == Token::T_PROCEDURE || $token['type'] == Token::T_CUSTOM_FUNCTION){
+        }else if (
+            $token['type'] == Token::T_PROCEDURE ||
+            $token['type'] == Token::T_CUSTOM_FUNCTION){
+
             $this->lastScriptEnd += count($code) * 4;
         }
 
@@ -211,11 +213,17 @@ class NewCompiler {
 
         $combinedVariables = [];
 
+        $combinedVariables = array_merge($combinedVariables, Manhunt2::$constants);
+        $combinedVariables = array_merge($combinedVariables, ManhuntDefault::$constants);
+
+        $combinedVariables = array_merge($combinedVariables, Manhunt2::$functions);
+        $combinedVariables = array_merge($combinedVariables, ManhuntDefault::$functions);
+
         $combinedVariables = array_merge($combinedVariables, $this->types);
+
         $combinedVariables = array_merge($combinedVariables, $this->constants);
+
         $combinedVariables = array_merge($combinedVariables, $this->headerVariables);
-        $combinedVariables = array_merge($combinedVariables, $this->procedures);
-        $combinedVariables = array_merge($combinedVariables, $this->customFunction);
 
         $this->combinedVariables = $combinedVariables;
 

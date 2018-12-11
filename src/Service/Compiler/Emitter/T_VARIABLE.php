@@ -26,8 +26,10 @@ class T_VARIABLE {
         $value = $node['value'];
         $valueLower = strtolower($value);
 
-
-        if (isset($data['customData']['customFunctions']) && isset($data['customData']['customFunctions'][ $valueLower ])) {
+        if (
+            isset($data['customData']['customFunctions']) &&
+            isset($data['customData']['customFunctions'][ $valueLower ])
+        ) {
 
             $mapped = $data['customData']['blockOffsets'][$valueLower];
 
