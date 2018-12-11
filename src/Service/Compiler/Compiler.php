@@ -361,7 +361,7 @@ class Compiler {
                 }else if ($currentTypeSection && $token['type'] == Token::T_VARIABLE){
 
                     $types[ $currentTypeSection ][ strtolower($token['value']) ] = [
-                        'type' => 'level_var tLevelState',
+                        'type' => 'level_var state',
                         'section' => "header",
                         'offset' => Helper::fromIntToHex($offset)
                     ];
@@ -414,12 +414,11 @@ class Compiler {
 
         // cleanup the source code
         $source = $this->prepare($source);
-//        var_dump($source);
-//        exit;
 
         // convert script code into tokens
         $tokenizer = new Tokenizer();
         $tokens = $tokenizer->run($source);
+
 
         $types = $this->getTypes($tokens);
         // extract every header and script variable definition
@@ -443,7 +442,6 @@ class Compiler {
                 }
             }
         }
-
 
         $smemOffset = 0;
 

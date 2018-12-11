@@ -27,9 +27,6 @@ class T_VARIABLE {
                 'type' => 'custom_functions'
             ];
 
-//            $mapped['section'] = 'script';
-//            $mapped['type'] = 'customFunction';
-
 
         }else if (isset($data['customData']['procedureVars']) && isset($data['customData']['procedureVars'][ $value ])) {
             $mapped = $data['customData']['procedureVars'][$value];

@@ -24,24 +24,17 @@ class T_FUNCTION {
 
 
         switch ($node['type']){
+            case Token::T_FLOAT:
+            case Token::T_FALSE:
+            case Token::T_TRUE:
             case Token::T_SELF:
-//                if ($isProcedure == true){
-                    $code[] = $getLine('10000000');
-                    $code[] = $getLine('01000000');
-
-//                }
-                break;
+                $code[] = $getLine('10000000');
+                $code[] = $getLine('01000000');
+            break;
 
 
             case Token::T_ADDITION:
             case Token::T_FUNCTION:
-                break;
-            case Token::T_FLOAT:
-//            case Token::T_SELF:
-            case Token::T_FALSE:
-            case Token::T_TRUE:
-                $code[] = $getLine('10000000');
-                $code[] = $getLine('01000000');
                 break;
 
             case Token::T_INT:
@@ -80,55 +73,27 @@ class T_FUNCTION {
                 switch ($mappedTo['section']) {
                     case 'header':
 
+                        $code[] = $getLine('10000000');
+                        $code[] = $getLine('01000000');
 
-                        switch ($mappedTo['type']) {
-                            case 'level_var boolean';
-                                $code[] = $getLine('level_Var');
-                                $code[] = $getLine('boolean');
-                                break;
-                            case 'integer';
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
-                            case 'constant';
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
-                            case 'level_var stringarray':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('02000000');
-
-                                break;
-                            case 'stringarray':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('02000000');
-
-                                break;
-                            case 'vec3d':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
-                            case 'entityptr':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
-                            default:
-                                throw new \Exception($mappedTo['type'] . " Not implemented!");
-                                break;
+                        if ($mappedTo['type'] == 'stringarray'){
+                            $code[] = $getLine('10000000');
+                            $code[] = $getLine('02000000');
                         }
-
 
                         break;
                     case 'script':
 
 
                         switch ($mappedTo['type']) {
+
+                            case 'entityptr':
+                            case 'vec3d':
+                            case 'integer':
+                                $code[] = $getLine('10000000');
+                                $code[] = $getLine('01000000');
+                                break;
+
                             case 'stringarray':
                                 $code[] = $getLine('10000000');
                                 $code[] = $getLine('01000000');
@@ -137,27 +102,12 @@ class T_FUNCTION {
                                 $code[] = $getLine('02000000');
                                 break;
 
-                            case 'entityptr':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-
-                                break;
-                            case 'vec3d':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
-                            case 'integer':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
-                                break;
                             case 'procedure':
 
                                 switch ($mappedTo['valueType']){
                                     case 'string':
                                         $code[] = $getLine('12000000');
                                         $code[] = $getLine('02000000');
-
-
 
                                         $code[] = $getLine('00000000'); // 0 always ?
 
