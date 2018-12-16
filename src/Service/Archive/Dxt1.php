@@ -12,7 +12,7 @@ use App\Service\NBinary;
  * Based on the great work from Kevin Chapelier
  * https://github.com/kchapelier/decode-dxt
  */
-class Dxt
+class Dxt1
 {
 
     public function decode($data, $width, $height, $returnAs = "rgba")

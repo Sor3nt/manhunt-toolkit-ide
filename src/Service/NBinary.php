@@ -6,16 +6,22 @@ use App\Service\Archive\ZLib;
 class NBinary{
     const INT_8 = 'INT_8';
     const INT_16 = 'INT_16';
+    const U_INT_8 = 'U_INT_8';
+    const LITTLE_U_INT_16 = 'LITTLE_U_INT_16';
+    const LITTLE_U_INT_32 = 'LITTLE_U_INT_32';
+//    const LITTLE_INT_32 = 'LITTLE_INT_32';
     const INT_32 = 'INT_32';
     const FLOAT_32 = 'FLOAT_32';
     const STRING = 'STRING';
     const HEX = 'RAW';
     const BINARY = 'BINARY';
 
-    private $hex = "";
-    protected $_hex;
+    public $hex = "";
+    protected $_hex = "";
 
-    public function __construct( $binary ){
+    public function __construct( $binary = null ){
+        if (is_null($binary)) return;
+
         $this->hex = bin2hex($binary);
 
         if (substr($this->hex, 0, 8) === "5a32484d"){
@@ -25,9 +31,42 @@ class NBinary{
         $this->_hex = $this->hex;
     }
 
+    public function length(){
+        return strlen($this->hex) / 2;
+    }
+
+    public function getAsArray(){
+        return str_split($this->hex, 2);
+    }
+
     public function jumpTo( $offset ){
         $this->hex = $this->_hex;
         $this->hex = substr($this->hex, $offset * 2);
+    }
+
+    public function write($bytes, $type){
+
+        switch ($type){
+            case self::LITTLE_U_INT_16:
+                $this->hex .= bin2hex(pack("v", $bytes));
+                break;
+            case self::LITTLE_U_INT_32:
+                $this->hex .= bin2hex(pack("V", $bytes));
+                break;
+//            case self::LITTLE_INT_32:
+//                var_dump(bin2hex(pack("V", $bytes)));
+//                exit;
+//                $this->hex .= bin2hex(pack("l", $bytes));
+//
+//                break;
+
+            case self::BINARY:
+                $this->hex .= bin2hex($bytes);
+                break;
+
+
+        }
+
     }
 
     public function consume( $bytes, $type){
@@ -36,10 +75,19 @@ class NBinary{
 
         switch ($type){
             case self::INT_8:
-                return is_int($result) ? pack("c", $result) :  current(unpack("c", hex2bin($result)));
+                return current(unpack("c", hex2bin($result)));
                 break;
             case self::INT_16:
-                return is_int($result) ? pack("s", $result) : current(unpack("s", hex2bin($result)));
+                return current(unpack("s", hex2bin($result)));
+                break;
+            case self::U_INT_8:
+                return current(unpack("C", hex2bin($result)));
+                break;
+            case self::LITTLE_U_INT_16:
+                return current(unpack("v", hex2bin($result)));
+                break;
+            case self::LITTLE_U_INT_32:
+                return current(unpack("V", hex2bin($result)));
                 break;
             case self::INT_32:
                 return (int) current(unpack("L", hex2bin($result)));

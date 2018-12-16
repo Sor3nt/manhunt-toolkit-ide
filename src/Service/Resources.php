@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Service\Archive\Mls;
+use App\Service\Archive\Tex;
+use App\Service\Archive\Txd;
 use App\Service\Archive\ZLib;
 
 class Resources
@@ -30,34 +32,44 @@ class Resources
         // we found a zLib compressed file
         if (substr($contentAsHex, 0, 8) === "5a32484d"){
             $content = ZLib::uncompress( $content );
-            $contentAsHex = bin2hex($content);
+//            file_put_contents('ps2-dsfe.txd', $content);
+//            exit;
         }
 
         switch ($fileExtension){
 
             case 'glg':
-                return new Resource(
-                    $content,
-                    $fileExtension,
-                    $relativeFile
-                );
+            case 'dxt1':
+            case 'dxt2':
+            case 'dxt3':
+            case 'dxt4':
+            case 'dxt5':
                 break;
+
             case 'scc':
             case 'mls':
-                $mlsHandler = new Mls();
-                $mlsContent = $mlsHandler->unpack($content, 'mh2');
+                $handler = new Mls();
+                $content = $handler->unpack($content, 'mh2');
+                break;
 
-                return new Resource(
-                    $mlsContent,
-                    $fileExtension,
-                    $relativeFile
-                );
+            case 'tex':
+                $handler = new Tex();
+                $content = $handler->unpack($content);
+                break;
+            case 'txd':
+
+                $handler = new Txd();
+                $content = $handler->unpack($content);
                 break;
             default:
                 throw new \Exception(sprintf('Unable to load resource %s, unknown handler', $relativeFile));
         }
 
-
+        return new Resource(
+            $content,
+            $fileExtension,
+            $relativeFile
+        );
     }
 
     public function saveMls( Resource $resource ){
