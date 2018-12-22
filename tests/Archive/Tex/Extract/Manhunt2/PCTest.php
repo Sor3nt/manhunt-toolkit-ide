@@ -4,6 +4,8 @@ namespace App\Tests\Archive\Txd\Extract\Manhunt2;
 use App\Service\Archive\Bmp;
 use App\Service\Archive\Dds;
 use App\Service\Archive\Dxt;
+use App\Service\Archive\Dxt1;
+use App\Service\Archive\Dxt5;
 use App\Service\Resources;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -15,12 +17,12 @@ class PCTest extends KernelTestCase
 
         $resources = new Resources();
         $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
+//        $content = $resources->load('/Archive/Tex/Manhunt2/PC/modelspc.tex');
         $content = $resources->load('/Archive/Tex/Manhunt2/PC/gmodelspc.tex');
 
         $content = $content->getContent();
 //
         $ddsHandler = new Dds();
-        $dxtHandler = new Dxt();
         $bmpHandler = new Bmp();
 
         foreach ($content as $item) {
@@ -28,6 +30,16 @@ class PCTest extends KernelTestCase
 
             //decode the DDS
             $ddsDecoded = $ddsHandler->decode($item['data']);
+
+            if($ddsDecoded['format'] == "DXT1") {
+                $dxtHandler = new Dxt1();
+            }else if($ddsDecoded['format'] == "DXT5"){
+                $dxtHandler = new Dxt5();
+
+            }else{
+                throw new \Exception('Format not implemented: ' . $ddsDecoded['format']);
+            }
+
 
             //decode the DXT Texture
             $bmpRgba = $dxtHandler->decode(
@@ -37,6 +49,7 @@ class PCTest extends KernelTestCase
                 'abgr'
             );
 
+
             //Convert the RGBa values into a Bitmap
             $bmpImage = $bmpHandler->encode(
                 $bmpRgba,
@@ -44,8 +57,11 @@ class PCTest extends KernelTestCase
                 $ddsDecoded['height']
             );
 
-//            file_put_contents('/Users/matthias/www/privat/manhunt-toolkit-ide-git/tests/Resources/_test_exports/test-' . $item['name'] . ".bmp" , $bmpImage);
-
+//            if($ddsDecoded['format'] == "DXT5"){
+//                file_put_contents('/Users/matthias/www/privat/manhunt-toolkit-ide-git/tests/Resources/_test_exports/' . $ddsDecoded['format'] .  '-' . $item['name'] . ".bmp" , $bmpImage);
+//                echo "OK";
+//exit;
+//            }
         }
 
         //we expect 13 results

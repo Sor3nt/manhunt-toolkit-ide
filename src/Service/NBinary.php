@@ -44,6 +44,11 @@ class NBinary{
         $this->hex = substr($this->hex, $offset * 2);
     }
 
+    public function range( $fromOffset, $toOffset ){
+        $this->hex = $this->_hex;
+        return substr($this->hex, $fromOffset * 2, ($toOffset - $fromOffset) * 2);
+    }
+
     public function write($bytes, $type){
 
         switch ($type){
