@@ -1,0 +1,176 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7564,
+            11124,
+            12448,
+            14400
+        ]
+    },
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            5228,
+            7536,
+            11096,
+            12420,
+            14372
+        ]
+    },
+    {
+        "name": "ambientyardwindowsmashed",
+        "nameGarbage": "0000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2252
+        ]
+    },
+    {
+        "name": "brickname",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "f8050000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "brickpos",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "ec050000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    },
+    {
+        "name": "donewithpedal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            3652
+        ]
+    },
+    {
+        "name": "firstpickedaxe",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "e8050000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "firstpickedbrick",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "e4050000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "gothead",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "e0050000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "incutscene",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7348,
+            11040,
+            12324,
+            14344
+        ]
+    },
+    {
+        "name": "leavecuttext",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            11068
+        ]
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "0002d09d2202789e2202909f2202c8a0220288a12202",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            21676,
+            23772
+        ]
+    },
+    {
+        "name": "numbricks",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            2372
+        ]
+    },
+    {
+        "name": "seedeadplayed",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "24060000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "showbrick",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "dc050000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "shownfacegoal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            1600,
+            1852
+        ]
+    }
+]

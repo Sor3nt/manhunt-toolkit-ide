@@ -1,0 +1,567 @@
+scriptmain SecLight;
+
+ENTITY
+	SecLightTrigger01 : et_name;
+	
+VAR
+	count : integer;
+	me : string[32];
+	me2 : string[32];
+	spawnedHunter : boolean;
+	heliTargetPlayer : level_var boolean;
+	deadCopsCount : level_var integer;
+	heliPatrolling : level_var boolean;
+
+script OnCreate;
+begin
+	me := GetEntityName(this);
+	
+	spawnedHunter := FALSE;
+	
+	if me = 'SecLightTrigger01' then me2 := 'SecLight01_(L)';
+	{if me = 'SecLightTrigger02' then me2 := 'SecLight02_(L)';}
+	if me = 'SecLightTrigger03' then me2 := 'SecLight03_(L)';
+	if me = 'SecLightTrigger04' then me2 := 'SecLight04_(L)';
+	if me = 'SecLightTrigger05' then me2 := 'SecLight05_(L)';
+	if me = 'SecLightTrigger06' then me2 := 'SecLight06_(L)';
+{	if me = 'SecLightTrigger07' then me2 := 'SecLight07_(L)';}
+	if me = 'SecLightTrigger08' then me2 := 'SecLight08_(L)';
+{	if me = 'SecLightTrigger09' then me2 := 'SecLight09_(L)';}
+{	if me = 'SecLightTrigger10' then me2 := 'SecLight10_(L)';}
+{	if me = 'SecLightTrigger11' then me2 := 'SecLight11_(L)';}
+{	if me = 'SecLightTrigger12' then me2 := 'SecLight12_(L)';}
+	if me = 'SecLightTrigger13' then me2 := 'SecLight13_(L)';
+	if me = 'SecLightTrigger14' then me2 := 'SecLight14_(L)';
+	
+	SwitchLightOff(GetEntity('SecFlipperlight01_(L)'));
+{	SwitchLightOff(GetEntity('SecFlipperlight02_(L)'));}
+	SwitchLightOff(GetEntity('SecFlipperlight03_(L)'));
+	SwitchLightOff(GetEntity('SecFlipperlight04_(L)'));
+	SwitchLightOff(GetEntity('SecFlipperlight05_(L)'));
+	SwitchLightOff(GetEntity('SecFlipperlight06_(L)'));
+{	SwitchLightOff(GetEntity('SecFlipperlight07_(L)'));}
+{	SwitchLightOff(GetEntity('SecFlipperlight09_(L)'));}
+{	SwitchLightOff(GetEntity('SecFlipperlight10_(L)'));}
+{	SwitchLightOff(GetEntity('SecFlipperlight11_(L)'));}
+{	SwitchLightOff(GetEntity('SecFlipperlight12_(L)'));}
+	SwitchLightOff(GetEntity('SecFlipperlight13_(L)'));
+	SwitchLightOff(GetEntity('SecFlipperlight14_(L)'));
+	
+	TriggerAddEntityClass(this, COL_HUNTER);
+	
+	RunScript(me, 'FlashIdle');
+		
+end;
+	
+script OnEnterTrigger;
+VAR
+	inTriggerCheck : boolean;
+	pDoor : entityPtr;
+begin
+	
+	
+	KillScript(me, 'FlashIdle');
+	sleep(100);
+	while InsideTrigger(this, GetPlayer) do
+	begin 		
+	
+		writedebug('in sec');
+		while (NOT IsPlayerRunning) AND (NOT IsPlayerSprinting) AND (NOT IsPlayerWalking) do sleep(10);
+		
+		writedebug('flashing');
+		count := 0;
+		{FLASH}
+		while count < 3 do
+		begin
+			SetCurrentLod(GetEntity(me2), 0);
+			sleep(10);
+			SetCurrentLod(GetEntity(me2), 1);
+			sleep(10);
+			
+			count := count + 1;
+		end;
+
+		SetCurrentLod(GetEntity(me2), 0);
+		RunScript(me, 'FlashIdle');
+
+		{CHECK IF STILL INSIDE AND RUNNING}
+		if (InsideTrigger(this, GetPlayer)) and ((IsPlayerRunning) OR (IsPlayerSprinting) OR (IsPlayerWalking)) OR (InsideTriggerType(this, EC_HUNTER)) then
+		begin
+			KillScript(me, 'FlashIdle');
+			{STILL INSIDE - TURN LIGHT ON}
+			SetCurrentLod(GetEntity(me2), 2);
+			{heliTargetPlayer := TRUE;}
+			KillScript(me, 'FlashIdle');
+			{Safe zone lighting - dark >> light}
+			if me = 'SecLightTrigger01' then
+			begin
+				SetNodeShadow('SEC01A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight01_(L)'));
+			end;
+		{	if me = 'SecLightTrigger02' then
+			begin
+				SetNodeShadow('SEC02A,SEC02B,SEC02C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight02_(L)'));
+			end;}
+			if me = 'SecLightTrigger03' then
+			begin
+				SetNodeShadow('SEC03A,SEC03B,SEC03C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight03_(L)'));
+			end;
+			if me = 'SecLightTrigger04' then
+			begin
+{				SetNodeShadow('SEC04A', false);}
+				SwitchLightOn(GetEntity('SecFlipperlight04_(L)'));
+			end;
+			if me = 'SecLightTrigger05' then
+			begin
+				SetNodeShadow('SEC05A,SEC05B,SEC05C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight05_(L)'));
+				if (SpawnedHunter = FALSE) AND (InsideTrigger(this, GetPlayer)) AND (deadCopsCount > 0) then
+				begin
+					AIAddEntity('SpawnedMan(hunter)');
+					setentityscriptsfromentity('h11(hunter)', 'SpawnedMan(hunter)');
+					RunScript('SpawnedMan(hunter)', 'Init');
+					AIDefineGoalGotoNode('gSpawned1', 'SpawnedMan(hunter)', AISCRIPT_HIGHPRIORITY, 'SPAWNEDRUN01', AISCRIPT_RUNMOVESPEED,true);
+					pDoor := GetEntity('SecurityHunter01_(D)');
+					unFreezeEntity(pDoor);  
+					unLockEntity(pDoor);
+					AiAddGoalForSubpack('leader(leader)', 'subBack1', 'gSpawned1');
+					PlayScriptAudioStreamFromEntityAuto('MIA9', 127, GetEntity('SecFlipperlight05_(L)'), 70);
+					SpawnedHunter := TRUE;
+					deadCopsCount := deadCopsCount - 1;
+				end;
+			end;
+			if me = 'SecLightTrigger06' then
+			begin
+				SetNodeShadow('SEC06A,SEC06B,SEC06C,SEC06D,SEC06E', false);
+				SwitchLightOn(GetEntity('SecFlipperlight06_(L)'));
+				if (SpawnedHunter = FALSE) AND (InsideTrigger(this, GetPlayer)) AND (deadCopsCount > 0) then
+				begin
+					AIAddEntity('SpawnedMan2(hunter)');
+					setentityscriptsfromentity('h11(hunter)', 'SpawnedMan2(hunter)');
+					RunScript('SpawnedMan2(hunter)', 'Init');
+					AIDefineGoalGotoNode('gSpawned2', 'SpawnedMan2(hunter)', AISCRIPT_HIGHPRIORITY, 'SPAWNEDRUN02', AISCRIPT_RUNMOVESPEED,true);
+					pDoor := GetEntity('SecurityHunter02_(D)');
+					unFreezeEntity(pDoor);  
+					unLockEntity(pDoor);
+					AiAddGoalForSubpack('leader(leader)', 'subBack1', 'gSpawned2');
+					PlayScriptAudioStreamFromEntityAuto('WIB10', 127, GetEntity('SecFlipperlight05_(L)'), 127);
+					SpawnedHunter := TRUE;
+					deadCopsCount := deadCopsCount - 1;
+				end;
+			end;
+		{	if me = 'SecLightTrigger07' then
+			begin
+				SetNodeShadow('SEC07A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight07_(L)'));
+			end;}
+		{	if me = 'SecLightTrigger09' then
+			begin
+				SetNodeShadow('SEC09A,SEC09B', false);
+				SwitchLightOn(GetEntity('SecFlipperlight09_(L)'));
+			end;}
+			{if me = 'SecLightTrigger10' then
+			begin
+				SetNodeShadow('SEC10A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight10_(L)'));
+			end;}
+{			if me = 'SecLightTrigger11' then
+			begin
+				SetNodeShadow('SEC11A,SEC11B,SEC11C,SEC11D,SEC11E', false);
+				SwitchLightOn(GetEntity('SecFlipperlight11_(L)'));
+			end;}
+			{if me = 'SecLightTrigger12' then
+			begin
+				SetNodeShadow('SEC12A,SEC12B', false);
+				SwitchLightOn(GetEntity('SecFlipperlight12_(L)'));
+			end;}
+			if me = 'SecLightTrigger13' then
+			begin
+				SwitchLightOn(GetEntity('SecFlipperlight13_(L)'));
+			end;
+			if me = 'SecLightTrigger14' then
+			begin
+				SwitchLightOn(GetEntity('SecFlipperlight14_(L)'));
+			end;
+			
+			{If not the first light, attract the chopper}
+			if me <> 'SecLightTrigger01' then
+			begin
+				if GetEntity('Heli') <> NIL then
+				begin
+					if heliPatrolling <> FALSE then
+						RunScript('heli', 'TargetPlayerPos');
+				end;
+			end;
+				
+			inTriggerCheck := TRUE;
+			while inTriggerCheck = TRUE do
+			begin
+				sleep(5000);
+				
+				if (InsideTrigger(this, GetPlayer)) and ((IsPlayerRunning) OR (IsPlayerSprinting) OR (IsPlayerWalking)) OR (InsideTriggerType(this, EC_HUNTER)) then
+					inTriggerCheck := TRUE
+				else
+					inTriggerCheck := FALSE;
+			end;
+		end;
+		
+		SetCurrentLod(GetEntity(me2), 0);
+		{Safe zone lighting - light >> dark}
+		if me = 'SecLightTrigger01' then
+		begin
+			SetNodeShadow('SEC01A', true);
+			SwitchLightOff(GetEntity('SecFlipperlight01_(L)'));
+		end;
+		{if me = 'SecLightTrigger02' then
+		begin
+			SetNodeShadow('SEC02A,SEC02B,SEC02C', true);
+			SwitchLightOff(GetEntity('SecFlipperlight02_(L)'));
+		end;}
+		if me = 'SecLightTrigger03' then
+		begin
+			SetNodeShadow('SEC03A,SEC03B,SEC03C', true);
+			SwitchLightOff(GetEntity('SecFlipperlight03_(L)'));
+		end;
+		if me = 'SecLightTrigger04' then
+		begin
+{			SetNodeShadow('SEC04A', true);}
+			SwitchLightOff(GetEntity('SecFlipperlight04_(L)'));
+		end;
+		if me = 'SecLightTrigger05' then
+		begin
+			SetNodeShadow('SEC05A,SEC05B,SEC05C', true);
+			SwitchLightOff(GetEntity('SecFlipperlight05_(L)'));
+		end;
+		if me = 'SecLightTrigger06' then
+		begin
+			SetNodeShadow('SEC06A,SEC06B,SEC06C,SEC06D,SEC06E', true);
+			SwitchLightOff(GetEntity('SecFlipperlight06_(L)'));
+		end;
+	{	if me = 'SecLightTrigger07' then
+		begin
+			SetNodeShadow('SEC07A', true);
+			SwitchLightOff(GetEntity('SecFlipperlight07_(L)'));
+		end;}
+		{if me = 'SecLightTrigger09' then
+		begin
+			SetNodeShadow('SEC09A,SEC09B', true);
+			SwitchLightOff(GetEntity('SecFlipperlight09_(L)'));
+		end;}
+		{if me = 'SecLightTrigger10' then
+		begin
+			SetNodeShadow('SEC10A', true);
+			SwitchLightOff(GetEntity('SecFlipperlight10_(L)'));
+		end;}
+{		if me = 'SecLightTrigger11' then
+		begin
+			SetNodeShadow('SEC11A,SEC11B,SEC11C,SEC11D,SEC11E,SEC11F', true);
+			SwitchLightOff(GetEntity('SecFlipperlight11_(L)'));
+		end;}
+		{if me = 'SecLightTrigger12' then
+		begin
+			SetNodeShadow('SEC12A,SEC12B', true);
+			SwitchLightOff(GetEntity('SecFlipperlight12_(L)'));
+		end;}
+		if me = 'SecLightTrigger13' then
+		begin
+			SwitchLightOff(GetEntity('SecFlipperlight13_(L)'));
+		end;
+		if me = 'SecLightTrigger14' then
+		begin
+			SwitchLightOff(GetEntity('SecFlipperlight14_(L)'));
+		end;
+		
+		RunScript(me, 'FlashIdle');
+	end;
+	
+	if InsideTriggerType(this, EC_HUNTER) then
+	begin
+		count := 0;
+		while count < 3 do
+		begin
+			SetCurrentLod(GetEntity(me2), 0);
+			sleep(10);
+			SetCurrentLod(GetEntity(me2), 1);
+			sleep(10);
+			
+			count := count + 1;
+		end;
+
+		SetCurrentLod(GetEntity(me2), 0);
+		RunScript(me, 'FlashIdle');
+
+		{CHECK IF STILL INSIDE AND RUNNING}
+		if (InsideTriggerType(this, EC_HUNTER)) then
+		begin
+			KillScript(me, 'FlashIdle');
+			{STILL INSIDE - TURN LIGHT ON}
+			SetCurrentLod(GetEntity(me2), 2);
+			{heliTargetPlayer := TRUE;}
+			KillScript(me, 'FlashIdle');
+			{Safe zone lighting - dark >> light}
+			if me = 'SecLightTrigger01' then
+			begin
+				SetNodeShadow('SEC01A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight01_(L)'));
+			end;
+		{	if me = 'SecLightTrigger02' then
+			begin
+				SetNodeShadow('SEC02A,SEC02B,SEC02C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight02_(L)'));
+			end;}
+			if me = 'SecLightTrigger03' then
+			begin
+				SetNodeShadow('SEC03A,SEC03B,SEC03C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight03_(L)'));
+			end;
+			if me = 'SecLightTrigger04' then
+			begin
+{				SetNodeShadow('SEC04A', false);}
+				SwitchLightOn(GetEntity('SecFlipperlight04_(L)'));
+			end;
+			if me = 'SecLightTrigger05' then
+			begin
+				SetNodeShadow('SEC05A,SEC05B,SEC05C', false);
+				SwitchLightOn(GetEntity('SecFlipperlight05_(L)'));
+			end;
+			if me = 'SecLightTrigger06' then
+			begin
+				SetNodeShadow('SEC06A,SEC06B,SEC06C,SEC06D,SEC06E', false);
+				SwitchLightOn(GetEntity('SecFlipperlight06_(L)'));
+			end;
+		{	if me = 'SecLightTrigger07' then
+			begin
+				SetNodeShadow('SEC07A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight07_(L)'));
+			end;}
+			{if me = 'SecLightTrigger09' then
+			begin
+				SetNodeShadow('SEC09A,SEC09B', false);
+				SwitchLightOn(GetEntity('SecFlipperlight09_(L)'));
+			end;}
+		{	if me = 'SecLightTrigger10' then
+			begin
+				SetNodeShadow('SEC10A', false);
+				SwitchLightOn(GetEntity('SecFlipperlight10_(L)'));
+			end;}
+{			if me = 'SecLightTrigger11' then
+			begin
+				SetNodeShadow('SEC11A,SEC11B,SEC11C,SEC11D,SEC11E,SEC11F', false);
+				SwitchLightOn(GetEntity('SecFlipperlight11_(L)'));
+			end;}
+			{if me = 'SecLightTrigger12' then
+			begin
+				SetNodeShadow('SEC12A,SEC12B', false);
+				SwitchLightOn(GetEntity('SecFlipperlight12_(L)'));
+			end;}
+			if me = 'SecLightTrigger13' then
+			begin
+				SwitchLightOn(GetEntity('SecFlipperlight13_(L)'));
+			end;
+			if me = 'SecLightTrigger14' then
+			begin
+				SwitchLightOn(GetEntity('SecFlipperlight14_(L)'));
+			end;
+				
+			inTriggerCheck := TRUE;
+			while inTriggerCheck = TRUE do
+			begin
+				sleep(3000);
+				if (InsideTrigger(this, GetPlayer)) and ((IsPlayerRunning) OR (IsPlayerSprinting) OR (IsPlayerWalking)) OR (InsideTriggerType(this, EC_HUNTER)) then
+					inTriggerCheck := TRUE
+				else
+					inTriggerCheck := FALSE;
+			end;
+			{while (InsideTriggerType(this, EC_HUNTER)) OR (InsideTriggerType(this, EC_PLAYER)) do sleep(10);}
+		end;
+		
+		SetCurrentLod(GetEntity(me2), 0);
+	end;
+	
+	writedebug('out sec');
+	SetCurrentLod(GetEntity(me2), 0);
+	
+	{Safe zone lighting - light >> dark}
+	if me = 'SecLightTrigger01' then
+	begin
+		SetNodeShadow('SEC01A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight01_(L)'));
+	end;
+	{if me = 'SecLightTrigger02' then
+	begin
+		SetNodeShadow('SEC02A,SEC02B,SEC02C', true);
+		SwitchLightOff(GetEntity('SecFlipperlight02_(L)'));
+	end;}
+	if me = 'SecLightTrigger03' then
+	begin
+		SetNodeShadow('SEC03A,SEC03B,SEC03C', true);
+		SwitchLightOff(GetEntity('SecFlipperlight03_(L)'));
+	end;
+	if me = 'SecLightTrigger04' then
+	begin
+{		SetNodeShadow('SEC04A', true);}
+		SwitchLightOff(GetEntity('SecFlipperlight04_(L)'));
+	end;
+	if me = 'SecLightTrigger05' then
+	begin
+		SetNodeShadow('SEC05A,SEC05B,SEC05C', true);
+		SwitchLightOff(GetEntity('SecFlipperlight05_(L)'));
+	end;
+	if me = 'SecLightTrigger06' then
+	begin
+		SetNodeShadow('SEC06A,SEC06B,SEC06C,SEC06D,SEC06E', true);
+		SwitchLightOff(GetEntity('SecFlipperlight06_(L)'));
+	end;
+{	if me = 'SecLightTrigger07' then
+	begin
+		SetNodeShadow('SEC07A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight07_(L)'));
+	end;}
+	{if me = 'SecLightTrigger09' then
+	begin
+		SetNodeShadow('SEC09A,SEC09B', true);
+		SwitchLightOff(GetEntity('SecFlipperlight09_(L)'));
+	end;}
+	{if me = 'SecLightTrigger10' then
+	begin
+		SetNodeShadow('SEC10A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight10_(L)'));
+	end;}
+{	if me = 'SecLightTrigger11' then
+	begin
+		SetNodeShadow('SEC11A,SEC11B,SEC11C,SEC11D,SEC11E,SEC11F', true);
+		SwitchLightOff(GetEntity('SecFlipperlight11_(L)'));
+	end;}
+{	if me = 'SecLightTrigger12' then
+	begin
+		SetNodeShadow('SEC12A,SEC12B', true);
+		SwitchLightOff(GetEntity('SecFlipperlight12_(L)'));
+	end;}
+	if me = 'SecLightTrigger13' then
+	begin
+		SwitchLightOff(GetEntity('SecFlipperlight13_(L)'));
+	end;
+	if me = 'SecLightTrigger14' then
+	begin
+		SwitchLightOff(GetEntity('SecFlipperlight14_(L)'));
+	end;
+	
+	RunScript(me, 'FlashIdle');
+	
+end;
+
+script FlashIdle;
+begin
+	while TRUE do
+	begin
+		SetCurrentLod(GetEntity(me2), 0);
+		sleep(400);
+		SetCurrentLod(GetEntity(me2), 1);
+		sleep(400);
+	end;
+end;
+
+script OnDamage;
+begin
+	if me = 'SecLightTrigger01' then 
+	begin
+		SetCurrentLod(GetEntity('SecLight01_(L)'), 3);	
+		SetNodeShadow('SEC01A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight01_(L)'));
+	end;
+	
+	{if me = 'SecLightTrigger02' then 
+	begin
+		SetCurrentLod(GetEntity('SecLight02_(L)'), 3);	
+		SetNodeShadow('SEC02A,SEC02B,SEC02C', true);
+		SwitchLightOff(GetEntity('SecFlipperlight02_(L)'));
+	end;}
+	
+	if me = 'SecLightTrigger03' then
+	begin
+		 SetCurrentLod(GetEntity('SecLight03_(L)'), 3);	
+		 SetNodeShadow('SEC03A,SEC03B,SEC03C', true);
+		 SwitchLightOff(GetEntity('SecFlipperlight03_(L)'));
+	end;
+	
+	if me = 'SecLightTrigger04' then 
+	begin
+		SetCurrentLod(GetEntity('SecLight04_(L)'), 3);	
+{		SetNodeShadow('SEC04A', true);}
+		SwitchLightOff(GetEntity('SecFlipperlight04_(L)'));
+	end;
+	
+	if me = 'SecLightTrigger05' then
+	begin
+		SetCurrentLod(GetEntity('SecLight05_(L)'), 3);	
+		SetNodeShadow('SEC05A,SEC05B,SEC05C', true);
+		SwitchLightOff(GetEntity('SecFlipperlight05_(L)'));
+	end;
+	
+	if me = 'SecLightTrigger06' then
+	begin
+		SetCurrentLod(GetEntity('SecLight06_(L)'), 3);	
+		SetNodeShadow('SEC06A,SEC06B,SEC06C,SEC06D,SEC06E', true);
+		SwitchLightOff(GetEntity('SecFlipperlight06_(L)'));
+		
+	end;
+	
+	{if me = 'SecLightTrigger07' then
+	begin
+		SetCurrentLod(GetEntity('SecLight07_(L)'), 3);	
+		SetNodeShadow('SEC07A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight07_(L)'));
+	end;}
+	
+	if me = 'SecLightTrigger08' then
+	begin
+		SetCurrentLod(GetEntity('SecLight08_(L)'), 3);	
+		SwitchLightOff(GetEntity('SecFlipperlight08_(L)'));
+	end;
+	
+	{if me = 'SecLightTrigger09' then 
+	begin
+		SetCurrentLod(GetEntity('SecLight09_(L)'), 3);	
+		SetNodeShadow('SEC09A,SEC09B', true);
+		SwitchLightOff(GetEntity('SecFlipperlight09_(L)'));
+	end;}
+	
+{	if me = 'SecLightTrigger10' then
+	begin
+		SetCurrentLod(GetEntity('SecLight10_(L)'), 3);	
+		SetNodeShadow('SEC10A', true);
+		SwitchLightOff(GetEntity('SecFlipperlight10_(L)'));
+	end;}
+	
+{	if me = 'SecLightTrigger11' then
+	begin
+		SetCurrentLod(GetEntity('SecLight11_(L)'), 3);	
+		SetNodeShadow('SEC011A,SEC011B', true);
+		SwitchLightOff(GetEntity('SecFlipperlight11_(L)'));
+	end;}
+	
+	{if me = 'SecLightTrigger12' then
+	begin
+		SetCurrentLod(GetEntity('SecLight12_(L)'), 3);	
+		SetNodeShadow('SEC12A,SEC12B', true);
+		SwitchLightOff(GetEntity('SecFlipperlight12_(L)'));
+	end;}
+	
+	if me = 'SecLightTrigger13' then
+	begin
+		SetCurrentLod(GetEntity('SecLight13_(L)'), 3);	
+		SwitchLightOff(GetEntity('SecFlipperlight13_(L)'));
+	end;
+	
+	if me = 'SecLightTrigger14' then
+	begin
+		SetCurrentLod(GetEntity('SecLight14_(L)'), 3);	
+		SwitchLightOff(GetEntity('SecFlipperlight14_(L)'));
+	end;
+	
+	DestroyEntity(this);
+end;
+
+end. 

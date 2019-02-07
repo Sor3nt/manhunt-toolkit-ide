@@ -1,0 +1,32 @@
+{
+    "const": [],
+    "strings": [
+        "hAfterFightA(hunter)",
+        "hAfterFightB(hunter)",
+        "leader(leader)",
+        "subGuardCar2",
+        "gRunAtPlayerA",
+        "AFTERA",
+        "gRunAtPlayerB",
+        "AFTERB",
+        "gRunAtPlayerC",
+        "AFTERC",
+        "gRunAtPlayerD",
+        "AFTERD",
+        "triggerAfterFightA",
+        "SwimmerA(hunter)",
+        "SwimmerB(hunter)",
+        "SwimmerC(hunter)",
+        "SwimmerD(hunter)",
+        "gSwimAtPlayerA",
+        "SWIMA",
+        "gSwimAtPlayerB",
+        "SWIMB",
+        "gSwimAtPlayerC",
+        "SWIMC",
+        "gSwimAtPlayerD",
+        "SWIMD",
+        "triggerAfterFightB"
+    ],
+    "byteReserved": 0
+}

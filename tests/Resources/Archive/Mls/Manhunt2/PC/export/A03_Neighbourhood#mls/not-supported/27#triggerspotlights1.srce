@@ -1,0 +1,54 @@
+scriptmain TriggerSpotlights1;
+
+ENTITY
+	triggerSpotlight03 : et_name;
+	
+VAR
+	rotate1 : boolean;
+	spotlight3working : level_var boolean;
+	
+script Init;
+begin
+	{SPOTLIGHT STUFF}
+	InitSpotlight('SPOT_3', GetEntity('Spotlight03'), 20.0, 20.0);
+	SetSpotlightTransitionTime('SPOT_3', 1.5);
+	writedebug('init spotlights');
+	RunScript('triggerSpotlight03', 'Spot1Patrol');
+	spotlight3working := False;
+	{SetSpotlightMode('SPOT_3', 'Freeze');}
+end;
+
+script Spot1Patrol;
+
+VAR
+	pos : vec3d;
+
+begin
+	{Rotate until entered trigger}
+	rotate1 := TRUE;
+	
+	while rotate1 and spotlight3working do
+	begin
+		SetVector(pos, 10.3867, 2.83118, -90.7966);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(1400);
+		SetVector(pos, 6.88033, 3.6734, -96.7107);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(700);
+		SetVector(pos, -0.845259, 3.74679, -99.2549);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(700);
+		SetVector(pos, -12.3702, 3.74829, -100.174);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(700);
+		SetVector(pos, -12.0465, 3.61491, -93.2373);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(700);
+		SetVector(pos, -8.27378, 2.76364, -86.6425);
+		SetSpotlightTarget('SPOT_3', pos);
+		sleep(700);
+	end;
+end;
+
+end.
+	

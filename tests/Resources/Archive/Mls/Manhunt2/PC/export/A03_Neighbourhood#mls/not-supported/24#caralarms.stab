@@ -1,0 +1,61 @@
+[
+    {
+        "name": "helipatrolling",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            3992
+        ]
+    },
+    {
+        "name": "helitargetplayer",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "me",
+        "nameGarbage": "000078013200000000000000000000000000000000000000000000000000",
+        "offset": "38010000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "patrolling",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            3840,
+            5244
+        ]
+    },
+    {
+        "name": "pos",
+        "nameGarbage": "0078013200000000000000000000000000000000000000000000000000",
+        "offset": "60010000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    },
+    {
+        "name": "thisobj",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "5c010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    }
+]

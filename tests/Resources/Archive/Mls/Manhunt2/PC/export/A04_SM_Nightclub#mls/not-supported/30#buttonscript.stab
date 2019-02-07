@@ -1,0 +1,20 @@
+[
+    {
+        "name": "self",
+        "nameGarbage": "000000002400000000000000322c20312c20352c203800496e666f5c",
+        "offset": "c0000000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "state",
+        "nameGarbage": "003200000000000000000000000000000000000000000000000000",
+        "offset": "d0000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    }
+]

@@ -1,0 +1,26 @@
+{
+    "const": [],
+    "strings": [
+        "player got head from hunter",
+        "Hunter1_Tower",
+        "Entered - Hunter1_Tower",
+        "willie_game_int !",
+        "status=",
+        "WhileLoop",
+        "status : 1",
+        "player",
+        "Player_Cut_Stop1",
+        "Gen_Interior_WoodDoor_(D)26",
+        "open",
+        "door into jump area opened",
+        "Player_End_Jump",
+        "GOAL4",
+        "status : 2",
+        "Hunter1_Tower_h",
+        "Idle_Player_Hold_Up_Head",
+        "Player told to walk to the hole at the end of the level",
+        "status : 3",
+        "OnEnterTrigger"
+    ],
+    "byteReserved": 16
+}

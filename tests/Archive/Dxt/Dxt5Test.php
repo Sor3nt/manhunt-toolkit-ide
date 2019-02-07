@@ -12,11 +12,11 @@ class Dxt5Test extends KernelTestCase
     public function testDxt5()
     {
 
-        $resources = new Resources();
-        $resources->workDirectory = explode("/tests/", __DIR__)[0] . "/tests/Resources";
-        $content = $resources->load('/Archive/Dxt/dxt.dxt5');
+        echo "\n* DXT5: Testing DXT5 Texture ==> ";
 
-        $content = $content->getContent();
+        $file = explode("/tests/", __DIR__)[0] . "/tests/Resources/Archive/Dxt/dxt.dxt5";
+
+        $content = file_get_contents($file);
 
         $dxtHandler = new Dxt5();
         $bmpRgba =$dxtHandler->decode($content, 128, 128, 'abgr');

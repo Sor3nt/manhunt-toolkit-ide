@@ -1,0 +1,25 @@
+{
+    "const": [],
+    "strings": [
+        "Hunter1_Tower",
+        "LEADER",
+        "Subpack_Building_Roof",
+        "Hunter1_Tower_Home",
+        "Hunter is unkillable",
+        "Gen_Save_Point",
+        "Gen_Save_Point01",
+        "Gen_Interior_WoodDoor_(D)22",
+        "OPEN",
+        "Gen_Interior_WoodDoor_(D)23",
+        "Guard room doors are now open",
+        "LEADER",
+        "Subpack_Building_Roof",
+        "GoalGuardRamp",
+        "hunter1 tower dead ",
+        "Gen_Interior_WoodDoor_(D)22",
+        "OPEN",
+        "Gen_Interior_WoodDoor_(D)23",
+        "Guard room doors are now open"
+    ],
+    "byteReserved": 4
+}

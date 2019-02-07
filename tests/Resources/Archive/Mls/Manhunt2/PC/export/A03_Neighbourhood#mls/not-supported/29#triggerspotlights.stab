@@ -1,0 +1,34 @@
+[
+    {
+        "name": "llevelstate",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            668
+        ]
+    },
+    {
+        "name": "rotate2",
+        "nameGarbage": "0058e7140290e8140238e91402e0e9140288ea140230eb1402",
+        "offset": "34000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotlight2working",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            316,
+            624
+        ]
+    }
+]

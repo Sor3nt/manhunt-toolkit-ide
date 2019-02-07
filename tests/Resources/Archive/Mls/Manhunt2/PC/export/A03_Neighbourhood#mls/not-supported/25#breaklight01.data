@@ -1,0 +1,20 @@
+{
+    "const": [],
+    "strings": [
+        " created",
+        "Flicker",
+        " destroyed",
+        "Flicker",
+        "LampSmash01_(L)",
+        "MISC",
+        "GLASS_BREAK",
+        "SMASHER1,SMASHER1B",
+        "LampSmash02_(L)",
+        "SMASHER2,SMASHER2B,SMASHER2C,SMASHER2D,SMASHER2E,SMASHER2F,SMASHER2G",
+        "LampSmash03_(L)",
+        "SMASHER3",
+        "LampSmash04_(L)",
+        "SMASHER4"
+    ],
+    "byteReserved": 40
+}

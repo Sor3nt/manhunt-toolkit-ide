@@ -1,0 +1,17 @@
+scriptmain brickScript;
+entity brickTemplate : et_name;
+var numBricks : level_var integer;
+
+script OnCreate;
+	begin
+		numBricks := numBricks + 1;
+		WriteDebug(GetEntityName(this), ' created... ', numBricks);
+	end;
+
+script OnDestroy;
+	begin
+		numBricks := numBricks - 1;
+		WriteDebug(GetEntityName(this), ' destroying... ', numBricks);
+	end;
+
+end.

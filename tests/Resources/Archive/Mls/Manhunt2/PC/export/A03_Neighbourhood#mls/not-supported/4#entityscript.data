@@ -1,0 +1,23 @@
+{
+    "const": [],
+    "strings": [
+        "SecLight01_(L)",
+        "triggerBreakSec01",
+        "OnEnterTrigger",
+        "SecLight03_(L)",
+        "triggerBreakSec03",
+        "SecLight04_(L)",
+        "triggerBreakSec04",
+        "SecLight05_(L)",
+        "triggerBreakSec05",
+        "SecLight06_(L)",
+        "triggerBreakSec06",
+        "SecLight08_(L)",
+        "triggerBreakSec08",
+        "SecLight13_(L)",
+        "triggerBreakSec13",
+        "SecLight14_(L)",
+        "triggerBreakSec14"
+    ],
+    "byteReserved": 0
+}

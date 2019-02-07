@@ -1,0 +1,45 @@
+scriptmain BarrelNo;
+
+entity
+	triggerBarrelNoNo : et_name;
+	
+script OnEnterTrigger;
+begin
+	
+	
+	{ClearLevelGoal('OBJ3');
+	if GetEntity('triggerLogs') <> NIL then
+		DestroyEntity(GetEntity('triggerLogs'));
+	
+	if GetEntity('triggerLogs') <> NIL then
+		DestroyEntity(GetEntity('triggerLogs'));}
+	
+	{sleep(650);
+	EntityPlayAnim(GetEntity('Falling_barrel'), 'EAT_FALLING_BARREL_ANIM', false);
+	sleep(80);
+
+	entityignorecollisions(GetEntity('Falling_barrel'), true);
+	entityignorecollisions(GetEntity('Falling_barrel_Collision'), false);
+	
+	if GetEntity('hChaser09s(hunter)') <> NIL then
+		RunScript('hChaser09s(hunter)', 'RunGoalsFour');}
+	{if GetEntity('hChaser10s(hunter)') <> NIL then
+			RunScript('hChaser10s(hunter)', 'RunGoalsFour');}
+	
+	{RunScript('player(player)', 'ChaseCheat');}
+	
+{	if GetEntity('heli') <> NIL then
+		RunScript('heli', 'MoveTowardsPlayer');}
+	
+	{RemoveThisScript;}
+	
+	EnableAction(2, FALSE);
+	
+end;
+
+script OnLeaveTrigger;
+begin
+	EnableAction(2, TRUE);
+end;
+
+end.

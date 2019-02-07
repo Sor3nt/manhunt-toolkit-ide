@@ -1,0 +1,20 @@
+scriptmain buttonScript;
+entity bDoorOverrideC5_(S) : et_name;
+
+script OnCreate;
+	begin RunScript('bDoorOverrideC5_(S)', 'CheckButtonLOD'); end;
+
+script OnUseableUsed;
+	begin CallScript('Door_Indicator08', 'ButtonUsed') : 'b52_(s)', 1; end;
+
+script CheckButtonLOD;
+	begin
+		while(true) do begin
+			if(GetDoorState(GetEntity('CellDoor_(SD)05')) = DOOR_CLOSED) then SetCurrentLOD(this, 2) else SetCurrentLOD(this, 1);
+			Sleep(300);
+			SetCurrentLOD(this, 0);
+			Sleep(300);
+		end;
+	end;
+
+end.

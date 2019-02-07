@@ -1,0 +1,25 @@
+{
+    "const": [],
+    "strings": [
+        " = ",
+        "FlickerLoop",
+        " destroyed ",
+        "SM_wall_lampcove_(L)",
+        "nWL01,nWL02,nNoSha205,nNoSha206",
+        "SM_wall_lampcove_(L)01",
+        "nWL11,nWL12,nNoSha203,nNoSha204",
+        "SM_wall_lampcove_(L)02",
+        "nWL21,nWL22,nNoSha201,nNoSha202",
+        "SM_wall_lampcove_(L)03",
+        "nWL31,nWL32,nNoSha106,nNoSha107",
+        "SM_wall_lampcove_(L)04",
+        "nWL41,nWL42,nNoSha104,nNoSha105",
+        "SM_wall_lampcove_(L)05",
+        "nWL51,nWL52,nNoSha102,nNoSha103",
+        "SM_wall_lampcove_(L)06",
+        "nWL61,nWL62,CELLONE_TPOINT_02,nNoSha100,nNoSha101",
+        "SM_wall_lampcove_(L)07",
+        "nWL71,nWL72"
+    ],
+    "byteReserved": 32
+}

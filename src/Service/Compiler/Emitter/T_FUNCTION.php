@@ -1,7 +1,7 @@
 <?php
 namespace App\Service\Compiler\Emitter;
 
-use App\Service\Compiler\FunctionMap\Manhunt;
+use App\MHT;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
 use App\Service\Compiler\Token;
@@ -12,23 +12,26 @@ class T_FUNCTION {
 
     private $blockOffsets;
     private $combinedVariables;
+    private $functions;
 
     public function __construct( $customData )
     {
         $this->blockOffsets = $customData['blockOffsets'];
         $this->combinedVariables = $customData['combinedVariables'];
+        $this->functions = $customData['functions'];
     }
 
     public function finalize( $node, $data, &$code, \Closure $getLine, $writeDebug = false, $isProcedure = false, $isCustomFunction = false ){
 
+        $debugMsg = sprintf('[T_FUNCTION] finalize: %s ', $node['type']);
 
         switch ($node['type']){
             case Token::T_FLOAT:
-            case Token::T_FALSE:
-            case Token::T_TRUE:
+            case Token::T_BOOLEAN:
             case Token::T_SELF:
-                $code[] = $getLine('10000000');
-                $code[] = $getLine('01000000');
+            case Token::T_MULTIPLY:
+                $code[] = $getLine('10000000', false, $debugMsg);
+                $code[] = $getLine('01000000', false, $debugMsg);
             break;
 
 
@@ -39,86 +42,104 @@ class T_FUNCTION {
             case Token::T_INT:
 
                     if ($node['value'] >= 0){
-                        $code[] = $getLine('10000000');
-                        $code[] = $getLine('01000000');
+                        $code[] = $getLine('10000000', false, $debugMsg . 'value=' . $node['value'] . ' (first)');
+                        $code[] = $getLine('01000000', false, $debugMsg . '(last)');
                     }else{
-                        $code[] = $getLine('2a000000');
-                        $code[] = $getLine('01000000');
-                        $code[] = $getLine('10000000');
-                        $code[] = $getLine('01000000');
+                        $code[] = $getLine('2a000000', false, $debugMsg . 'value=' . $node['value'] . ' (negative) (first)');
+                        $code[] = $getLine('01000000', false, $debugMsg);
+                        $code[] = $getLine('10000000', false, $debugMsg);
+                        $code[] = $getLine('01000000', false, $debugMsg . '(last)');
                     }
 
                 break;
 
             case Token::T_STRING:
 
-                if ($isProcedure == false){
-                    $code[] = $getLine('10000000');
-                    $code[] = $getLine('01000000');
-
-                    $code[] = $getLine('10000000');
-                    $code[] = $getLine('02000000');
+                if ($isProcedure == false && $isCustomFunction == false){
+                    $code[] = $getLine('10000000', false, $debugMsg . 'value=' . $node['value'] . ' (first)');
+                    $code[] = $getLine('01000000', false, $debugMsg);
+                    $code[] = $getLine('10000000', false, $debugMsg);
+                    $code[] = $getLine('02000000', false, $debugMsg . '(last)');
                 }
+
                 break;
 
             case Token::T_VARIABLE:
                 $mappedTo = T_VARIABLE::getMapping(
                     $node,
-                    null,
                     $data
                 );
-
 
                 switch ($mappedTo['section']) {
                     case 'header':
 
-                        $code[] = $getLine('10000000');
-                        $code[] = $getLine('01000000');
+                        if ($data['game'] == MHT::GAME_MANHUNT && $writeDebug) {
 
-                        if ($mappedTo['type'] == 'stringarray'){
-                            $code[] = $getLine('10000000');
-                            $code[] = $getLine('02000000');
+                        }else{
+                            $code[] = $getLine('10000000', false, $debugMsg . ' (header read)');
+                            $code[] = $getLine('01000000', false, $debugMsg . 'value=' . $node['value']);
                         }
 
-                        break;
-                    case 'script':
+                        $debugMsg = sprintf('[T_FUNCTION] finalize: header %s ', $mappedTo['type']);
 
+                        if ($mappedTo['type'] == 'level_var stringarray'){
+                            $code[] = $getLine('10000000', false, $debugMsg);
+                            $code[] = $getLine('02000000', false, $debugMsg);
+                        }
+
+                        if ($mappedTo['type'] == 'stringarray'){
+                            $code[] = $getLine('10000000', false, $debugMsg);
+                            $code[] = $getLine('02000000', false, $debugMsg);
+                        }
+
+
+
+                        break;
+
+                    case 'script':
+                        $debugMsg = sprintf('[T_FUNCTION] finalize: script %s ', $mappedTo['type']);
 
                         switch ($mappedTo['type']) {
 
                             case 'entityptr':
                             case 'vec3d':
                             case 'integer':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
+                                $code[] = $getLine('10000000', false, $debugMsg);
+                                $code[] = $getLine('01000000', false, $debugMsg);
+                                break;
+
+                            case 'customFunction':
+                                $code[] = $getLine('12000000', false, $debugMsg);
+                                $code[] = $getLine('02000000', false, $debugMsg);
                                 break;
 
                             case 'stringarray':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
+                                $code[] = $getLine('10000000', false, $debugMsg);
+                                $code[] = $getLine('01000000', false, $debugMsg);
 
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('02000000');
+                                $code[] = $getLine('10000000', false, $debugMsg);
+                                $code[] = $getLine('02000000', false, $debugMsg);
                                 break;
 
                             case 'procedure':
+                                $debugMsg = sprintf('[T_FUNCTION] finalize: procedure %s ', $mappedTo['valueType']);
 
                                 switch ($mappedTo['valueType']){
                                     case 'string':
-                                        $code[] = $getLine('12000000');
-                                        $code[] = $getLine('02000000');
+                                        $code[] = $getLine('12000000', false, $debugMsg);
+                                        $code[] = $getLine('02000000', false, $debugMsg);
 
-                                        $code[] = $getLine('00000000'); // 0 always ?
+                                        $code[] = $getLine('00000000', false, $debugMsg); // 0 always ?
 
-                                        $code[] = $getLine('10000000');
-                                        $code[] = $getLine('01000000');
+                                        $code[] = $getLine('10000000', false, $debugMsg);
+                                        $code[] = $getLine('01000000', false, $debugMsg);
 
-                                        $code[] = $getLine('10000000');
-                                        $code[] = $getLine('02000000');
+                                        $code[] = $getLine('10000000', false, $debugMsg);
+                                        $code[] = $getLine('02000000', false, $debugMsg);
                                         break;
                                     case 'real':
-                                        $code[] = $getLine('10000000');
-                                        $code[] = $getLine('01000000');
+                                        $code[] = $getLine('10000000', false, $debugMsg);
+                                        $code[] = $getLine('01000000', false, $debugMsg);
                                         break;
 
                                     default:
@@ -130,17 +151,17 @@ class T_FUNCTION {
                                 break;
                             case 'real':
                                 if ($writeDebug == false){
-                                    $code[] = $getLine('10000000');
-                                    $code[] = $getLine('01000000');
+                                    $code[] = $getLine('10000000', false, $debugMsg);
+                                    $code[] = $getLine('01000000', false, $debugMsg);
                                 }
                                 break;
                             case 'constant':
-                                $code[] = $getLine('10000000');
-                                $code[] = $getLine('01000000');
+                                $code[] = $getLine('10000000', false, $debugMsg);
+                                $code[] = $getLine('01000000', false, $debugMsg);
 
                                 if ($mappedTo['valueType'] == "string"){
-                                    $code[] = $getLine('10000000');
-                                    $code[] = $getLine('02000000');
+                                    $code[] = $getLine('10000000', false, $debugMsg . ' (string)');
+                                    $code[] = $getLine('02000000', false, $debugMsg . ' (string)');
                                 }
                                 break;
                             default:
@@ -158,12 +179,12 @@ class T_FUNCTION {
             default:
                 throw new \Exception($node['type'] . " Not implemented!");
                 break;
-
-
         }
     }
 
     public function handleWriteDebugCall($node, \Closure $getLine, \Closure $emitter, $data){
+
+        $debugMsg = '[T_FUNCTION] handleWriteDebugCall ';
         $code = [  ];
 
         /**
@@ -180,13 +201,14 @@ class T_FUNCTION {
                 $singleParam['last'] = $index == count($node['params']) - 1;
 
                 $result = $this->handleWriteDebugCall($singleParam, $getLine, $emitter, $data);
+
                 foreach ($result as $item) {
+                    $item->debug = '[WriteDebug] ' . $item->debug;
                     $code[] = $item;
                 }
             }
 
             return $code;
-
         }
 
         /**
@@ -195,19 +217,17 @@ class T_FUNCTION {
         $param = $node['params'][0];
         $param['nested'] = false;
 
-        $resultCode = $emitter( $param );
-        foreach ($resultCode as $line) {
+        foreach ($emitter( $param ) as $line){
+            $line->debug = $debugMsg . ' ' . $line->debug;
             $code[] = $line;
         }
 
 
         $this->finalize($param, $data, $code, $getLine, true);
 
-
         /**
          * generate the needed function call
          */
-
         switch ($param['type']){
             case Token::T_INT:
                 $code[] = $getLine($this->getFunction('WriteDebugInteger')['offset']);
@@ -217,7 +237,7 @@ class T_FUNCTION {
                 break;
             case Token::T_VARIABLE:
 
-                $mapping = T_VARIABLE::getMapping($param, $emitter, $data);
+                $mapping = T_VARIABLE::getMapping($param, $data);
 
                 switch ($mapping['type']){
                     case 'real':
@@ -225,6 +245,16 @@ class T_FUNCTION {
                         break;
                     case 'stringarray':
                         $code[] = $getLine($this->getFunction('WriteDebugString')['offset']);
+                        break;
+                    case 'integer':
+                    case 'game_var integer':
+                        $code[] = $getLine($this->getFunction('WriteDebugInteger')['offset']);
+                        break;
+                    case 'level_var integer':
+                        $code[] = $getLine($this->getFunction('WriteDebugLevelVarInteger')['offset']);
+                        break;
+                    case 'object':
+                        $code[] = $getLine($this->getFunction('WriteDebugObject')['offset']);
                         break;
                     case 'procedure':
                         $code[] = $getLine($this->getFunction('WriteDebug')['offset']);
@@ -253,7 +283,6 @@ class T_FUNCTION {
                         $code[] = $getLine($this->getFunction('WriteDebugReal')['offset']);
                         break;
                     default:
-                        var_dump($function);
                         throw new \Exception(sprintf('T_FUNCTION: Return type %s is unknown', $function['return']));
                         break;
                 }
@@ -269,24 +298,22 @@ class T_FUNCTION {
         if (!isset($node['last']) || $node['last'] === true) {
             $code[] = $getLine($this->getFunction('WriteDebugFlush')['offset']);
         }
+//
+//        foreach ($code as &$line) {
+//            $line->debug = sprintf('[T_FUNCTION] handleWriteDebugCall');
+//        }
 
 
         return $code;
     }
 
-    public function getForceFloat( $functioName ){
+    public function getForceFloat( $functionName ){
 
+        $functionName = strtolower($functionName);
 
-        $functioName = strtolower($functioName);
+        $functionForceFloat = array_merge(Manhunt2::$functionForceFloar, ManhuntDefault::$functionForceFloar);
 
-        $functionForceFloar = Manhunt2::$functionForceFloar;
-        if (GAME == "mh1") $functionForceFloar = Manhunt::$functionForceFloar;
-
-        $functionForceFloar = array_merge($functionForceFloar, ManhuntDefault::$functionForceFloar);
-
-        if (isset( $functionForceFloar[$functioName] )){
-            return $functionForceFloar[$functioName];
-        }
+        if (isset( $functionForceFloat[$functionName] )) return $functionForceFloat[$functionName];
 
         return [];
     }
@@ -295,27 +322,33 @@ class T_FUNCTION {
 
         $functionName = strtolower($functionName);
 
-        if (
-            !isset($this->combinedVariables[$functionName])
-        ){
+        if ( !isset($this->functions[$functionName]) ){
             throw new \Exception(sprintf('Unknown function %s', $functionName));
         }
 
-        return $this->combinedVariables[$functionName];
+        return $this->functions[$functionName];
     }
 
     public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
+
+        $debugMsg = '[T_FUNCTION] map ';
         $code = [ ];
 
         /**
          * sometimes is the mapping not correct, validate it
          */
+
         try {
-            T_VARIABLE::getMapping($node, null, $data);
-            return $emitter([
-                'type' => Token::T_VARIABLE,
-                'value' => $node['value']
-            ]);
+            $mapping = T_VARIABLE::getMapping($node, $data);
+
+            //todo: why do the variable mapper, map custom functions ?!
+            if ($mapping['type'] != 'custom_functions'){
+                return $emitter([
+                    'type' => Token::T_VARIABLE,
+                    'value' => $node['value']
+                ]);
+            }
+
         }catch(\Exception $e){
 
             if (strpos($e->getMessage(), 'unable to find variable') == false){
@@ -332,12 +365,11 @@ class T_FUNCTION {
 
         $forceFloatOrder = $this->getForceFloat($node['value']);
 
-
-
         $isProcedure = false;
         $isCustomFunction = false;
 
         $mappedToBlock = false;
+
         if (isset($this->blockOffsets[ strtolower($node['value']) ]) ){
 
             $mappedToBlock = $this->blockOffsets[ strtolower($node['value']) ];
@@ -354,7 +386,6 @@ class T_FUNCTION {
 
         }
 
-
         if (isset($node['params']) && count($node['params'])){
             $skipNext = false;
 
@@ -370,24 +401,47 @@ class T_FUNCTION {
 
                     $resultCode = $emitter( $mathValue );
                     foreach ($resultCode as $line) {
+                        $line->debug = $debugMsg .  ' ' . $line->debug;
                         $code[] = $line;
                     }
 
-                    $code[] = $getLine('0f000000');
-                    $code[] = $getLine('04000000');
+                    $debugMsg = sprintf('[T_FUNCTION] map: addition %s', $mathValue['value']);
+                    $code[] = $getLine('0f000000', false, $debugMsg);
+                    $code[] = $getLine('04000000', false, $debugMsg);
 
 
-                    $code[] = $getLine('31000000');
-                    $code[] = $getLine('01000000');
-                    $code[] = $getLine('04000000');
+                    $code[] = $getLine('31000000', false, $debugMsg);
+                    $code[] = $getLine('01000000', false, $debugMsg);
+                    $code[] = $getLine('04000000', false, $debugMsg);
 
-                    $code[] = $getLine('10000000');
-                    $code[] = $getLine('01000000');
+                    $code[] = $getLine('10000000', false, $debugMsg);
+                    $code[] = $getLine('01000000', false, $debugMsg);
 
                     $skipNext = true;
                 }else if ($param['type'] == Token::T_SUBSTRACTION){
                     throw new \Exception('T_SUBSTRACTION not iplemented');
+                }else if ($param['type'] == Token::T_MULTIPLY){
 
+                    $mathValue = $node['params'][$index + 1];
+
+                    $resultCode = $emitter( $mathValue );
+                    foreach ($resultCode as $line) {
+                        $line->debug = $debugMsg .  ' ' . $line->debug;
+                        $code[] = $line;
+                    }
+
+                    $debugMsg = sprintf('[T_FUNCTION] map: subtraction %s', $mathValue['value']);
+                    $code[] = $getLine('0f000000', false, $debugMsg);
+                    $code[] = $getLine('04000000', false, $debugMsg);
+
+
+                    $code[] = $getLine('35000000', false, $debugMsg);
+                    $code[] = $getLine('04000000', false, $debugMsg);
+
+                    $code[] = $getLine('10000000', false, $debugMsg);
+                    $code[] = $getLine('01000000', false, $debugMsg);
+
+                    $skipNext = true;
 
                 }else{
                     $resultCode = $emitter( $param, true, [
@@ -396,9 +450,9 @@ class T_FUNCTION {
                     ]);
 
                     foreach ($resultCode as $line) {
+                        $line->debug = $debugMsg .  ' ' . $line->debug;
                         $code[] = $line;
                     }
-
                 }
 
                 $this->finalize($param, $data, $code, $getLine, false, $isProcedure, $isCustomFunction);
@@ -408,34 +462,66 @@ class T_FUNCTION {
                  * we assign the positive value and negate them with this sequence
                  */
                 if (
-                    ( $param['type'] == Token::T_FLOAT) &&
-                    $param['value'] < 0
+                    $param['type'] == Token::T_FLOAT &&
+                    (
+                        $param['value'] < 0 ||
+                        // -0 cant be detected by php, need the hex value for it
+                        Helper::fromFloatToHex($param['value']) == "00000080"
+                    )
                 ) {
+                    $debugMsg = sprintf('[T_FUNCTION] map: negative float %s', $param['value']);
 
-                    $code[] = $getLine('4f000000');
-                    $code[] = $getLine('32000000');
-                    $code[] = $getLine('09000000');
-                    $code[] = $getLine('04000000');
-                    $code[] = $getLine('10000000');
-                    $code[] = $getLine('01000000');
+                    $code[] = $getLine('4f000000', false, $debugMsg);
+                    $code[] = $getLine('32000000', false, $debugMsg);
+                    $code[] = $getLine('09000000', false, $debugMsg);
+                    $code[] = $getLine('04000000', false, $debugMsg);
+                    $code[] = $getLine('10000000', false, $debugMsg);
+                    $code[] = $getLine('01000000', false, $debugMsg);
                 }
 
 
+                /**
+                 * when a function want a float but receive a int instead
+                 * we need to tell the engine to convert the int to float
+                 */
                 if (
                     count($forceFloatOrder) > 0 &&
                     $param['type'] == Token::T_INT
                 ) {
-
-
                     if (count($forceFloatOrder)){
                         if ($forceFloatOrder[$index] === true){
-                            $code[] = $getLine('4d000000');
-                            $code[] = $getLine('10000000');
-                            $code[] = $getLine('01000000');
+                            $debugMsg = sprintf('[T_FUNCTION] map: convert int to float %s', $param['value']);
+
+                            $code[] = $getLine('4d000000', false, $debugMsg);
+                            $code[] = $getLine('10000000', false, $debugMsg);
+                            $code[] = $getLine('01000000', false, $debugMsg);
 
                         }
                     }
                 }
+
+                if ($param['type'] == Token::T_VARIABLE){
+                    $mapping = T_VARIABLE::getMapping($param, $data);
+
+                    if ($mapping['type'] == "constant") {
+//                        $code[] = $getLine('hier');
+
+                    }else if ($mapping['type'] == "customFunction"){
+                        $debugMsg = sprintf('[T_FUNCTION] map: customFunction %s', $param['value']);
+
+//                        if ($mapping['valueType'] == "string"){
+                            $code[] = $getLine('00000000', false, $debugMsg); //maybe argument position ?
+                            $code[] = $getLine('10000000', false, $debugMsg);
+                            $code[] = $getLine('01000000', false, $debugMsg);
+                            $code[] = $getLine('10000000', false, $debugMsg);
+                            $code[] = $getLine('02000000', false, $debugMsg);
+
+//                        }
+                    }
+
+
+                }
+
             }
         }
 
@@ -447,40 +533,23 @@ class T_FUNCTION {
 
         }catch (\Exception $e){
 
-            if ($isProcedure) {
+            if ($isProcedure || $isCustomFunction) {
                 $procedureOffset = $mappedToBlock['offset'];
 
-                $code[] = $getLine('10000000'); //procedure
-                $code[] = $getLine('04000000'); //procedure
-                $code[] = $getLine('11000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('00000000'); //procedure
-                $code[] = $getLine('32000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('1c000000'); //procedure
-                $code[] = $getLine('10000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('39000000'); //procedure
-                $code[] = $getLine(Helper::fromIntToHex($procedureOffset * 4)); //procedure offset
+                $debugMsg = sprintf('[T_FUNCTION] map: call procedure/customFunction %s', $node['value']);
 
-                return $code;
-
-            }else if ($isCustomFunction){
-
-                $procedureOffset = $mappedToBlock['offset'];
-
-                $code[] = $getLine('10000000'); //procedure
-                $code[] = $getLine('04000000'); //procedure
-                $code[] = $getLine('11000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('00000000'); //procedure
-                $code[] = $getLine('32000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('1c000000'); //procedure
-                $code[] = $getLine('10000000'); //procedure
-                $code[] = $getLine('02000000'); //procedure
-                $code[] = $getLine('39000000'); //procedure
-                $code[] = $getLine( Helper::fromIntToHex($procedureOffset * 4 ) ); // customFunction offset
+                $code[] = $getLine('10000000', false, $debugMsg); //procedure
+                $code[] = $getLine('04000000', false, $debugMsg); //procedure
+                $code[] = $getLine('11000000', false, $debugMsg); //procedure
+                $code[] = $getLine('02000000', false, $debugMsg); //procedure
+                $code[] = $getLine('00000000', false, $debugMsg); //procedure
+                $code[] = $getLine('32000000', false, $debugMsg); //procedure
+                $code[] = $getLine('02000000', false, $debugMsg); //procedure
+                $code[] = $getLine('1c000000', false, $debugMsg); //procedure
+                $code[] = $getLine('10000000', false, $debugMsg); //procedure
+                $code[] = $getLine('02000000', false, $debugMsg); //procedure
+                $code[] = $getLine('39000000', false, $debugMsg); //procedure
+                $code[] = $getLine(Helper::fromIntToHex($procedureOffset * 4), false, $debugMsg . ' (offset)'); //procedure offset
 
                 return $code;
             }
@@ -488,7 +557,9 @@ class T_FUNCTION {
             throw $e;
         }
 
-        $code[] = $getLine($function['offset']);
+        $debugMsg = sprintf('[T_FUNCTION] map: call function %s', $node['value']);
+
+        $code[] = $getLine($function['offset'], false, $debugMsg);
 
 
         /**
@@ -497,18 +568,17 @@ class T_FUNCTION {
 
         if (isset($node['nested']) && $node['nested'] === true){
 
-            $functionNoReturn = Manhunt2::$functionNoReturn;
-            if (GAME == "mh1") $functionNoReturn = Manhunt::$functionNoReturn;
-
-            $functionNoReturn = array_merge($functionNoReturn, ManhuntDefault::$functionNoReturn);
+            $functionNoReturn = array_merge(Manhunt2::$functionNoReturn, ManhuntDefault::$functionNoReturn);
 
             if (
                 //not sure, maybe this is just a fix for a unknown bug
                 !in_array(strtolower($node['value']), $functionNoReturn )
             ){
 
-                $code[] = $getLine('10000000');
-                $code[] = $getLine('01000000');
+                $debugMsg = sprintf('[T_FUNCTION] map: call function return');
+
+                $code[] = $getLine('10000000', false, $debugMsg);
+                $code[] = $getLine('01000000', false, $debugMsg);
 
             }
         }

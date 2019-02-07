@@ -1,0 +1,17 @@
+{
+    "const": [],
+    "strings": [
+        "player(player)",
+        "leader(leader)",
+        "goalHuntPlayer",
+        "subPostChase",
+        " added",
+        "player(player)",
+        "WaveCountOne",
+        "WaveCountTwo",
+        "WaveCountThree",
+        "WaveCountFour",
+        "WaveCountFive"
+    ],
+    "byteReserved": 44
+}

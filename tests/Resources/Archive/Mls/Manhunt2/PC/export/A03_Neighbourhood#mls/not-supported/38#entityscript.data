@@ -1,0 +1,16 @@
+{
+    "const": [],
+    "strings": [
+        "tPlayerDeath: OnEnterTrigger",
+        "DamagePlayerInsideTrigger",
+        "hChaser03(hunter)",
+        "hChaser04(hunter)",
+        "gOrbitPlayer1",
+        "",
+        "player(player)",
+        "gOrbitPlayer2",
+        "leader(leader)",
+        "subGuardCar2"
+    ],
+    "byteReserved": 0
+}

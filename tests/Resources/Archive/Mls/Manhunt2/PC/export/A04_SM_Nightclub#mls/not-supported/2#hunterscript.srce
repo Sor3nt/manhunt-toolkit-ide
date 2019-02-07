@@ -1,0 +1,36 @@
+scriptmain hunterScript;
+entity hCounter(hunter)01 : et_name;
+var self : string[32];
+	playingAnim : boolean;
+
+script OnCreate;
+	begin
+		self := GetEntityName(this);
+		playingAnim := true;
+	end;
+
+script OnVeryLowSightingOrAbove;
+	begin
+		WriteDebug('OnLowSightingOrAbove');
+		if(playingAnim) then AIEntityCancelAnim(self, 'BAT_IDLE_CLEANGLASS_ANIM');
+		playingAnim := false;
+		RemoveThisScript;
+	end;
+
+script OnVeryLowHearingOrAbove;
+	begin
+		WriteDebug('OnLowHearingOrAbove');
+		if(playingAnim) then AIEntityCancelAnim(self, 'BAT_IDLE_CLEANGLASS_ANIM');
+		playingAnim := false;
+		RemoveThisScript;
+	end;
+
+script OnStartExecution;
+	begin
+		WriteDebug('OnStartExecution');
+		if(playingAnim) then AIEntityCancelAnim(self, 'BAT_IDLE_CLEANGLASS_ANIM');
+		playingAnim := false;
+		RemoveThisScript;
+	end;
+
+end.

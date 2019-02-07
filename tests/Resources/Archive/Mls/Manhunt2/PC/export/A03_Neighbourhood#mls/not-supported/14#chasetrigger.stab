@@ -1,0 +1,23 @@
+[
+    {
+        "name": "llevelstate",
+        "nameGarbage": "00726f6c00e0a0120288a1120248a2120278a31202",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            36,
+            160
+        ]
+    },
+    {
+        "name": "patrolling",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

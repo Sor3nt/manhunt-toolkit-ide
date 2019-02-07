@@ -1,0 +1,14 @@
+[
+    {
+        "name": "flag_hunter_tower_dead",
+        "nameGarbage": "00735c4173796c756d5c",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            1528,
+            1588,
+            1648
+        ]
+    }
+]

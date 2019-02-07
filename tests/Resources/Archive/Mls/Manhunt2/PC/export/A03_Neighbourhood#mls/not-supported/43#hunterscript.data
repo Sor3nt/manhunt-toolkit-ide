@@ -1,0 +1,21 @@
+{
+    "const": [],
+    "strings": [
+        "player(player)",
+        "leader(leader)",
+        "goalHuntPlayer",
+        "h11(hunter)",
+        "h11Path",
+        "h11b(hunter)",
+        "h11Pathb",
+        "h12(hunter)",
+        "h12Path",
+        "h13(hunter)",
+        "h13Path",
+        "subBack1",
+        " added",
+        "Heli",
+        "TargetPlayerPos"
+    ],
+    "byteReserved": 40
+}

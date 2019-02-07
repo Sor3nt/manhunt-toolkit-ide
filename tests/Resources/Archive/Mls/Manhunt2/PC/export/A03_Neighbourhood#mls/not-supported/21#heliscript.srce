@@ -1,0 +1,343 @@
+scriptmain Heliscript;
+
+entity
+	Heli : et_name;
+	
+TYPE
+tLevelState = ( StartOfLevel, GasCan, Chase, EndChase );
+
+VAR
+	patrolling : level_var boolean;
+	vector : vec3D;
+	vector2 : vec3D;
+	heliChasePatrol : level_var integer;
+	heliTargetPlayer : level_var boolean;
+	SpecialStart : level_var boolean;
+	lLevelState : level_var tLevelState;
+	heliPatrolling : level_var boolean;
+
+script OnCreate;	
+begin		
+	{************** INIT HELICOPTER´}
+	SetVector(vector, 29.2301, 13.0, -56.2896);
+	SetVector(vector2, 0.781215, -0.541193, -38.7844);
+	HeliGotoPosition(this, vector, true, true);	
+	{HeliLookAtPosition(this, vector2, true);}
+	
+	HeliSetEnemy(this, 'player(player)', true);
+	HeliSetLight(this, true);
+	HeliOpenFire(this, true, 0.2);
+	HeliSetFiringRate(this, 5);
+	HeliSetLightSpeed(this, 1.0);
+	writedebug('speed 1.0');
+	HeliSetMoveSpeed(this, 1.0);
+	SetNoisyEntity(this, 30.0);
+	RunScript('heli', 'MakeRadarNoise');
+	
+	HeliSetSpolightMaxDeflection(GetEntity('heli'), 25.0);
+	
+	EntityIgnoreCollisions(this , TRUE); {ChopperLanding}
+	{************** INIT HELICOPTER }
+	
+	patrolling := TRUE;
+	heliPatrolling := TRUE;
+	
+	{RunScript('heli', 'PatrolTheStreet');}
+	
+	{PATH CREATION}
+	HeliCreateHeliNode('~HeliPathOne_00',3.72894,14.0681,-18.4543);
+	HeliCreateHeliNode('~HeliPathOne_02',-1.92753,14.0681,-59.8796);
+	HeliCreateHeliNode('~HeliPathOne_03',5.40292,14.0681,-38.8621);
+	HeliCreateHeliNode('~HeliPathOne_01',-3.17896,14.0681,-35.7367);
+	HeliCreateHeliPath('HeliPathOne','HeliPathOne_00,HeliPathOne_01,HeliPathOne_02,HeliPathOne_03');
+	HeliCreateHeliNode('~HeliPathTwo00',-26.997,14.0681,-37.1499);
+	HeliCreateHeliNode('~HeliPathTwo01',-26.997,14.0681,-12.3208);
+	HeliCreateHeliPath('HeliPathTwo','HeliPathTwo00,HeliPathTwo01');
+	HeliCreateHeliNode('~HeliPathFour00',24.3522,14.0681,-114.094);
+	HeliCreateHeliNode('~HeliPathFour01',24.3522,14.0681,-90.5255);
+	HeliCreateHeliNode('~HeliPathFour02',-0.924149,14.0681,-90.5255);
+	HeliCreateHeliPath('HeliPathFour','HeliPathFour00,HeliPathFour01,HeliPathFour02');
+	HeliCreateHeliNode('~HeliPathThree00',-44.0246,14.0681,-112.081);
+	HeliCreateHeliNode('~HeliPathThree01',-45.7645,14.0681,-84.2352);
+	HeliCreateHeliNode('~HeliPathThree02',-27.1464,14.0681,-68.4122);
+	HeliCreateHeliPath('HeliPathThree','HeliPathThree00,HeliPathThree01,HeliPathThree02');
+	HeliCreateHeliNode('~HeliPathFive00',29.9519,14.0681,-12.693);
+	HeliCreateHeliNode('~HeliPathFive01',17.009,14.0681,-55.578);
+	HeliCreateHeliPath('HeliPathFive','HeliPathFive00,HeliPathFive01');
+	HeliCreateHeliNode('~HeliPathPetrol_01',3.72894,14.0681,-13.2313);
+	HeliCreateHeliNode('~HeliPathPetrol_02',10.8177,14.0681,-85.422);
+	HeliCreateHeliPath('PathPetrol','HeliPathPetrol_01,HeliPathPetrol_02');
+
+	HeliSetMoveSpeed(this, 0.8);
+	
+	writeDebug('Heli created');
+end;
+
+script OnHeliSpottedEntity;
+begin
+	RunScript('heli', 'ChasePlayer');
+end;
+
+{script IfClimbingDontShoot;
+begin
+	while TRUE do
+	begin
+		while (NOT IsPlayerClimbing) do sleep(10);
+		writedebug('shooting off (climb)');
+		HeliOpenFire(this, false, 0.2);
+		while (IsPlayerClimbing) do sleep(10);
+		writedebug('shooting on (climb)');
+		HeliOpenFire(this, true, 0.2);
+	end;
+end;}
+
+
+script MakeRadarNoise;
+var
+    vPosition : vec3d;
+begin
+  {remember to terminate this when the helicopter is hidden}
+   while true do
+    begin
+    	vPosition := GetEntityPosition(this);
+      RadarCreateBlip(vPosition, 30);
+      sleep(100);
+    end;      
+end;
+
+
+script ChasePlayer;
+VAR
+	lostHim : boolean;
+	randSpeech : integer;
+	pos : vec3d;
+begin
+	lostHim := FALSE;
+	KillScript('heli', 'PatrolTheStreet');
+	patrolling := FALSE;
+	
+	HeliSetMoveSpeed(this, 0.25);
+	HeliSetLightSpeed(this, 0.25);
+	HeliPauseIdlePatrol(this);
+	heliPatrolling := FALSE;
+	HeliSetSpolightMaxDeflection(GetEntity('heli'), 25.0);
+	HeliLookAtEntity(this, 'player(player)');
+	writeDebug('Player spotted');
+	
+  if IsScriptAudioStreamCompleted then
+  begin
+  	pos:= GetEntityPosition(GetEntity('heli'));
+  	randSpeech := RandNum(4);
+  	if randSpeech = 0 then
+  		PlayScriptAudioStreamFromPosAuto('HE01', 127,pos,127);
+  	if randSpeech = 1 then
+  		PlayScriptAudioStreamFromPosAuto('HE02', 127,pos,127);	
+  	if randSpeech = 2 then
+  		PlayScriptAudioStreamFromPosAuto('HE03', 127,pos,127);	
+  	if randSpeech = 3 then
+  		PlayScriptAudioStreamFromPosAuto('HE04', 127,pos,127);	
+  	{if randSpeech = 4 then
+  		PlayScriptAudioStreamFromPosAuto('HE05', 127,pos,127);	
+  	if randSpeech = 5 then
+  		PlayScriptAudioStreamFromPosAuto('HE06', 127,pos,127);	}
+  end;
+	
+	
+	{sleep(2000);}
+	
+	while lostHim = FALSE do
+	begin
+		
+		{writedebug(HeliGetDistanceFromSpolight(GetEntity('heli'), 'player(player)'));}
+		
+		if HeliGetDistanceFromSpolight(GetEntity('heli'), 'player(player)') > 20.0 then
+			lostHim := TRUE;
+	end;
+	
+	writedebug('lost him');
+	
+	HeliSetMoveSpeed(this, 1.0	);
+	HeliSetLightSpeed(this, 1.0);
+	
+	HeliResumeIdlePatrol(this);
+	heliPatrolling := TRUE;
+	HeliSetSpolightMaxDeflection(GetEntity('heli'), -1.0);
+	
+	writedebug('HELICOPTER LOST THE PLAYER');
+	randSpeech := RandNum(3);
+	pos:= GetEntityPosition(GetEntity('heli'));
+	if randSpeech = 0 then
+		PlayScriptAudioStreamFromPosAuto('HP1', 127,pos,127);
+	if randSpeech = 1 then
+		PlayScriptAudioStreamFromPosAuto('HP2', 127,pos,127);	
+	if randSpeech = 2 then
+		PlayScriptAudioStreamFromPosAuto('HP3', 127,pos,127);	 
+	
+	
+	if lLevelState <> Chase then
+	begin
+		RunScript('heli', 'PatrolTheStreet');
+	end;
+	
+end;
+
+script PatrolTheStreet;
+VAR
+	angle : vec3d;
+begin
+	
+	writedebug('patrol init');
+	HeliSetLight(this, true);
+	{patrolling := TRUE;}
+	
+	{SetVector(vector, 4.42779, 2.48366, -38.7844);
+	HeliLookAtPosition(this, vector, true);}
+	HeliSetMoveSpeed(this, 0.8);
+	
+	if ((InsideTrigger(GetEntity('triggerZone1') ,GetPlayer)) OR (SpecialStart = TRUE)) AND (lLevelState <> GasCan)  then
+	begin 
+		HeliSetLight(GetEntity('heli'), true);
+		if SpecialStart = TRUE then
+		begin
+			SetVector(vector, 0.781215, 13.0, -33.6057);
+			HeliGotoPosition(GetEntity('heli'), vector, true, true);
+			patrolling := TRUE;
+		end;
+		SpecialStart := FALSE;
+		
+		writedebug('Running helipathone');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'HeliPathOne', true, angle);
+		
+	end
+	else if (InsideTrigger(GetEntity('triggerZone2') ,GetPlayer))  AND (lLevelState <> GasCan)  then
+	begin
+					
+			writedebug('Running helipathtwo');
+			SetVector(angle, 0.0, -15.0, 2.0);
+			HeliSetIdlePatrolPath(this, 'HeliPathTwo', true, angle);
+			
+			while (HeliGetNodeReached(this) <> 'HeliPathTwo01') do sleep(10);
+			
+			writedebug('Running helipathone');
+			SetVector(angle, 0.0, -15.0, 2.0);
+			HeliSetIdlePatrolPath(this, 'HeliPathOne', true, angle)
+
+	end
+	else if (InsideTrigger(GetEntity('triggerZone3') ,GetPlayer))  AND (lLevelState <> GasCan) then
+	begin
+			writedebug('Running helipaththree');
+			SetVector(angle, 0.0, -15.0, 2.0);
+			HeliSetIdlePatrolPath(this, 'HeliPathThree', true, angle);
+			
+			while (HeliGetNodeReached(this) <> 'HeliPathThree02') do sleep(10);
+			
+			writedebug('Running helipathone');
+			SetVector(angle, 0.0, -15.0, 2.0);
+			HeliSetIdlePatrolPath(this, 'HeliPathOne', true, angle);
+	end
+	else if (InsideTrigger(GetEntity('triggerZone4') ,GetPlayer))  AND (lLevelState <> GasCan) then
+	begin
+		writedebug('Running helipathfour');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'HeliPathFour', true, angle);
+			
+		while (HeliGetNodeReached(this) <> 'HeliPathFour02') do sleep(10);
+			
+		writedebug('Running helipathone');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'HeliPathOne', true, angle);
+	end
+	else if (InsideTrigger(GetEntity('triggerZone5') ,GetPlayer))  AND (lLevelState <> GasCan) then
+	begin
+		writedebug('Running helipathfive');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'HeliPathFive', true, angle);
+		
+		while(HeliGetNodeReached(this) <> 'HeliPathFive01') do sleep(10);
+		
+		writedebug('Running helipathone');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'HeliPathOne', true, angle);
+	end
+	else if lLevelState = GasCan then
+	begin
+		writedebug('Running helipathPETROL');
+		SetVector(angle, 0.0, -15.0, 2.0);
+		HeliSetIdlePatrolPath(this, 'PathPetrol', true, angle);
+	end;
+end;
+
+script doChasePatrol;
+VAR                            
+	pos : vec3d;
+begin
+		RemoveScript('heli', 'ChasePlayer');
+		KillScript('heli', 'OnHeliSpottedEntity');
+		RemoveScript('heli', 'OnHeliSpottedEntity');
+		RemoveScript('heli', 'OnHeliReachedLookAt');
+		
+		SetVector(pos, 17.009, 11.0681, -55.578);
+		HeliGotoPosition(GetEntity('heli'), pos, true, true);	
+		
+		writedebug('Chasing player');
+		
+		HeliSetMoveSpeed(this, 0.8);
+		HeliSetLightSpeed(this, 0.8);
+		HeliPauseIdlePatrol(this);
+		heliPatrolling := FALSE;
+		HeliSetSpolightMaxDeflection(GetEntity('heli'), 25.0);
+		HeliLookAtEntity(this, 'player(player)');
+		{HeliSetLightRandomWander(this, 10.0, 0.05, 10.0);}
+		writeDebug('Player spotted : chase');
+end;
+
+script MoveTowardsPlayer;
+
+VAR
+	pos : vec3d;
+
+begin
+	patrolling := FALSE;
+	SetVector(pos, 93.5849, 15.0, -132.092);
+	HeliGotoPosition(this, pos, true, true);	
+{	HeliSetSpolightMaxDeflection(GetEntity('heli'), 25.0);}
+	HeliSetLightSpeed(this, 0.05);
+	HeliSetLightRandomWander(this, 0.0, 0.0, 0.0);
+	HeliSetLight(this, true);
+	SetVector(pos, 118.961, -1.16358, -126.069);
+	HeliLookAtPosition(this, pos, false);
+	{HeliSetMoveSpeed(this, 0.05);	
+	SetVector(pos, 123.385, -1.00456, -122.966);
+	HeliLookAtPosition(this, pos, false);}
+end;
+
+
+script TargetPlayerPos;
+begin
+	HeliPauseIdlePatrol(this);
+	heliPatrolling := FALSE;
+  HeliLookAtPosition(GetEntity('heli'), GetEntityPosition(GetPlayer), false);  
+end;
+
+script IntroFlyBy;
+VAR
+	pos : vec3d;
+begin
+	HeliPauseIdlePatrol(this);
+	heliPatrolling := FALSE;
+	HeliSetLight(this, false);
+	HeliSetSpolightMaxDeflection(this, 25.0);
+	SetVector(pos, 37.007, 12.800113, -73.4123);
+	MoveEntity(GetEntity('heli'), pos, 1);
+	SetVector(pos, 27.2003, 12.91772, -112.184);
+	HeliGotoPosition(GetEntity('heli'), pos, false, false);
+end;
+
+Script OnHeliReachedLookAt;
+begin
+	HeliResumeIdlePatrol(this);
+	heliPatrolling := TRUE;
+end;
+
+end.   

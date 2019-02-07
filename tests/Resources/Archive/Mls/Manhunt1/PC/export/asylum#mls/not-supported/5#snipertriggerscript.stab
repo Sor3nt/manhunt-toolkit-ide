@@ -1,0 +1,13 @@
+[
+    {
+        "name": "flag_hunter_in_switch_trigger",
+        "nameGarbage": "000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            340,
+            416
+        ]
+    }
+]

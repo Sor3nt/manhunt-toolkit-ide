@@ -1,0 +1,16 @@
+{
+    "const": [],
+    "strings": [
+        "smashDoor3",
+        "smashDoor04",
+        "smashDoor05",
+        "smashDoor06",
+        "smashDoor04",
+        "smashDoor05",
+        "smashDoor06",
+        "PPD1",
+        "PPD2",
+        "PPD3"
+    ],
+    "byteReserved": 16
+}

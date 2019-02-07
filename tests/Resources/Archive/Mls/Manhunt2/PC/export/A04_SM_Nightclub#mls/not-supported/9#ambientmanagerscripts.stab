@@ -1,0 +1,104 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8344,
+            11172,
+            11512,
+            12884
+        ]
+    },
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            752,
+            852,
+            8288,
+            11096,
+            11264,
+            11464
+        ]
+    },
+    {
+        "name": "ambientlocationlastid",
+        "nameGarbage": "0000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            8316,
+            11072,
+            11228,
+            11288,
+            11484
+        ]
+    },
+    {
+        "name": "ambientmusicoffinbar",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            5792,
+            6428,
+            6748,
+            7284,
+            8400
+        ]
+    },
+    {
+        "name": "ambienttwowaymirrorsmashed",
+        "nameGarbage": "000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            1256,
+            8428
+        ]
+    },
+    {
+        "name": "ambientyardwindowsmashed",
+        "nameGarbage": "0000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7456,
+            8372
+        ]
+    },
+    {
+        "name": "doors",
+        "nameGarbage": "003200000000000000000000000000000000000000000000000000",
+        "offset": "28020000",
+        "size": 144,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "009b0b02789c0b02f09d0b02089f0b0298d80b0240d90b0230da0b02",
+        "offset": "04020000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

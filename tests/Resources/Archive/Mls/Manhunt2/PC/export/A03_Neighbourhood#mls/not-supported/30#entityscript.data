@@ -1,0 +1,19 @@
+{
+    "const": [],
+    "strings": [
+        "player(player)",
+        "EndChaser",
+        "BARREL ENTER = ",
+        "hChaser09s(hunter)",
+        "BARREL ENTER ONE",
+        "hChaser10s(hunter)",
+        "BARREL ENTER TWO",
+        "FuncInsideTrigger: Checking object ",
+        " with position: ",
+        ", ",
+        "FuncInsideTrigger: ",
+        " is inside the trigger",
+        " is NOT inside the trigger"
+    ],
+    "byteReserved": 32
+}

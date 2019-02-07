@@ -1,0 +1,22 @@
+[
+    {
+        "name": "flag_cutscene_played_tower",
+        "nameGarbage": "000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            3588,
+            3612,
+            7336
+        ]
+    },
+    {
+        "name": "pdoor1",
+        "nameGarbage": "00656374735c4b6f6a616b5c6c6576656c735c4173796c756d5c",
+        "offset": "f8010000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

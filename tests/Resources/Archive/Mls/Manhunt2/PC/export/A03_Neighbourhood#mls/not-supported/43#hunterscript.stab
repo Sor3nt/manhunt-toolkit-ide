@@ -1,0 +1,23 @@
+[
+    {
+        "name": "deadcopscount",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            2172,
+            2232
+        ]
+    },
+    {
+        "name": "me",
+        "nameGarbage": "00000a0000002400000000000000322c20312c20352c203800496e666f5c",
+        "offset": "d0000000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

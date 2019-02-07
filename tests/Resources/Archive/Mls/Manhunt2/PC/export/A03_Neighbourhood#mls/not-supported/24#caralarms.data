@@ -1,0 +1,27 @@
+{
+    "const": [],
+    "strings": [
+        "triggerAlarm01",
+        "Car_Alarmed01",
+        "triggerAlarm02",
+        "Car_Alarmed02",
+        "triggerAlarm03",
+        "Car_Alarmed03",
+        "triggerAlarm04",
+        "Car_Alarmed04",
+        "triggerAlarm05",
+        "Car_Alarmed05",
+        "triggerAlarm06",
+        "Car_Alarmed06",
+        "LEVEL",
+        "CARALARM",
+        "CARALARM1",
+        "CARALARM2",
+        "CARALARM3",
+        "Heli",
+        "TargetPlayerPos",
+        "luring hunters to alarm",
+        "ALARM"
+    ],
+    "byteReserved": 64
+}

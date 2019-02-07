@@ -1,0 +1,37 @@
+[
+    {
+        "name": "addedgoals",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "cc000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "me",
+        "nameGarbage": "00002000f30020003401200075012000b60120001a032000dd0320001e04",
+        "offset": "a8000000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "secondwavecount",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            572,
+            632,
+            644,
+            844,
+            1044,
+            1244,
+            1444
+        ]
+    }
+]

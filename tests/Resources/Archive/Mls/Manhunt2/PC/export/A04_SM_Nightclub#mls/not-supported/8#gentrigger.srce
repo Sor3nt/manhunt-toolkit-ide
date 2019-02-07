@@ -1,0 +1,155 @@
+scriptmain genTrigger;
+entity tStrobes : et_name;
+type Strobe = record
+		light : entityptr;
+		floor : integer;
+	end;
+	SpotlightWaypoint = record
+		target : vec3d;
+		transition : integer;
+	end;
+var swap : boolean;
+	blitzing : boolean;
+	Strobes : array [1..3] of Strobe;
+	SlowSweep : array [1..8] of SpotlightWaypoint;
+	SlowSweepWP : array [1..4] of integer;
+	SlowSweepSleep : integer;
+	doneDiscoCutscene : level_var boolean;
+	strobesBuilt : level_var boolean;
+
+procedure MakeSpotlight(index : integer; p1 : real; p2 : real);
+	begin
+		case index of
+			1: InitSpotlight('SPOT_1', GetEntity('Spot_Dance01'), p1, p2);  
+			2: InitSpotlight('SPOT_2', GetEntity('Spot_Dance02'), p1, p2);
+			3: InitSpotlight('SPOT_3', GetEntity('Spot_Dance03'), p1, p2);
+			4: InitSpotlight('SPOT_4', GetEntity('Spot_Dance04'), p1, p2);
+		end;
+	end;
+
+procedure SetSpotlightTargetTransition(index : integer);
+	var name, num : string[32];
+	begin
+		IntegerToString(num, index);
+		StringCat(name, 'SPOT_', num);
+		SetSpotlightTarget(name, SlowSweep[SlowSweepWP[index]].target);
+		SetSpotlightTransitionTime(name, SlowSweep[SlowSweepWP[index]].transition);
+	end;
+
+procedure ClearStrobes;
+	begin
+		SwitchLightOff(GetEntity('strobe_R(L)'));
+		SwitchLightOff(GetEntity('strobe_G(L)'));
+		SwitchLightOff(GetEntity('strobe_B(L)'));
+		SetCurrentLod(GetEntity('SM_DancefloorLOD'), 0);
+	end;
+
+procedure TurnOnStrobe(index : integer);
+	begin
+		SetCurrentLod(GetEntity('SM_DancefloorLOD'), Strobes[index].floor);
+		SwitchLightOn(Strobes[index].light);
+	end;
+
+script OnCreate;
+	var pos : vec3d;
+		i : integer;
+	begin WriteDebug('Creating spotlights and strobes...');
+		{ Setup spotlights }
+		strobesBuilt := true;
+		swap := false;
+		blitzing := false;
+		SlowSweepWP[1] := 1;
+		SlowSweepWP[2] := 3;
+		SlowSweepWP[3] := 5;
+		SlowSweepWP[4] := 7;
+		SlowSweepSleep := 4000;
+		SetVector(pos, 0.5, -1.0, -26.0);
+		for i := 1 to 4 do begin
+			MakeSpotlight(i, 12.0, 24.0);
+			SetSpotlightTargetTransition(i);
+		end;
+		for i := 1 to 8 do begin
+			SlowSweep[i].transition := 4;
+			case i of
+				1 : SetVector(SlowSweep[i].target, 0.5, -1.0, -33.0);
+				2 : SetVector(SlowSweep[i].target, 5.38954, -1.0, -30.9792);
+				3 : SetVector(SlowSweep[i].target, 7.5, -1.0, -26.0);
+				4 : SetVector(SlowSweep[i].target, 5.47877, -1.0, -21.0801);
+				5 : SetVector(SlowSweep[i].target, 0.5, -1.0, -19.0);
+				6 : SetVector(SlowSweep[i].target, -4.42032, -1.0, -20.9909);
+				7 : SetVector(SlowSweep[i].target, -6.5, -1.0, -26.0);
+				8 : SetVector(SlowSweep[i].target, -4.50955, -1.0, -30.89);
+			end;
+		end;
+		{ Strobes }
+		ClearStrobes;
+		Strobes[1].light := GetEntity('strobe_R(L)');
+		Strobes[1].floor := 1;
+		Strobes[2].light := GetEntity('strobe_G(L)');
+		Strobes[2].floor := 2;
+		Strobes[3].light := GetEntity('strobe_B(L)');
+		Strobes[3].floor := 3;
+		{ Run }
+		RunScript(GetEntityName(this), 'RunSpotlightSlowSweep');
+	end;
+
+script RunSpotlightSlowSweep;
+	var i, l, t1, t2 : integer;
+		pos : vec3d;
+	begin
+		l := 0;
+		{SetVector(pos, 0.450343, 10.209834, -24.2017);}
+		SetVector(pos, 2.90186, -0.209834, -24.205);
+		SetSpotlightTarget('SPOT_1', pos);
+		SetSpotlightTransitionTime('SPOT_1', 0.1);
+		SetSpotlightTarget('SPOT_2', pos);
+		SetSpotlightTransitionTime('SPOT_2', 0.1);
+		SetSpotlightTarget('SPOT_3', pos);
+		SetSpotlightTransitionTime('SPOT_3', 0.1);
+		SetSpotlightTarget('SPOT_4', pos);
+		SetSpotlightTransitionTime('SPOT_4', 0.1);
+		while(not doneDiscoCutscene) do begin
+			if(not blitzing) then RunScript(GetEntityName(this), 'BlitzStrobes');
+			Sleep(10);
+		end;
+		while(true) do begin
+			if(l > 2) then begin
+				if(swap) then begin
+					l := 0;
+					t1 := SlowSweepWP[1];
+					t2 := SlowSweepWP[4];
+					SlowSweepWP[1] := SlowSweepWP[2];
+					SlowSweepWP[4] := SlowSweepWP[3];
+					SlowSweepWP[2] := t1;
+					SlowSweepWP[3] := t2;
+					swap := false;
+				end else swap := true;
+				RunScript(GetEntityName(this), 'BlitzStrobes');
+			end;
+			for i := 1 to 4 do begin
+				SetSpotlightTargetTransition(i);
+				SlowSweepWP[i] := SlowSweepWP[i] + 1;
+				if(SlowSweepWP[i] > 8) then SlowSweepWP[i] := 1;
+			end;
+			l := l + 1;
+			Sleep(SlowSweepSleep);
+		end;
+	end;
+
+script BlitzStrobes;
+	var i : integer;
+	begin
+		blitzing := true;
+		SetNodeShadow('nSha01,nSha02,nSha03,nSha04,nSha05,nSha06,nSha07,nSha08,nSha09', false);
+		for i := 1 to 15 do begin
+			ClearStrobes;
+			Sleep(15);
+			TurnOnStrobe(1 + randnum(3));
+			Sleep(10);
+		end;
+		ClearStrobes;
+		SetNodeShadow('nSha01,nSha02,nSha03,nSha04,nSha05,nSha06,nSha07,nSha08,nSha09', true);
+		blitzing := false;
+	end;
+
+end.

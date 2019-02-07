@@ -1,9 +1,25 @@
 <?php
 namespace App\Service\Archive;
 
+use App\MHT;
 use App\Service\NBinary;
 
-class Tex {
+class Tex extends Archive {
+
+    public $name = 'Textures';
+
+    public static $supported = 'tex';
+
+    /**
+     * @param $pathFilename
+     * @param $input
+     * @param $game
+     * @param $platform
+     * @return bool
+     */
+    public static function canPack( $pathFilename, $input, $game, $platform ){
+        return false;
+    }
 
     private function parseHeader( NBinary &$binary ){
 
@@ -18,7 +34,6 @@ class Tex {
             'numTextures'       => $binary->consume(4,  NBinary::INT_32),
             'firstOffset'       => $binary->consume(4,  NBinary::INT_32),
             'lastTOffset'       => $binary->consume(4,  NBinary::INT_32)
-//            'unknown2'          => $binary->consume(20, NBinary::HEX),
         ];
 
 
@@ -53,9 +68,48 @@ class Tex {
         return $texture;
     }
 
-    public function unpack($binary){
 
-        $binary = new NBinary($binary);
+    public function convertToBmp( $texture ){
+        $ddsHandler = new Dds();
+        $bmpHandler = new Bmp();
+
+        $ddsDecoded = $ddsHandler->unpack( new NBinary($texture['data']), MHT::GAME_MANHUNT_2, MHT::PLATFORM_PC );
+
+        if($ddsDecoded['format'] == "DXT1") {
+            $dxtHandler = new Dxt1();
+        }else if($ddsDecoded['format'] == "DXT5"){
+            $dxtHandler = new Dxt5();
+        }else{
+            throw new \Exception('Format not implemented: ' . $ddsDecoded['format']);
+        }
+
+        //decode the DXT Texture
+        $bmpRgba = $dxtHandler->decode(
+            $ddsDecoded['data'],
+            $ddsDecoded['width'],
+            $ddsDecoded['height'],
+            'abgr'
+        );
+
+        //Convert the RGBa values into a Bitmap
+        $bmpImage = $bmpHandler->encode(
+            $bmpRgba,
+            $ddsDecoded['width'],
+            $ddsDecoded['height']
+        );
+
+        return [ $texture['name'] . ".bmp" , $bmpImage];
+    }
+
+    /**
+     * @param NBinary $binary
+     * @param $game
+     * @param $platform
+     * @return array
+     * @throws \Exception
+     */
+    public function unpack(NBinary $binary, $game, $platform){
+
         $header = $this->parseHeader($binary);
 
         $currentOffset = $header['firstOffset'];
@@ -63,7 +117,13 @@ class Tex {
         $textures = [];
         while($header['numTextures'] > 0) {
             $texture = $this->parseTexture($currentOffset, $binary);
-            $textures[] = $texture;
+
+            if ($texture['mipMapCount'] > 1){
+                throw new \Exception('MipMap handler missed');
+            }
+
+            list($filename, $bmp) = $this->convertToBmp($texture);
+            $textures[$filename] = $bmp;
 
             $currentOffset = $texture['nextOffset'];
 
@@ -74,9 +134,14 @@ class Tex {
         return $textures;
     }
 
-    public function pack( $executions, $envExecutions, $paddings ){
+    /**
+     * @param $data
+     * @param $game
+     * @param $platform
+     */
+    public function pack($data, $game, $platform ){
 
-        die("no packing support right now");
+        die("Packing it not supported right now.");
 
     }
 }

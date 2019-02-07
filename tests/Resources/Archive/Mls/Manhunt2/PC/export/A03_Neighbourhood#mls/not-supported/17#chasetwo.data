@@ -1,0 +1,24 @@
+{
+    "const": [],
+    "strings": [
+        "destroying",
+        "hChaser01(hunter)",
+        "hChaser02(hunter)",
+        "hChaser03(hunter)",
+        "Init",
+        "hChaser04(hunter)",
+        "hChaser05(hunter)",
+        "heli",
+        "RunGoals",
+        "SkipMe",
+        "GUARD2",
+        "COP3",
+        "triggerChase03",
+        "triggerChase05a",
+        "triggerChase05b",
+        "triggerChase05c",
+        "Door2_(D)",
+        "_fake"
+    ],
+    "byteReserved": 0
+}

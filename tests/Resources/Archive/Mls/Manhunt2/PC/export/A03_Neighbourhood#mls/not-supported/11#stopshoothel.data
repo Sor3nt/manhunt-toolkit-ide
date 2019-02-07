@@ -1,0 +1,15 @@
+{
+    "const": [],
+    "strings": [
+        "StopHeliShoot",
+        "CheckLoop",
+        "heli",
+        "OPEN FIRE",
+        "player(player)",
+        "DONT OPEN FIRE",
+        "HP5",
+        "HP6",
+        "HP10"
+    ],
+    "byteReserved": 4
+}

@@ -2,29 +2,60 @@
 
 namespace App\Service;
 
+use App\Service\Archive\Archive;
+use Symfony\Component\Finder\Finder;
+
 class Resource
 {
 
-    private $content = '';
-    private $type = '';
+    /** @var Finder|NBinary */
+    private $input;
+
+    private $handler = '';
     private $relativeFile = '';
 
-    public function __construct( $content, $type, $relativeFile)
+    public function __construct( Archive $handler, $relativeFile, $input)
     {
-        $this->content = $content;
-        $this->type = $type;
+        $this->input = $input;
+        $this->handler = $handler;
         $this->relativeFile = $relativeFile;
     }
 
     /**
-     * @return mixed
+     * @return Archive
      */
-    public function getContent(){
-        return $this->content;
+    public function getHandler()
+    {
+        return $this->handler;
     }
 
-    public function setContent( $content ){
-        $this->content = $content;
+    /**
+     * @param Archive $handler
+     */
+    public function setHandler($handler)
+    {
+        $this->handler = $handler;
     }
+
+
+
+
+    /**
+     * @return Finder|NBinary
+     */
+    public function getInput()
+    {
+        return $this->input;
+    }
+
+
+    /**
+     * @param Finder|NBinary $input
+     */
+    public function setInput($input)
+    {
+        $this->input = $input;
+    }
+
 
 }

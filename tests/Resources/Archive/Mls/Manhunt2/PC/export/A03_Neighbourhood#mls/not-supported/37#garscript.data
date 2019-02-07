@@ -1,0 +1,20 @@
+{
+    "const": [],
+    "strings": [
+        "button 1",
+        "Garage01_(S)",
+        "Open",
+        "BlinkGreen",
+        "BlinkRed",
+        "A03_Garage_Shutter02",
+        "EAT_GARAGE_SHUTTER_ANIM",
+        "blinkOpen",
+        "A03_Garage_Shutter02",
+        "LURE_LOW",
+        " : BlinkRed",
+        "BlinkGreen",
+        " : BlinkGreen",
+        "BlinkRed"
+    ],
+    "byteReserved": 36
+}

@@ -1,0 +1,56 @@
+[
+    {
+        "name": "behindlogs",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "helichasepatrol",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            5136
+        ]
+    },
+    {
+        "name": "lcurrentambientaudiotrack",
+        "nameGarbage": "00000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            3092
+        ]
+    },
+    {
+        "name": "llevelstate",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            3072
+        ]
+    },
+    {
+        "name": "spotted",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            5532,
+            5544
+        ]
+    }
+]

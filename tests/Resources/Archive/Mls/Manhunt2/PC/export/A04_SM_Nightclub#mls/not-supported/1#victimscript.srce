@@ -1,0 +1,15 @@
+scriptmain victimScript;
+entity victim(hunter)01 : et_name;
+var self : string[20];
+
+script OnCreate;
+	begin
+		self := GetEntityName(this);
+		WriteDebug(self, ' creating...');
+		AISetHunterOnRadar(self, false);
+		SetHunterRunTime(self, 0);
+		SetHunterRunSpeed(self, 0.9);
+		SetDamage(this, 1);
+	end;
+
+end.

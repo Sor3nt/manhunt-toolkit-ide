@@ -1,0 +1,49 @@
+[
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            1896,
+            2716,
+            4044,
+            4140,
+            4256
+        ]
+    },
+    {
+        "name": "flicker",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "d8010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "incutscene",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            4484
+        ]
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "0001200075012000b60120005b0320006e182000af18",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            2608,
+            3936
+        ]
+    }
+]

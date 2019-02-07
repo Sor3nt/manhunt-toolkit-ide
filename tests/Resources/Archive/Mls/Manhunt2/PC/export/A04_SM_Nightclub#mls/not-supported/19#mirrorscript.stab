@@ -1,0 +1,44 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            6912
+        ]
+    },
+    {
+        "name": "ambienttwowaymirrorsmashed",
+        "nameGarbage": "000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            6940
+        ]
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00043200000000000000000000000000000000000000000000000000",
+        "offset": "5c070000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "wincheedone",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            3724
+        ]
+    }
+]

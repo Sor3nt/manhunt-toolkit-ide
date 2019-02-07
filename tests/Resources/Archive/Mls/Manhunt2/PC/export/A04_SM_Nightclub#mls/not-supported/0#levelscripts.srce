@@ -1,0 +1,465 @@
+scriptmain LevelScripts;
+entity A04_SM_Nightclub : et_level; 
+const playerName = 'player(player)';
+	  leaderName = 'leader(leader)';
+type tLevelState = ( Bar, Disco, Dungeon );
+var levelState : tLevelState;
+	debugJump, freshLoad : boolean;
+	girlLeft : boolean;
+	leaveCutText : boolean;
+	inCutscene : boolean;
+	barNoiseRadius : real;
+	blipShowing : boolean;
+	strobesBuilt : boolean;
+	doneWithPedal : boolean;
+	doneDiscoCutscene : boolean;
+	stunProdPlaying : boolean;
+	drillPlaying : boolean;
+	girlFailsafeHit : boolean;
+	ambientForceChange : boolean;
+	ambientLocationID : integer;
+	ambientLocationLastID : integer;
+	ambientYardWindowSmashed : boolean;
+	ambientTwoWayMirrorSmashed : boolean;
+	ambientMusicOffInBar : boolean;
+	numBricks : integer;
+	shownFaceGoal : boolean;
+	winchEEdone : boolean;
+
+script OnCreate;
+	var pos, pos2 : vec3d;
+	begin WriteDebug('Starting level OnCreate...');
+		SetMaxScoreForLevel(63);
+		SetQTMBaseProbability(50.0);
+		SetQTMLength(2.0);
+		SetQTMPresses(1);
+		SetColourRamp('FE_colramps', 1, 4.0);
+		SetNextLevelByName('A07_Tolerance_Zone');
+		if(GetEntity('Gen_Save_Point') <> nil) then DeactivateSavePoint(GetEntity('Gen_Save_Point'));
+		if(GetEntity('Gen_Save_Point01') <> nil) then DeactivateSavePoint(GetEntity('Gen_Save_Point01'));
+		if(GetEntity('Executor_02(envex)') <> nil) then ActivateEnvExec(GetEntity('Executor_02(envex)'), false);
+		EntityIgnoreCollisions(GetEntity('voodoo'), true);
+		EntityIgnoreCollisions(GetEntity('voodoo01'), true);
+		EntityIgnoreCollisions(GetEntity('CJ_Dumpster08'), true);
+		{ Create fake trigger box and save point }
+		SetVector(pos, 0, 0, 0);
+		CreateBoxTrigger(pos, pos, 'genTrigger');
+		CreateBoxTrigger(pos, pos, 'tAmbientManager');
+		CreateBoxTrigger(pos, pos, 'tAmbientTransitions');
+		RunScript('tAmbientTransitions', 'CreateTransitions');
+		{ Setup leader and hunt goals }
+		AIAddPlayer(playerName);
+		AIAddEntity(leaderName);
+		AISetHunterOnRadar(leaderName, false);
+		AISetEntityAsLeader(leaderName);
+		AISetLeaderInvisible(leaderName);
+		AIAddLeaderEnemy(leaderName, playerName);
+		AIEntityAlwaysEnabled(leaderName);
+		AIAddEntity('victimleader(leader)');
+		AISetHunterOnRadar('victimleader(leader)', false);
+		AISetEntityAsLeader('victimleader(leader)');
+		AISetLeaderInvisible('victimleader(leader)');
+		AIAddLeaderEnemy('victimleader(leader)', playerName);
+		AIEntityAlwaysEnabled('victimleader(leader)');
+		AIAddSubPackForLeader('victimleader(leader)', 'subVictims');
+		AISetSubpackCombatType('victimleader(leader)', 'subVictims', COMBATTYPEID_OPEN_MELEE);
+		AIDefineGoalHuntEnemy('goalHuntPlayer', playerName, false, 4);
+		AIAddSubPackForLeader(leaderName, 'subHuntMelee');
+		AISetSubpackCombatType(leaderName, 'subHuntMelee', COMBATTYPEID_OPEN_MELEE);
+		AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+		AIAddSubPackForLeader(leaderName, 'subHuntDisco');
+		AISetSubpackCombatType(leaderName, 'subHuntDisco', COMBATTYPEID_OPEN_MELEE);
+		AIAddGoalForSubpack(leaderName, 'subHuntDisco', 'goalHuntPlayer');
+		AIAddSubPackForLeader(leaderName, 'subHuntDungeon');
+		AISetSubpackCombatType(leaderName, 'subHuntDungeon', COMBATTYPEID_OPEN_MELEE);
+		AIAddGoalForSubpack(leaderName, 'subHuntDungeon', 'goalHuntPlayer');
+		AIAddSubPackForLeader(leaderName, 'subHuntDungeonDud');
+		AIAddSubPackForLeader(leaderName, 'subPiss');
+		AISetSubpackCombatType(leaderName, 'subPiss', COMBATTYPEID_OPEN_MELEE);
+		AIAddGoalForSubpack(leaderName, 'subPiss', 'goalHuntPlayer');
+		SetEntityScriptsFromEntity('mirror2', 'mirror5');
+		SetEntityScriptsFromEntity('mirror2', 'mirror6');
+		{ Setup level properties and entities }
+		debugJump := false;
+		freshLoad := true;
+		leaveCutText := false;
+		girlLeft := false;
+		inCutscene := false;
+		doneWithPedal := false;
+		doneDiscoCutscene := false;
+		strobesBuilt := false;
+		stunProdPlaying := false;
+		drillPlaying := false;
+		girlFailsafeHit := false;
+		numBricks := 0;
+		shownFaceGoal := false;
+		winchEEdone := false;
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)01');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)02');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)03');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)04');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)05');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)06');
+		SetEntityScriptsFromEntity('SM_wall_lampcove_(L)', 'SM_wall_lampcove_(L)07');
+		if(GetEntity('PFX_dungeon01') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon01'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon02') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon02'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon03') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon03'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon04') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon04'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon05') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon05'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon06') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon06'), 'PAT_BRNTPILE', true);
+		if(GetEntity('PFX_dungeon07') <> nil) then EntityPlayAnim(GetEntity('PFX_dungeon07'), 'PAT_BRNTPILE', true);
+		SetDoorOpenAngleIn(GetEntity('SM_HeadIDDoor_(D)'), 90);
+		SetDoorOpenAngleOut(GetEntity('SM_HeadIDDoor_(D)'), 90);
+		SetDoorOpenAngleIn(GetEntity('SM_doorA_(D)'), 100);
+		SetDoorOpenAngleOut(GetEntity('SM_doorA_(D)'), 100);
+		SetDoorOpenAngleIn(GetEntity('doorEscape_(D)'), 90);
+		SetDoorOpenAngleOut(GetEntity('doorEscape_(D)'), 90);
+		SetSlideDoorAjarDistance(GetEntity('BarDoor_(SD)'), 1.17);
+		SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSED);
+		HideEntity(GetEntity('SM_HeadIDDoor_(D)'));
+		LockEntity(GetEntity('doorEscape_(D)'));
+		GraphModifyConnections(GetEntity('doorEscape_(D)'), AISCRIPT_GRAPHLINK_ALLOW_NOTHING);
+		EnableGraphConnection('nHatch', 'nHatch2', false, true);
+		RunScript('A04_SM_Nightclub', 'KillTextForCutscene');
+		SwitchLitterOn(false);
+		RunScript('A04_SM_Nightclub', 'LoadFromSavePoint');
+		KillSubtitleText;
+		KillGameText;
+	end;
+
+script LoadFromSavePoint;
+	var pos, pos2 : vec3d;
+	begin
+		WriteDebug('++++++++++++++++++ Setting level state to BAR ++++++++++++++++++');
+		levelState := Bar;
+		if(GetEntity('Gen_Save_Point') = nil) then begin
+			WriteDebug('++++++++++++++++++ Setting level state to DISCO ++++++++++++++++++');
+			levelState := Disco;
+		end;
+		if(GetEntity('Gen_Save_Point01') = nil) then begin
+			WriteDebug('++++++++++++++++++ Setting level state to DUNGEON ++++++++++++++++++');
+			levelState := Dungeon;
+		end;
+		{ Hack start point and weapons }
+		{ Disco start }
+		{	levelState := Disco;
+			SetVector(pos, 20.6, 0.0, -23.4);
+			MoveEntity(GetPlayer, pos, 0);
+			SetPedOrientation(GetPlayer, 0);}
+			{AddItemToInventory(GetPlayer, SpawnMovingEntity('Fire_Axe_(CT)', pos, 'ScriptCreateName'));}
+		{ Dungeon start }
+		{	levelState := Dungeon;
+			SetVector(pos, 0.2, -2.1, -65.0);
+			MoveEntity(GetPlayer, pos, 0);
+			AddItemToInventory(GetPlayer, SpawnMovingEntity('Fire_Axe_(CT)', pos, 'ScriptCreateName'));
+			UnlockEntity(GetEntity('dungeon_door_(D)01'));
+			UnlockEntity(GetEntity('dungeon_door_(D)02')); }
+		{ Load states }
+		if(levelState = Bar) then begin
+			WriteDebug('================================== Loading Bar ==================================');
+			BlockPathsAroundPlayer(false);
+			RunScript('player(player)', 'RunIntro');
+			SetLevelGoal('GOAL1');
+			RunScript('genTrigger', 'CreateStartTriggers');
+			if(not strobesBuilt) then begin
+				SetVector(pos, -9.14866, -1.14349, -37.2372);
+				SetVector(pos2, 9.96351, 1.77157, -17.9945);
+				CreateBoxTrigger(pos, pos2, 'tStrobes');
+			end;
+			AIAddEntity('hBar01(hunter)');
+			RunScript('hBar01(hunter)', 'CreateMe');
+			AIAddEntity('hBar02(hunter)');
+			SetEntityScriptsFromEntity('hBar01(hunter)', 'hBar02(hunter)');
+			RunScript('hBar02(hunter)', 'CreateMe');
+			AIAddEntity('hBar03(hunter)');
+			SetEntityScriptsFromEntity('hBar01(hunter)', 'hBar03(hunter)');
+			RunScript('hBar03(hunter)', 'CreateMe');
+			AIAddEntity('hBar04(hunter)');
+			SetEntityScriptsFromEntity('hBar01(hunter)', 'hBar04(hunter)');
+			RunScript('hBar04(hunter)', 'CreateMe');
+			AIAddEntity('hCounter(hunter)01');
+			AISetIdleHomeNode('hCounter(hunter)01', '');
+			SetVector(pos, 17.5, 0.8759212, -9.25);
+			MoveEntity(GetEntity('hCounter(hunter)01'), pos, 0);
+			SetPedOrientation(GetEntity('hCounter(hunter)01'), 270);
+			if(GetEntity('StripGirlLeaving') <> nil) then HideEntity(GetEntity('StripGirlLeaving'));
+			if(GetEntity('StripGirlLeaving01') <> nil) then HideEntity(GetEntity('StripGirlLeaving01'));
+			if(GetEntity('StripGirlDancing') <> nil) then begin
+				EntityPlayAnim(GetEntity('StripGirlDancing'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true);
+				pos := GetEntityPosition(GetEntity('StripGirlDancing'));
+				InitSpotlight('SPOT_0', GetEntity('Spot_Bar01'), 22.0, 20.0);
+				pos.x := pos.x - 0.25;
+				SetSpotlightTarget('SPOT_0', pos);
+				SetSpotlightTransitionTime('SPOT_0', 1);
+			end;
+			RunScript('player(player)', 'MonitorBricks');
+			RunScript('player(player)', 'MonitorBarExit');
+			RunScript('A04_SM_Nightclub', 'HackFireAxe');
+			RunScript('A04_SM_Nightclub', 'HackFireAxe01');
+			RunScript('A04_SM_Nightclub', 'CreateNoisyBarMusic');
+			WriteDebug('================================== Loaded Bar ==================================');
+		end;
+		if(levelState = Disco) then begin
+			WriteDebug('================================== Loading Disco ==================================');
+			BlockPathsAroundPlayer(true);
+			if(GetEntity('StripGirlLeaving01') <> nil) then DestroyEntity(GetEntity('StripGirlLeaving01'));
+			if(GetEntity('tTransition01') <> nil) then DestroyEntity(GetEntity('tTransition01'));
+			if(GetEntity('tTransition02') <> nil) then DestroyEntity(GetEntity('tTransition02'));
+			if(GetEntity('tTransition03') <> nil) then DestroyEntity(GetEntity('tTransition03'));
+			if(GetEntity('tTransition04') <> nil) then DestroyEntity(GetEntity('tTransition04'));
+			RemoveScript('player(player)', 'OnPickUpDeadBody');
+			RemoveScript('player(player)', 'OnDropDeadBody');
+			RemoveScript('SM_Break_Window_Glass', 'PromptThrow');
+			RemoveScript('player(player)', 'HunterPissing');
+			RemoveScript('leader(leader)', 'BarAlerted');
+			RemoveScript('leader(leader)', 'SneakedUpOnBar');
+			RemoveScript('leader(leader)', 'PervTalk');
+			RemoveScript('leader(leader)', 'DiscoFlashback');
+			doneWithPedal := true;
+			ClearLevelGoal('GOAL21');
+			if(freshLoad) then begin
+				RunScript('A04_SM_Nightclub', 'HackFireAxe');
+				RunScript('A04_SM_Nightclub', 'HackFireAxe01');
+				AIAddEntity('hCounter(hunter)01');
+				if(GetEntity('hBar01(hunter)') <> nil) then DestroyEntity(GetEntity('hBar01(hunter)'));
+				if(GetEntity('hBar02(hunter)') <> nil) then DestroyEntity(GetEntity('hBar02(hunter)'));
+				if(GetEntity('hBar03(hunter)') <> nil) then DestroyEntity(GetEntity('hBar03(hunter)'));
+				if(GetEntity('hBar04(hunter)') <> nil) then DestroyEntity(GetEntity('hBar04(hunter)'));
+			end;
+			RunScript('A04_SM_Nightclub', 'HangCounterHunter');
+			RunScript('genTrigger', 'CreateDiscoTriggers');
+			if(not strobesBuilt) then begin
+				SetVector(pos, -9.14866, -1.14349, -37.2372);
+				SetVector(pos2, 9.96351, 1.77157, -17.9945);
+				CreateBoxTrigger(pos, pos2, 'tStrobes');
+			end;
+			while(IsWhiteNoiseDisplaying) do Sleep(10);
+			RunScript('player(player)', 'DisplayGameText_EXEC3');
+			if(GetEntity('SM_HunterSpotlight_(L)') <> nil) then DestroyEntity(GetEntity('SM_HunterSpotlight_(L)'));
+			if(GetEntity('SM_Dancefloor_middle') <> nil) then DestroyEntity(GetEntity('SM_Dancefloor_middle'));
+			HideEntity(GetEntity('SM_TortureTableCorpse'));
+			HideEntity(GetEntity('Judy(hunter)flash'));
+			{**** TOM - REMOVED DEC 11TH, seems to be causing a crash - you already set his subpack in "Hangcounterhunter?" ***}
+			{if(not freshLoad) then begin
+				AIAddHunterToLeaderSubpack(leaderName, 'subHuntMelee', 'hCounter(hunter)01');
+				AISetHunterIdleActionMinMax('hCounter(hunter)01', AISCRIPT_IDLE_STANDSTILL, AISCRIPT_LOWPRIORITY, 10000, 20000);
+				AIEntityPlayAnimLooped('hCounter(hunter)01', 'BAT_IDLE_CLEANGLASS_ANIM', 0.0);
+			end;}
+			if(GetEntity('smdancer01') <> nil) then DestroyEntity(GetEntity('smdancer01'));
+			if(GetEntity('smdancer02') <> nil) then DestroyEntity(GetEntity('smdancer02'));
+			if(GetEntity('smdancer03') <> nil) then DestroyEntity(GetEntity('smdancer03'));
+			if(GetEntity('smdancer04') <> nil) then DestroyEntity(GetEntity('smdancer04'));
+			if(GetEntity('smdancer05') <> nil) then DestroyEntity(GetEntity('smdancer05'));
+			if(GetEntity('smdancer06') <> nil) then DestroyEntity(GetEntity('smdancer06'));
+			if(GetEntity('smdancer07') <> nil) then DestroyEntity(GetEntity('smdancer07'));
+			if(GetEntity('smdancer08') <> nil) then DestroyEntity(GetEntity('smdancer08'));
+			if(GetEntity('smdancer09') <> nil) then DestroyEntity(GetEntity('smdancer09'));
+			if(GetEntity('smdancer10') <> nil) then DestroyEntity(GetEntity('smdancer10'));
+			WriteDebug('================================== Loaded Disco ==================================');
+		end;
+		if(levelState = Dungeon) then begin
+			WriteDebug('================================== Loading Dungeon ==================================');
+			if(not AIIsGoalNameInSubpack('leader(leader)', 'subHuntDungeon', 'goalHuntPlayer')) then AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'goalHuntPlayer');
+			BlockPathsAroundPlayer(true);
+			if(GetEntity('tTransition05') <> nil) then DestroyEntity(GetEntity('tTransition05'));
+			if(GetEntity('tTransition06') <> nil) then DestroyEntity(GetEntity('tTransition06'));
+			RemoveScript('player(player)', 'OnPickUpDeadBody');
+			RemoveScript('player(player)', 'OnDropDeadBody');
+			RemoveScript('SM_Break_Window_Glass', 'PromptThrow');
+			RemoveScript('player(player)', 'PromptHead');
+			RemoveScript('leader(leader)', 'DiscoCutscene');
+			RemoveScript('leader(leader)', 'CheckHeadAtDoor');
+			AIAddEntity('hDungeon01(hunter)');
+			RunScript('hDungeon01(hunter)', 'CreateMe');
+			AIAddEntity('hDungeon02(hunter)');
+			SetEntityScriptsFromEntity('hDungeon01(hunter)', 'hDungeon02(hunter)');
+			RunScript('hDungeon02(hunter)', 'CreateMe');
+			AIAddEntity('hDungeon04(hunter)');
+			SetEntityScriptsFromEntity('hDungeon01(hunter)', 'hDungeon04(hunter)');
+			RunScript('hDungeon04(hunter)', 'CreateMe');
+			AIAddEntity('hDungeon05(hunter)');
+			SetEntityScriptsFromEntity('hDungeon01(hunter)', 'hDungeon05(hunter)');
+			RunScript('hDungeon05(hunter)', 'CreateMe');
+			AIAddEntity('hDungeon06(hunter)');
+			SetEntityScriptsFromEntity('hDungeon01(hunter)', 'hDungeon06(hunter)');
+			RunScript('hDungeon06(hunter)', 'CreateMe');
+			AIAddEntity('hDungeon07(hunter)');
+			SetEntityScriptsFromEntity('hDungeon01(hunter)', 'hDungeon07(hunter)');
+			RunScript('hDungeon07(hunter)', 'CreateMe');
+			if(GetEntity('SM_HeadIDDoor_(S)') <> nil) then DestroyEntity(GetEntity('SM_HeadIDDoor_(S)'));
+			if(GetEntity('SM_HeadIDDoor_(S)01') <> nil) then DestroyEntity(GetEntity('SM_HeadIDDoor_(S)01'));
+			ShowEntity(GetEntity('SM_HeadIDDoor_(D)'));
+			HideEntity(GetEntity('Judy(hunter)'));
+			SetLevelGoal('GOAL6');
+			SetDoorOpenAngleIn(GetEntity('SM_HeadIDDoor_(D)'), 1);
+			SetDoorOpenAngleOut(GetEntity('SM_HeadIDDoor_(D)'), 1);
+			EnableGraphConnection('nHatch', 'nHatch2', false, true);
+			LockEntity(GetEntity('SM_HeadIDDoor_(D)'));
+			SetDoorOpenAngleIn(GetEntity('SM_doorA_(D)'), 100);
+			SetDoorOpenAngleOut(GetEntity('SM_doorA_(D)'), 100);
+			SetSlideDoorAjarDistance(GetEntity('BarDoor_(SD)'), 1.17);
+			SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSED);
+			UnfreezeEntity(GetEntity('dungeon_door_(D)03'));
+			SetDoorOverrideAngle('dungeon_door_(D)03', -35);
+			UnfreezeEntity(GetEntity('dungeon_door_(D)04'));
+			SetDoorOverrideAngle('dungeon_door_(D)04', 25);
+			RunScript('genTrigger', 'CreateDungeonTriggers');
+			SetNodeShadow('nWL01,nWL02,nNoSha205,nNoSha206', false);
+			SetNodeShadow('nWL11,nWL12,nNoSha203,nNoSha204', false);
+			SetNodeShadow('nWL21,nWL22,nNoSha201,nNoSha202', false);
+			SetNodeShadow('nWL31,nWL32,nNoSha106,nNoSha107', false);
+			SetNodeShadow('nWL41,nWL42,nNoSha104,nNoSha105', false);
+			SetNodeShadow('nWL51,nWL52,nNoSha102,nNoSha103', false);
+			SetNodeShadow('nWL61,nWL62,CELLONE_TPOINT_02,nNoSha100,nNoSha101', false);
+			SetNodeShadow('nWL71,nWL72', false);
+			SetEntityScriptsFromEntity('Monitor_Template', 'CJ_MONITER');
+			SetEntityScriptsFromEntity('Monitor_Template', 'CJ_MONITER01');
+			SetEntityScriptsFromEntity('Monitor_Template', 'CJ_MONITER02');
+			SetEntityScriptsFromEntity('Monitor_Template', 'CJ_MONITER04');
+			SetEntityScriptsFromEntity('Monitor_Template', 'CJ_MONITER05');
+			RunScript('A04_SM_Nightclub', 'CreateNoisyBlips');
+			HideEntity(GetEntity('SM_TortureTableCorpse'));
+			EntityIgnoreCollisions(GetEntity('SM_TortureTable'), true);
+			AIAddEntity('victim(hunter)02');
+			SetPedLockonable(GetEntity('victim(hunter)02'), false);
+			AIAddHunterToLeaderSubpack('victimleader(leader)', 'subVictims', 'victim(hunter)02');
+			AIMakeEntityBlind('victim(hunter)02', 0);
+			AIMakeEntityDeaf('victim(hunter)02', 0);
+			SetVector(pos, 25.05, -5.727, -83.477);
+			MoveEntity(GetEntity('victim(hunter)02'), pos, 0);
+			SetVector(pos, 26.5, -5.727, -83.0);
+			MoveEntity(GetEntity('hDungeon01(hunter)'), pos, 0);
+			WriteDebug('================================== Loaded Dungeon ==================================');
+		end;
+		freshLoad := true;
+	end;
+
+script HangCounterHunter;
+	var pos : vec3d;
+	begin
+		FreezeEntity(GetEntity('hCounter(hunter)01'));
+		SetVector(pos, 17.5, 0.8759212, -9.70);
+		while(IsWhiteNoiseDisplaying) do begin
+			MoveEntity(GetEntity('hCounter(hunter)01'), pos, 0);
+			SetPedOrientation(GetEntity('hCounter(hunter)01'), 270);
+			Sleep(10);
+		end;
+		Sleep(250);
+		UnfreezeEntity(GetEntity('hCounter(hunter)01'));
+		AIAddHunterToLeaderSubpack(leaderName, 'subHuntMelee', 'hCounter(hunter)01');
+		AISetHunterIdleActionMinMax('hCounter(hunter)01', AISCRIPT_IDLE_STANDSTILL, AISCRIPT_LOWPRIORITY, 10000, 20000);
+		AIEntityPlayAnimLooped('hCounter(hunter)01', 'BAT_IDLE_CLEANGLASS_ANIM', 0.0);
+	end;
+
+script KillTextForCutscene;
+	begin
+		while(true) do begin
+			if((not leaveCutText) and ((IsCutSceneInProgress) or (IsExecutionInProgress))) then KillGameText;
+			Sleep(100);
+		end;
+	end;
+
+script HackFireAxe;
+	var pos1, pos2 : vec3d;
+	begin
+		pos1 := GetEntityPosition(GetEntity('Fire_Axe_(CT)'));
+		pos2 := GetEntityPosition(GetEntity('SM_Break_Glass_Axe'));
+		pos1.y := pos2.y + 0.1;
+		EntityIgnoreCollisions(GetEntity('Fire_Axe_(CT)'), true);
+		while((levelState <> Dungeon) and (GetEntity('SM_Break_Glass_Axe') <> nil)) do begin
+			MoveEntity(GetEntity('Fire_Axe_(CT)'), pos1, 0);
+			Sleep(10);
+		end;
+		EntityIgnoreCollisions(GetEntity('Fire_Axe_(CT)'), false);
+		DestroyEntity(GetEntity('Fire_Axe_(CT)'));
+		SpawnMovingEntity('Fire_Axe_(CT)', pos1, 'ScriptCreateName');
+	end;
+
+script HackFireAxe01;
+	var pos1, pos2, vpos, dir : vec3d;
+		ent : entityptr;
+	begin
+		pos1 := GetEntityPosition(GetEntity('Fire_Axe_(CT)01'));
+		dir := GetEntityView( GetEntity('Fire_Axe_(CT)01') );
+		pos2 := GetEntityPosition(GetEntity('SM_Break_Glass_Axe01'));
+		pos1.y := pos2.y + 0.1;
+		EntityIgnoreCollisions(GetEntity('Fire_Axe_(CT)01'), true);
+		while((levelState <> Dungeon) and (GetEntity('SM_Break_Glass_Axe01') <> nil)) do begin
+			MoveEntity(GetEntity('Fire_Axe_(CT)01'), pos1, 0);
+			Sleep(10);
+		end;
+		EntityIgnoreCollisions(GetEntity('Fire_Axe_(CT)01'), false);
+		DestroyEntity(GetEntity('Fire_Axe_(CT)01'));
+		{SetVector(pos1, 14.9, 6, -34.0);}
+		SpawnEntityWithDirection('Fire_Axe_(CT)', pos1, 'ScriptCreateName', dir);
+		KillThisScript;
+	end;
+
+script CreateNoisyBarMusic;
+	var pos : vec3d;
+		i : integer;
+	begin
+		blipShowing := true;
+		barNoiseRadius := 22;
+		SetNoisyEntity(GetEntity('Spot_Bar01'), barNoiseRadius);
+		RunScript('A04_SM_Nightclub', 'ShowMusicBlip');
+		while(not ambientMusicOffInBar) do Sleep(1);
+		Sleep(3000);
+		blipShowing := false;
+		Sleep(500);
+		SetNoisyEntity(GetEntity('leader(leader)'), 0.1);
+	end;
+
+script ShowMusicBlip;
+	var i : integer;
+	begin
+		i := 0;
+		while(blipShowing) do begin
+			if(ambientLocationID >= 3) then RadarCreateBlip(GetEntityPosition(GetEntity('Spot_Bar01')), barNoiseRadius);
+			Sleep(1);
+		end;
+	end;
+
+script CreateNoisyBlips;
+	var pos, n1, n2, n3 : vec3d;
+		dungeonNoiseRadius, nr : real;
+	begin
+		nr := 11;
+		dungeonNoiseRadius := 19;
+		SetVector(n1, 42.1, -5.7, -48.0);
+		SetVector(n2, 29.9, -5.7, -48.0);
+		SetVector(n3, 17.4, -5.7, -48.0);
+		SetVector(pos, 29.5, -8.0, -48.0);
+		MoveEntity(GetEntity('doorEscape_(D)'), pos, 0);
+		SetNoisyEntity(GetEntity('doorEscape_(D)'), dungeonNoiseRadius);
+		while(true) do begin
+			if(ambientLocationID >= 11) then RadarCreateBlip(n1, nr);
+			if(ambientLocationID >= 11) then RadarCreateBlip(n2, nr);
+			if(ambientLocationID >= 11) then RadarCreateBlip(n3, nr);
+			Sleep(1);
+		end;
+	end;
+
+script RemoveBarHunters;
+	var i : integer;
+		ent : entityptr;
+		pos : vec3d;
+	begin
+		ent := nil;
+		for i := 1 to 4 do begin
+			case i of
+				1 : if(GetEntity('hBar01(hunter)') <> nil) then ent := GetEntity('hBar01(hunter)') else ent := nil;
+				2 : if(GetEntity('hBar02(hunter)') <> nil) then ent := GetEntity('hBar02(hunter)') else ent := nil;
+				3 : if(GetEntity('hBar03(hunter)') <> nil) then ent := GetEntity('hBar03(hunter)') else ent := nil;
+				4 : if(GetEntity('hBar04(hunter)') <> nil) then ent := GetEntity('hBar04(hunter)') else ent := nil;
+			end;
+			if(ent <> nil) then begin
+				pos := GetEntityPosition(ent);
+				WriteDebug(GetEntityName(ent), ' ', pos.x);
+				if(pos.x > 22.0742) then DestroyEntity(ent);
+			end;
+		end;
+	end;
+
+end.
+ 

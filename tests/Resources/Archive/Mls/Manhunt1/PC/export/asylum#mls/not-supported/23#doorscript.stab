@@ -1,0 +1,35 @@
+[
+    {
+        "name": "doingdoorclose",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            1140,
+            2356
+        ]
+    },
+    {
+        "name": "flag_warddoor_closed",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            208,
+            1000,
+            1972,
+            2148,
+            2324
+        ]
+    },
+    {
+        "name": "warddoor",
+        "nameGarbage": "0074735c4b6f6a616b5c6c6576656c735c4173796c756d5c",
+        "offset": "e8000000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

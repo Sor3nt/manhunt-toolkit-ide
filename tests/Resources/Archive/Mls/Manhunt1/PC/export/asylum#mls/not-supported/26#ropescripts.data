@@ -1,0 +1,29 @@
+{
+    "const": [],
+    "strings": [
+        "Bow_Interior_PrisonGate_(D)06",
+        "UsedSwitch",
+        "LEADER",
+        "Subpack_Building",
+        "GoalHuntPlayer",
+        "Subpack_Building1",
+        "Subpack_Building3",
+        "Subpack_Building4",
+        "Subpack_Building_Roof",
+        "Subpack_Building_Roof2",
+        "doors cutscene flag value",
+        "Bow_Interior_PrisonGate_(D)06",
+        "Cutplayed = TRUE",
+        "LEADER",
+        "Subpack_Building",
+        "GoalHuntPlayer",
+        "Subpack_Building1",
+        "Subpack_Building3",
+        "Subpack_Building4",
+        "Subpack_Building_Roof",
+        "Subpack_Building_Roof2",
+        "UsedSwitch",
+        "trigger check for the tower gates UsedSwitch has been removed"
+    ],
+    "byteReserved": 8
+}

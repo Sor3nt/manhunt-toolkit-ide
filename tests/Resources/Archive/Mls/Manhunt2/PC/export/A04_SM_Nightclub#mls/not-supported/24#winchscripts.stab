@@ -1,0 +1,14 @@
+[
+    {
+        "name": "wincheedone",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            40,
+            116
+        ]
+    }
+]

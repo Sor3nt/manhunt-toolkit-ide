@@ -1,0 +1,24 @@
+scriptmain genWindow;
+entity SM_Break_Window_Glass : et_name;
+var ambientForceChange : level_var boolean;
+	ambientYardWindowSmashed : level_var boolean;
+
+script OnDestroy;
+	begin
+		ambientForceChange := true;
+		ambientYardWindowSmashed := true;
+		KillScript('SM_Break_Window_Glass', 'PromptThrow');
+		ClearLevelGoal('BT');
+	end;
+
+script PromptThrow;
+	begin
+		RunScript('player(player)', 'DisplayGameText_BRICK');
+		Sleep(2000);
+		ClearLevelGoal('GOAL1');
+		Sleep(100);
+		SetLevelGoal('BT');
+		SetLevelGoal('GOAL1');
+	end;
+
+end.

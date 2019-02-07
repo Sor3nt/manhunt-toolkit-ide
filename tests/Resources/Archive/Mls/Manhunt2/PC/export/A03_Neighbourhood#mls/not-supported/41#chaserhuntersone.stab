@@ -1,0 +1,38 @@
+[
+    {
+        "name": "addedgoals",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "c4060000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "barrelenteredone",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "barrelenteredtwo",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "me",
+        "nameGarbage": "000078013200000000000000000000000000000000000000000000000000",
+        "offset": "a0060000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

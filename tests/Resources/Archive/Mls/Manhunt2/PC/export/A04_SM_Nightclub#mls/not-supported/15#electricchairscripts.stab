@@ -1,0 +1,11 @@
+[
+    {
+        "name": "dying",
+        "nameGarbage": "00aa3c0a03070000001503070001000b127f1100010000a43c0a02",
+        "offset": "d0010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

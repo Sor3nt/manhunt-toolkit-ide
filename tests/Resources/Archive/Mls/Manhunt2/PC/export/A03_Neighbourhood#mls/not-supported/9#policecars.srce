@@ -1,0 +1,56 @@
+scriptmain PoliceCars;
+
+ENTITY
+	PoliceCar2 : et_name;
+	
+script OnDestroy;
+VAR
+	pos : vec3d;
+begin
+	writedebug('Police car blown up');
+	
+	if GetEntityName(this) = 'PoliceCar2' then
+	begin
+		HideEntity(GetEntity('Spotlight03'));
+		DestroyEntity(GetEntity('triggerSpotlightGuard3'));
+		DestroyEntity(GetEntity('triggerSpotlight03'));
+		SetSpotlightMode('SPOT_3', 'Off');
+		{SetVector(pos, -1.05263, -2.59635, -91.3148);
+		MoveEntity(GetEntity('PFX_PoliceSiren01'), pos, 1);}
+		RemoveThisScript;
+	end;
+		
+	if GetEntityName(this) = 'PoliceCar03' then
+	begin
+		HideEntity(GetEntity('Spotlight02'));
+		DestroyEntity(GetEntity('triggerSpotlightGuard2'));
+		DestroyEntity(GetEntity('triggerSpotlight02'));
+		SetSpotlightMode('SPOT_2', 'Off');
+	{	SetVector(pos, -1.05263, -2.59635, -91.3148);
+		MoveEntity(GetEntity('PFX_PoliceSiren02') pos, 1);}
+		RemoveThisScript;
+	end;
+	
+	if GetEntityName(this) = 'PoliceCar04' then
+	begin
+		HideEntity(GetEntity('Spotlight01'));
+		DestroyEntity(GetEntity('triggerSpotlightGuard1'));
+		DestroyEntity(GetEntity('triggerSpotlight01'));
+		SetSpotlightMode('SPOT_1', 'Off');
+		{SetVector(pos, -1.05263, -2.59635, -91.3148);
+		MoveEntity(GetEntity('PFX_PoliceSiren03') pos, 1);}
+		RemoveThisScript;
+	end;
+	
+	if GetEntityName(this) = 'PoliceCar07' then
+	begin
+		HideEntity(GetEntity('Spotlight02'));
+		DestroyEntity(GetEntity('triggerSpotlightGuard2'));
+		DestroyEntity(GetEntity('triggerSpotlight02'));
+		SetSpotlightMode('SPOT_2', 'Off');
+		RemoveThisScript;
+	end;
+		
+end;
+
+end.

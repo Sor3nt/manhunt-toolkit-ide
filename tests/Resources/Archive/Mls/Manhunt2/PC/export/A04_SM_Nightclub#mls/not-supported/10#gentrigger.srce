@@ -1,0 +1,48 @@
+scriptmain genTrigger;
+entity tCheckHead : et_name;
+var playedCut1, playedCut2, canPlayCut2 : boolean;
+	shownFaceGoal : level_var boolean;
+
+script OnCreate;
+	begin
+		playedCut1 := false;
+		playedCut2 := false;
+		canPlayCut2 := false;
+	end;
+
+script OnEnterTrigger;
+	var pos: vec3d;
+	begin
+		if(not IsPlayerPositionKnown) then begin
+			if(IsNamedItemInInventory(GetPlayer, CT_HEAD) = -1) then begin
+				if(not playedCut1) then begin
+					EnableUseable(GetEntity('SM_HeadIDDoor_(S)'), false);
+					playedCut1 := true;
+					EntityPlayAnim(GetEntity('SM_HeadIDDoor_(S)'), 'SM_HeadIDDoor_ANIM', false);
+					PlayScriptAudioStreamFromEntityAuto('PERV31', 127, GetEntity('SM_HeadIDDoor_(S)'), 15);
+					shownFaceGoal := true;
+					SetLevelGoal('GOAL4');
+					DisableUserInput;
+					Sleep(6000);
+					DestroyEntity(GetEntity('SM_HeadIDDoor_(S)'));
+					ShowEntity(GetEntity('SM_HeadIDDoor_(S)01'));
+					EnableUseable(GetEntity('SM_HeadIDDoor_(S)01'), true);
+					EnableUserInput;
+					canPlayCut2 := true;
+				end else begin
+					if((canPlayCut2) and (not playedCut2)) then begin
+						playedCut2 := true;
+						PlayScriptAudioStreamFromEntityAuto('LE02', 127, GetPlayer, 15);
+					end;
+				end;
+			end else begin
+				if((not IsCutSceneInProgress) and (not IsExecutionInProgress)) then begin
+					KillGameText;
+					Sleep(500);
+					DisplayGameText('SHOHED');
+				end;
+			end;
+		end;
+	end;
+
+end.

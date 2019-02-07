@@ -1,6 +1,9 @@
 <?php
 namespace App\Service\Compiler;
 
+use App\Service\Compiler\Tokens\T_ARRAY;
+use App\Service\Compiler\Tokens\T_ARRAY_RANGE;
+use App\Service\Compiler\Tokens\T_BOOLEAN;
 use App\Service\Compiler\Tokens\T_CUSTOM_FUNCTION;
 use App\Service\Compiler\Tokens\T_ADDITION;
 use App\Service\Compiler\Tokens\T_AND;
@@ -11,6 +14,7 @@ use App\Service\Compiler\Tokens\T_BRACKET_OPEN;
 use App\Service\Compiler\Tokens\T_CASE;
 use App\Service\Compiler\Tokens\T_CUSTOM_FUNCTION_NAME;
 use App\Service\Compiler\Tokens\T_DEFINE;
+use App\Service\Compiler\Tokens\T_DEFINE_SECTION_ARG;
 use App\Service\Compiler\Tokens\T_DEFINE_SECTION_CONST;
 use App\Service\Compiler\Tokens\T_DEFINE_SECTION_ENTITY;
 use App\Service\Compiler\Tokens\T_DEFINE_TYPE;
@@ -19,7 +23,6 @@ use App\Service\Compiler\Tokens\T_DEFINE_SECTION_TYPE;
 use App\Service\Compiler\Tokens\T_DO;
 use App\Service\Compiler\Tokens\T_END;
 use App\Service\Compiler\Tokens\T_ELSE;
-use App\Service\Compiler\Tokens\T_FALSE;
 use App\Service\Compiler\Tokens\T_FLOAT;
 use App\Service\Compiler\Tokens\T_FOR;
 use App\Service\Compiler\Tokens\T_FORWARD;
@@ -41,6 +44,7 @@ use App\Service\Compiler\Tokens\T_OF;
 use App\Service\Compiler\Tokens\T_OR;
 use App\Service\Compiler\Tokens\T_PROCEDURE;
 use App\Service\Compiler\Tokens\T_PROCEDURE_NAME;
+use App\Service\Compiler\Tokens\T_RECORD;
 use App\Service\Compiler\Tokens\T_SCRIPT;
 use App\Service\Compiler\Tokens\T_SCRIPT_NAME;
 use App\Service\Compiler\Tokens\T_SCRIPTMAIN;
@@ -53,7 +57,6 @@ use App\Service\Compiler\Tokens\T_STRING;
 use App\Service\Compiler\Tokens\T_SUBSTRACTION;
 use App\Service\Compiler\Tokens\T_THEN;
 use App\Service\Compiler\Tokens\T_TO;
-use App\Service\Compiler\Tokens\T_TRUE;
 use App\Service\Compiler\Tokens\T_VARIABLE;
 use App\Service\Compiler\Tokens\T_WHILE;
 use App\Service\Compiler\Tokens\T_WHITESPACE;
@@ -70,6 +73,7 @@ class Tokenizer {
         T_STRING::class,
         T_WHITESPACE::class,
 
+        T_RECORD::class,
         T_CASE::class,
         T_OF::class,
         T_FOR::class,
@@ -84,6 +88,7 @@ class Tokenizer {
         T_DEFINE_SECTION_TYPE::class,
         T_DEFINE_SECTION_ENTITY::class,
         T_DEFINE_SECTION_VAR::class,
+        T_DEFINE_SECTION_ARG::class,
         T_DEFINE_SECTION_CONST::class,
         T_SCRIPTMAIN_NAME::class,
 
@@ -115,8 +120,8 @@ class Tokenizer {
         T_END::class,
         T_DO::class,
 
-        T_TRUE::class,
-        T_FALSE::class,
+        T_ARRAY::class,
+        T_BOOLEAN::class,
         T_FLOAT::class,
         T_INT::class,
         T_NULL::class,
@@ -240,10 +245,9 @@ class Tokenizer {
                     $nextToken = $tokens[$current];
 
                     if ($nextToken['type'] != Token::T_BRACKET_OPEN){
-                        var_dump($nextToken);
-                        die("todo");
-                        //todo add line end
+
                         continue;
+//                        throw new \Exception("dieT_BRACKET_OPEN todo");
                     }
 
                     $deep = 0;
@@ -383,7 +387,6 @@ class Tokenizer {
      */
     private function match($line, $offset, $tokens) {
         $string = substr($line, $offset);
-
         foreach ($this->tokens as $token) {
             $parsed = $token::match($line, $offset, $tokens);
 

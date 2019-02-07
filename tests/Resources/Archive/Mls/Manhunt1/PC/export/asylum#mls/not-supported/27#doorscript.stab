@@ -1,0 +1,70 @@
+[
+    {
+        "name": "alarmboxeffect",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "14020000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "alarmboxeffect2",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "18020000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "alarmboxmatrix",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "0c020000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "alarmboxmatrix2",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "10020000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "alarmvec",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "2c020000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "flag_player_spotted",
+        "nameGarbage": "00000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            5536,
+            5648,
+            6196
+        ]
+    },
+    {
+        "name": "searchlight_door",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "1c020000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "vpoz",
+        "nameGarbage": "0001bc00000000000000000000000000000000000000000000000000",
+        "offset": "20020000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

@@ -1,0 +1,24 @@
+{
+    "const": [],
+    "strings": [
+        "Police car blown up",
+        "PoliceCar2",
+        "Spotlight03",
+        "triggerSpotlightGuard3",
+        "triggerSpotlight03",
+        "SPOT_3",
+        "Off",
+        "PoliceCar03",
+        "Spotlight02",
+        "triggerSpotlightGuard2",
+        "triggerSpotlight02",
+        "SPOT_2",
+        "PoliceCar04",
+        "Spotlight01",
+        "triggerSpotlightGuard1",
+        "triggerSpotlight01",
+        "SPOT_1",
+        "PoliceCar07"
+    ],
+    "byteReserved": 0
+}

@@ -1,0 +1,11 @@
+[
+    {
+        "name": "updatereflected",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "b0000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

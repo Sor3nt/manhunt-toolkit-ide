@@ -1,0 +1,12 @@
+{
+    "const": [],
+    "strings": [
+        "hChaser09(hunter)",
+        "RunGoalsTwo",
+        "hChaser10(hunter)",
+        "triggerChase07",
+        "dummyRadarBlip",
+        "dummyRadarBlip02"
+    ],
+    "byteReserved": 4
+}

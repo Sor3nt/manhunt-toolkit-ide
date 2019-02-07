@@ -1,0 +1,35 @@
+[
+    {
+        "name": "garagesopen",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            60,
+            120,
+            420,
+            652,
+            884
+        ]
+    },
+    {
+        "name": "itemsspawned",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "shearsspawned",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

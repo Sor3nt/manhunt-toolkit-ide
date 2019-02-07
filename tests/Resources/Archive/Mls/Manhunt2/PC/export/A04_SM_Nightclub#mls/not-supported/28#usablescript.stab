@@ -1,0 +1,29 @@
+[
+    {
+        "name": "celldoors",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "0c020000",
+        "size": 140,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "donedoorscene",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "04020000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donedoorscenefinal",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "08020000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

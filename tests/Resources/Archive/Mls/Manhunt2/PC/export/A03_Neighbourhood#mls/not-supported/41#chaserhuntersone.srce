@@ -1,0 +1,193 @@
+scriptmain chaserHuntersOne;
+
+ENTITY
+	hChaser01(hunter) : et_name;
+
+const
+	{ global definitions }
+	playerName = 'player(player)';
+	leaderName = 'leader(leader)';
+	
+	
+	{ global goals }
+	goalHuntPlayer = 'goalHuntPlayer';
+
+var
+	me : string[32];
+	addedGoals : boolean;
+	barrelEnteredOne : level_var boolean;
+	barrelEnteredTwo : level_var boolean;
+	
+	
+script Init;
+begin
+	addedGoals := FALSE;
+	
+	me := GetEntityName(this);
+	
+	if (me <> 'hChaser10s(hunter)') AND (me <> 'hChaser09s(hunter)') then
+		AISetHunterIdleActionMinMaxRadius(me, AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_MEDIUMPRIORITY, 120, 180, 31.0);
+					
+	{AISetIdleHomeNode(me, '');}
+	{SetHunterRunTime(me, 20);}
+
+	AISetHunterOnRadar(me, true);
+
+	AiAddHunterToLeaderSubpack(leaderName, 'subGuardCar2', me);
+	
+	{accuracy at far distances bad - nearer good}
+	HunterSetGunAccuracyNear(this, 5.0, 0.5);
+	HunterSetGunAccuracyMid(this, 20, 1.0);
+	HunterSetGunAccuracyFar(this, 50, 2.0);
+	
+	if me = 'hChaser01(hunter)' then AISetIdleHomeNode(me, 'CHASER01');
+	if me = 'hChaser02(hunter)' then AISetIdleHomeNode(me, 'CHASER02');
+
+	{SetHunterGunFireMinPause(me, 4.0);
+	SetHunterGunFireMaxPause(me, 8.0);}
+	
+	AIEnableClimbingInIdle(this, true);
+	
+	if me = 'hChaser01(hunter)' then AIDefineGoalGotoNode('gChase01', me, AISCRIPT_HIGHPRIORITY, 'CHASER01', AISCRIPT_WALKMOVESPEED,true);
+	if me = 'hChaser02(hunter)' then AIDefineGoalGotoNode('gChase02', me, AISCRIPT_HIGHPRIORITY, 'CHASER02', AISCRIPT_WALKMOVESPEED,true);
+	if me = 'hChaser03(hunter)' then AIDefineGoalGotoNode('gChase03', me, AISCRIPT_HIGHPRIORITY, 'CHASER03', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser04(hunter)' then AIDefineGoalGotoNode('gChase04', me, AISCRIPT_HIGHPRIORITY, 'CHASER04', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser05(hunter)' then AIDefineGoalGotoNode('gChase05', me, AISCRIPT_HIGHPRIORITY, 'CHASER05', AISCRIPT_RUNMOVESPEED,true);
+{	if me = 'hChaser06(hunter)' then AIDefineGoalGotoNode('gChase06', me, AISCRIPT_HIGHPRIORITY, 'CHASER06', AISCRIPT_RUNMOVESPEED,true);}
+	if me = 'hChaser07(hunter)' then AIDefineGoalGotoNode('gChase07', me, AISCRIPT_HIGHPRIORITY, 'CHASER07', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser08(hunter)' then AIDefineGoalGotoNode('gChase08', me, AISCRIPT_HIGHPRIORITY, 'CHASER08', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser09(hunter)' then AIDefineGoalGotoNode('gChase09', me, AISCRIPT_HIGHPRIORITY, 'CHASER09', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser10(hunter)' then AIDefineGoalGotoNode('gChase10', me, AISCRIPT_HIGHPRIORITY, 'CHASER10', AISCRIPT_RUNMOVESPEED,true);
+	{SPECIAL CHASE GOALS}
+	if me = 'hChaser09(hunter)' then AIDefineGoalGotoNode('gChase09b', me, AISCRIPT_HIGHPRIORITY, 'CHASER09B', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser10(hunter)' then AIDefineGoalGotoNode('gChase10b', me, AISCRIPT_HIGHPRIORITY, 'CHASER10B', AISCRIPT_RUNMOVESPEED,true);
+{	if me = 'hChaser09(hunter)' then AIDefineGoalGotoNode('gChase09c', me, AISCRIPT_HIGHPRIORITY, 'CHASER09C', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser09(hunter)' then AIDefineGoalGotoNode('gChase10c', me, AISCRIPT_HIGHPRIORITY, 'CHASER10C', AISCRIPT_RUNMOVESPEED,true);}
+	if me = 'hChaser09s(hunter)' then AIDefineGoalGotoNode('gChase09d', me, AISCRIPT_MEDIUMPRIORITY, 'CHASER09C', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser10s(hunter)' then AIDefineGoalGotoNode('gChase10d', me, AISCRIPT_MEDIUMPRIORITY, 'CHASER10C', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser09s(hunter)' then AIDefineGoalGotoNode('gChase09e', me, AISCRIPT_HIGHPRIORITY, 'GETCLOSER1', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser10s(hunter)' then AIDefineGoalGotoNode('gChase10e', me, AISCRIPT_HIGHPRIORITY, 'GETCLOSER2', AISCRIPT_RUNMOVESPEED,true);
+	if me = 'hChaser09s(hunter)' then AIDefineGoalGotoNodeStayOnPath('gChase09f', me, AISCRIPT_MEDIUMPRIORITY, 'ENDCHASE01', AISCRIPT_RUNMOVESPEED,false);
+	if me = 'hChaser10s(hunter)' then AIDefineGoalGotoNodeStayOnPath('gChase10f', me, AISCRIPT_MEDIUMPRIORITY, 'ENDCHASE02', AISCRIPT_RUNMOVESPEED,false);
+	{----}
+	if me = 'hChaser11(hunter)' then AIDefineGoalGotoNode('gChase11', me, AISCRIPT_HIGHPRIORITY, 'EXTRA01', AISCRIPT_WALKMOVESPEED,true);
+	if me = 'hChaser12(hunter)' then AIDefineGoalGotoNode('gChase12', me, AISCRIPT_HIGHPRIORITY, 'EXTRA02', AISCRIPT_WALKMOVESPEED,true);
+		
+	writedebug(me,' added');
+	
+	addedGoals := TRUE;
+	
+end;
+
+script RunGoals;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+	
+	if me = 'hChaser01(hunter)' then 
+	begin
+		if (NOT AIIsGoalNameInSubpack('leader(leader)', 'subGuardCar2', 'gChase01')) then
+			AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase01');
+	end;
+	if me = 'hChaser02(hunter)' then
+	begin
+		if (NOT AIIsGoalNameInSubpack('leader(leader)', 'subGuardCar2', 'gChase02')) then
+			AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase02');
+	end;
+	if me = 'hChaser03(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase03');
+	if me = 'hChaser04(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase04');
+	if me = 'hChaser05(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase05');
+{	if me = 'hChaser06(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase06');}
+	if me = 'hChaser07(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase07');
+	if me = 'hChaser08(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase08');
+	if me = 'hChaser09(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09');
+	if me = 'hChaser10(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10');
+	if me = 'hChaser11(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase11');
+	if me = 'hChaser12(hunter)' then AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase12');
+	
+	writedebug('added goal a');
+
+end;
+
+script RunGoalsTwo;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+	
+	AIRemoveAllGoalsFromSubpack('leader(leader)','subGuardCar2');
+	AiAddGoalForSubpack(leaderName, 'subGuardCar2', 'goalHuntPlayer');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09b');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10b');
+
+	writedebug('added goal b');
+end;
+
+script RunGoalsThree;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+
+	AIRemoveAllGoalsFromSubpack('leader(leader)','subGuardCar2');
+	AiAddGoalForSubpack(leaderName, 'subGuardCar2', 'goalHuntPlayer');
+{	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09c');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10c');}
+
+	writedebug('added goal c');
+end;
+
+script RunGoalsFour;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+	
+	AIRemoveAllGoalsFromSubpack('leader(leader)','subGuardCar2');
+	AiAddGoalForSubpack(leaderName, 'subGuardCar2', 'goalHuntPlayer');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09d');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10d');
+
+	writedebug('added goal d');
+end;
+
+script RunGoalsFive;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+	
+	AIRemoveAllGoalsFromSubpack('leader(leader)','subGuardCar2');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09e');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10e');
+
+	writedebug('added goal e');
+end;
+
+script RunGoalsSix;
+VAR
+	pos : vec3d;
+begin
+	
+	while addedGoals = FALSE do sleep(10);
+	AIRemoveAllGoalsFromSubpack('leader(leader)','subGuardCar2');
+	AiAddGoalForSubpack(leaderName, 'subGuardCar2', 'goalHuntPlayer');
+	
+	sleep(2500);
+	
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase09f');
+	AIAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gChase10f');
+	
+	AISetEntityIdleOverRide ('hChaser09s(hunter)', FALSE, FALSE);
+	AIMakeEntityDeaf('hChaser09s(hunter)', 0);
+	sleep(3000);
+	AISetEntityIdleOverRide ('hChaser10s(hunter)', FALSE, FALSE);
+	AIMakeEntityDeaf('hChaser10s(hunter)', 0);
+	
+	if (NOT IsPlayerPositionKnown) then
+		PlayScriptAudioStreamFromEntityAuto('SWAT1', 127, GetEntity('hChaser09s(hunter)'), 127);
+	
+	RunScript('triggerBarrelOver', 'WaitForEnterOne');
+	RunScript('triggerBarrelOver', 'WaitForEnterTwo');
+	
+	writedebug('added goals 6');
+end;
+
+end.
+   

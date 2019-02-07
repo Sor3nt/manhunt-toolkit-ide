@@ -1,0 +1,72 @@
+scriptmain TriggerSpotlights;
+
+ENTITY
+	triggerSpotlight02 : et_name;
+
+TYPE
+	tLevelState = ( StartOfLevel, GasCan, Chase, EndChase );
+
+
+VAR
+	rotate2 : boolean;
+	spotlight2working : level_var boolean;
+	lLevelState : level_var tLevelState;
+	
+script Init;
+VAR
+	pos : vec3d;
+begin
+	{SPOTLIGHT STUFF}
+	InitSpotlight('SPOT_2', GetEntity('Spotlight02'), 20.0, 20.0);
+	SetSpotlightTransitionTime('SPOT_2', 0.8);
+	writedebug('init spotlights');
+	spotlight2working := False;
+	{RunScript('triggerSpotlight02', 'Spot2Patrol');}
+	{SetSpotlightMode('SPOT_1', 'Freeze');}
+	SetVector(pos, 66.2008, 0.32345, -21.4592);
+	SetSpotlightTarget('SPOT_2', pos);
+end;
+
+script Spot2Patrol;
+
+VAR
+	pos : vec3d;
+
+begin
+	{Rotate until entered trigger}
+	rotate2 := TRUE;
+	
+	while (rotate2) and (spotlight2working) and (lLevelState <> Chase) do
+	begin
+		SetVector(pos, 69.7572, 0.217898, -25.0372);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 73.863, 0.31778, -21.0117);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 74.0978, 0.426087, -17.9399);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 72.6971, 0.539764, -14.6006);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 70.2388, 0.635229, -11.3472);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 65.819, 0.740781, -7.16392);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 54.3638, 0.635229, -12.1752);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 54.3638, 0.324678, -23.1723);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);
+		SetVector(pos, 61.668, 0.117942, -29.7696);
+		SetSpotlightTarget('SPOT_2', pos);
+		sleep(700);		
+	end;
+end;
+
+end.
+	

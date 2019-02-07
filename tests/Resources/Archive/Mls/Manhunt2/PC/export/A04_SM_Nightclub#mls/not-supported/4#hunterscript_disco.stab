@@ -1,0 +1,20 @@
+[
+    {
+        "name": "cantakeupposition",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ac020000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "94020000",
+        "size": 20,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

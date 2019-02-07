@@ -1,0 +1,209 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "480f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "4c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "ambientlocationlastid",
+        "nameGarbage": "0000000000000000000000",
+        "offset": "500f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "ambientmusicoffinbar",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "5c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "ambienttwowaymirrorsmashed",
+        "nameGarbage": "000000000000",
+        "offset": "580f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "ambientyardwindowsmashed",
+        "nameGarbage": "0000000000000000",
+        "offset": "540f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "barnoiseradius",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "280f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "blipshowing",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "2c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "debugjump",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "140f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donediscocutscene",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "380f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donewithpedal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "340f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "drillplaying",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "400f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "freshload",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "180f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "girlfailsafehit",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "440f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "girlleft",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "1c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "incutscene",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "240f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "leavecuttext",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "200f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "0000d4090000f4090000c00a00000000000001000000",
+        "offset": "100f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "tLevelState",
+        "occurrences": []
+    },
+    {
+        "name": "numbricks",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "600f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "shownfacegoal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "640f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "strobesbuilt",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "300f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "stunprodplaying",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "3c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "wincheedone",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "680f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

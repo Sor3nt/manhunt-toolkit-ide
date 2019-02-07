@@ -1,0 +1,13 @@
+[
+    {
+        "name": "helipatrolling",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            1280
+        ]
+    }
+]

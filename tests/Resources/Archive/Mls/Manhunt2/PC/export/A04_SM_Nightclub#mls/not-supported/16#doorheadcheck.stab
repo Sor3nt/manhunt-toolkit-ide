@@ -1,0 +1,11 @@
+[
+    {
+        "name": "index",
+        "nameGarbage": "00f30020003401200075012000b60120005b0320005e1420009f14",
+        "offset": "50000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    }
+]

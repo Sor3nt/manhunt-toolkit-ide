@@ -1,0 +1,90 @@
+scriptmain EntityScript;
+
+ENTITY
+	triggerAfterFightA : et_name;
+	
+script OnEnterTrigger;
+VAR
+	pos : vec3d;
+begin
+	AIAddEntity('hAfterFightA(hunter)');
+	AIAddEntity('hAfterFightB(hunter)');
+	
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'hAfterFightA(hunter)');
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'hAfterFightB(hunter)');
+	
+	AISetHunterIdleActionMinMaxRadius('hAfterFightA(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 11.0);
+	AISetHunterIdleActionMinMaxRadius('hAfterFightB(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 11.0);
+	
+	HunterSetGunAccuracyNear(GetEntity('hAfterFightA(hunter)'), 5.0, 0.5);
+	HunterSetGunAccuracyMid(GetEntity('hAfterFightA(hunter)'), 20, 1.0);
+	HunterSetGunAccuracyFar(GetEntity('hAfterFightA(hunter)'), 50, 2.0);
+	
+	HunterSetGunAccuracyNear(GetEntity('hAfterFightB(hunter)'), 5.0, 0.5);
+	HunterSetGunAccuracyMid(GetEntity('hAfterFightB(hunter)'), 20, 1.0);
+	HunterSetGunAccuracyFar(GetEntity('hAfterFightB(hunter)'), 50, 2.0);
+	
+	{Goto goals}
+	AIDefineGoalGotoNode('gRunAtPlayerA', 'hAfterFightA(hunter)', AISCRIPT_MEDIUMPRIORITY, 'AFTERA', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gRunAtPlayerB', 'hAfterFightB(hunter)', AISCRIPT_MEDIUMPRIORITY, 'AFTERB', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gRunAtPlayerC', 'hAfterFightA(hunter)', AISCRIPT_MEDIUMPRIORITY, 'AFTERC', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gRunAtPlayerD', 'hAfterFightB(hunter)', AISCRIPT_MEDIUMPRIORITY, 'AFTERD', AISCRIPT_RUNMOVESPEED,true);
+	
+	{Move to correct spot based on player's entrance point}
+	if GetEntityName(this) = 'triggerAfterFightA' then
+	begin
+		SetVector(pos, 98.9898, -1.05869, -41.5852);
+		MoveEntity(GetEntity('hAfterFightA(hunter)'), pos, 1);
+		SetVector(pos, 99.0467, -1.05179, -44.306);
+		MoveEntity(GetEntity('hAfterFightB(hunter)'), pos, 1);
+		{Add goals}
+		AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gRunAtPlayerA');
+		AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gRunAtPlayerB');
+	end
+	else
+	begin
+		{Add goals}
+		AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gRunAtPlayerC');
+		AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gRunAtPlayerD');
+	end;
+		
+	{At this point, add the swimming pool hunters, but don't activate them until later}
+	AIAddEntity('SwimmerA(hunter)');
+	AIAddEntity('SwimmerB(hunter)');
+	AIAddEntity('SwimmerC(hunter)');
+	AIAddEntity('SwimmerD(hunter)');
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'SwimmerA(hunter)');
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'SwimmerB(hunter)');
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'SwimmerC(hunter)');
+	AiAddHunterToLeaderSubpack('leader(leader)', 'subGuardCar2', 'SwimmerD(hunter)');
+	AIDefineGoalGotoNode('gSwimAtPlayerA', 'SwimmerA(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'SWIMA', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gSwimAtPlayerB', 'SwimmerB(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'SWIMB', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gSwimAtPlayerC', 'SwimmerC(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'SWIMC', AISCRIPT_RUNMOVESPEED,true);
+	AIDefineGoalGotoNode('gSwimAtPlayerD', 'SwimmerD(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'SWIMD', AISCRIPT_RUNMOVESPEED,true);
+	AISetHunterIdleActionMinMaxRadius('SwimmerA(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 21.0);
+	AISetHunterIdleActionMinMaxRadius('SwimmerB(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 21.0);
+	AISetHunterIdleActionMinMaxRadius('SwimmerC(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 21.0);
+	AISetHunterIdleActionMinMaxRadius('SwimmerD(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 180, 21.0);
+	AISetEntityIdleOverRide('SwimmerA(hunter)', TRUE, TRUE);
+	AISetEntityIdleOverRide('SwimmerB(hunter)', TRUE, TRUE);
+	AISetEntityIdleOverRide('SwimmerC(hunter)', TRUE, TRUE);
+	AISetEntityIdleOverRide('SwimmerD(hunter)', TRUE, TRUE);
+	AIEnableClimbingInIdle(GetEntity('SwimmerA(hunter)'), true);
+	AIEnableClimbingInIdle(GetEntity('SwimmerB(hunter)'), true);
+	AIEnableClimbingInIdle(GetEntity('SwimmerC(hunter)'), true);
+	AIEnableClimbingInIdle(GetEntity('SwimmerD(hunter)'), true);
+	
+	if GetEntityName(this) = 'triggerAfterFightA' then
+	begin
+		DestroyEntity(GetEntity('triggerAfterFightB'));
+		DestroyEntity(GetEntity('triggerAfterFightA'));
+	end
+	else
+	begin
+		DestroyEntity(GetEntity('triggerAfterFightA'));
+		DestroyEntity(GetEntity('triggerAfterFightB'));
+	end;
+	
+end;
+
+end.

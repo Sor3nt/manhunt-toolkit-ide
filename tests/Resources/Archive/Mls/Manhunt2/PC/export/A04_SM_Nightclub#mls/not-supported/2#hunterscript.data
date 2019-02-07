@@ -1,0 +1,12 @@
+{
+    "const": [],
+    "strings": [
+        "OnLowSightingOrAbove",
+        "BAT_IDLE_CLEANGLASS_ANIM",
+        "OnLowHearingOrAbove",
+        "BAT_IDLE_CLEANGLASS_ANIM",
+        "OnStartExecution",
+        "BAT_IDLE_CLEANGLASS_ANIM"
+    ],
+    "byteReserved": 40
+}

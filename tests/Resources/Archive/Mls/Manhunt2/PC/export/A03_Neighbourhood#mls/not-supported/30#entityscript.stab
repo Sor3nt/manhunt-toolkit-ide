@@ -1,0 +1,78 @@
+[
+    {
+        "name": "barrelenteredone",
+        "nameGarbage": "00637574696f6e5f6c696d69745f6869",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2836
+        ]
+    },
+    {
+        "name": "barrelenteredtwo",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            3100
+        ]
+    },
+    {
+        "name": "x1",
+        "nameGarbage": "0000e8043200000000000000000000000000000000000000000000000000",
+        "offset": "14010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "x2",
+        "nameGarbage": "0000e0033200000000000000000000000000000000000000000000000000",
+        "offset": "20010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "y1",
+        "nameGarbage": "000090043200000000000000000000000000000000000000000000000000",
+        "offset": "18010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "y2",
+        "nameGarbage": "000088033200000000000000000000000000000000000000000000000000",
+        "offset": "24010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "z1",
+        "nameGarbage": "000038043200000000000000000000000000000000000000000000000000",
+        "offset": "1c010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    },
+    {
+        "name": "z2",
+        "nameGarbage": "000030033200000000000000000000000000000000000000000000000000",
+        "offset": "28010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "game_var real",
+        "occurrences": []
+    }
+]

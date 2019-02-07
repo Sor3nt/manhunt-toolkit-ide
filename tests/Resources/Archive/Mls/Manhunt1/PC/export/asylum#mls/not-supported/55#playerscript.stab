@@ -1,0 +1,101 @@
+[
+    {
+        "name": "flag_cutscene_played_guard",
+        "nameGarbage": "000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "flag_hunter_tower_dead",
+        "nameGarbage": "00000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            16024
+        ]
+    },
+    {
+        "name": "flag_level_goals",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            2652,
+            2892,
+            2928,
+            3060,
+            11412,
+            11568,
+            11772,
+            11976,
+            14612,
+            15332
+        ]
+    },
+    {
+        "name": "flag_player_carrying_gas_can",
+        "nameGarbage": "00000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "vend",
+        "nameGarbage": "0001bc00000000000000000000000000000000000000000000000000",
+        "offset": "e4060000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "vpoz",
+        "nameGarbage": "0001bc00000000000000000000000000000000000000000000000000",
+        "offset": "cc060000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "vstart",
+        "nameGarbage": "0000000000000000000000000000000000000000000000000000",
+        "offset": "d8060000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "willie_game_int",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "feffffff",
+        "occurrences": [
+            17212,
+            17272,
+            17320,
+            17380,
+            17780,
+            17840,
+            17888,
+            17948
+        ]
+    },
+    {
+        "name": "willie_game_int2",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "feffffff",
+        "occurrences": [
+            2768,
+            13068,
+            14936,
+            18552
+        ]
+    }
+]

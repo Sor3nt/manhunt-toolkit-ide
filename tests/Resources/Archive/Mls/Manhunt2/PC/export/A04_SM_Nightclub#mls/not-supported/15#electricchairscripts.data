@@ -1,0 +1,31 @@
+{
+    "const": [],
+    "strings": [
+        "Electric chair created...",
+        "SMPowerswitch_(S)dummy",
+        "SMPowerswitch_(S)",
+        "UseWithCutscene",
+        "UseWithoutCutscene",
+        "CHAIR",
+        "vic_3_maleWhedE",
+        "SMPowerswitch_(S)",
+        "SwitchLODs",
+        "SM_ELEC_FRYLOOP",
+        "vic_3_maleWhedEref",
+        "SM_ELEC_FRYEND",
+        "SM_ELEC_DIE",
+        "hDungeon04(hunter)",
+        "ForceDetectPlayer",
+        "SMPowerswitch_(S)dummy",
+        "CHAIR",
+        "vic_3_maleWhedE",
+        "SMPowerswitch_(S)",
+        "SwitchLODs",
+        "SM_ELEC_FRYLOOP",
+        "vic_3_maleWhedEref",
+        "SM_ELEC_FRYEND",
+        "SM_ELEC_RESTLOOP",
+        "SM_RoomBlackout"
+    ],
+    "byteReserved": 4
+}

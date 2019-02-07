@@ -1,0 +1,25 @@
+scriptmain EntityScript;
+
+ENTITY
+	SecLight01_(L) : et_name;
+	
+script OnDamage;
+begin
+	if GetEntityName(this) = 'SecLight01_(L)' then RunScript('triggerBreakSec01', 'OnEnterTrigger');
+{	if GetEntityName(this) = 'SecLight02_(L)' then RunScript('triggerBreakSec02', 'OnEnterTrigger');}
+	if GetEntityName(this) = 'SecLight03_(L)' then RunScript('triggerBreakSec03', 'OnEnterTrigger');
+	if GetEntityName(this) = 'SecLight04_(L)' then RunScript('triggerBreakSec04', 'OnEnterTrigger');
+	if GetEntityName(this) = 'SecLight05_(L)' then RunScript('triggerBreakSec05', 'OnEnterTrigger');
+	if GetEntityName(this) = 'SecLight06_(L)' then RunScript('triggerBreakSec06', 'OnEnterTrigger');
+{	if GetEntityName(this) = 'SecLight07_(L)' then RunScript('triggerBreakSec07', 'OnEnterTrigger');}
+	if GetEntityName(this) = 'SecLight08_(L)' then RunScript('triggerBreakSec08', 'OnEnterTrigger');
+{	if GetEntityName(this) = 'SecLight10_(L)' then RunScript('triggerBreakSec10', 'OnEnterTrigger');}
+{	if GetEntityName(this) = 'SecLight11_(L)' then RunScript('triggerBreakSec11', 'OnEnterTrigger');}
+{	if GetEntityName(this) = 'SecLight12_(L)' then RunScript('triggerBreakSec12', 'OnEnterTrigger');}
+	if GetEntityName(this) = 'SecLight13_(L)' then RunScript('triggerBreakSec13', 'OnEnterTrigger');
+	if GetEntityName(this) = 'SecLight14_(L)' then RunScript('triggerBreakSec14', 'OnEnterTrigger');
+	
+	RemoveThisScript;
+end;
+
+end.

@@ -1,0 +1,423 @@
+scriptmain hunterScript;
+entity hDungeon01(hunter) : et_name;
+var self : string[22];
+	stunProdPlaying : level_var boolean;
+	drillPlaying : level_var boolean;
+	sample : integer;
+	detectedPlayer : boolean;
+
+script CreateMe;
+	begin
+		{ Set entity name for script runner }
+		self := GetEntityName(this);
+		detectedPlayer := false;
+		{ Create other dungeon hunters }
+		if(self = 'hDungeon01(hunter)') then begin
+			WriteDebug(self, ' creating Dungeon hunters');
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+			AIMakeEntityDeaf(self, 0);
+			AIMakeEntityBlind(self, 0);
+			SetPedOrientation(GetEntity(self), 270);
+		end;
+		{ Setup for cell two hunter }
+		if(self = 'hDungeon02(hunter)') then begin
+			AIMakeEntityDeaf(self, 0);
+			AIMakeEntityBlind(self, 0);
+			AISetHunterOnRadar(self, false);
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+			AISetHunterIdleActionMinMax(self, AISCRIPT_IDLE_STANDSTILL, AISCRIPT_LOWPRIORITY, 1, 2);
+			AISetIdleHomeNode(self, 'n21');
+			AISetEntityAllowSurprise(self, false);
+			HideEntity(this);
+		end;
+		{ Setup for patroller }
+		if(self = 'hDungeon03(hunter)') then begin
+			WriteDebug(self, ' starting patrol');
+			AISetIdleHomeNode(self, 'DPATROL_START');
+			AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppDungeon01');
+			AISetIdlePatrolStop(self, 'DPATROL_START', 3, true);
+			AISetIdlePatrolStop(self, 'DPATROL_START', 3, false);
+			AISetIdlePatrolStop(self, 'DPATROL_STOP', 8, true);
+			AISetIdlePatrolStop(self, 'DPATROL_STOP', 8, false);
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+		end;
+		{ Setup for cell five hunter }
+		if(self = 'hDungeon04(hunter)') then begin
+			AIMakeEntityBlind(self, 0);
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeonDud', self);
+			SetPedOrientation(GetEntity(self), 0);
+			AIEnableClimbingInIdle(this, true);
+			RunScript(self, 'ChairExecutor');
+			RunScript(self, 'MonitorMirrorSmash');
+		end;
+		{ Setup for cell four hunter }
+		if(self = 'hDungeon05(hunter)') then begin
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+			AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppIronClean');
+		{	RunScript(self, 'IronMaidenCleaner');}
+			AISetIdleHomeNode(self, '');
+		end;
+		{ Setup for cell three hunter }
+		if(self = 'hDungeon06(hunter)') then begin
+			AIMakeEntityDeaf(self, 0);
+			AIMakeEntityBlind(self, 0);
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+			RunScript(self, 'CellThreeMonitor');
+			SetPedOrientation(GetEntity(self), 160);
+		end;
+		{ Setup for cell six hunter }
+		if(self = 'hDungeon07(hunter)') then begin
+			AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+			SetPedOrientation(GetEntity(self), 30);
+		end;
+		{ For all }
+		SetPedDoNotDecay(this, true);
+		SetHunterMute(this, true);
+		SetPedHurtOtherPeds(self, true);
+		AISetHunterOnRadar(self, true);
+		WriteDebug(self, ' Initialised...');
+	end;
+
+script OnLowSightingOrAbove;
+	begin WriteDebug(self, ' - OnLowSightingOrAbove');
+		detectedPlayer := true;
+		if(self = 'hDungeon07(hunter)') then RunScript(self, 'DropDrillObject');
+		RemoveThisScript;
+	end;
+
+script OnLowHearingOrAbove;
+	begin WriteDebug(self, ' - OnLowSightingOrAbove');
+		detectedPlayer := true;
+		if(self = 'hDungeon07(hunter)') then RunScript(self, 'DropDrillObject');
+		if(self = 'hDungeon06(hunter)') then RunScript(self, 'CellThreeLureOut');
+		RemoveThisScript;
+	end;
+
+script ForceDetectPlayer;
+	begin
+		detectedPlayer := true;
+	end;
+
+script OnHunterLookListen;
+	begin WriteDebug(self, ' - OnHunterLookListen');
+	end;
+
+script OnHunterWalkToInvestigate;
+	begin WriteDebug(self, ' - OnHunterWalkToInvestigate');
+	end;
+
+script OnHunterRunToInvestigate;
+	begin WriteDebug(self, ' - OnHunterRunToInvestigate');
+	end;
+
+script OnHunterWalkRunToInvestigate;
+	begin WriteDebug(self, ' - OnHunterWalkRunToInvestigate');
+	end;
+
+script OnHunterLookWalkRunToInvestigate;
+	var pos : vec3d;
+	begin WriteDebug(self, ' - OnHunterLookWalkRunToInvestigate');
+		if(self = 'hDungeon01(hunter)') then begin
+			pos := GetPlayerPosition;
+			if(pos.x < 13.0) then begin
+				WriteDebug(self, ' - Investigating...');
+				AIDefineGoalGotoNode('Goto_Ply01', self, AISCRIPT_HIGHPRIORITY, 'nSawPlayer', AISCRIPT_RUNMOVESPEED, true);
+				if(not AIIsGoalNameInSubpack('leader(leader)', 'subHuntDungeon', 'Goto_Ply01')) then AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'Goto_Ply01');
+			end;
+		end;
+	end;
+
+script OnStartExecution;
+	begin
+		if(self = 'hDungeon07(hunter)') then RunScript(self, 'DropDrillObjectQuick');
+		KillGameText;
+		KillSubtitleText;
+		RemoveThisScript;
+	end;
+
+script OnStartEnvExecution;
+	begin
+		if(self = 'hDungeon07(hunter)') then RunScript(self, 'DropDrillObjectQuick');
+		KillGameText;
+		KillSubtitleText;
+		RemoveThisScript;
+	end;
+
+script OnDeath;
+	begin
+		{if(self = 'hDungeon05(hunter)') then KillScript(self, 'IronMaidenCleaner');}
+	end;
+
+script StartCellTwoAmbush;
+	var pos : vec3d;
+	begin
+		AIRemoveHunterFromLeaderSubpack('leader(leader)', self);
+		Sleep(50);
+		AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+		Sleep(50);
+		SetVector(pos, 26.7, -5.7, -87.1);
+		MoveEntity(GetEntity(self), pos, 0);
+		if(GetEntity('mirror2') <> nil) then InflictDamage(GetEntity('mirror2'), 1000, ARM_HEAVY);
+		Sleep(50);
+		ShowEntity(GetEntity(self));
+		Sleep(5);
+		PlayScriptAudioStreamFromEntityAuto('GMP3', 100, this, 50);
+		AIEntityPlayAnim(self, 'TAT_IDLE_MELEE_TAUNT_03_ANIM');
+		Sleep(1000);
+		AIMakeEntityDeaf(self, 1);
+		AIMakeEntityBlind(self, 1);
+		AISetHunterOnRadar(self, true);
+		Sleep(3000);
+		AISetIdleHomeNode(self, 'nMirrorSmash');
+		AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppMirrorSmash');
+	end;
+
+script CellThreeLureOut;
+	begin
+		PlayScriptAudioStreamFromEntityAuto('GMP4', 100, this, 50);
+		AIDefineGoalGotoNode('gGotoB32', self, AISCRIPT_HIGHPRIORITY, 'nB32', AISCRIPT_WALKMOVESPEED, true);
+		AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'gGotoB32');
+		Sleep(3500);
+		AIDeleteGoalDefinition('gGotoB32');
+		CallScript('Door_Indicator08', 'ButtonUsed') : 'b32_(s)', 0;
+		Sleep(2000);
+		AIMakeEntityBlind(self, 1);
+		AIDefineGoalGotoNode('gEXIT_CELL_4', self, AISCRIPT_HIGHPRIORITY, 'EXIT_CELL_4_2', AISCRIPT_WALKMOVESPEED, true);
+		AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'gEXIT_CELL_4');
+		AISetIdleHomeNode(self, 'DUNGEON02_START');
+		Sleep(2000);
+		AIDeleteGoalDefinition('gEXIT_CELL_4');
+		AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppDung02');
+	end;
+
+script StunprodTortureLoop;
+	var idleSleep : integer;
+	begin
+		stunProdPlaying := true;
+		idleSleep := 2000;
+		AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_IDLE_A', 0);
+		AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V', 0);
+		AIIgnoreEntityIfDead('victim(hunter)01');
+		Sleep(idleSleep);
+		while(true) do begin
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_1_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_1_V', 0);
+			Sleep(3800);
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_1_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_1_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V', 0);
+			Sleep(idleSleep);
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_2_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_2_V', 0);
+			Sleep(3000);
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_2_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_2_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V', 0);
+			Sleep(idleSleep);
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_3_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_3_V', 0);
+			Sleep(5000);
+			AIEntityCancelAnim(self, 'SM_PROD_TORTURE_3_A');
+			AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_3_V');
+			AIEntityPlayAnimLooped(self, 'SM_PROD_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V', 0);
+			Sleep(idleSleep);
+		end;
+	end;
+
+script CellThreeMonitor;
+	begin
+		while(true) do begin
+			if((GetDoorState(GetEntity('CellDoor_(SD)03')) = DOOR_OPENING) or (GetDoorState(GetEntity('CellDoor_(SD)03')) = DOOR_OPEN)) then begin
+				EndScriptAudioStream;
+				RunScript(self, 'CancelStunprodTorture');
+				Sleep(3000);
+				AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_LOWPRIORITY, 3000, 5000, 'ppDung02');
+				KillThisScript;
+			end;
+			Sleep(1000);
+		end;
+	end;
+
+script CancelStunprodTorture;
+	begin
+		stunProdPlaying := false;
+		AIMakeEntityBlind(self, 1);
+		RemoveScript(self, 'CellThreeLureOut');
+		KillScript(self, 'StunprodTortureLoop');
+		{AIDefineGoalHuntEnemy('goalHuntVictim01', 'victim(hunter)01', false, 4);
+		AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'goalHuntVictim01');
+		AIAddLeaderEnemy('leader(leader)', 'victim(hunter)01');}
+		AIEntityCancelAnim(self, 'SM_PROD_TORTURE_IDLE_A');
+		AIEntityCancelAnim(self, 'SM_PROD_TORTURE_1_A');
+		AIEntityCancelAnim(self, 'SM_PROD_TORTURE_2_A');
+		AIEntityCancelAnim(self, 'SM_PROD_TORTURE_3_A');
+		AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_IDLE_V');
+		AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_1_V');
+		AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_2_V');
+		AIEntityCancelAnim('victim(hunter)01', 'SM_PROD_TORTURE_3_V');
+		{if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromPlayer')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromPlayer');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD01')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD01');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD02')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD02');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD04')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD04');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD05')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD05');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD06')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD06');
+		if(not AIIsGoalNameInSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD07')) then AIAddGoalForSubpack('victimleader(leader)', 'subVictims', 'gVictim01_HideFromD07');}
+		KillEntity(GetEntity('victim(hunter)01'));
+	end;
+
+script IronMaidenCleaner;
+	begin
+		while(true) do begin
+			AISetIdleHomeNode(self, 'nIC01');
+			AIEntityGoHomeIfIdle(self);
+			Sleep(10000 + randnum(5000));
+			AISetIdleHomeNode(self, 'nIC02');
+			AIEntityGoHomeIfIdle(self);
+			Sleep(10000 + randnum(5000));
+		end;
+	end;
+
+script StartCellFiveReverseMirror;
+	begin
+		AIRemoveHunterFromLeaderSubpack('leader(leader)', self);
+		AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDungeon', self);
+		AIMakeEntityBlind(self, 1);
+		AILookAtEntity(self, 'player(player)');
+		AISetHunterIdleActionMinMaxRadius(self, AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_MEDIUMPRIORITY, 1200, 2400, 10);
+	end;
+
+script ChairExecutor;
+	var used : boolean;
+	begin
+		AISetIdleTalkProbability(self, 0);
+		SetHunterMute(this, false);
+		used := false;
+		while((GetDamage(this) > 0) and (not detectedPlayer)) do begin
+			if(GetDamage(this) > 0) then AISetIdleHomeNode(self, 'nElecSwitch');
+			if(GetDamage(this) > 0) then AIEntityGoHomeIfIdle(self);
+			Sleep(5000);
+			if(GetDamage(this) > 0) then HunterUseSwitch(this, GetEntity('SMPowerswitch_(S)'));
+			Sleep(2900);
+			if(GetDamage(this) > 0) then AISetIdleHomeNode(self, 'nElecChair');
+			if(GetDamage(this) > 0) then AIEntityGoHomeIfIdle(self);
+			if(GetDamage(this) > 0) then AIPlayCommunication(self, 'FlareDeath', 'ScriptedAudio');
+			Sleep(6000);
+			if(GetDamage(this) > 0) then AIPlayCommunication(self, 'FlareDeath', 'ScriptedAudio');
+			Sleep(5000);
+			if(GetDamage(this) > 0) then AIPlayCommunication(self, 'FlareDeath', 'ScriptedAudio');
+			Sleep(4000);
+		end;
+		if(GetDamage(this) > 0) then SetHunterMute(this, false);
+	end;
+
+script DrillTortureLoop;
+	var idleSleep : integer;
+	begin
+		drillPlaying := true;
+		sample := 0;
+		idleSleep := 1400;
+		SetPedOrientation(GetEntity(self), 30);
+		AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_IDLE_A', 0);
+		AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V', 0);
+		EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_IDLE_D', false);
+		Sleep(idleSleep);
+		while(drillPlaying) do begin
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_1_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_1_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_1_D', false);
+			sample := PlayAudioOneShotFromEntity(GetEntity(self), 'LEVEL', 'DRILL1', 127, 15);
+			Sleep(4500);
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_1_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_1_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_IDLE_D', false);
+			Sleep(idleSleep);
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_2_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_2_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_2_D', false);
+			sample := PlayAudioOneShotFromEntity(GetEntity(self), 'LEVEL', 'DRILL2', 127, 15);
+			Sleep(4700);
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_2_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_2_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_IDLE_D', false);
+			Sleep(idleSleep);
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_IDLE_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_3_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_3_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_3_D', false);
+			sample := PlayAudioOneShotFromEntity(GetEntity(self), 'LEVEL', 'DRILL3', 127, 15);
+			Sleep(6300);
+			AIEntityCancelAnim(self, 'SM_DRILL_TORTURE_3_A');
+			AIEntityCancelAnim('victim(hunter)03', 'SM_DRILL_TORTURE_3_V');
+			AIEntityPlayAnimLooped(self, 'SM_DRILL_TORTURE_IDLE_A', 0);
+			AIEntityPlayAnimLooped('victim(hunter)03', 'SM_DRILL_TORTURE_IDLE_V', 0);
+			EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_IDLE_D', false);
+			Sleep(idleSleep);
+		end;
+	end;
+
+script DropDrillObject;
+	begin
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		drillPlaying := false;
+		EndScriptAudioStream;
+		if(sample > 0) then EndAudioLooped(sample);
+		KillScript('hDungeon07(hunter)', 'DrillTortureLoop');
+		EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_END_D', false);
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		Sleep(1000);
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		RemoveThisScript;
+	end;
+
+script DropDrillObjectQuick;
+	begin
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		drillPlaying := false;
+		EndScriptAudioStream;
+		if(sample > 0) then EndAudioLooped(sample);
+		KillScript('hDungeon07(hunter)', 'DrillTortureLoop');
+		EntityPlayAnim(GetEntity('Drill_2'), 'SM_DRILL_TORTURE_END_D', false);
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		Sleep(1000);
+		if(GetDamage(GetEntity('victim(hunter)03')) > 0) then KillEntity(GetEntity('victim(hunter)03'));
+		RemoveThisScript;
+	end;
+
+script MonitorMirrorSmash;
+	var stopMonitor : boolean;
+	begin
+		stopMonitor := false;
+		while(not stopMonitor) do begin
+			Sleep(10);
+			if(GetDamage(this) <= 0) then stopMonitor := true;
+			if(GetEntity('mirror5') = nil) then stopMonitor := true;
+			if(not stopMonitor) then begin
+				{WriteDebug('========== mirr ', CalcDistanceToEntity(this, GetEntityPosition(GetEntity('mirror5'))));}
+				if(CalcDistanceToEntity(this, GetEntityPosition(GetEntity('mirror5'))) < 1.2) then begin
+					InflictDamage(GetEntity('mirror5'), 1000, ARM_HEAVY);
+					stopMonitor := true;
+				end;
+			end;
+		end;
+	end;
+
+end.
+  

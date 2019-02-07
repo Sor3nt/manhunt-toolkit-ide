@@ -1,0 +1,72 @@
+[
+    {
+        "name": "drillplaying",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            21532
+        ]
+    },
+    {
+        "name": "firstrun",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "c0060000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "freshload",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            15208,
+            15656
+        ]
+    },
+    {
+        "name": "pos",
+        "nameGarbage": "0078013200000000000000000000000000000000000000000000000000",
+        "offset": "00000000",
+        "size": 12,
+        "hierarchieType": "02000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    },
+    {
+        "name": "pos2",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "b4060000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "004b1202984c1202404d1202e84d1202904e1202804f120280801202",
+        "offset": "90060000",
+        "size": 22,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "stunprodplaying",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            21208
+        ]
+    }
+]

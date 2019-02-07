@@ -1,0 +1,24 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            40
+        ]
+    },
+    {
+        "name": "ambientyardwindowsmashed",
+        "nameGarbage": "0000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            68
+        ]
+    }
+]

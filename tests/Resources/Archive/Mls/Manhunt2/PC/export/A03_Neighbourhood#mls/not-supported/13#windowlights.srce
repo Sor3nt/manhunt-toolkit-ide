@@ -1,0 +1,72 @@
+scriptmain WindowLights;
+
+ENTITY
+	triggerWindow01 : et_name;
+
+VAR
+	thisObj : entityPtr;
+	chatter : boolean;
+	
+script OnEnterTrigger;
+
+VAR
+	me : string[32];
+	
+
+begin
+
+	me := GetEntityName(this);
+	
+	if me = 'triggerWindow01' then thisObj := GetEntity('window_alert01');
+	if me = 'triggerWindow02' then thisObj := GetEntity('window_alert02');
+	if me = 'triggerWindow03' then thisObj := GetEntity('window_alert03');
+	if me = 'triggerWindow04' then thisObj := GetEntity('window_alert04');
+	if me = 'triggerWindow05' then thisObj := GetEntity('window_alert05');
+	if me = 'triggerWindow06' then thisObj := GetEntity('window_alert06');
+
+	{Light on - screaming woman/man}
+
+	SetCurrentLod(thisObj, 1);
+	
+	sleep(400);
+	
+	if me = 'triggerWindow01' then 
+	begin
+		PlayScriptAudioStreamFromEntityAuto('WIB5', 127, thisObj, 45);
+		while (NOT IsScriptAudioStreamCompleted) do sleep(10);
+		PlayScriptAudioStreamFromEntityAuto('MIB5', 127, thisObj, 45);
+	end;
+	if me = 'triggerWindow02' then 
+	begin
+		PlayScriptAudioStreamFromEntityAuto('MIA6', 127, thisObj, 45);
+		while (NOT IsScriptAudioStreamCompleted) do sleep(10);
+		PlayScriptAudioStreamFromEntityAuto('MIA7', 127, thisObj, 45);
+	end;
+	if me = 'triggerWindow03' then
+	begin
+		PlayScriptAudioStreamFromEntityAuto('MIB6', 127, thisObj, 45);
+		while (NOT IsScriptAudioStreamCompleted) do sleep(10);
+		PlayScriptAudioStreamFromEntityAuto('MIB7', 127, thisObj, 45);
+	end;
+	if me = 'triggerWindow04' then PlayScriptAudioStreamFromEntityAuto('WIA6', 127, thisObj, 45);
+	if me = 'triggerWindow05' then
+	begin
+		PlayScriptAudioStreamFromEntityAuto('WIA7', 127, thisObj, 45);
+		while (NOT IsScriptAudioStreamCompleted) do sleep(10);
+		PlayScriptAudioStreamFromEntityAuto('WIA8', 127, thisObj, 45);
+	end;
+	if me = 'triggerWindow06' then PlayScriptAudioStreamFromEntityAuto('MIB8', 127, thisObj, 45);
+	
+	if me = 'triggerWindow01' then DestroyEntity(GetEntity('triggerWindowIdle01'));
+	if me = 'triggerWindow02' then DestroyEntity(GetEntity('triggerWindowIdle02'));
+	if me = 'triggerWindow03' then DestroyEntity(GetEntity('triggerWindowIdle03'));
+	if me = 'triggerWindow04' then DestroyEntity(GetEntity('triggerWindowIdle04'));
+	if me = 'triggerWindow05' then DestroyEntity(GetEntity('triggerWindowIdle05'));
+	if me = 'triggerWindow06' then DestroyEntity(GetEntity('triggerWindowIdle06'));
+	
+	RemoveThisScript;
+	
+end;
+
+
+end.

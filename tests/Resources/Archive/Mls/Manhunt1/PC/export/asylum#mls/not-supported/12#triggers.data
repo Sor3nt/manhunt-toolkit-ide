@@ -1,0 +1,20 @@
+{
+    "const": [],
+    "strings": [
+        "Gas_Can",
+        "SpawnCan: creating a new gas can",
+        "Exploder_Drum",
+        "SpawnCan: gas can is set to explode",
+        "Gas Can has been destroyed as the door is gone - ONCREATE SCRIPT",
+        "SpawnCan: Called.",
+        "aigreenhouse",
+        "SpaceCheck",
+        "Gas_Can",
+        "SpawnCan: creating a new gas can",
+        "Exploder_Drum",
+        "SpawnCan: gas can is set to explode",
+        "SpawnCan: Ended.",
+        "Gas Can has been destroyed as the door is gone - SPAWN CAN SCRIPT"
+    ],
+    "byteReserved": 20
+}

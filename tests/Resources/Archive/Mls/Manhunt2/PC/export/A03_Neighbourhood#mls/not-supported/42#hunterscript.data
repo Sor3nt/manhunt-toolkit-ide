@@ -1,0 +1,17 @@
+{
+    "const": [],
+    "strings": [
+        "player(player)",
+        "leader(leader)",
+        "goalHuntPlayer",
+        "hCarCop21(hunter)",
+        "hCarCop22(hunter)",
+        "subBack1",
+        "hCarCop21Path",
+        "hCarCop22Path",
+        " added",
+        "Heli",
+        "TargetPlayerPos"
+    ],
+    "byteReserved": 40
+}

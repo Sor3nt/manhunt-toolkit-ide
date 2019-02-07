@@ -2,78 +2,66 @@
 
 namespace App\Service;
 
+use App\Service\Archive\Archive;
+use App\Service\Archive\Bin;
+use App\Service\Archive\Bsp;
+use App\Service\Archive\Col;
+use App\Service\Archive\Dds;
+use App\Service\Archive\Dff;
+use App\Service\Archive\Fsb;
+use App\Service\Archive\Glg;
+use App\Service\Archive\Gxt;
+use App\Service\Archive\Ifp;
+use App\Service\Archive\Inst;
+use App\Service\Archive\Mdl;
 use App\Service\Archive\Mls;
+use App\Service\Archive\Pak;
 use App\Service\Archive\Tex;
-use App\Service\Archive\Txd;
-use App\Service\Archive\ZLib;
+use Symfony\Component\Finder\Finder;
 
 class Resources
 {
 
-    public $workDirectory = '/Users/matthias/mh2';
+    public $workDirectory = '';
 
-    /**
-     * @param $relativeFile
-     * @return \App\Service\Resource
-     * @throws \Exception
-     *
-     * todo: caching verbauen
-     */
-    public function load( $relativeFile ){
+    /** @var Archive[]  */
+    private $archives = [
+        Bin::class,     Col::class,     Dds::class,     Dff::class,     /*Fsb::class,*/
+        Gxt::class,     Ifp::class,     Inst::class,    Mls::class,     Tex::class,
+        Pak::class,     Glg::class,     Mdl::class,     Bsp::class
+    ];
+
+
+    public function load( $relativeFile, $game, $platform ){
 
         $absoluteFile = $this->workDirectory . $relativeFile;
-        if (!file_exists( $absoluteFile )) throw new \Exception(sprintf('File not found: %s', $absoluteFile));
 
-        $fileExtension = strtolower(pathinfo($absoluteFile, PATHINFO_EXTENSION));
+        if (!file_exists( $absoluteFile ) && !is_dir($absoluteFile)) throw new \Exception(sprintf('File/Folder not found: %s', $absoluteFile));
 
-        $content = file_get_contents($absoluteFile);
-        $contentAsHex = bin2hex($content);
+        $handler = false;
 
-        // we found a zLib compressed file
-        if (substr($contentAsHex, 0, 8) === "5a32484d"){
-            $content = ZLib::uncompress( $content );
-//            file_put_contents('ps2-dsfe.txd', $content);
-//            exit;
+        if (is_dir($absoluteFile)){
+            $input = new Finder();
+            $input->files()->in($absoluteFile);
+        }else{
+            $input = new NBinary( file_get_contents($absoluteFile) );
         }
 
-        switch ($fileExtension){
-
-            case 'glg':
-            case 'dxt1':
-            case 'dxt2':
-            case 'dxt3':
-            case 'dxt4':
-            case 'dxt5':
+        foreach ($this->archives as $archive) {
+            if ($archive::canHandle( $relativeFile, $input, $game, $platform )){
+                /** @var Archive $handler */
+                $handler = new $archive();
                 break;
-
-            case 'scc':
-            case 'mls':
-                $handler = new Mls();
-                $content = $handler->unpack($content, 'mh2');
-                break;
-
-            case 'tex':
-                $handler = new Tex();
-                $content = $handler->unpack($content);
-                break;
-            case 'txd':
-
-                $handler = new Txd();
-                $content = $handler->unpack($content);
-                break;
-            default:
-                throw new \Exception(sprintf('Unable to load resource %s, unknown handler', $relativeFile));
+            }
         }
+
+        if ($handler == false) throw new \Exception(sprintf('No handler available for file %s', $absoluteFile));
 
         return new Resource(
-            $content,
-            $fileExtension,
-            $relativeFile
+            $handler,
+            $relativeFile,
+            $input
         );
-    }
-
-    public function saveMls( Resource $resource ){
-
     }
 
 }

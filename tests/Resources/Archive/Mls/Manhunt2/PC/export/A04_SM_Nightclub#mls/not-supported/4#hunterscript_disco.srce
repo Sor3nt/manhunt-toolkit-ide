@@ -1,0 +1,136 @@
+scriptmain hunterScript_Disco;
+entity hDisco01(hunter) : et_name;
+var	self : string[20];
+	CanTakeUpPosition : boolean;
+
+script CreateMe;
+	begin
+		{ Set entity name for script runner }
+		self := GetEntityName(this);
+		CanTakeUpPosition := false;
+		{ Setup and add to subpack }
+		SetHunterMute(this, true);
+		AllowReceivingOfHeadshots(this, false);
+		SetPedDoNotDecay(this, true);
+		AISetHunterOnRadar(self, true);
+		AIAddHunterToLeaderSubpack('leader(leader)', 'subHuntDisco', self);
+		WriteDebug(self, ' Initialised...');
+	end;
+	
+script OnDeath;
+	begin
+		if(self = 'hDisco04(hunter)') then KillScript(self, 'HackIdleWander');
+	end;
+
+script OnHunterIdle;
+	begin
+		if(CanTakeUpPosition) then begin
+			WriteDebug(self, ' going idle');
+			RunScript(self, 'TakeUpPosition');
+		end;
+	end;
+
+script OnStartExecution;
+	begin
+		KillGameText;
+		KillSubtitleText;
+		RemoveThisScript;
+	end;
+
+script OnStartEnvExecution;
+	begin
+		KillGameText;
+		KillSubtitleText;
+		RemoveThisScript;
+	end;
+
+script AllTakeUpPositions;
+	begin
+		RunScript('hDisco01(hunter)',  'TakeUpPosition');
+		RunScript('hDisco02(hunter)',  'TakeUpPosition');
+		RunScript('hDisco04(hunter)',  'TakeUpPosition');
+	end;
+
+script TakeUpPosition;
+	begin
+		CanTakeUpPosition := true;
+		{ First upstairs guy }
+		if(self = 'hDisco01(hunter)') then begin
+			WriteDebug(self, ' starting upstairs patrol');
+			AISetIdleHomeNode(self, 'nBalconyPatrolStart');
+			AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppBalconyCleaner');
+			AISetIdlePatrolStop(self, 'nBalconyPatrolStart', 6, true);
+			AISetIdlePatrolStop(self, 'nBalconyPatrolStop',  6, true);
+			AISetIdlePatrolStop(self, 'nBalconyPatrolStart', 6, false);
+			AISetIdlePatrolStop(self, 'nBalconyPatrolStop',  6, false);
+		end;
+		{ Downstairs cleaner }
+		if(self = 'hDisco02(hunter)') then begin
+			WriteDebug(self, ' starting cleaner patrol');
+			AISetIdleHomeNode(self, 'L12');
+			AISetHunterIdlePatrol(self, AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'ppDiscoCleaner');
+			AISetIdlePatrolStop(self, 'L12', 3 + randnum(3), true);
+			AISetIdlePatrolStop(self, 'L19', 3 + randnum(3), true);
+			AISetIdlePatrolStop(self, 'L12', 3 + randnum(3), false);
+			AISetIdlePatrolStop(self, 'L19', 3 + randnum(3), false);
+			AISetEntityStayOnPath(self, true);
+		end;
+		{ Spotlight controller }
+		if(self = 'hDisco04(hunter)') then begin
+			WriteDebug(self, ' TODO');
+			AIMakeEntityDeaf(self, 1);
+			AIMakeEntityBlind(self, 1);
+			AISetIdleHomeNode(self, 'nSpotLight');
+			RunScript(self, 'HackIdleWander');
+			AISetEntityIdleOverRide(self, false, false);
+		end;
+	end;
+
+script HackIdleWander;
+	var rand : integer;
+	begin
+		while(true) do begin
+			rand := randnum(9);
+			case rand of
+				0: AISetIdleHomeNode(self, 'nRandPatrol01');
+				1: AISetIdleHomeNode(self, 'nRandPatrol02');
+				2: AISetIdleHomeNode(self, 'nRandPatrol03');
+				3: AISetIdleHomeNode(self, 'nRandPatrol04');
+				4: AISetIdleHomeNode(self, 'nRandPatrol05');
+				5: AISetIdleHomeNode(self, 'nRandPatrol06');
+				6: AISetIdleHomeNode(self, 'nRandPatrol07');
+				7: AISetIdleHomeNode(self, 'nRandPatrol08');
+				8: AISetIdleHomeNode(self, 'nRandPatrol09');
+			end;
+			Sleep(randnum(8000) + 10000);
+			if(not IsEntityAlive(self)) then KillThisScript;
+			if(GetEntity(self) = nil) then KillThisScript;
+			AIEntityGoHomeIfIdle(self);
+		end;
+	end;
+
+script HackSpawnedWander;
+	var rand : integer;
+	begin
+		while(true) do begin
+			rand := randnum(9);
+			case rand of
+				0: AISetIdleHomeNode(self, 'L12');
+				1: AISetIdleHomeNode(self, 'L03');
+				2: AISetIdleHomeNode(self, 'L23');
+				3: AISetIdleHomeNode(self, 'nSha06');
+				4: AISetIdleHomeNode(self, 'nSha01');
+				5: AISetIdleHomeNode(self, 'L25');
+				6: AISetIdleHomeNode(self, 'L05');
+				7: AISetIdleHomeNode(self, 'nGate1');
+				8: AISetIdleHomeNode(self, 'L04');
+			end;
+			Sleep(1000);
+			if(not IsEntityAlive(self)) then KillThisScript;
+			if(GetEntity(self) = nil) then KillThisScript;
+			AIEntityGoHomeIfIdle(self);
+			Sleep(randnum(8000) + 10000);
+		end;
+	end;
+
+end.

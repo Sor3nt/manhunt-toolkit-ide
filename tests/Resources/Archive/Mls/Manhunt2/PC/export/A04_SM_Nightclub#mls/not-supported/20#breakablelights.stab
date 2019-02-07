@@ -1,0 +1,20 @@
+[
+    {
+        "name": "broken",
+        "nameGarbage": "0000000000000000000000000000000000000000000000000000",
+        "offset": "20020000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "0032000a010000143a0a01120000000b1b01000011000b427f370101",
+        "offset": "04020000",
+        "size": 24,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

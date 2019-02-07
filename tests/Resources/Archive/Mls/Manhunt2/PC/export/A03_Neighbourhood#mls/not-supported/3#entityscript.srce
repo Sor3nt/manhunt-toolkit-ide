@@ -1,0 +1,38 @@
+Scriptmain EntityScript;
+
+ENTITY
+	triggerKillPlayer : et_name;
+	
+VAR
+	heliPatrolling : level_var boolean;
+	
+script OnEnterTrigger;
+begin
+	{Kill player with helicopter}
+	
+	writedebug('player being killed');
+	
+	if GetEntity('heli') <> NIL then
+	begin
+		KillScript('heli', 'HeliMissIfLow');
+		KillScript('heli', 'OnHeliSpottedEntity');
+		RemoveScript('heli', 'HeliMissIfLow');
+		RemoveScript('heli', 'OnHeliSpottedEntity');	
+		KillScript('StopHeliShoot', 'CheckLoop');
+		RemoveScript('StopHeliShoot', 'CheckLoop');
+		
+		HeliLookAtPosition(GetEntity('heli'), GetPlayerPosition, true);
+		HeliOpenFire(GetEntity('heli'), true, 0.9);
+		HeliSetFiringRate(GetEntity('heli'), 18);
+		HeliSetMoveSpeed(GetEntity('heli'), 1.0);
+		HeliSetLightSpeed(GetEntity('heli'), 2000.0);
+		HeliPauseIdlePatrol(GetEntity('heli'));
+		heliPatrolling := FALSE;
+		HeliSetSpolightMaxDeflection(GetEntity('heli'), 40.0);
+		HeliLookAtEntity(GetEntity('heli'), 'player(player)');
+	end;
+	
+	RemoveThisScript;
+end;
+
+end.

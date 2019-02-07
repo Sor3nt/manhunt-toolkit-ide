@@ -1,0 +1,13 @@
+{
+    "const": [],
+    "strings": [
+        "triggerSpotlight03",
+        "Spot1Patrol",
+        "OnEnterTrigger",
+        "triggerSpotlight03",
+        "Spot1Patrol",
+        "SPOT_3",
+        "Freeze"
+    ],
+    "byteReserved": 4
+}

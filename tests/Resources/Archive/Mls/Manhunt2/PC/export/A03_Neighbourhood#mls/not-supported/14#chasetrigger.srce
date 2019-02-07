@@ -1,0 +1,243 @@
+scriptmain chaseTrigger;
+
+ENTITY
+	triggerChase : et_name;
+	
+TYPE
+tLevelState = ( StartOfLevel, GasCan, Chase, EndChase );	
+
+VAR
+	{ This tells what level the state is in. After setting (increasing) it, call OnLevelStateSwitch. }
+	lLevelState : level_var tLevelState;
+
+script OnEnterTrigger;
+
+VAR
+	pos, pos2 : vec3d;
+	patrolling : level_var boolean;
+	
+begin
+	
+	
+		if lLevelState <> Chase then
+		begin
+        {DestroyEntity(GetEntity('Bottle_(CT)01'));
+        DestroyEntity(GetEntity('Can_(CT)'));
+        DestroyEntity(GetEntity('southbushc195'));
+
+        DestroyEntity(GetEntity('Bag_(CT)13'));
+        DestroyEntity(GetEntity('trashbin_A59'));
+        DestroyEntity(GetEntity('southbushc196'));
+
+
+        DestroyEntity(GetEntity('post_box_red01'));
+        DestroyEntity(GetEntity('trashbin_A48'));
+        DestroyEntity(GetEntity('Lamp_house_(L)49'));
+        DestroyEntity(GetEntity('satelitedish_home02'));
+        DestroyEntity(GetEntity('southtreelargea_DL01'));
+        DestroyEntity(GetEntity('southtreelargea_DL05'));
+
+        DestroyEntity(GetEntity('kitchen_cab_light_(L)02'));
+
+        DestroyEntity(GetEntity('auto'));
+        DestroyEntity(GetEntity('Can_(CT)01'));
+        DestroyEntity(GetEntity('Bottle_(CT)08'));
+        DestroyEntity(GetEntity('stinger'));
+        DestroyEntity(GetEntity('trashbin_A56'));
+        DestroyEntity(GetEntity('trashbin_A49'));
+        DestroyEntity(GetEntity('smallyucca11'));
+        DestroyEntity(GetEntity('southbushc97'));
+        DestroyEntity(GetEntity('plaza_lamp(L)07'));
+        DestroyEntity(GetEntity('Lamp_house_(L)46'));
+        DestroyEntity(GetEntity('powerpole'));
+        DestroyEntity(GetEntity('post_box09'));
+        DestroyEntity(GetEntity('post_box01'));
+        DestroyEntity(GetEntity('FIREHYDRANT'));
+        DestroyEntity(GetEntity('satelitedish_home'));
+        DestroyEntity(GetEntity('southbusha04'));
+        DestroyEntity(GetEntity('southtreelargea_DL'));
+        DestroyEntity(GetEntity('southtreelargea_DL06'));
+        DestroyEntity(GetEntity('SA_Rubbish_J01'));
+        DestroyEntity(GetEntity('LampSmash04_(L)'));
+
+        DestroyEntity(GetEntity('Manhole_Exec'));
+        DestroyEntity(GetEntity('trashbin_A71'));
+        DestroyEntity(GetEntity('southbushc175'));
+        DestroyEntity(GetEntity('big_trashcanB10'));
+        DestroyEntity(GetEntity('satelitedish_home01'));
+        DestroyEntity(GetEntity('window_alert03'));
+
+        DestroyEntity(GetEntity('Half_Brick_(CT)04'));
+        DestroyEntity(GetEntity('auto01b'));
+        DestroyEntity(GetEntity('Can_(CT)02'));
+        DestroyEntity(GetEntity('Can_(CT)03'));
+        DestroyEntity(GetEntity('Bottle_(CT)09'));
+        DestroyEntity(GetEntity('Bottle_(CT)10'));
+        DestroyEntity(GetEntity('Garage01_(S)'));
+        DestroyEntity(GetEntity('powerpole22'));
+        DestroyEntity(GetEntity('southbusha03'));
+        DestroyEntity(GetEntity('plaza_lamp(L)08'));
+        DestroyEntity(GetEntity('post_box08'));
+        DestroyEntity(GetEntity('post_box07'));
+        DestroyEntity(GetEntity('FIREHYDRANT01'));
+        DestroyEntity(GetEntity('med_truck'));
+        DestroyEntity(GetEntity('southtreelargea_DL02'));
+        DestroyEntity(GetEntity('southtreelargea_DL03'));
+        DestroyEntity(GetEntity('southtreelargea_DL07'));
+        DestroyEntity(GetEntity('A03_Garage_Shutter02'));
+        DestroyEntity(GetEntity('Home_Box_(O)'));
+        DestroyEntity(GetEntity('powerpole31'));
+        DestroyEntity(GetEntity('minivan01'));
+
+        DestroyEntity(GetEntity('garden_furniture02'));
+        DestroyEntity(GetEntity('BAR_B_Q02'));
+        DestroyEntity(GetEntity('southbushc172'));
+        DestroyEntity(GetEntity('window_alert01'));
+        DestroyEntity(GetEntity('southtreelargea_DL11'));
+        DestroyEntity(GetEntity('EntitySound_(ES)04'));
+
+        DestroyEntity(GetEntity('trashbin_A37'));
+        DestroyEntity(GetEntity('southbushc62'));
+        DestroyEntity(GetEntity('southbushc60'));
+        DestroyEntity(GetEntity('Lamp_house_(L)25'));
+        DestroyEntity(GetEntity('Lamp_house_(L)24'));
+        DestroyEntity(GetEntity('Lamp_house_(L)21'));
+        DestroyEntity(GetEntity('trashbin_A74'));
+        DestroyEntity(GetEntity('CJ_FOLDCHAIR07'));
+        DestroyEntity(GetEntity('CJ_FOLDCHAIR08'));
+        DestroyEntity(GetEntity('Lamp_house_(L)61'));
+
+        DestroyEntity(GetEntity('Bag_(CT)03'));
+        DestroyEntity(GetEntity('auto02'));
+        DestroyEntity(GetEntity('Can_(CT)05'));
+        DestroyEntity(GetEntity('Bottle_(CT)11'));
+        DestroyEntity(GetEntity('Bottle_(CT)12'));
+        DestroyEntity(GetEntity('Garage00_(S)'));
+        DestroyEntity(GetEntity('Executor_(envex)'));
+        DestroyEntity(GetEntity('post_box_red02'));
+        DestroyEntity(GetEntity('Lamp_house_(L)53'));
+        DestroyEntity(GetEntity('big_trashcanB05'));
+        DestroyEntity(GetEntity('powerpole23'));
+        DestroyEntity(GetEntity('trashbin_A53'));
+        DestroyEntity(GetEntity('southbushc110'));
+        DestroyEntity(GetEntity('big_trashcanB11'));
+        DestroyEntity(GetEntity('Lamp_house_(L)54'));
+        DestroyEntity(GetEntity('ThreeWheeler_New'));
+        DestroyEntity(GetEntity('Gen_Bin_Liner01'));
+        DestroyEntity(GetEntity('Gen_Bin_Liner02'));
+        DestroyEntity(GetEntity('Gen_Bin_Liner03'));
+        DestroyEntity(GetEntity('Gen_Bin_Liner04'));
+        DestroyEntity(GetEntity('southtreelargea_DL10'));
+        DestroyEntity(GetEntity('A03_Garage_Shutter'));
+        DestroyEntity(GetEntity('Home_Box_(O)02'));}
+        
+		{Save point and switch}
+		lLevelState := Chase;
+		RunScript('A03_Neighbourhood', 'OnLevelStateSwitch');
+		
+		{Make hunters not accurate, so they shoot during the cutscene, but miss}
+		{HunterSetGunAccuracyNear(GetEntity('hChaser01(hunter)'), 1.0, 100.0);
+		HunterSetGunAccuracyMid(GetEntity('hChaser01(hunter)'), 2.0, 300.0);
+		HunterSetGunAccuracyFar(GetEntity('hChaser01(hunter)'), 10.0, 600.0);
+		HunterSetGunAccuracyNear(GetEntity('hChaser02(hunter)'), 1.0, 100.0);
+		HunterSetGunAccuracyMid(GetEntity('hChaser02(hunter)'), 2.0, 300.0);
+		HunterSetGunAccuracyFar(GetEntity('hChaser02(hunter)'), 10.0, 600.0);}
+		
+		{Ignore above - hunters will not shoot now}
+		
+		
+			RunScript('triggerChase', 'ChaseScene');
+			
+			sleep(500);
+			
+			while IsCutSceneInProgress do sleep(10);
+			
+			AIMakeEntityBlind('hChaser01(hunter)', 1);
+			AIMakeEntityBlind('hChaser02(hunter)', 1);
+			AIMakeEntityDeaf('hChaser01(hunter)', 1);
+			AIMakeEntityDeaf('hChaser02(hunter)', 1);
+				
+			{AIMakeEntityDeaf('hChaser01(hunter)', 1);
+			AIMakeEntityBlind('hChaser01(hunter)', 1);
+			AIMakeEntityDeaf('hChaser02(hunter)', 1);
+			AIMakeEntityBlind('hChaser02(hunter)', 1);} 
+			HunterSetGunAccuracyNear(GetEntity('hChaser01(hunter)'), 1.0, 0.3);
+			HunterSetGunAccuracyMid(GetEntity('hChaser01(hunter)'), 2.0, 1.0);
+			HunterSetGunAccuracyFar(GetEntity('hChaser01(hunter)'), 10.0, 3.0);
+			HunterSetGunAccuracyNear(GetEntity('hChaser02(hunter)'), 1.0, 0.3);
+			HunterSetGunAccuracyMid(GetEntity('hChaser02(hunter)'), 2.0, 1.0);
+			HunterSetGunAccuracyFar(GetEntity('hChaser02(hunter)'), 10.0, 3.0);
+		
+	end;
+	RemoveThisScript;
+	
+end;
+
+script ChaseScene;
+begin
+	CutSceneStart;
+			{ Setup camera }
+			
+			sleep(300);
+			
+			AICutSceneEntityEnable('hChaser01(hunter)', true);
+			AICutSceneEntityEnable('hChaser02(hunter)', true);
+			AIMakeEntityBlind('hChaser01(hunter)', 0);
+			AIMakeEntityBlind('hChaser02(hunter)', 0);
+			AIMakeEntityDeaf('hChaser01(hunter)', 0);
+			AIMakeEntityDeaf('hChaser02(hunter)', 0);
+			
+			RunScript('hChaser01(hunter)', 'RunGoals');
+			RunScript('hChaser02(hunter)', 'RunGoals');
+			
+			CutsceneRegisterSkipScript(this, 'SkipMe');
+			
+			{ === Cutscene Camera Animation Block (cameraFollowChase) === }
+			CutsceneCameraInit;
+			
+			CutscenecameraSetPos(0.0, 45.5549, 1.83026, -7.64671);
+			CutscenecameraSetPos(6.0, 37.34, 2.29711, -8.27393);
+			
+			CutscenecameraSetTarget(0.0, 20.1398, -0.848151, -9.51306);
+			CutscenecameraSetTarget(6.0, 30.9627, -0.730575, -24.5543);
+			
+			CutsceneCameraSetFOV(0.0, 80.0);
+			
+			CutsceneCameraSetRoll(0.0, 8.0);
+			
+			CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			{ === End Cutscene Camera Animation Block (cameraFollowChase) === }
+			
+			FrisbeeSpeechPlay('GUARD1', 127, 127);	
+					
+			sleep(2500);
+			
+			PlayScriptAudioStreamFromEntityAux('COP1', 127, GetEntity('hChaser01(hunter)'), 127);
+			{while NOT FrisbeeSpeechIsFinished('COP1') do sleep(10);}
+			
+			sleep(1500);
+			
+		CutSceneEnd(false);
+		
+		RunScript('hChaser01(hunter)', 'RunGoals');
+		RunScript('hChaser02(hunter)', 'RunGoals');
+end;
+
+script SkipMe;
+VAR
+	pos : vec3d;
+begin
+	SetVector(pos, 36.0858, 0.740781, -9.04732);
+{	LockEntity(GetEntity('hChaser01(hunter)'));}
+	MoveEntity(GetEntity('hChaser01(hunter)'), pos, 0);
+	{UnLockEntity(GetEntity('hChaser01(hunter)'));	}
+	
+	SetVector(pos, 38.071, 0.742009, -8.54619);
+	{LockEntity(GetEntity('hChaser02(hunter)'));}
+	MoveEntity(GetEntity('hChaser02(hunter)'), pos, 0);
+	{UnLockEntity(GetEntity('hChaser02(hunter)'));	}
+end;
+
+
+end.   

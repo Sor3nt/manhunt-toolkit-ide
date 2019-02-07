@@ -1,0 +1,28 @@
+{
+    "const": [],
+    "strings": [
+        " entered ",
+        "hChaser03(hunter)",
+        "hChaser04(hunter)",
+        "hChaser05(hunter)",
+        "hChaser07(hunter)",
+        "hChaser08(hunter)",
+        "hChaser13(hunter)",
+        "Door1_(D)",
+        "hChaser09(hunter)",
+        "hChaser01(hunter)",
+        "Init",
+        "hChaser10(hunter)",
+        "triggerChase06",
+        "Door2_(D)",
+        "dummyRadarBlip",
+        "RunGoals",
+        "triggerChase05a",
+        "triggerChase05b",
+        "triggerChase05c",
+        "heli",
+        "HP8",
+        "COP2"
+    ],
+    "byteReserved": 4
+}

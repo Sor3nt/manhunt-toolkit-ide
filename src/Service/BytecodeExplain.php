@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Bytecode\Helper;
 use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
@@ -10,360 +11,343 @@ class BytecodeExplain {
 
     private $mapping = [
 
-//
-//        [
-//
-//            "*" => [
-//                ''
-//            ]
-//
-//            'start' => [
-//                "12000000" => "Start assignment",
-//                "01000000" => "Pass a Int/Bool or self"
-//            ],
-//            'end' => [
-//                "10000000" ,
-//                "01000000"
-//            ],
-//            'desc' => 'parameter (read simple type (int/float...))'
-//        ],
-//
-//            'variante_2' => [
-//                'start' => [
-//                    "12000000",
-//                    "02000000"
-//                ],
-//                'end' => [
-//                    "10000000" ,
-//                    "01000000"
-//                ],
-//
-//                'desc' => 'parameter (Read String var)'
-//            ],
-//
-//            'variante_3' => [
-//
-//                'start' => [
-//                    "12000000",
-//                    "03000000"
-//                ],
-//                'end' => [
-//                    "10000000" ,
-//                    "04000000"
-//                ],
-//
-//                'desc' => 'parameter (read string array? assign?)'
-//            ],
-//
-//            'variante_4' => [
-//
-//                'start' => [
-//                    "12000000",
-//                    "01000000"
-//                ],
-//                'end' => [
-//                    "16000000" ,
-//                    "04000000"
-//                ],
-//
-//                'desc' => 'parameter (access script var)'
-//            ],
-//
-//            'variante_5' => [
-//
-//                'start' => [
-//                    "12000000",
-//                    "01000000"
-//                ],
-//                'end' => [
-//                    "1a000000" ,
-//                    "01000000"
-//                ],
-//
-//                'desc' => 'parameter (access level_var)'
-//            ],
-//
-//            'variante_6' => [
-//
-//                'start' => [
-//                    "12000000",
-//                    "01000000"
-//                ],
-//                'end' => [
-//                    "0f000000" ,
-//                    "04000000"
-//                ],
-//
-//                'desc' => 'parameter (temp int)'
-//            ],
-//
-//            'variante_7' => [
-//
-//                'start' => [
-//                    "12000000",
-//                    "01000000"
-//                ],
-//                'end' => [
-//                    "0f000000" ,
-//                    "02000000"
-//                ],
-//
-//                'desc' => 'parameter (function return (bool?))'
-//            ],
-//
-//
-//        ],
-//
-//
-//
-//        'statement_not' => [
-//            'hex' => [
-//                "29000000" ,
-//                "01000000" ,
-//                "01000000" ,
-//            ],
-//
-//            'desc' => 'NOT'
-//        ],
-//
-//        'read_from_script_var' => [
-//            'hex' => [
-//                "13000000" ,
-//                "01000000" ,
-//                "04000000" ,
-//            ],
-//
-//            'desc' => 'read from script var'
-//        ],
-//
-//        'script_init' => [
-//            'hex' => [
-//                "10000000" ,
-//                "0a000000" ,
-//                "11000000" ,
-//                "0a000000" ,
-//                "09000000"
-//            ],
-//
-//            'desc' => 'Script start block'
-//        ],
-//
-//        'nested_return' => [
-//            'hex' => [
-//                "10000000" ,
-//                "01000000" ,
-//            ],
-//
-//            'desc' => 'nested call return result'
-//        ],
-//
-//        'read_header_var' => [
-//            'hex' => [
-//                "14000000" ,
-//                "01000000" ,
-//                "04000000" ,
-//            ],
-//
-//            'desc' => 'Read VAR from header'
-//        ],
-//
-//
-//        'script_end' => [
-//            'hex' => [
-//                "11000000",
-//                "09000000",
-//                "0a000000",
-//                "0f000000",
-//                "0a000000",
-//                "3b000000",
-//                "00000000"
-//            ],
-//
-//            'desc' => 'Script end block'
-//        ],
-//
-//
-//        'set_str_offset_1' => [
-//            'hex' => [
-//                "21000000",
-//                "04000000",
-//                "01000000"
-//            ],
-//
-//            'desc' => 'Prepare string read (DATA table)'
-//        ],
-//
-//
-//        'set_str_offset_1_a' => [
-//            'hex' => [
-//                "22000000",
-//                "04000000",
-//                "01000000"
-//            ],
-//
-//            'desc' => 'Prepare vec3d read'
-//        ],
-//
-//        'set_str_offset_2' => [
-//            'hex' => [
-//                "21000000",
-//                "04000000",
-//                "04000000"
-//            ],
-//
-//            'desc' => 'Prepare string read (header)'
-//        ],
-//
-//        'set_str_offset_3' => [
-//            'hex' => [
-//                "22000000",
-//                "04000000",
-//                "01000000"
-//            ],
-//
-//            'desc' => 'Prepare string read (3)'
-//        ],
-//
-//        'inverse_number' => [
-//            'hex' => [
-//                "4f000000",
-//                "32000000",
-//                "09000000",
-//                "04000000",
-//                "10000000",
-//                "01000000"
-//            ],
-//
-//            'desc' => 'turn prev number into negative'
-//        ],
-//
-//        'reserve_bytes' => [
-//
-//            'hex' => [
-//                "34000000",
-//                "09000000",
-//            ],
-//
-//            'desc' => 'reserve bytes'
-//
-//        ],
-//
-//        'if_statement_1' => [
-//            'hex' => [
-//                "23000000",
-//                "04000000",
-//                "01000000",
-//                "12000000",
-//                "01000000",
-//                "01000000",
-//                "",
-//                "",
-//                "33000000",
-//                "01000000",
-//                "01000000",
-//
-//            ],
-//
-//            'desc' => 'statement (core)'
-//        ],
-//
-//        'if_statement_2' => [
-//            'hex' => [
-//                "24000000",
-//                "01000000",
-//                "00000000",
-//            ],
-//
-//            'desc' => 'statement (end sequence)'
-//        ],
-//
-//        'statement_line_offset' => [
-//            'hex' => [
-//                "3f000000"
-//            ],
-//
-//            'desc' => 'statement (init start offset)'
-//        ],
-//
-//
-//        'statement_repeat_offset' => [
-//            'hex' => [
-//                "3c000000"
-//            ],
-//
-//            'desc' => 'statement (init statement start offset)'
-//        ],
-//
-//        'statement_compare' => [
-//            'hex' => [
-//                "33000000",
-//                "01000000",
-//                "01000000"
-//            ],
-//
-//            'desc' => 'statement (compare mode INT/FLOAT)'
-//        ],
-//
-//        'statement_or' => [
-//            'hex' => [
-//                "27000000",
-//                "01000000",
-//                "04000000"
-//            ],
-//
-//            'desc' => 'statement (OR operator)'
-//        ],
-//
-//        'statement_and' => [
-//            'hex' => [
-//                "25000000",
-//                "01000000",
-//                "04000000"
-//            ],
-//
-//            'desc' => 'statement (AND operator)'
-//        ],
-//
-//        'assign_script_var' => [
-//            'hex' => [
-//                "12000000",
-//                "03000000",
-//
-//                "0f000000",
-//                "01000000",
-//            ],
-//
-//            'desc' => 'assign (to script var)'
-//        ]
+        'parameters' => [
+
+            /**
+             * a parameter block start always with 8-bytes followed by 4-byte param value and finalized with 8-bytes
+             */
+
+            'variante_1' => [
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x01\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x10\x00\x00\x00" ,
+                    "\x01\x00\x00\x00"
+                ],
+                'desc' => 'parameter (read simple type (int/float...))'
+            ],
+
+            'variante_2' => [
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x02\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x10\x00\x00\x00" ,
+                    "\x01\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (Read String var)'
+            ],
+
+            'variante_3' => [
+
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x03\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x10\x00\x00\x00" ,
+                    "\x04\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (read string array? assign?)'
+            ],
+
+            'variante_4' => [
+
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x01\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x16\x00\x00\x00" ,
+                    "\x04\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (access script var)'
+            ],
+
+            'variante_5' => [
+
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x01\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x1a\x00\x00\x00" ,
+                    "\x01\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (access level_var)'
+            ],
+
+            'variante_6' => [
+
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x01\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x0f\x00\x00\x00" ,
+                    "\x04\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (temp int)'
+            ],
+
+            'variante_7' => [
+
+                'start' => [
+                    "\x12\x00\x00\x00",
+                    "\x01\x00\x00\x00"
+                ],
+                'end' => [
+                    "\x0f\x00\x00\x00" ,
+                    "\x02\x00\x00\x00"
+                ],
+
+                'desc' => 'parameter (function return (bool?))'
+            ],
+
+
+        ],
+
+
+
+        'statement_not' => [
+            'hex' => [
+                "\x29\x00\x00\x00" ,
+                "\x01\x00\x00\x00" ,
+                "\x01\x00\x00\x00" ,
+            ],
+
+            'desc' => 'NOT'
+        ],
+
+        'read_from_script_var' => [
+            'hex' => [
+                "\x13\x00\x00\x00" ,
+                "\x01\x00\x00\x00" ,
+                "\x04\x00\x00\x00" ,
+            ],
+
+            'desc' => 'read from script var'
+        ],
+
+        'script_init' => [
+            'hex' => [
+                "\x10\x00\x00\x00" ,
+                "\x0a\x00\x00\x00" ,
+                "\x11\x00\x00\x00" ,
+                "\x0a\x00\x00\x00" ,
+                "\x09\x00\x00\x00"
+            ],
+
+            'desc' => 'Script start block'
+        ],
+
+        'nested_return' => [
+            'hex' => [
+                "\x10\x00\x00\x00" ,
+                "\x01\x00\x00\x00" ,
+            ],
+
+            'desc' => 'nested call return result'
+        ],
+
+        'read_header_var' => [
+            'hex' => [
+                "\x14\x00\x00\x00" ,
+                "\x01\x00\x00\x00" ,
+                "\x04\x00\x00\x00" ,
+            ],
+
+            'desc' => 'Read VAR from header'
+        ],
+
+
+        'script_end' => [
+            'hex' => [
+                "\x11\x00\x00\x00",
+                "\x09\x00\x00\x00",
+                "\x0a\x00\x00\x00",
+                "\x0f\x00\x00\x00",
+                "\x0a\x00\x00\x00",
+                "\x3b\x00\x00\x00",
+                "\x00\x00\x00\x00"
+            ],
+
+            'desc' => 'Script end block'
+        ],
+
+
+        'set_str_offset_1' => [
+            'hex' => [
+                "\x21\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x01\x00\x00\x00"
+            ],
+
+            'desc' => 'Prepare string read (DATA table)'
+        ],
+
+
+        'set_str_offset_1_a' => [
+            'hex' => [
+                "\x22\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x01\x00\x00\x00"
+            ],
+
+            'desc' => 'Prepare vec3d read'
+        ],
+
+        'set_str_offset_2' => [
+            'hex' => [
+                "\x21\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x04\x00\x00\x00"
+            ],
+
+            'desc' => 'Prepare string read (header)'
+        ],
+
+        'set_str_offset_3' => [
+            'hex' => [
+                "\x22\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x01\x00\x00\x00"
+            ],
+
+            'desc' => 'Prepare string read (3)'
+        ],
+
+        'inverse_number' => [
+            'hex' => [
+                "\x4f\x00\x00\x00",
+                "\x32\x00\x00\x00",
+                "\x09\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x10\x00\x00\x00",
+                "\x01\x00\x00\x00"
+            ],
+
+            'desc' => 'turn prev number into negative'
+        ],
+
+        'reserve_bytes' => [
+
+            'hex' => [
+                "\x34\x00\x00\x00",
+                "\x09\x00\x00\x00",
+            ],
+
+            'desc' => 'reserve bytes'
+
+        ],
+
+        'if_statement_1' => [
+            'hex' => [
+                "\x23\x00\x00\x00",
+                "\x04\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x12\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "",
+                "",
+                "\x33\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x01\x00\x00\x00",
+
+            ],
+
+            'desc' => 'statement (core)'
+        ],
+
+        'if_statement_2' => [
+            'hex' => [
+                "\x24\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x00\x00\x00\x00",
+            ],
+
+            'desc' => 'statement (end sequence)'
+        ],
+
+        'statement_line_offset' => [
+            'hex' => [
+                "\x3f\x00\x00\x00"
+            ],
+
+            'desc' => 'statement (init start offset)'
+        ],
+
+
+        'statement_repeat_offset' => [
+            'hex' => [
+                "\x3c\x00\x00\x00"
+            ],
+
+            'desc' => 'statement (init statement start offset)'
+        ],
+
+        'statement_compare' => [
+            'hex' => [
+                "\x33\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x01\x00\x00\x00"
+            ],
+
+            'desc' => 'statement (compare mode INT/FLOAT)'
+        ],
+
+        'statement_or' => [
+            'hex' => [
+                "\x27\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x04\x00\x00\x00"
+            ],
+
+            'desc' => 'statement (OR operator)'
+        ],
+
+        'statement_and' => [
+            'hex' => [
+                "\x25\x00\x00\x00",
+                "\x01\x00\x00\x00",
+                "\x04\x00\x00\x00"
+            ],
+
+            'desc' => 'statement (AND operator)'
+        ],
+
+        'assign_script_var' => [
+            'hex' => [
+                "\x12\x00\x00\x00",
+                "\x03\x00\x00\x00",
+
+                "\x0f\x00\x00\x00",
+                "\x01\x00\x00\x00",
+            ],
+
+            'desc' => 'assign (to script var)'
+        ]
 
     ];
 
-    public function __construct()
-    {
-
-        $this->mapping = [
-            [
-                [
-                    "12000000" => "Start assignment",
-                    "01000000" => "Pass a int/bool or self",
-                ],
-                [
-                    'Assign Value: %s' => function( Binary $data ){
-                        return Helper::fromHexToInt($data->toHex());
-                    }
-                ],
-                [
-                    "10000000" => "Return",
-                    "01000000" => "Result"
-                ]
-            ]
-        ];
-    }
-
     public function explain( $content ){
 
-        $content = new Binary( implode("", explode("\n", $content)), true);
-        $lines = $content->split(4);
+//        $content = new Binary( implode("", explode("\n", $content)), true);
+//        $lines = $content->split(4);
+
+        $lines = json_decode($content, true);
+        foreach ($lines as &$line) {
+            $line = new Binary($line, true);
+        }
 
         $result = [];
 
@@ -1076,8 +1060,8 @@ class BytecodeExplain {
 //                    if ($valueHex == "01000000") $value = "Bool true / int 1";
 //
 //                    if (
-//                        isset($result[$lineIndex + 5]) && $lines[ $lineIndex + 5]->toBinary() == "10000000" &&
-//                        isset($result[$lineIndex + 6]) && $lines[ $lineIndex + 6]->toBinary() == "02000000"
+//                        isset($result[$lineIndex + 5]) && $lines[ $lineIndex + 5]->toBinary() == "\x10\x00\x00\x00" &&
+//                        isset($result[$lineIndex + 6]) && $lines[ $lineIndex + 6]->toBinary() == "\x02\x00\x00\x00"
 //                    ){
 //                        $value = "Reference to a string";
 //
@@ -1104,8 +1088,8 @@ class BytecodeExplain {
                     ];
 
                     if (
-                        $lines[ $lineIndex + 6]->toBinary() == "02000000" &&
-                        $lines[ $lineIndex + 5]->toBinary() == "10000000"
+                        $lines[ $lineIndex + 6]->toBinary() == "\x02\x00\x00\x00" &&
+                        $lines[ $lineIndex + 5]->toBinary() == "\x10\x00\x00\x00"
                     ){
 
                         $result[$lineIndex + 5] = [
@@ -1171,6 +1155,12 @@ class BytecodeExplain {
             }
 
             foreach ($lines as $lineIndex => $line) {
+
+                if (strlen($functionBinary) % 2 !== 0){
+                    var_dump($functionBinary);
+                    continue;
+//                    exit;
+                }
 
                 if ($line->toBinary() == hex2bin($functionBinary)){
 

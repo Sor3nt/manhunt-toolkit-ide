@@ -3,15 +3,6 @@ namespace App\Service\Compiler;
 
 class Evaluate {
 
-    /**
-     * Todo: cleanup, die class sollte nicht mehr vorhanden sein
-     */
-
-    static public function setStatementNot( &$code, \Closure $getLine ){
-        $code[] = $getLine('29000000');
-        $code[] = $getLine('01000000');
-        $code[] = $getLine('01000000');
-    }
 
     static public function setStatementOperator($node, &$code, \Closure $getLine ){
 
@@ -37,7 +28,11 @@ class Evaluate {
 
     static public function getObjectToAttributeSplit( $value, $data ){
         list($originalObject, $attribute) = explode('.', $value);
-        $originalMap = $data['variables'][$originalObject];
+
+        if (!isset($data['combinedVariables'][$originalObject])){
+            throw new \Exception('Evaluate fail for ' . $originalObject);
+        }
+        $originalMap = $data['combinedVariables'][$originalObject];
 
         if (strtolower($originalMap['type']) == "vec3d"){
 

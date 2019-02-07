@@ -1,0 +1,186 @@
+scriptmain ambientManagerScripts;
+entity tAmbientTransitions : et_name;
+var	self : string[22];
+	inCutscene : level_var boolean;
+	ambientLocationID : level_var integer;
+
+script OnCreate;
+	begin
+		self := GetEntityName(this);
+		WriteDebug(self, ' created...');
+	end;
+
+script CreateTransitions;
+	var pos, pos2 : vec3d;
+	begin
+		SetVector(pos, 52.66, 0.0, -29.0659);
+		SetVector(pos2, 56.74, 0.78, -22.5485);
+		CreateBoxTrigger(pos, pos2, 'tTransition01H');
+		TriggerAddEntityClass(GetEntity('tTransition01H'), COL_HUNTER);
+		
+		SetVector(pos, 54.6452, -0.622485, -25.2055);
+		SetVector(pos2, 56.6452, 3.37752, -21.2055);
+		CreateBoxTrigger(pos, pos2, 'tTransition01');
+		SetEntityScriptsFromEntity(self, 'tTransition01');
+
+		SetVector(pos, 48.144, -0.0640358, -29.7247);
+		SetVector(pos2, 50.144, 1.93596, -28.7247);
+		CreateBoxTrigger(pos, pos2, 'tTransition02');
+		SetEntityScriptsFromEntity(self, 'tTransition02');
+
+		SetVector(pos, 46.4291, -0.0531305, -32.3533);
+		SetVector(pos2, 47.4291, 1.94687, -30.3533);
+		CreateBoxTrigger(pos, pos2, 'tTransition03');
+		SetEntityScriptsFromEntity(self, 'tTransition03');
+
+		SetVector(pos, 41.3538, -1.09454, -32.3533);
+		SetVector(pos2, 42.3538, 0.905457, -30.3533);
+		CreateBoxTrigger(pos, pos2, 'tTransition04');
+		SetEntityScriptsFromEntity(self, 'tTransition04');
+
+		SetVector(pos, 21.0779, -0.122368, -23.1846);
+		SetVector(pos2, 23.0779, 1.87763, -22.1846);
+		CreateBoxTrigger(pos, pos2, 'tTransition05');
+		SetEntityScriptsFromEntity(self, 'tTransition05');
+		
+		SetVector(pos, 5.00387, -0.122368, -10.9141);
+		SetVector(pos2, 7.00387, 1.87763, -7.91411);
+		CreateBoxTrigger(pos, pos2, 'tTransition06');
+		SetEntityScriptsFromEntity(self, 'tTransition06');
+	
+		SetVector(pos, -0.171792, -0.122368, -49.7273);
+		SetVector(pos2, 0.828208, 1.87763, -47.7273);
+		CreateBoxTrigger(pos, pos2, 'tTransition07');
+		SetEntityScriptsFromEntity(self, 'tTransition07');
+	
+		SetVector(pos, -2.17179, -5.09574, -68.0803);
+		SetVector(pos2, 2.82821, 3.90426, -52.0803);
+		CreateBoxTrigger(pos, pos2, 'tTransition08');
+		SetEntityScriptsFromEntity(self, 'tTransition08');
+	
+		SetVector(pos, 1.75131, -4.92747, -70.8363);
+		SetVector(pos2, 3.75131, -2.92747, -69.8363);
+		CreateBoxTrigger(pos, pos2, 'tTransition09');
+		SetEntityScriptsFromEntity(self, 'tTransition09');
+	
+		SetVector(pos, 8.68037, -5.81484, -66.9852);
+		SetVector(pos2, 12.6804, -3.81484, -65.9852);
+		CreateBoxTrigger(pos, pos2, 'tTransition10');
+		SetEntityScriptsFromEntity(self, 'tTransition10');
+		
+		SetVector(pos, 45.8003, -5.81484, -66.9852);
+		SetVector(pos2, 49.8003, -3.81484, -65.9852);
+		CreateBoxTrigger(pos, pos2, 'tTransition11');
+		SetEntityScriptsFromEntity(self, 'tTransition11');
+
+		SetVector(pos, 7.09834, -5.81484, -69.1399);
+		SetVector(pos2, 13.0983, -3.81484, -68.1399);
+		CreateBoxTrigger(pos, pos2, 'tTransition12');
+		SetEntityScriptsFromEntity(self, 'tTransition12');
+
+		SetVector(pos, 9.31075, -5.81484, -59.7727);
+		SetVector(pos2, 49.3107, -3.81484, -56.7727);
+		CreateBoxTrigger(pos, pos2, 'tTransition13');
+		SetEntityScriptsFromEntity(self, 'tTransition13');
+			
+		SetVector(pos, 17.1929, -5.83242, -55.1812);
+		SetVector(pos2, 18.1929, -3.83242, -53.1812);
+		CreateBoxTrigger(pos, pos2, 'tTransition14');
+		SetEntityScriptsFromEntity(self, 'tTransition14');
+
+		SetVector(pos, 29.1893, -5.83242, -55.1812);
+		SetVector(pos2, 30.1893, -3.83242, -53.1812);
+		CreateBoxTrigger(pos, pos2, 'tTransition15');
+		SetEntityScriptsFromEntity(self, 'tTransition15');
+
+		SetVector(pos, 41.1754, -5.83242, -55.1812);
+		SetVector(pos2, 42.1754, -3.83242, -53.1812);
+		CreateBoxTrigger(pos, pos2, 'tTransition16');
+		SetEntityScriptsFromEntity(self, 'tTransition16');
+		
+		SetVector(pos, 37.5142, -5.83242, -51.2227);
+		SetVector(pos2, 39.5142, -3.83242, -50.2227);
+		CreateBoxTrigger(pos, pos2, 'tTransition17');
+		SetEntityScriptsFromEntity(self, 'tTransition17');
+		
+		SetVector(pos, 31.6991, -5.83242, -51.1926);
+		SetVector(pos2, 33.6991, -3.83242, -50.1926);
+		CreateBoxTrigger(pos, pos2, 'tTransition18');
+		SetEntityScriptsFromEntity(self, 'tTransition18');
+		
+		SetVector(pos, 8.68037, -5.81484, -63.5902);
+		SetVector(pos2, 12.6804, -3.81484, -62.5902);
+		CreateBoxTrigger(pos, pos2, 'tTransition19');
+		SetEntityScriptsFromEntity(self, 'tTransition19');
+		
+		SetVector(pos, 19.7041, -5.83242, -43.9572);
+		SetVector(pos2, 21.7041, -3.83242, -42.9572);
+		CreateBoxTrigger(pos, pos2, 'tTransition20');
+		SetEntityScriptsFromEntity(self, 'tTransition20');
+
+		SetVector(pos, 28.5924, -5.83242, -46.1938);
+		SetVector(pos2, 30.5924, -2.83242, -45.1938);
+		CreateBoxTrigger(pos, pos2, 'tTransition21');
+		SetEntityScriptsFromEntity(self, 'tTransition21');
+		
+		SetVector(pos, 45.8003, -5.81484, -63.5902);
+		SetVector(pos2, 49.8003, -3.81484, -62.5902);
+		CreateBoxTrigger(pos, pos2, 'tTransition22');
+		SetEntityScriptsFromEntity(self, 'tTransition22');
+	end;
+
+procedure CheckTransition(name : string);
+	var pos : vec3d;
+	begin
+		pos := GetPlayerPosition;
+		if(not inCutscene) then begin
+			{WriteDebug(self, ' ', name, ' ', pos.x, ' ', pos.y, ' ', pos.z);}
+			if(name = 'tTransition01') then begin if(pos.z < -23.355) then ambientLocationID := 2 else ambientLocationID := 1; end;
+			if(name = 'tTransition02') then begin if(pos.x <  49.000) then ambientLocationID := 3 else ambientLocationID := 2; end;
+			if(name = 'tTransition03') then begin if(pos.z < -31.000) then ambientLocationID := 4 else ambientLocationID := 3; end;
+			if(name = 'tTransition04') then begin if(pos.z < -32.000) then ambientLocationID := 4 else ambientLocationID := 3; end;
+			if(name = 'tTransition05') then begin if(pos.x <  22.000) then ambientLocationID := 5 else ambientLocationID := 3; end;
+			if(name = 'tTransition06') then begin if(pos.x <   6.000) then ambientLocationID := 6 else ambientLocationID := 5; end;
+			if(name = 'tTransition07') then begin if(pos.z < -48.727) then ambientLocationID := 7 else ambientLocationID := 6; end;
+			if(name = 'tTransition08') then begin ambientLocationID := 8; if(pos.z > -56.1164) then ambientLocationID := 7 else if(pos.z < -64.0641) then ambientLocationID := 9; end;
+			if(name = 'tTransition09') then begin if(pos.x <   2.751) then ambientLocationID := 9 else ambientLocationID := 10; end;
+			if(name = 'tTransition10') then ambientLocationID := 11;
+			if(name = 'tTransition11') then ambientLocationID := 10;
+			if(name = 'tTransition12') then ambientLocationID := 10;
+			if(name = 'tTransition19') then ambientLocationID := 12;
+			if(name = 'tTransition22') then ambientLocationID := 13;
+			if(name = 'tTransition13') then ambientLocationID := 18;
+			if(name = 'tTransition14') then begin if(pos.z < -54.181) then ambientLocationID := 18 else ambientLocationID := 14; end;
+			if(name = 'tTransition15') then begin if(pos.z < -54.181) then ambientLocationID := 18 else ambientLocationID := 15; end;
+			if(name = 'tTransition16') then begin if(pos.z < -54.181) then ambientLocationID := 18 else ambientLocationID := 16; end;
+			if(name = 'tTransition17') then begin if(pos.x <  38.514) then ambientLocationID := 17 else ambientLocationID := 16; end;
+			if(name = 'tTransition18') then begin if(pos.x <  32.699) then ambientLocationID := 15 else ambientLocationID := 17; end;
+			if(name = 'tTransition20') then begin if(pos.x <  20.704) then ambientLocationID := 14 else ambientLocationID := 19; end;
+			if(name = 'tTransition21') then begin if(pos.z < -45.693) then ambientLocationID := 15 else ambientLocationID := 19; end;
+		end else WriteDebug('Cant change ambience - in cutscene');
+		Sleep(1);
+	end;
+
+script CheckTransitionLoop;
+	var check : boolean;
+		loops : integer;
+	begin
+		check := true;
+		loops := 0;
+		while(check) do begin
+			loops := loops + 1;
+			if(loops > 2000) then begin
+				loops := 0;
+				if(InsideTrigger(GetEntity(self), GetPlayer)) then check := false;
+			end;
+			CheckTransition(self);
+			Sleep(1);
+		end;
+	end;
+
+{ Run on each transition }
+script OnEnterTrigger; begin WriteDebug(self, ' entered...'); RunScript(self, 'CheckTransitionLoop'); end;
+script OnLeaveTrigger; begin KillScript(self, 'CheckTransitionLoop'); CheckTransition(self); end;
+
+end.
+  

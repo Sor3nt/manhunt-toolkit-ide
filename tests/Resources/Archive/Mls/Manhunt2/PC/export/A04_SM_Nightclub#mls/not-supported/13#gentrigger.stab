@@ -1,0 +1,53 @@
+[
+    {
+        "name": "builtflash",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "d8000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donecut",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "dc000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donewithpedal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2564
+        ]
+    },
+    {
+        "name": "girlleft",
+        "nameGarbage": "0003070000001503070001000b127f1100010000a43c0a02",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2864
+        ]
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "0076315f686964696e675f6c696d69745f6d65646975",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            52
+        ]
+    }
+]

@@ -1,6 +1,7 @@
 <?php
 namespace App\Service\Compiler;
 
+use App\MHT;
 use App\Service\Compiler\FunctionMap\Manhunt;
 use App\Service\Compiler\FunctionMap\Manhunt2;
 use App\Service\Compiler\FunctionMap\ManhuntDefault;
@@ -41,14 +42,19 @@ class NewCompiler
     protected $ast = false;
     protected $tokens = [];
 
-    public function __construct($source, $parentScript = false)
+    private $game;
+    private $platform;
+
+    public function __construct($source, $parentScript = false, $game, $platform)
     {
+
+        $this->game = $game;
+        $this->platform = $platform;
 
         $this->untouchedSource = $source;
 
         // cleanup the source code
         $source = $this->prepare($source);
-
         $tokenizer = new Tokenizer();
         $tokens = $tokenizer->run($source);
 
@@ -68,7 +74,6 @@ class NewCompiler
         $tokens = $tokenizer->fixTypeMapping($tokens, $this->types);
         $tokens = $tokenizer->fixHeaderBracketMismatches($tokens);
 
-
         // parse the token list to a ast
         $parser = new Parser();
         $this->ast = $parser->toAST($tokens);
@@ -80,11 +85,11 @@ class NewCompiler
          */
         $this->ast = $parser->handleForward($this->ast);
 
+        $this->headerVariables = $this->getHeaderVariables($tokens);
 
         $this->procedures = $this->searchScriptType(Token::T_PROCEDURE);
         $this->customFunction = $this->searchScriptType(Token::T_CUSTOM_FUNCTION);
 
-        $this->headerVariables = $this->getHeaderVariables($tokens);
 
         $this->combine();
 
@@ -106,7 +111,8 @@ class NewCompiler
             ) {
                 $code = $this->processBlock($token);
                 foreach ($code as $line) {
-                    $result[] = $line->hex;
+                    $result[] = $line;
+//                    $result[] = $line->hex;
                 }
 
             }
@@ -155,32 +161,37 @@ class NewCompiler
 
         // OLD CODE; DO REFACTOR
         if ($token['type'] == Token::T_PROCEDURE) {
-            $this->procedures[$scriptName] = $this->lineCount - 1;
+            $this->procedures[$scriptName] = Helper::fromIntToHex($this->lineCount - 1);
         } else if ($token['type'] == Token::T_CUSTOM_FUNCTION) {
-            $this->customFunction[$scriptName] = $this->lineCount - 1;
+            $this->customFunction[$scriptName] = Helper::fromIntToHex($this->lineCount - 1);
         }
         // OLD CODE; DO REFACTOR
 
-        $scriptVar = $this->getScriptVar($token['body']);
+        $scriptArg = $this->getScriptVar($token['body'], Token::T_DEFINE_SECTION_ARG);
+        $scriptVar = array_merge($scriptArg, $this->getScriptVar($token['body']));
 
         /**
          * Translate Token AST to Bytecode
          */
         $emitter = new Emitter(
-            array_merge($this->combinedVariables, $scriptVar),
-            array_merge($this->stringsForScript[$scriptName], $this->headerStrings),
 
+            array_merge($this->combinedVariables, $scriptVar),
+
+            array_merge($this->stringsForScript[$scriptName], $this->headerStrings),
 
             $scriptVar,
             $this->types,
             $this->constants,
-            $this->lineCount
+            $this->lineCount,
+            $this->game
         );
 
         $code = $emitter->emitter($token, true, [
 
             'procedures' => $this->procedures,
             'customFunctions' => $this->customFunction,
+
+            'functions' => array_merge(ManhuntDefault::$functions, $this->game == MHT::GAME_MANHUNT_2 ? Manhunt2::$functions : Manhunt::$functions),
 
             'combinedVariables' => array_merge($this->combinedVariables, $scriptVar),
 
@@ -215,11 +226,8 @@ class NewCompiler
 
         $combinedVariables = [];
 
-        $combinedVariables = array_merge($combinedVariables, Manhunt2::$constants);
         $combinedVariables = array_merge($combinedVariables, ManhuntDefault::$constants);
-
-        $combinedVariables = array_merge($combinedVariables, Manhunt2::$functions);
-        $combinedVariables = array_merge($combinedVariables, ManhuntDefault::$functions);
+        $combinedVariables = array_merge($combinedVariables, $this->game == MHT::GAME_MANHUNT_2 ? Manhunt2::$constants : Manhunt::$constants);
 
         $combinedVariables = array_merge($combinedVariables, $this->types);
 
@@ -336,6 +344,63 @@ class NewCompiler
         return $result;
     }
 
+    private function recursiveReplace(&$tokens, $searchType, callable $callback)
+    {
+        foreach ($tokens as &$token) {
+
+            if ($token['type'] == $searchType) {
+
+                $token = $callback($token);
+
+            }
+
+            if (isset($token['variable'])) {
+                $val = [$token['start']];
+                $this->recursiveReplace($val, $searchType, $callback);
+                $token['start'] = $val[0];
+            }
+
+            if (isset($token['start'])) {
+                $val = [$token['start']];
+                $this->recursiveReplace($val, $searchType, $callback);
+                $token['start'] = $val[0];
+            }
+
+            if (isset($token['end'])) {
+                $val = [$token['end']];
+                $this->recursiveReplace($val, $searchType, $callback);
+                $token['end'] = $val[0];
+            }
+
+            if (isset($token['params'])) {
+                $this->recursiveReplace($token['params'], $searchType, $callback);
+
+            } else if (isset($token['body'])) {
+                $this->recursiveReplace($token['body'], $searchType, $callback);
+            } else if (isset($token['cases'])) {
+
+                if (isset($token['switch'])) {
+                    $val = [$token['switch']];
+                    $this->recursiveReplace($val, $searchType, $callback);
+                    $token['switch'] = $val[0];
+                }
+
+                foreach ($token['cases'] as $case) {
+
+                    if (!isset($case['condition'])) {
+                        $this->recursiveReplace($case['body'], $searchType, $callback);
+                    }
+
+                    if (isset($case['condition'])) {
+                        $this->recursiveReplace($case['condition'], $searchType, $callback);
+
+                        $this->recursiveReplace($case['isTrue'], $searchType, $callback);
+                    }
+                }
+            }
+        }
+    }
+
     private function getMemorySizeByType($type, $add4Bytes = true)
     {
 
@@ -403,22 +468,31 @@ class NewCompiler
     {
 
         $source = str_replace([
-
-            "if (GetEntity('Syringe_(CT)')) <> NIL then",
-            "if (GetEntity('Syringe_(CT)')) = nil then",
+//            "if ( NIL <> (GetEntity('Dynamic_light1_(L)'))) then",
+            "if EnteredTrigger(this,(GetEntity('Hunter1_Tower')))",
+            "or InsideTrigger(this,(GetEntity('Hunter1_Tower'))) then",
+            "+",
+            "/100",
+            "}}",
             "if(",
             "while(",
             "PLAYING  TWITCH",
+
+            "if IsEntityAlive(strHunterName) and IsEntityPartOfAI(strHunterName) then",
             "if bMeleeTutDone AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
             "if (NOT IsPlayerPositionKnown) AND IsScriptAudioStreamCompleted then"
         ], [
-
-            "if GetEntity('Syringe_(CT)') <> NIL then",
-            "if GetEntity('Syringe_(CT)') = nil then",
+//            "if ( NIL <> GetEntity('Dynamic_light1_(L)')) then",
+            "if (EnteredTrigger(this,(GetEntity('Hunter1_Tower'))))",
+            "or (InsideTrigger(this,(GetEntity('Hunter1_Tower')))) then",
+            " + ",
+            "/ 100",
+            "}",
             "if (",
             "while (",
             "PLAYING__TWITCH",  // we replace this because the next operation will remove the whitespaces
 
+            "if (IsEntityAlive(strHunterName)) and (IsEntityPartOfAI(strHunterName)) then",
             "if (bMeleeTutDone) AND (IsNamedItemInInventory(GetPlayer, CT_SYRINGE ) <> -1) then",
             "if (NOT IsPlayerPositionKnown) AND (IsScriptAudioStreamCompleted) then"
 
@@ -430,7 +504,8 @@ class NewCompiler
 
         // remove comments / unused code
 
-        $source = preg_replace("/({([^{^}])*)*{([^{^}])*}(([^{^}])*})*/m", "", $source);
+        $source = preg_replace("/\{.*?\}/m", "", $source);
+//        $source = preg_replace("/({([^{^}])*)*{([^{^}])*}(([^{^}])*})*/m", "", $source);
 
         if (preg_last_error() == PREG_JIT_STACKLIMIT_ERROR) {
             die("PHP7 issue, pls disable pcre.jit=0 in your php.ini");
@@ -449,80 +524,144 @@ class NewCompiler
         // replace line ends with new lines
         $source = preg_replace("/;/", ";\n", $source);
 
-        return trim($source);
+        $source = trim($source);
+
+        if (empty($source)){
+            throw new \Exception('Cleanup going wrong, source is empty');
+        }
+
+        return $source;
     }
 
 
     /**
      * Getter
      */
-    private function getTypes($tokens)
-    {
+    private function getTypes($tokens){
 
-        $types = [];
+        $content = [];
 
+        /**
+         * Step 1 : collect any data inside the TYPE section
+         */
         $current = 0;
-        $offset = 0;
-        $inside = false;
-        $currentTypeSection = false;
-
         while ($current < count($tokens)) {
-
             $token = $tokens[$current];
 
             if ($token['type'] == Token::T_DEFINE_SECTION_TYPE) {
-                $inside = true;
+                $current++;
 
-            } else if (
-                $inside && (
-                    $token['type'] == Token::T_DEFINE_SECTION_VAR ||
-                    $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
-                    $token['type'] == Token::T_DEFINE_SECTION_CONST ||
-                    $token['type'] == Token::T_PROCEDURE ||
-                    $token['type'] == Token::T_CUSTOM_FUNCTION ||
-                    $token['type'] == Token::T_SCRIPT
-                )
-            ) {
+                while ($current < count($tokens)) {
+                    $token = $tokens[$current];
 
-                return $types;
+                    if (
+                        $token['type'] == Token::T_DEFINE_SECTION_VAR ||
+                        $token['type'] == Token::T_DEFINE_SECTION_ENTITY ||
+                        $token['type'] == Token::T_DEFINE_SECTION_CONST ||
+                        $token['type'] == Token::T_PROCEDURE ||
+                        $token['type'] == Token::T_CUSTOM_FUNCTION ||
+                        $token['type'] == Token::T_SCRIPT
+                    ){
+                        break;
 
-            } else if (
-                $token['type'] == Token::T_BRACKET_OPEN ||
-                $token['type'] == Token::T_BRACKET_CLOSE
-            ) {
-                // do nothing
-            } else if (
-                $token['type'] == Token::T_LINEEND
-            ) {
+                    }else{
+                        $content[] = $token;
+                    }
 
-                $currentTypeSection = false;
-            } else if ($inside) {
-
-                if ($token['type'] == Token::T_IS_EQUAL) {
-                    $beforeToken = $tokens[$current - 1];
-
-                    $offset = 0;
-                    $currentTypeSection = strtolower($beforeToken['value']);
-
-                    $types[$currentTypeSection] = [];
-
-
-                } else if ($currentTypeSection && $token['type'] == Token::T_VARIABLE) {
-
-                    $types[$currentTypeSection][strtolower($token['value'])] = [
-                        'type' => 'level_var state',
-                        'section' => "header",
-                        'offset' => Helper::fromIntToHex($offset)
-                    ];
-
-                    $offset++;
+                    $current++;
                 }
+
+                break;
             }
 
             $current++;
         }
 
+        /**
+         * Step 2 : split content into single types
+         */
+        $current = 0;
+        $typesTokens = [];
+
+        if (count($content)){
+
+            $typeTokens = [];
+
+            $endWIth = false;
+            while ($current < count($content)) {
+                $token = $content[$current];
+
+                if ($token['type'] == Token::T_BRACKET_OPEN) {
+                    $endWIth = Token::T_LINEEND;
+                }else if ($token['type'] == Token::T_RECORD){
+                    $endWIth = Token::T_RECORD_END;
+                }
+
+                $typeTokens[] = $token;
+
+                if ($token['type'] == $endWIth ){
+                    $typesTokens[] = $typeTokens;
+                    $typeTokens = [];
+                    $endWIth = false;
+                }
+
+                $current++;
+            }
+
+        }
+
+        /**
+         * Step 3 : parse the types
+         */
+        $types = [];
+        foreach ($typesTokens as $typeTokens) {
+            $currentTypeSection = ($typeTokens[0]['value']);
+            $types[$currentTypeSection] = [];
+
+            $current = 3;
+            $offset = 0;
+
+            if ($typeTokens[2]['type'] == Token::T_RECORD){
+                $index = 0;
+                while ($typeTokens[$current]['type'] == Token::T_VARIABLE) {
+
+                    $usedType = $typeTokens[$current + 2]['value'];
+
+                    $types[$currentTypeSection][$typeTokens[$current]['value']] = [
+                        'type' => $usedType,
+                        'section' => "header",
+                        'index' => $index,
+                        'size' => $this->getMemorySizeByType($usedType),
+                        'offset' => Helper::fromIntToHex($offset)
+                    ];
+
+//                    //todo.. ka ob das stimmt...
+                    $offset += $this->getMemorySizeByType($usedType);
+
+                    $index++;
+                    $current += 4;
+                }
+
+            }else if ($typeTokens[2]['type'] == Token::T_BRACKET_OPEN){
+
+                while ($typeTokens[$current]['type'] != Token::T_BRACKET_CLOSE) {
+
+                    $types[$currentTypeSection][$typeTokens[$current]['value']] = [
+                        'type' => 'level_var state',
+                        'section' => "header",
+                        'offset' => Helper::fromIntToHex($offset)
+                    ];
+                    $offset++;
+
+                    $current++;
+                }
+
+
+            }
+        }
+
         return $types;
+
     }
 
     private function getHeaderVariables($tokens)
@@ -588,34 +727,55 @@ class NewCompiler
                 foreach ($variables as $variable) {
                     if (!$this->isVariableInUse($tokens, $variable['value'])) continue;
 
-                    $variableType = strtolower($tokens[$current + 2]['value']);
+                    if ($tokens[$current + 2]['type'] == Token::T_ARRAY){
+
+                        $row = [
+                            'section' => 'header',
+                            'type' => 'array',
+                            'from' => $tokens[$current + 2]['from'],
+                            'to' => $tokens[$current + 2]['to'],
+                            'ofVar' => $tokens[$current + 2]['ofVar'],
+
+                            'length' => $tokens[$current + 2]['to'],
+                            'size' => $tokens[$current + 2]['to']
+                        ];
 
 
-                    $isLevelVar = strpos($variableType, 'level_var') !== false;
-                    $variableTypeWihtoutLevel = str_replace('level_var ', '', $variableType);
+                    }else{
 
-                    $row = [
-                        'section' => $currentSection,
-                        'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? ($isLevelVar ? 'level_var stringarray' : 'stringarray') : $variableType,
-                        'length' => $this->getMemorySizeByType($variableTypeWihtoutLevel),
-                        'size' => $this->getMemorySizeByType($variableTypeWihtoutLevel, false)
-                    ];
+                        $variableType = strtolower($tokens[$current + 2]['value']);
 
+                        if (substr($variableType, 0, 5) == "array"){
+                            $variableType = 'array';
+                        }
 
-//                    var_dump($variableType, $variableTypeWihtoutLevel);
-                    if (isset($this->types[$variableTypeWihtoutLevel])) {
-                        $row['isLevelVar'] = $isLevelVar;
-                        $row['abstract'] = 'state';
+                        $isLevelVar = strpos($variableType, 'level_var') !== false;
+                        $isGameVar = strpos($variableType, 'game_var') !== false;
+                        $variableTypeWihtoutLevel = str_replace('level_var ', '', $variableType);
+
+                        $row = [
+                            'section' => $currentSection,
+                            'type' => substr($variableTypeWihtoutLevel, 0, 7) == "string[" ? ($isLevelVar ? 'level_var stringarray' : 'stringarray') : $variableType,
+                            'length' => $this->getMemorySizeByType($variableTypeWihtoutLevel),
+                            'size' => $this->getMemorySizeByType($variableTypeWihtoutLevel, false)
+                        ];
+
+                        if (isset($this->types[$variableTypeWihtoutLevel])) {
+
+                            //todo move to row
+                            $row['isLevelVar'] = $isLevelVar;
+                            $row['isGameVar'] = $isGameVar;
+                            $row['abstract'] = 'state';
+                        }
                     }
-//                    if (isset($types[ str_replace('level_var ', '', $variableType) ] )) $row['abstract'] = 'state';
 
                     $vars[$variable['value']] = $row;
+
                 }
             }
 
             $current++;
         }
-
 
         /**
          * Apply variables from parent script
@@ -628,7 +788,10 @@ class NewCompiler
 
                 // look if we use a parent varoable
                 foreach ($vars as $headerVariableName => &$headerVariable) {
-                    if (strpos(strtolower($headerVariable['type']), 'level_var') === false) continue;
+                    if (
+                        strpos(strtolower($headerVariable['type']), 'level_var') === false &&
+                        strpos(strtolower($headerVariable['type']), 'game_var') === false
+                    ) continue;
                     if ($parentVariableName != $headerVariableName) continue;
 
                     $headerVariable['offset'] = $parentVariable['offset'];
@@ -654,6 +817,7 @@ class NewCompiler
 
             $this->memoryOffset += $size;
         }
+
 
         return $vars;
     }
@@ -693,11 +857,13 @@ class NewCompiler
 
                     $constants[$variable] = $tokens[$current + 2];
 
+//                        $constants[$variable]['offset'] = substr(Helper::fromIntToHex($constants[$variable]['value']),0, 8);
+
                     if (
                         $constants[$variable]['type'] == Token::T_INT ||
                         $constants[$variable]['type'] == Token::T_FLOAT
                     ) {
-                        //just rais the memory, we dont need to save a offset for numerics
+                        //just raise the memory, we do not need to save a offset for numbers
                         $this->memoryOffset += 4;
                     }
 
@@ -713,15 +879,14 @@ class NewCompiler
          * Caclulate string offsets
          */
 
-        $tmpArray = [];
         $strings = [];
-        foreach ($constants as $item) {
+
+        foreach ($constants as &$item) {
 
             if ($item['type'] == Token::T_STRING) {
                 $string = str_replace('"', '', $item['value']);
 
-                if(!isset($tmpArray[$string])){
-                    $tmpArray[$string] = $string;
+                if(!isset($strings[$string])){
 
                     $length = strlen($string) + 1;
                     $strings[$string] = [
@@ -729,42 +894,47 @@ class NewCompiler
                         'length' => strlen($string)
                     ];
 
+                    $item['offset'] = $strings[$string]['offset'];
+
+                    if ($this->game == MHT::GAME_MANHUNT){
+                        $length -= 1;
+                    }
 
                     $this->memoryOffset += $length + $this->calculateMissedStringSize($length);
-
                 }
             }
         }
 
-
         foreach ($constants as &$var) {
 
-            $var['section'] = 'script';
+            if ($var['type'] == Token::T_STRING) $var['valueType'] = "string";
 
-            if ($var['type'] == Token::T_INT) {
+
+            if ($var['type'] == Token::T_INT){
                 $var['valueType'] = "integer";
-
-            } else if ($var['type'] == Token::T_STRING) {
-                $var['valueType'] = "string";
-
-            } else if ($var['type'] == Token::T_FLOAT) {
-                $var['valueType'] = "float";
-
+                $var['offset'] = Helper::fromIntToHex($var['value']);
             }
 
-            //todo: hmm ich brauch den richtigen type in T_SCRIPT_CONSTANT -.-
-//            $var['type'] = 'constant';
+            if ($var['type'] == Token::T_FLOAT){
+                $var['valueType'] = "float";
+                $var['offset'] = Helper::fromFloatToHex($var['value']);
+            }
 
+            $var['section'] = 'script';
+            $var['type'] = 'constant';
         }
 
         /**
          * apply the hardcoded constants
+         *
+         *
+         * todo: das ist doppelt ?!
          */
 
         foreach (
             array_merge(
                 ManhuntDefault::$constants,
-                Manhunt2::$constants
+                $this->game == MHT::GAME_MANHUNT_2 ? Manhunt2::$constants : Manhunt::$constants
             ) as $index => $hardCodedConstant) {
 
             $hardCodedConstant['section'] = 'header';
@@ -816,7 +986,11 @@ class NewCompiler
                         'offset' => Helper::fromIntToHex($this->memoryOffset)
                     ];
 
-                    $length += $this->calculateMissedStringSize($length);
+                    if($this->game == MHT::GAME_MANHUNT && $length % 4 == 0){
+
+                    }else{
+                        $length += $this->calculateMissedStringSize($length);
+                    }
 
                     $this->memoryOffset += $length;
 
@@ -829,7 +1003,7 @@ class NewCompiler
         return $strings4Scripts;
     }
 
-    private function getScriptVar($tokens)
+    private function getScriptVar($tokens, $section = Token::T_DEFINE_SECTION_VAR)
     {
 
         $originalTokens = $tokens;
@@ -838,7 +1012,7 @@ class NewCompiler
         $varSection = [];
 
         foreach ($tokens as $token) {
-            if ($token['type'] == Token::T_DEFINE_SECTION_VAR) {
+            if ($token['type'] == $section) {
                 $varSection = $token['body'];
             } else {
                 $otherTokens[] = $token;
@@ -853,8 +1027,14 @@ class NewCompiler
 
             $token = $tokens[$current];
 
-            if ($token['type'] == Token::T_VARIABLE && $tokens[$current + 1]['type'] == Token::T_DEFINE_TYPE) {
-
+            if (
+                $token['type'] == Token::T_VARIABLE &&
+                (
+                    $tokens[$current + 1]['type'] == Token::T_DEFINE_TYPE ||
+                    $tokens[$current + 1]['type'] == Token::T_ARRAY ||
+                    $tokens[$current + 1]['type'] == "T_LEVEL_VAR"
+                )
+            ) {
                 $variables = [$token];
 
                 $oriPos = $current;
@@ -875,12 +1055,14 @@ class NewCompiler
 
                 $variableType = strtolower($tokens[$current]['value']);
 
-                foreach ($variables as $variable) {
+                foreach ($variables as $index => $variable) {
                     $variable = $variable['value'];
 
                     $row = [
                         'section' => 'script',
-                        'type' => $variableType
+                        'order' => $index,
+                        'type' => $variableType,
+                        'isArg' => $section == Token::T_DEFINE_SECTION_ARG
                     ];
 
                     if (substr($variableType, 0, 7) == "string[") {
@@ -902,22 +1084,42 @@ class NewCompiler
 
         $blockMemory = 0;
         $scriptVarFinal = [];
+
         foreach ($vars as $name => &$item) {
-            $blockMemory += $item['size'];
 
-            $item['offset'] = Helper::fromIntToHex($blockMemory);
+            if (substr($item['type'], 0, 9) == "level_var" ){
 
-            $blockMemory += $this->calculateMissedIntegerSize($blockMemory);
+                /**
+                 * this section handle level_vars INSIDE scripts...
+                 */
+                $item['offset'] =  $this->parentScript['extra']['headerVariables'][$name]['offset'];
+                $item['isLevelVarFromScript'] = true;
+                $item['section'] = "header";
+                $this->headerVariables[$name] = $item;
+                $item['section'] = "script";
+//                continue;
+
+            }else{
+                $blockMemory += $item['size'];
+
+                $item['offset'] = Helper::fromIntToHex($blockMemory);
+
+                $blockMemory += $this->calculateMissedIntegerSize($blockMemory);
+            }
 
             $scriptVarFinal[$name] = $item;
             $this->variablesOverAllScripts[$name] = $item;
         }
 
-        foreach ($this->headerVariables as $_name => $_item) {
 
-            if ($this->isVariableInUse($originalTokens, $_name)) {
-                if (!isset($scriptVarFinal[$_name])) {
-                    $scriptVarFinal[$_name] = $_item;
+        if ($section == Token::T_DEFINE_SECTION_VAR){
+
+            foreach ($this->headerVariables as $_name => $_item) {
+
+                if ($this->isVariableInUse($originalTokens, $_name)) {
+                    if (!isset($scriptVarFinal[$_name])) {
+                        $scriptVarFinal[$_name] = $_item;
+                    }
                 }
             }
         }
@@ -939,8 +1141,7 @@ class NewCompiler
             $scriptSize += $item;
 
             $functionEventDefinitionDefault = ManhuntDefault::$functionEventDefinition;
-            $functionEventDefinition = Manhunt2::$functionEventDefinition;
-            if ($game == "mh1") $functionEventDefinition = Manhunt::$functionEventDefinition;
+            $functionEventDefinition = $this->game == MHT::GAME_MANHUNT_2 ? Manhunt2::$functionEventDefinition : Manhunt::$functionEventDefinition;
 
             if (isset($functionEventDefinitionDefault[strtolower($name)])) {
                 $onTrigger = $functionEventDefinitionDefault[strtolower($name)];
@@ -963,16 +1164,29 @@ class NewCompiler
 
     private function generateDATA($strings4Scripts)
     {
-        $result = [];
 
-        foreach ($strings4Scripts as $strings) {
-            foreach ($strings as $value => $string) {
-                if ($value !== '__empty__') $result[] = $value;
+        $result = [
+            'const' => [],
+            'strings' => []
+        ];
+
+        if (count($this->constants)){
+
+            foreach ($this->constants as $constant) {
+                if ($constant['section'] == "script"){
+                    $result['const'][] = (int) $constant['value'];
+                }
             }
         }
 
-        if (count($result) == 0) {
-            $result[] = hex2bin('dadadadadadadada');
+        foreach ($strings4Scripts as $strings) {
+            foreach ($strings as $value => $string) {
+                if ($value == '__empty__'){
+                    $result['strings'][] = '';
+                }else{
+                    $result['strings'][] = $value;
+                }
+            }
         }
 
         return $result;
@@ -983,6 +1197,8 @@ class NewCompiler
 
         $result = [];
 
+        $memoryForDoubleEntries = 0;
+
         foreach ($headerVariables as $name => $variable) {
 
             $occur = [];
@@ -990,16 +1206,26 @@ class NewCompiler
             $varType = $variable['type'];
             $hierarchieType = '01000000';
 
-            if (substr($varType, 0, 9) == "level_var") {
-                $varType = substr($varType, 10);
+            if (
+                substr($varType, 0, 9) == "level_var" ||
+                substr($varType, 0, 8) == "game_var"
+            ) {
+
+                $isGameVar = substr($varType, 0, 8) == "game_var";
+                $varType = substr($varType, $isGameVar ? 9 : 10);
 
                 foreach ($sectionCode as $index => $code) {
-
                     if ($code == $variable['offset']) {
                         $occur[] = $index * 4;
                     }
+//                    var_dump($variable['offset'], $name, $occur);
+//                    var_dump($variable);
+//                    exit;
                 }
 
+                if ($isGameVar){
+                    $varType = "feffffff";
+                }
                 $hierarchieType = "ffffffff";
                 $variable['offset'] = "ffffffff";
                 $variable['size'] = "ffffffff";
@@ -1009,16 +1235,45 @@ class NewCompiler
             /**
              * when the variable is defined inside the HEADER and also in one or multiple scripts, we need to give him the 02 sequence
              */
+//            if ($variable['type'] != "vec3d"){
             foreach ($variablesOverAllScripts as $varScriptName => $variablesOverAllScript) {
                 if ($varScriptName == $name) {
-                    $hierarchieType = '02000000';
-                    $variable['offset'] = "00000000";
+
+                    if (isset($variable['isLevelVarFromScript']) && $variable['isLevelVarFromScript'] == true){
+
+                        unset($variable['isLevelVarFromScript']);
+                        $hierarchieType = "ffffffff";
+                        $variable['offset'] = "ffffffff";
+                        $variable['size'] = "ffffffff";
+
+                    }else{
+
+
+                        $hierarchieType = '02000000';
+                        $variable['offset'] = Helper::fromIntToHex($memoryForDoubleEntries);
+
+                        if ($variable['type'] == "vec3d"){
+                            $memoryForDoubleEntries += 12;
+                        }else{
+                            $memoryForDoubleEntries += 4;
+                        }
+                    }
+
                 }
             }
+
+//            }
 
 
             if (strtolower($varType) == "tlevelstate") $varType = "tLevelState";
             if ($varType == "stringarray") $varType = "string";
+
+//            if ($this->game == MHT::GAME_MANHUNT_2){
+                if ($varType == "entityptr"){
+                    $varType = "integer";
+                }
+
+//            }
 
             /**
              * todo: not important, the type should say tLevelState but its messed up by the state handling
@@ -1027,29 +1282,36 @@ class NewCompiler
                 $varType = "tLevelState";
             }
 
+            if ($this->game == MHT::GAME_MANHUNT){
+                if ($varType == "integer"){
+                    $varType = "boolean";
+                }
+            }
+
             $row = [
                 'name' => strtolower($name),
                 'offset' => $variable['offset'],
                 'size' => $variable['size'],
 
-                'hierarchieType' => $hierarchieType,
                 'objectType' => ($varType),
 
                 'occurrences' => $occur
             ];
 
+            if ($this->game == MHT::GAME_MANHUNT_2){
+                $row['hierarchieType'] = $hierarchieType;
+            }
 
-            //todo...
-//            if (strtolower($name) == "ldebuggingflag"){
-//                $row['unknown'] = '012000b6012000dd03200072192000b319';
-//            }
+
+            if (isset($variable['isLevelVarFromScript'])){
+                $row['isLevelVarFromScript'] = true;
+            }
 
             $result[] = $row;
         }
         usort($result, function ($a, $b) {
             return $a['name'] > $b['name'];
         });
-
         return $result;
     }
 
@@ -1058,6 +1320,10 @@ class NewCompiler
 
         $tokens = $this->tokens;
         $current = 0;
+
+        if (!isset($tokens[1])){
+            return [];
+        }
 
         $scriptName = strtolower($tokens[1]['value']);
 

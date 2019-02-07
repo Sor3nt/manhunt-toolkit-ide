@@ -1,0 +1,1192 @@
+scriptmain levelscript;
+
+entity
+	A03_Neighbourhood : et_level;
+	
+CONST
+	{ global definitions }
+	playerName = 'player(player)';
+	leaderName = 'leader(leader)';
+	
+TYPE
+tLevelState = ( StartOfLevel, GasCan, Chase, EndChase );
+	
+var
+		sound: string[8];
+		
+		{ This tells what level the state is in. After setting (increasing) it, call OnLevelStateSwitch. }
+		lLevelState : tLevelState;
+
+		{ This flag is  TRUE when we are loading a saved game, not starting the level fresh. }
+		lLoadingFlag : boolean;
+		
+		lCurrentAmbientAudioTrack : integer;
+		
+		patrolling : boolean;
+		behindLogs : boolean;
+		heliChasePatrol : integer;
+		heliTargetPlayer : boolean;
+		spotlight1working : boolean;
+		spotlight2working : boolean;
+		spotlight3working : boolean;
+		SpecialStart : boolean;
+		FoundFence : boolean;
+		
+		deadCopsCount : integer;
+		secondWaveCount : integer;
+		
+		garagesOpen : integer;
+		itemsSpawned : array[1..3] of boolean;
+		
+		barrelEnteredOne : boolean;
+		barrelEnteredTwo : boolean;
+		
+		shearsSpawned : boolean;
+		
+		spotted : boolean;
+		
+		heliPatrolling : boolean;
+
+
+PROCEDURE InitHunter(HunterName, SubpackName : string); FORWARD;
+PROCEDURE SpawnHunter(HunterName, HunterType, SubpackName : string; x, y, z : real); FORWARD;
+PROCEDURE ArmHunterWithMelee(HunterName : string; weapon : eCollectableType); FORWARD;
+PROCEDURE InitSubpack(SubpackName : string; CombatType : eAICombatType; HuntPlayer : boolean); FORWARD;
+PROCEDURE DestroyEntityIfExists(EntityName : string); FORWARD;
+PROCEDURE createSTrigger(TriggerName : string; Radius, x, y, z : real); FORWARD;
+PROCEDURE createBTrigger(TriggerName : string; x1, y1, z1, x2, y2, z2 : real); FORWARD;
+PROCEDURE ChangeDoor(DoorName, DoorStatus : string);  FORWARD; {DoorStatus: 'open' or 'closed'}
+procedure ShowFakeHunter(ModelName : string); forward;
+procedure HideFakeHunter(ModelName : string); forward;
+
+script OnCreate;
+var 
+	pos,pos2 : vec3d;
+	SavePoint, pDoor : EntityPtr;
+	
+begin
+	{Set colouramp for Normal}
+	SetColourRamp('FE_colramps', 1, 4.0);	
+	
+	SetNextLevelByName('A15_Cemetery');
+
+	ShowTriggers(false);
+				
+	SetMaxNumberOfRats(0);
+	{SwitchLitterOn(false);}
+	
+	{QTM setup}
+	SetQTMBaseProbability(70.0);
+	SetQTMLength(1.3);
+	SetQTMPresses(2);
+	
+	itemsSpawned[1] := FALSE;
+	itemsSpawned[2] := FALSE;
+	itemsSpawned[3] := FALSE;
+
+	{Scoring}
+	{SetNumberOfKillableHuntersInLevel(11, 11);}
+	SetMaxScoreForLevel(46);
+	
+	AIClearAllActiveAreaAssociations;
+	
+	aiassociateoneactiveareawithplayerarea('aiback1', 'ai');
+	aiassociateoneactiveareawithplayerarea('ai', 'aiback1');
+		
+	behindLogs := FALSE;
+	
+	garagesOpen := 0;
+	barrelEnteredOne := FALSE;
+	barrelEnteredTwo := FALSE;
+	shearsSpawned := FALSE;
+	
+	AiAddPlayer(playerName);
+	AiAddEntity(leaderName);
+		
+	AISetHunterOnRadar(leaderName, FALSE);
+	AISetEntityAsLeader(leaderName);
+	AISetLeaderInvisible(leaderName);
+	AIAddLeaderEnemy(leaderName, playerName);
+	AIEntityAlwaysEnabled(leaderName);
+	AIDefineGoalHuntEnemy('goalHuntPlayer', playerName, false, 10);
+	
+	{AIAddSubPackForLeader(leaderName, 'subHuntMelee');
+	AIAddSubPackForLeader(leaderName, 'subHunt');}
+	AIAddSubPackForLeader(leaderName, 'subPostChase');
+	AIAddSubPackForLeader(leaderName, 'subGuardCar2');
+	AIAddSubPackForLeader(leaderName, 'subBack1');
+		
+	{AISetSubpackCombatType(leaderName, 'subHuntMelee', COMBATTYPEID_OPEN_MELEE);
+	AISetSubpackCombatType(leaderName, 'subHunt', COMBATTYPEID_OPEN);}
+	AISetSubpackCombatType(leaderName, 'subPostChase', COMBATTYPEID_COVER);
+	AISetSubpackCombatType(leaderName, 'subGuardCar2', COMBATTYPEID_OPEN);
+	AISetSubpackCombatType(leaderName, 'subBack1', COMBATTYPEID_OPEN_MELEE);
+	
+	entityignorecollisions(GetEntity('Falling_barrel_Collision'), false);
+	
+	SetEntityScriptsFromEntity('PoliceCar2', 'PoliceCar03');
+	SetEntityScriptsFromEntity('PoliceCar2', 'PoliceCar04');
+	SetEntityScriptsFromEntity('PoliceCar2', 'PoliceCar07');
+	
+	{AIAddAreaForSubPack('subBack1', 'aiback1');
+	AISubpackStayInTerritory(leaderName, 'subBack1', true);}
+		
+	{AIDefineGoalGuard('gCopCar2', AISCRIPT_MEDIUMPRIORITY, '22home', 4.0, 15.0, 2);
+	AIDefineGoalGuard('gCopCar1', AISCRIPT_MEDIUMPRIORITY, '11home', 4.0, 15.0, 2);
+	AIDefineGoalGuard('gCopCar3', AISCRIPT_MEDIUMPRIORITY, '32home', 4.0, 15.0, 2);}
+	
+	{AiAddGoalForSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+	AiAddGoalForSubpack(leaderName, 'subHunt', 'goalHuntPlayer');
+	AiAddGoalForSubpack(leaderName, 'subGuardCar1', 'goalHuntPlayer');}
+	{AiAddGoalForSubpack(leaderName, 'subPostChase', 'goalHuntPlayer');}
+	AiAddGoalForSubpack(leaderName, 'subGuardCar2', 'goalHuntPlayer');
+	AiAddGoalForSubpack(leaderName, 'subBack1', 'goalHuntPlayer');	
+	
+	{AIStayInHuntEnemy(leaderName, 'subGuardCar2', TRUE, AISCRIPT_RUNMOVESPEED);}
+	
+	{ Hide save points and determine if we're loading a game }
+	lLoadingFlag := TRUE;
+	SavePoint := GetEntity('Save02');
+	if NIL <> SavePoint then
+	begin
+		lLoadingFlag := FALSE;
+		DeactivateSavePoint(SavePoint);
+	end;
+	SavePoint := GetEntity('Save03');
+	if NIL <> SavePoint then
+	begin
+		DeactivateSavePoint(SavePoint);
+	end;
+	
+	ShowEntity(GetEntity('Wire_Blockage'));
+	HideEntity(GetEntity('wiremesh_STATIC'));
+	
+	{Unlock the stupid locked ini door}
+	pDoor := GetEntity('Door1_(D)');
+	unFreezeEntity(pDoor);  
+	unLockEntity(pDoor);
+ 	pDoor := GetEntity('Door2_(D)');
+	unFreezeEntity(pDoor);  
+	unLockEntity(pDoor);
+	
+	SetVector(pos, 33.7861, 0.365747, -17.9727);
+	SetVector(pos2, 34.444, 0.365747, -17.8622);
+	
+	CreateCrawlTrigger(pos, pos2, 'tCrawl_mesh');
+	
+	{Openables}	
+	if GetEntity('Home_Box_(O)01') <> NIL then
+		setentityscriptsfromentity('Home_Box_(O)', 'Home_Box_(O)01');
+	if GetEntity('Home_Box_(O)02') <> NIL then
+		setentityscriptsfromentity('Home_Box_(O)', 'Home_Box_(O)02');
+	
+	RunScript('A03_Neighbourhood', 'SetupLights');	
+
+	if lLoadingFlag = FALSE then
+	begin
+		writedebug('starting');
+		lLevelState := StartOfLevel;
+		RunScript('A03_Neighbourhood', 'OnLevelStateSwitch');
+	end
+	else
+	begin
+		RunScript('A03_Neighbourhood', 'OnLevelStateLoad');
+	end;
+	
+	{HandCamSetAll(15, 2.0, 0.0, 20.0, 3.0, 0.0);}
+	
+	{SKIP DEBUG MUSSSSSST REMOOOOOOOOOOOOVE}
+	{lLevelState := EndChase;
+	RunScript('A03_Neighbourhood', 'OnLevelStateLoad');
+	
+	SetVector(pos, 123.342, -1.16358, -129.402);
+	MoveEntity(GetPlayer, pos, 1);
+	CreateInventoryItem(CT_SHOTGUN, GetPlayer, true);
+	AddAmmoToInventoryWeapon(GetPlayer, CT_SHOTGUN, 16);}
+	
+	{RunScript('A03_Neighbourhood', 'InitSecondPart');}
+	
+{	RadarPositionSetEntity(GetEntity('Gen_Padlock'), MAP_COLOR_LOCATION);}
+
+	writeDebug('level started');
+	
+	RunScript('PFX_VanSmoke', 'FXInit');
+
+end;
+
+
+script OnLevelStateSwitch;
+
+VAR
+	pos, pos2, vector : vec3d;
+
+begin
+	
+	case lLevelState of
+	{ Start of the level }
+	StartOfLevel: begin
+		
+		deadCopsCount := 0;
+		
+		WriteDebug('Switching to state: StartOfLevel');
+		AiAddEntity('h11(hunter)');
+		RunScript('h11(hunter)', 'Init');
+		
+		AiAddEntity('h11b(hunter)');
+		setentityscriptsfromentity('h11(hunter)', 'h11b(hunter)');
+		RunScript('h11b(hunter)', 'Init');
+		{AIEnableClimbingInIdle('h11b(hunter)', true);}
+	
+		AiAddEntity('h12(hunter)');
+		setentityscriptsfromentity('h11(hunter)', 'h12(hunter)');
+		RunScript('h12(hunter)', 'Init');
+		
+		AiAddEntity('hCarCop21(hunter)');
+		RunScript('hCarCop21(hunter)', 'Init');
+		
+		AiAddEntity('hCarCop22(hunter)');
+		setentityscriptsfromentity('hCarCop21(hunter)', 'hCarCop22(hunter)');
+		RunScript('hCarCop22(hunter)', 'Init');
+		
+		sleep(500);
+		RunScript('player(player)', 'Intro');
+		
+		RadarPositionSetEntity(GetEntity('Wire_Blockage'), MAP_COLOR_BLUE);
+		SetLevelGoal('OBJ1');
+		SetLevelGoal('OBJ5');
+		RadarPositionSetEntity(GetEntity('Home_Box_(O)'), MAP_COLOR_GREEN);
+		RadarPositionSetEntity(GetEntity('Home_Box_(O)01'), MAP_COLOR_GREEN);
+		RadarPositionSetEntity(GetEntity('Home_Box_(O)02'), MAP_COLOR_GREEN);
+		
+	end;
+	
+	GasCan: begin
+		writedebug('SWITCH TO GAS CAN');
+		lCurrentAmbientAudioTrack := GetAmbientAudioTrack;
+
+		SetVector(pos, 35.2682, -0.305876, -21.5362);
+		SetVector(pos2, 35.8206, 1.59955, -16.4939);
+		CreateBoxTrigger(pos, pos2, 'triggerChase');
+		
+		{RunScript('heli', 'PatrolGasCanRoute');}
+		
+	end;
+	
+	Chase: begin
+		writedebug('SWITCH TO CHASE');
+		{ Store current ambient stream in a global variable prior to saving }
+		
+		{EntityIgnoreCollisions(GetEntity('Wire_Blockage'), FALSE);}
+		EntityIgnoreCollisions(GetEntity('FakeFence'), FALSE);
+		
+		{REMOVE OLD HUNTERS}
+		if GetEntity('h11(hunter)') <> NIL then DestroyEntity(GetEntity('h11(hunter)'));
+		if GetEntity('h11b(hunter)') <> NIL then DestroyEntity(GetEntity('h11b(hunter)'));
+		if GetEntity('h12(hunter)') <> NIL then DestroyEntity(GetEntity('h12(hunter)'));
+		if GetEntity('hCarCop21(hunter)') <> NIL then DestroyEntity(GetEntity('hCarCop21(hunter)'));
+		if GetEntity('hCarCop22(hunter)') <> NIL then DestroyEntity(GetEntity('hCarCop22(hunter)'));
+		if GetEntity('SpawnedMan(hunter)') <> NIL then DestroyEntity(GetEntity('SpawnedMan(hunter)'));
+		if GetEntity('SpawnedMan2(hunter)') <> NIL then DestroyEntity(GetEntity('SpawnedMan2(hunter)'));
+		
+		{ADD NEW ONES}	
+		AIAddEntity('hChaser01(hunter)');
+		RunScript('hChaser01(hunter)', 'Init');
+		
+		AIAddEntity('hChaser02(hunter)');
+		setentityscriptsfromentity('hChaser01(hunter)', 'hChaser02(hunter)');
+		RunScript('hChaser02(hunter)', 'Init');
+		
+		{FAKE HUNTERS}
+		ShowFakeHunter('FakeHunterA');
+		ShowFakeHunter('FakeHunterB');
+		ShowFakeHunter('FakeHunterC');
+		ShowFakeHunter('FakeHunterD');
+		ShowFakeHunter('FakeHunterE');
+		
+	{	AIMakeEntityDeaf('hChaser01(hunter)', 0);
+		AIMakeEntityBlind('hChaser01(hunter)', 0);
+		AIMakeEntityDeaf('hChaser02(hunter)', 0);
+		AIMakeEntityBlind('hChaser02(hunter)', 0);}
+				
+			
+		SetVector(pos, 84.5439, -1.50443, -95.0091);
+		SetVector(pos2, 103.199, 4.44268, -66.5882);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight01');
+		RunScript('triggerSpotlight01', 'Init');
+		
+		{SetVector(pos, 53.3447, 0.0, -28.7575);
+		SetVector(pos2, 74.9644, 4.34414, -4.91518);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight02');}
+		SetVector(pos, 44.0535, -0.265608, -39.3323);
+		SetVector(pos2, 74.1574, 0.969454, -5.50371);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight02');
+		RunScript('triggerSpotlight02', 'Init');
+		
+		SetVector(pos, 44.0535, -0.265608, -39.3323);
+		SetVector(pos2, 74.1574, 0.969454, -5.50371);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlightGuard2');
+		
+	{	SetVector(pos, 47.6771, -0.16686, -27.3432);
+		SetVector(pos2, 77.6675, 0.810165, -26.4087);
+		CreateBoxTrigger(pos, pos2, 'tPlayerDeath');}
+				
+		SetVector(pos, 47.9848, 0.0, -37.8709);
+		SetVector(pos2, 48.6275, 2.27683, -34.0837);
+		CreateBoxTrigger(pos, pos2, 'triggerChase02');
+		
+		SetVector(pos, 94.8251, -2.26326, -95.472);
+		SetVector(pos2, 99.4262, -0.00961876, -70.3217);
+		CreateBoxTrigger(pos, pos2, 'triggerKillPlayer');
+		
+		{ Boxtrigger triggerKillPlayer02 }
+		SetVector(pos, 94.8251, -2.26326, -121.696);
+		SetVector(pos2, 99.4262, -0.00961876, -95.2498);
+		CreateBoxTrigger(pos, pos2, 'triggerKillPlayer02');
+		
+		setEntityScriptsFromEntity('triggerKillPlayer', 'triggerKillPlayer02');
+		
+		{Stop heli hitting player when climbing fences}
+		SetVector(pos, 43.4495, 0.360347, -37.8034);
+		SetVector(pos2, 43.7681, 2.83474, -34.0971);
+		CreateBoxTrigger(pos, pos2, 'triggerHeliChaseShoot');
+		
+		SetVector(pos, 52.7929, 1.2362, -90.8097);
+		CreateSphereTrigger(pos, 0.773123, 'triggerHeliChaseShoot2');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot2');
+		
+		SetVector(pos, 75.0567, 0.389207, -106.797);
+		CreateSphereTrigger(pos, 0.773123, 'triggerHeliChaseShoot3');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot3');
+		
+		SetVector(pos, 72.0536, 0.389207, -119.039);
+		CreateSphereTrigger(pos, 1.21312, 'triggerHeliChaseShoot4');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot4');
+		
+		SetVector(pos, 99.7633, 0.389207, -128.405);
+		CreateSphereTrigger(pos, 1.21312, 'triggerHeliChaseShoot5');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot5');
+		
+		lCurrentAmbientAudioTrack := GetAmbientAudioTrack;
+
+    TriggerSavePoint(GetEntity('Save02'), TRUE);
+		
+		{HELICOPTER PLS}
+		RunScript('heli', 'doChasePatrol');		
+		RunScript('player(player)', 'HeliMissIfLow');
+		
+		{Radar blip}
+		RadarPositionSetEntity(GetEntity('triggerChase02'), MAP_COLOR_BLUE);
+		ClearAllLevelGoals;
+		SetLevelGoal('OBJ3');
+		
+		if GetEntity('Home_Box_(O)') <> NIL then
+			RadarPositionClearEntity(GetEntity('Home_Box_(O)'));
+			
+		if GetEntity('Home_Box_(O)01') <> NIL then
+			RadarPositionClearEntity(GetEntity('Home_Box_(O)01'));
+			
+		if GetEntity('Home_Box_(O)02') <> NIL then
+			RadarPositionClearEntity(GetEntity('Home_Box_(O)02'));
+				
+		RunScript('player(player)', 'ChaseCheat');
+		
+		while IsCutsceneInProgress do sleep(10);
+		SetPedOrientation(GetPlayer, 180);
+		SetVector(pos, 35.6732, 0.436127, -18.7489);
+		MoveEntity(GetPlayer, pos, 1);
+		
+		{ Boxtrigger triggerAfterFightA }
+		SetVector(pos, 118.633, -1.57135, -37.8555);
+		SetVector(pos2, 120.016, -0.490111, -31.921);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightA');
+			
+		{ Boxtrigger triggerAfterFightB }
+		SetVector(pos, 97.5206, -1.57135, -47.0208);
+		SetVector(pos2, 100.522, -0.490111, -45.5372);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightB');
+		
+		setentityscriptsfromentity('triggerAfterFightA', 'triggerAfterFightB');
+		
+		SetVector(pos, 114.10, 6.36, -9.50);
+		SetVector(pos2, 138.00, -2.00, -1.64);
+		CreateBoxTrigger(pos, pos2, 'triggerDannyYard');
+	end;
+	
+	EndChase : begin
+		
+		writedebug('switch to end chase');
+		
+		{FAKE HUNTERS}
+		HideFakeHunter('FakeHunterA');
+		HideFakeHunter('FakeHunterB');
+		HideFakeHunter('FakeHunterC');
+		HideFakeHunter('FakeHunterD');
+		HideFakeHunter('FakeHunterE');
+		HideFakeHunter('hChaser01(hunter)');
+		HideFakeHunter('hChaser02(hunter)');
+		
+		secondWaveCount := 0;
+
+		{ Save in triggerChase07! Preventing checkpoint activating when player is somewhere else like falling through world}
+		{lCurrentAmbientAudioTrack := GetAmbientAudioTrack;
+		TriggerSavePoint(GetEntity('Save03'), TRUE);}
+    
+     {Make all the cover goals}
+    SetVector(vector, 0,1,0);
+    AIDefineGoalGuardDirection('gSecWaveA', AISCRIPT_MEDIUMPRIORITY, 'WAVEF', 0.5, 0.5, 1, vector);
+    AIDefineGoalGuardDirection('gSecWaveB', AISCRIPT_MEDIUMPRIORITY, 'WAVEB', 0.5, 0.5, 1, vector);
+   	AIDefineGoalGuardDirection('gSecWaveC', AISCRIPT_MEDIUMPRIORITY, 'WAVEC', 0.5, 0.5, 1, vector);
+   	
+   	{Add the goals}
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveA');
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveB');
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveC');
+    
+    AiAddEntity('hSecondWaveA(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveA(hunter)');
+		RunScript('hSecondWaveA(hunter)', 'Init');
+		
+		AiAddEntity('hSecondWaveB(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveB(hunter)');
+		RunScript('hSecondWaveB(hunter)', 'Init');
+		
+		AiAddEntity('hSecondWaveC(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveC(hunter)');
+		RunScript('hSecondWaveC(hunter)', 'Init');
+		
+		DestroyEntity(GetEntity('triggerDannyYard'));
+		
+		SetVector(pos, 116.695, -1.94059, 18.1629);
+		SetVector(pos2, 119.684, -0.548388, 22.8899);
+		CreateBoxTrigger(pos, pos2, 'triggerEndLevel');
+		
+		EntityPlayAnim(GetEntity('A02FB_DannysWifeWashing'), 'BAT_WIFE_IDLE_ANIM', true);
+		
+		SetVector(pos, 88.7452, -0.267919, -31.0855);
+		SetVector(pos2, 97.5667, 0.538929, -29.473);
+		CreateBoxTrigger(pos, pos2, 'triggerSwimmingSection');
+		
+		RadarPositionSetEntity(GetEntity('triggerEndLevel'), MAP_COLOR_LOCATION);
+		ClearAllLevelGoals;
+		SetLevelGoal('OBJ4');
+     
+	end;
+	
+	end; {Of case}
+
+
+end;
+
+script OnLevelStateLoad;
+
+VAR
+	pos, pos2, vector : vec3d;
+
+begin
+	
+	case lLevelState of
+{	GasCan: begin
+		writedebug('LOAD GAS CAN');
+		
+		if GetEntity('h11(hunter)') <> NIL then
+		begin
+			AiAddEntity('h11(hunter)');
+			RunScript('h11(hunter)', 'Init');
+		end;
+		
+		if GetEntity('h12(hunter)') <> NIL then
+		begin
+			AiAddEntity('h12(hunter)');
+			RunScript('h12(hunter)', 'Init');
+		end;
+		
+		if GetEntity('h13(hunter)') <> NIL then
+		begin
+			AiAddEntity('h13(hunter)');
+			RunScript('h13(hunter)', 'Init');
+		end;
+		
+		if GetEntity('hCarCop21(hunter)') <> NIL then
+		begin
+			AiAddEntity('hCarCop21(hunter)');
+			RunScript('hCarCop21(hunter)', 'Init');
+		end;
+		
+		if GetEntity('hCarCop22(hunter)') <> NIL then
+		begin
+			AiAddEntity('hCarCop22(hunter)');
+			RunScript('hCarCop22(hunter)', 'Init');
+		end;
+		
+		SetVector(pos, -31.8787, 0.0616555, -30.2363);
+		SetVector(pos2, -22.9715, 2.87935, -23.5906);
+		CreateBoxTrigger(pos, pos2, 'SecLightTrigger01');
+
+		 TriggerSavePoint(GetEntity('Save01'), TRUE);
+		SetVector(pos, 36.7347, 1.35363, -18.7719);
+		CreateSphereTrigger(pos, 1.1054, 'triggerChase');
+
+		SetVector(pos, 31.8944, 0.380892, -20.4082);
+		SetVector(pos2, 32.6633, 1.15506, -17.111);
+		CreateBoxTrigger(pos, pos2, 'triggerBurnRem');
+		
+		RadarPositionSetEntity(GetEntity('Wire_Blockage'), MAP_COLOR_BLUE);
+		ClearAllLevelGoals;
+		SetLevelGoal('OBJ1');
+		
+	end;}
+	
+	Chase: begin
+		
+		{FAKE HUNTERS}
+		ShowFakeHunter('FakeHunterA');
+		ShowFakeHunter('FakeHunterB');
+		ShowFakeHunter('FakeHunterC');
+		ShowFakeHunter('FakeHunterD');
+		ShowFakeHunter('FakeHunterE');
+		
+		{Replace wiremesh with open version}
+		HideEntity(GetEntity('Wire_Blockage'));
+		ShowEntity(GetEntity('wiremesh_STATIC'));
+		
+		{ADD NEW ONES}	
+		writedebug('load chase');
+		AIAddEntity('hChaser01(hunter)');
+		RunScript('hChaser01(hunter)', 'Init');
+		
+		AIAddEntity('hChaser02(hunter)');
+		setentityscriptsfromentity('hChaser01(hunter)', 'hChaser02(hunter)');
+		RunScript('hChaser02(hunter)', 'Init');
+
+		SetPedOrientation(GetPlayer, 180);
+		SetVector(pos, 35.6732, 0.436127, -18.7489);
+		MoveEntity(GetPlayer, pos, 1);
+
+		SetVector(pos, 84.5439, -1.50443, -95.0091);
+		SetVector(pos2, 103.199, 4.44268, -66.5882);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight01');
+		RunScript('triggerSpotlight01', 'Init');
+		
+		{SetVector(pos, 53.3447, 0.0, -28.7575);
+		SetVector(pos2, 74.9644, 4.34414, -4.91518);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight02');}
+		SetVector(pos, 44.0535, -0.265608, -39.3323);
+		SetVector(pos2, 74.1574, 0.969454, -5.50371);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlight02');
+		RunScript('triggerSpotlight02', 'Init');
+		
+		SetVector(pos, 44.0535, -0.265608, -39.3323);
+		SetVector(pos2, 74.1574, 0.969454, -5.50371);
+		CreateBoxTrigger(pos, pos2, 'triggerSpotlightGuard2');
+		
+		SetVector(pos, 47.9848, 0.0, -37.8709);
+		SetVector(pos2, 48.6275, 2.27683, -34.0837);
+		CreateBoxTrigger(pos, pos2, 'triggerChase02');
+
+		SetVector(pos, 94.8251, -2.26326, -95.472);
+		SetVector(pos2, 99.4262, -0.00961876, -70.3217);
+		CreateBoxTrigger(pos, pos2, 'triggerKillPlayer');
+		
+		{ Boxtrigger triggerKillPlayer02 }
+		SetVector(pos, 94.8251, -2.26326, -121.696);
+		SetVector(pos2, 99.4262, -0.00961876, -95.2498);
+		CreateBoxTrigger(pos, pos2, 'triggerKillPlayer02');
+		
+		setEntityScriptsFromEntity('triggerKillPlayer', 'triggerKillPlayer02');
+		
+		{Stop heli hitting player when climbing fences}
+		SetVector(pos, 43.4495, 0.360347, -37.8034);
+		SetVector(pos2, 43.7681, 2.83474, -34.0971);
+		CreateBoxTrigger(pos, pos2, 'triggerHeliChaseShoot');
+		
+		SetVector(pos, 52.7929, 1.2362, -90.8097);
+		CreateSphereTrigger(pos, 0.773123, 'triggerHeliChaseShoot2');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot2');
+		
+		SetVector(pos, 75.0567, 0.389207, -106.797);
+		CreateSphereTrigger(pos, 0.773123, 'triggerHeliChaseShoot3');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot3');
+		
+		SetVector(pos, 72.0536, 0.389207, -119.039);
+		CreateSphereTrigger(pos, 1.21312, 'triggerHeliChaseShoot4');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot4');
+		
+		SetVector(pos, 99.7633, 0.389207, -128.405);
+		CreateSphereTrigger(pos, 1.21312, 'triggerHeliChaseShoot5');
+		setEntityScriptsFromEntity('triggerHeliChaseShoot', 'triggerHeliChaseShoot5');
+		
+	{	SetVector(pos, 47.6771, -0.16686, -27.3432);
+		SetVector(pos2, 77.6675, 0.810165, -26.4087);
+		CreateBoxTrigger(pos, pos2, 'tPlayerDeath');}
+		
+		RunScript('heli', 'doChasePatrol');	
+		RunScript('player(player)', 'HeliMissIfLow');
+		
+		{Radar blip}
+		RadarPositionSetEntity(GetEntity('triggerChase02'), MAP_COLOR_BLUE);
+		ClearAllLevelGoals;
+		SetLevelGoal('OBJ3');
+		
+		RunScript('player(player)', 'ChaseCheat');
+		
+		{ Boxtrigger triggerAfterFightA }
+		SetVector(pos, 118.633, -1.57135, -37.8555);
+		SetVector(pos2, 120.016, -0.490111, -31.921);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightA');
+			
+		{ Boxtrigger triggerAfterFightB }
+		SetVector(pos, 97.5206, -1.57135, -47.0208);
+		SetVector(pos2, 100.522, -0.490111, -45.5372);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightB');
+		
+		setentityscriptsfromentity('triggerAfterFightA', 'triggerAfterFightB');
+		
+		SetVector(pos, 35.2682, -0.305876, -21.5362);
+		SetVector(pos2, 35.8206, 1.59955, -16.4939);
+		CreateBoxTrigger(pos, pos2, 'triggerChase');
+		
+		RunScript('triggerChase', 'ChaseScene');
+		
+		sleep(300);
+		while IsCutSceneInProgress do sleep(10);
+		
+		AIMakeEntityBlind('hChaser01(hunter)', 1);
+		AIMakeEntityBlind('hChaser02(hunter)', 1);
+		AIMakeEntityDeaf('hChaser01(hunter)', 1);
+		AIMakeEntityDeaf('hChaser02(hunter)', 1);
+		
+		DestroyEntity(GetEntity('triggerChase'));
+		
+		SetVector(pos, 114.10, 6.36, -9.50);
+		SetVector(pos2, 138.00, -2.00, -1.64);
+		CreateBoxTrigger(pos, pos2, 'triggerDannyYard');
+	end;
+	
+	EndChase : begin
+		
+		writedebug('load end chase');
+		
+		SetPedOrientation(GetPlayer, 90);
+		SetVector(pos, 107.14, -1.67, -128.44);
+		MoveEntity(GetPlayer, pos, 1);
+		
+		HideEntity(GetEntity('Wire_Blockage'));
+		ShowEntity(GetEntity('wiremesh_STATIC'));
+		
+		if GetEntity('heli') <> NIL then
+			DestroyEntity(GetEntity('heli'));
+		
+		secondWaveCount := 0;
+		
+		AIAddEntity('hChaser11(hunter)');
+		setentityscriptsfromentity('hChaser01(hunter)', 'hChaser11(hunter)');
+		RunScript('hChaser11(hunter)', 'Init');
+		
+		AIAddEntity('hChaser12(hunter)');
+		setentityscriptsfromentity('hChaser01(hunter)', 'hChaser12(hunter)');
+		RunScript('hChaser12(hunter)', 'Init');
+		
+		entityignorecollisions(GetEntity('Falling_barrel_Collision'), true);
+	
+	{	EntityPlayAnim(GetEntity('Falling_barrel'), 'EAT_FALLING_BARREL_ANIM', false);
+		entityignorecollisions(GetEntity('Falling_barrel'), true);
+		entityignorecollisions(GetEntity('Falling_barrel_Collision'), false);}
+		SetVector(pos, 131.239, -0.116082, -132.209);
+		SetVector(pos2, 132.297, 0.833887, -130.789);
+		CreateBoxTrigger(pos, pos2, 'triggerBarrelNoNo');
+		
+		 {Make all the cover goals}
+    SetVector(vector, 0,1,0);
+    AIDefineGoalGuardDirection('gSecWaveA', AISCRIPT_MEDIUMPRIORITY, 'WAVEA', 0.5, 0.5, 1, vector);
+    AIDefineGoalGuardDirection('gSecWaveB', AISCRIPT_MEDIUMPRIORITY, 'WAVEB', 0.5, 0.5, 1, vector);
+   	AIDefineGoalGuardDirection('gSecWaveC', AISCRIPT_MEDIUMPRIORITY, 'WAVEC', 0.5, 0.5, 1, vector);
+   	
+   	{Add the goals}
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveA');
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveB');
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveC');
+    
+    AiAddEntity('hSecondWaveA(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveA(hunter)');
+		RunScript('hSecondWaveA(hunter)', 'Init');
+		
+		AiAddEntity('hSecondWaveB(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveB(hunter)');
+		RunScript('hSecondWaveB(hunter)', 'Init');
+		
+		AiAddEntity('hSecondWaveC(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveC(hunter)');
+		RunScript('hSecondWaveC(hunter)', 'Init');
+		
+		SetVector(pos, 118.633, -1.57135, -37.8555);
+		SetVector(pos2, 120.016, -0.490111, -31.921);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightA');
+			
+		{ Boxtrigger triggerAfterFightB }
+		SetVector(pos, 97.5206, -1.57135, -47.0208);
+		SetVector(pos2, 100.522, -0.490111, -45.5372);
+		CreateBoxTrigger(pos, pos2, 'triggerAfterFightB');
+		setentityscriptsfromentity('triggerAfterFightA', 'triggerAfterFightB');
+		
+		SetVector(pos, 116.695, -1.94059, 18.1629);
+		SetVector(pos2, 119.684, -0.548388, 22.8899);
+		CreateBoxTrigger(pos, pos2, 'triggerEndLevel');
+		
+		EntityPlayAnim(GetEntity('A02FB_DannysWifeWashing'), 'BAT_WIFE_IDLE_ANIM', true);
+		
+		SetVector(pos, 88.7452, -0.267919, -31.0855);
+		SetVector(pos2, 97.5667, 0.538929, -29.473);
+		CreateBoxTrigger(pos, pos2, 'triggerSwimmingSection');
+		
+		RadarPositionSetEntity(GetEntity('triggerEndLevel'), MAP_COLOR_LOCATION);
+		ClearAllLevelGoals;
+		SetLevelGoal('OBJ4');
+	end;
+	
+	end; {Of case}
+	
+end;
+
+
+script SetupLights;
+VAR
+	pos : vec3d;
+	pos2 : vec3d;
+begin
+	
+	writedebug('SETTING UP SECURITY LIGHTS');
+	
+	SetVector(pos, -24.7599, 1.09838, -48.9917);
+	SetVector(pos2, -23.176, 1.75649, -47.0174);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow01');
+	
+	SetVector(pos, -12.6024, 2.75611, -101.827);
+	SetVector(pos2, -11.0184, 3.41422, -99.8531);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow02');
+	setentityscriptsfromentity('triggerWindow01', 'triggerWindow02');
+	
+	SetVector(pos, 17.7184, 1.17919, -69.5422);
+	SetVector(pos2, 19.3024, 1.83731, -67.5678);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow03');
+	setentityscriptsfromentity('triggerWindow01', 'triggerWindow03');
+	
+	SetVector(pos, 52.7273, -0.123971, -17.5431);
+	SetVector(pos2, 54.3113, 0.534141, -15.5688);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow04');
+	setentityscriptsfromentity('triggerWindow01', 'triggerWindow04');
+	
+	SetVector(pos, 113.499, -1.53499, -47.439);
+	SetVector(pos2, 115.083, -0.876877, -45.4646);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow05');
+	setentityscriptsfromentity('triggerWindow01', 'triggerWindow05');
+	
+	SetVector(pos, 117.258, -1.96108, -72.0236);
+	SetVector(pos2, 118.841, -1.30297, -70.0492);
+	CreateBoxTrigger(pos, pos2, 'triggerWindow06');
+	setentityscriptsfromentity('triggerWindow01', 'triggerWindow06');
+	
+	SetVector(pos, -29.8051, 1.09838, -50.2849);
+	SetVector(pos2, -23.0101, 1.75649, -45.7242);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle01');
+	
+	SetVector(pos, -13.7349, 2.75611, -101.633);
+	SetVector(pos2, -9.88585, 3.41422, -96.7369);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle02');
+	setentityscriptsfromentity('triggerWindowIdle01', 'triggerWindowIdle02');
+	
+	SetVector(pos, 15.3644, 1.17919, -70.6771);
+	SetVector(pos2, 19.7837, 1.83731, -66.4323);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle03');
+	setentityscriptsfromentity('triggerWindowIdle01', 'triggerWindowIdle03');
+	
+	SetVector(pos, 52.4672, -0.123971, -19.1511);
+	SetVector(pos2, 56.9499, 0.534141, -14.1363);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle04');
+	setentityscriptsfromentity('triggerWindowIdle01', 'triggerWindowIdle04');
+	
+	SetVector(pos, 112.647, -1.53499, -49.5482);
+	SetVector(pos2, 115.935, -0.876877, -45.6785);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle05');
+	setentityscriptsfromentity('triggerWindowIdle01', 'triggerWindowIdle05');
+	
+	SetVector(pos, 116.085, -1.96108, -73.0772);
+	SetVector(pos2, 120.014, -1.30297, -68.9311);
+	CreateBoxTrigger(pos, pos2, 'triggerWindowIdle06');
+	setentityscriptsfromentity('triggerWindowIdle01', 'triggerWindowIdle06');
+
+	SetVector(pos, -31.8787, 0.0616555, -30.2363);
+	SetVector(pos2, -22.9715, 2.87935, -23.5906);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger01');
+				
+	SetVector(pos, -51.6648, 1.76474, -97.3028);
+	SetVector(pos2, -42.7575, 4.58244, -90.6571);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger03');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger03');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight03_(L)');
+		
+	SetVector(pos, 12.941, 1.78936, -102.882);
+	SetVector(pos2, 21.8483, 4.60705, -96.2365);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger04');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger04');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight04_(L)');
+		
+	SetVector(pos, 26.9869, 0.105781, -71.8618);
+	SetVector(pos2, 35.8941, 2.92348, -65.2161);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger05');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger05');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight05_(L)');
+		
+	SetVector(pos, 26.384, -0.181474, -45.5239);
+	SetVector(pos2, 35.2912, 2.63622, -38.8781);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger06');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger06');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight06_(L)');
+		
+{	SetVector(pos, 48.3921, -1.14906, -32.6649);
+	SetVector(pos2, 57.2994, 1.66864, -26.0192);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger07');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger07');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight07_(L)');}
+
+		
+	{SetVector(pos, 83.7053, -2.92722, -104.664);
+	SetVector(pos2, 92.6125, -0.109518, -98.0185);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger09');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger09');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight09_(L)');}
+		
+	{SetVector(pos, 90.9007, -1.31545, -25.1145);
+	SetVector(pos2, 99.808, 1.50225, -18.4687);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger10');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger10');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight10_(L)');}
+	
+	SetVector(pos, 130.542, -1.15455, -24.7863);
+	SetVector(pos2, 139.449, 1.66314, -18.1405);
+{	CreateBoxTrigger(pos, pos2, 'SecLightTrigger11');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger11');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight11_(L)');}
+	
+	{SetVector(pos, 120.387, -2.62054, -43.0362);
+	SetVector(pos2, 129.294, 0.197157, -36.3904);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger12');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger12');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight12_(L)');}
+	
+	SetVector(pos, -25.1267, 2.73589, -96.4349);
+	SetVector(pos2, -20.6232, 5.55359, -89.9772);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger13');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger13');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight13_(L)');
+
+	SetVector(pos, 5.19738, 0.795819, -53.6627);
+	SetVector(pos2, 11.0294, 2.55427, -46.9573);
+	CreateBoxTrigger(pos, pos2, 'SecLightTrigger14');
+	setentityscriptsfromentity('SecLightTrigger01', 'SecLightTrigger14');
+	setentityscriptsfromentity('SecLight01_(L)', 'SecLight14_(L)');
+			
+	{SetVector(pos, -3.82127, 0.0, -31.6727);
+	SetVector(pos2, -1.40816, 2.17679, -26.5051);}
+	SetVector(pos, -3.22926, 0.0, -31.3781);
+	SetVector(pos2, -2.22926, 2.17679, -27.1781);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm01');
+	
+	{SetVector(pos, 1.26091, 0.525791, -69.999);
+	SetVector(pos2, 3.70513, 2.73892, -64.3346);}
+	SetVector(pos, 2.00838, 0.525791, -69.2442);
+	SetVector(pos2, 3.00838, 2.73892, -65.0442);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm02');
+	setentityscriptsfromentity('triggerAlarm01', 'triggerAlarm02');
+	
+	{SetVector(pos, -22.0967, 2.04224, -96.3349);
+	SetVector(pos2, -19.7909, 4.40094, -90.6563);}
+	SetVector(pos, -21.2202, 2.04224, -95.562);
+	SetVector(pos2, -20.2202, 4.40094, -91.362);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm03');
+	setentityscriptsfromentity('triggerAlarm01', 'triggerAlarm03');
+	
+	{SetVector(pos, 13.9165, 2.04224, -93.7882);
+	SetVector(pos2, 16.276, 4.19444, -88.1095);}
+	SetVector(pos, 14.8911, 2.04224, -92.8409);
+	SetVector(pos2, 15.8911, 4.19444, -88.6409);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm04');
+	setentityscriptsfromentity('triggerAlarm01', 'triggerAlarm04');
+		
+	{SetVector(pos, 102.075, -2.07782, -67.9822);
+	SetVector(pos2, 104.756, 0.297983, -62.3035);}
+	SetVector(pos, 103.004, -2.07782, -67.4445);
+	SetVector(pos2, 104.004, 0.297983, -63.2445);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm05');
+	setentityscriptsfromentity('triggerAlarm01', 'triggerAlarm05');
+	
+	{SetVector(pos, 76.6069, -1.20687, -41.3411);
+	SetVector(pos2, 79.2881, 1.25278, -35.6624);}
+	SetVector(pos, 77.5442, -1.20687, -40.8272);
+	SetVector(pos2, 78.5442, 1.25278, -36.6272);
+	CreateBoxTrigger(pos, pos2, 'triggerAlarm06');
+	setentityscriptsfromentity('triggerAlarm01', 'triggerAlarm06');
+		
+	setentityscriptsfromentity('LampSmash01_(L)', 'LampSmash02_(L)');
+	setentityscriptsfromentity('LampSmash01_(L)', 'LampSmash03_(L)');
+	setentityscriptsfromentity('LampSmash01_(L)', 'LampSmash04_(L)');
+{	setentityscriptsfromentity('LampSmash01_(L)', 'LampSmash05_(L)');}
+	
+	SetNodeShadow('SMASHER1,SMASHER1B', false);
+  SetNodeShadow('SMASHER2,SMASHER2B,SMASHER2C,SMASHER2D,SMASHER2E,SMASHER2F,SMASHER2G', false);
+  SetNodeShadow('SMASHER3', false);
+  SetNodeShadow('SMASHER4', false);
+	
+	SetVector(pos, -6.47054, 0.0, -65.2672);
+	SetVector(pos2, 6.22112, 6.73435, -4.65805);
+	CreateBoxTrigger(pos, pos2, 'triggerZone1');
+	
+	SetVector(pos, -35.4429, 0.0, -65.0504);
+	SetVector(pos2, -6.17439, 9.06547, -2.88721);
+	CreateBoxTrigger(pos, pos2, 'triggerZone2');
+	
+	SetVector(pos, -51.9657, 0.702559, -129.188);
+	SetVector(pos2, -10.2542, 8.92624, -65.4703);
+	CreateBoxTrigger(pos, pos2, 'triggerZone3');
+	
+	SetVector(pos, -11.2637, 0.0, -125.092);
+	SetVector(pos2, 39.4689, 7.32601, -65.2015);
+	CreateBoxTrigger(pos, pos2, 'triggerZone4');
+	
+	SetVector(pos, 6.15574, 0.0, -66.4835);
+	SetVector(pos2, 34.6722, 9.89011, 0.915779);
+	CreateBoxTrigger(pos, pos2, 'triggerZone5');
+	
+	SetVector(pos, 87.4281, -2.00811, -83.1709);
+	SetVector(pos2, 94.868, -0.734987, -76.0285);
+	CreateBoxTrigger(pos, pos2, 'triggerSpotlightGuard1');
+
+	SetVector(pos, -4.56926, 1.858, -94.5536);
+	SetVector(pos2, 2.48606, 3.96976, -87.7842);
+	CreateBoxTrigger(pos, pos2, 'triggerSpotlightGuard3');
+	
+	if lLevelState <> EndChase then
+	begin
+		SetVector(pos, 0.0, 1.0, 0.0);
+		CreateSphereTrigger(pos, 1.5, 'StopHeliShoot');
+		AttachToEntity(GetEntity('StopHeliShoot'), GetPlayer);
+	end;
+	
+	SetVector(pos, -24.5538, 2.29374, -26.6465);
+	SetVector(pos2, -24.1791, 2.76337, -26.226);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec01');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec01'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec01'), COL_PLAYER);
+	
+	SetVector(pos, -23.6345, 3.22642, -45.2483);
+	SetVector(pos2, -23.2598, 3.69605, -44.8278);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec02');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec02'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec02'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec02');
+	
+	SetVector(pos, -42.7271, 4.92516, -93.7312);
+	SetVector(pos2, -42.3524, 5.3948, -93.3107);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec03');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec03'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec03'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec03');
+	
+	SetVector(pos, 17.8731, 4.77585, -103.465);
+	CreateSphereTrigger(pos, 0.297277, 'triggerBreakSec04');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec04'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec04'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec04');
+	
+	SetVector(pos, 27.2464, 3.26881, -69.2192);
+	SetVector(pos2, 27.621, 3.73845, -68.7987);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec05');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec05'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec05'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec05');
+	
+	SetVector(pos, 18.8351, 2.98753, -41.9467);
+	SetVector(pos2, 19.2098, 3.45717, -41.5262);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec06');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec06'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec06'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec06');
+	
+	SetVector(pos, 48.7074, 2.01835, -30.0309);
+	SetVector(pos2, 49.0821, 2.48798, -29.6104);
+	CreateBoxTrigger(pos, pos2, 'triggerBreakSec07');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec07'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec07'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec07');
+
+	SetVector(pos, 87.6581, 0.470055, -105.293);
+	CreateSphereTrigger(pos, 0.877885, 'triggerBreakSec09');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec09'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec09'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec09');
+	
+	SetVector(pos, 91.4732, 2.10625, -22.2586);
+	CreateSphereTrigger(pos, 0.877885, 'triggerBreakSec10');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec10'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec10'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec10');
+	
+	SetVector(pos, 138.936, 2.24226, -21.0086);
+{	CreateSphereTrigger(pos, 0.877885, 'triggerBreakSec11');}
+{	TriggerAddEntityClass(GetEntity('triggerBreakSec11'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec11'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec11');}
+	
+	SetVector(pos, 17.8731, 4.77585, -103.465);
+	CreateSphereTrigger(pos, 0.297277, 'triggerBreakSec12');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec12'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec12'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec12');
+	
+	SetVector(pos, -26.1207, 4.77585, -94.1448);
+	CreateSphereTrigger(pos, 0.297277, 'triggerBreakSec13');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec13'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec13'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec13');
+	
+	SetVector(pos, 11.0512, 2.65318, -50.0422);
+	CreateSphereTrigger(pos, 0.297277, 'triggerBreakSec14');
+	TriggerAddEntityClass(GetEntity('triggerBreakSec14'), COL_SHOT);
+	TriggerRemoveEntityClass(GetEntity('triggerBreakSec14'), COL_PLAYER);
+	setentityscriptsfromentity('triggerBreakSec01', 'triggerBreakSec14');
+	
+	while IsCutSceneInProgress do sleep(10);
+	
+	SetVector(pos, -28.0325, 0.0, -96.4522);
+	SetVector(pos2, 21.1836, 6.97878, -70.3488);
+	CreateBoxTrigger(pos, pos2, 'triggerSpotlight03');
+	RunScript('triggerSpotlight03', 'Init');
+	
+	writedebug('END SETTING UP LIGHTS');
+end;
+
+
+{PROCEDURES *************************************************************}
+
+PROCEDURE InitHunter;
+begin
+	AIaddEntity(HunterName);
+	AIaddHunterToLeaderSubpack('leader(leader)', SubpackName, HunterName);
+end;
+
+
+PROCEDURE SpawnHunter;
+var
+	vector : vec3d;
+begin
+	setVector(vector, x, y, z);
+	SpawnMovingEntity(HunterType, vector, HunterName);
+	AIaddEntity(HunterName);
+	AIaddHunterToLeaderSubpack('leader(leader)', SubpackName, HunterName);
+end;
+
+
+PROCEDURE ArmHunterWithMelee;
+var
+	Hunter : EntityPtr;
+begin
+	Hunter := getEntity(HunterName);
+	CreateInventoryItem(weapon, Hunter, true);
+end;
+
+
+PROCEDURE InitSubpack;
+begin
+	AIaddSubpackForLeader('leader(leader)',  SubpackName);
+	AIsetSubpackCombatType('leader(leader)',  SubpackName, CombatType);
+	if HuntPlayer then AIAddGoalForSubPack('leader(leader)', SubpackName, 'huntPlayer');
+end;
+
+
+
+PROCEDURE createSTrigger;
+var
+	Vector : vec3d;
+begin
+	setVector(Vector, x, y, z);
+	createSphereTrigger(Vector, Radius, TriggerName);
+end;
+
+
+PROCEDURE createBTrigger;
+var
+	Vector1 : vec3d;
+	Vector2 : vec3d;
+begin
+	setVector(Vector1, x1, y1, z1);
+	setVector(Vector2, x2, y2, z2);
+	createBoxTrigger(Vector1, Vector2, TriggerName);
+end;
+
+
+
+PROCEDURE DestroyEntityIfExists;
+var
+	P : EntityPtr;
+begin
+	P := getEntity(EntityName);
+	if (P <> NIL) then DestroyEntity(P);
+end;
+
+
+
+
+PROCEDURE ChangeDoor;
+var
+	Door : EntityPtr;
+begin
+	Door := GetEntity(DoorName);
+	
+	if (DoorStatus = 'open') then
+	begin
+	 	unFreezeEntity(Door);  
+	 	unLockEntity(Door);
+ 	end
+ 	else
+ 	begin
+		UnfreezeEntity(Door); 
+	 	LockEntity(Door);
+ 	end;
+end;
+
+procedure ShowFakeHunter;
+var
+	P : EntityPtr;
+	FakeName : string[64];
+	randAnim : integer;
+begin
+	P := GetEntity(ModelName);
+	StringCat(FakeName, ModelName, '_fake');
+ 	
+ 	{show the model and setup its anim}
+ 	{ShowEntity(P);}
+ 	{randAnim := RandNum(2);
+ 	if randAnim = 0 then
+		EntityPlayAnim(P,'BAT_IDLELOOP_IDLE_ANIM', true)
+	else
+		EntityPlayAnim(P,'BAT_COMBAT_STANCE_RIFLE_ANIM', true);}
+		
+	{create the fake radar blip}
+	FakeHunterCreate(FakeName);
+	FakeHunterSetPos(FakeName, GetEntityPosition(P));
+	FakeHunterSetDir(FakeName, GetEntityView(P));
+	FakeHunterSetColour(FakeName, MAP_COLOR_ORANGE);	
+	
+end;
+
+procedure HideFakeHunter;
+var
+	FakeName : string[64];	
+begin
+ 	HideEntity(GetEntity(ModelName));
+	StringCat(FakeName, ModelName, '_fake');
+	FakeHunterDestroy(FakeName);	
+end;
+
+
+
+end.   

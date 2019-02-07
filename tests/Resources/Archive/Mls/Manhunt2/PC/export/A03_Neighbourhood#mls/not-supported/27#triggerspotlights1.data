@@ -1,0 +1,12 @@
+{
+    "const": [],
+    "strings": [
+        "SPOT_3",
+        "Spotlight03",
+        "init spotlights",
+        "triggerSpotlight03",
+        "Spot1Patrol",
+        "SPOT_3"
+    ],
+    "byteReserved": 8
+}

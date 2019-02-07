@@ -1,0 +1,20 @@
+{
+    "const": [],
+    "strings": [
+        "PedalLoop",
+        "hBar01(hunter)",
+        "hBar02(hunter)",
+        "hBar03(hunter)",
+        "hBar04(hunter)",
+        "FootPeddle",
+        "Done with pedal",
+        "BarDoor_(SD)",
+        "LEVEL",
+        "WEIGHTON",
+        "Built flashback",
+        "tFlashback",
+        "genTrigger",
+        "hBar02(hunter)"
+    ],
+    "byteReserved": 20
+}

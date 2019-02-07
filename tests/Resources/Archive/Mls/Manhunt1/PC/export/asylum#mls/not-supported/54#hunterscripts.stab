@@ -1,0 +1,25 @@
+[
+    {
+        "name": "flag_player_spotted",
+        "nameGarbage": "00000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            1196,
+            1320,
+            1380,
+            1916,
+            2040,
+            2100
+        ]
+    },
+    {
+        "name": "vpoz",
+        "nameGarbage": "0004bc00000000000000000000000000000000000000000000000000",
+        "offset": "30010000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

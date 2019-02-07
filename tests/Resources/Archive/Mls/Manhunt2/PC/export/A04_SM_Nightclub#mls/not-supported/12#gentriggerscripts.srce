@@ -1,0 +1,293 @@
+scriptmain genTriggerScripts;
+entity genTrigger : et_name;
+var	self : string[22];
+	pos, pos2 : vec3d;
+	firstRun : boolean;
+	freshLoad : level_var boolean;
+	stunProdPlaying : level_var boolean;
+	drillPlaying : level_var boolean;
+
+script Skip_Empty; begin WriteDebug('Skipping'); end;
+
+script OnCreate;
+	begin
+		self := GetEntityName(this);
+		firstRun := true;
+		if(self = 'tDoorEscape') then TriggerAddEntityClass(this, COL_HUNTER);
+		if(self = 'tPedalTrig') then TriggerAddEntityClass(this, COL_HUNTER);
+		WriteDebug(self, ' created...');
+	end;
+
+script CreateStartTriggers;
+	var pos : vec3d;
+	begin
+		SetVector(pos, 43.4233, -0.964944, -18.5341);
+		SetVector(pos2, 43.7841, 0.984507, -18.1374);
+		CreateBoxTrigger(pos, pos2, 'tPedal');
+		{ Not a generic script - don't copy }
+
+		SetVector(pos, 47.8591, 1.06641, -18.2725);
+		CreateSphereTrigger(pos, 1, 'tNeon');
+		{ Not a generic script - don't copy }
+
+		pos := GetEntityPosition(GetEntity('Half_Brick_(CT)11'));
+		CreateSphereTrigger(pos, 2.0, 'tBrick');
+		SetEntityScriptsFromEntity(self, 'tBrick');
+		
+		SetVector(pos, 46.915, 1.06641, -32.1767);
+		CreateSphereTrigger(pos, 0.1, 'tDoorEscape');
+		SetEntityScriptsFromEntity(self, 'tDoorEscape');
+
+		SetVector(pos, 18.6274, -0.0434155, -20.6742);
+		SetVector(pos2, 21.518, 2.84902, -20.2991);
+		CreateBoxTrigger(pos, pos2, 'tSave1');
+		SetEntityScriptsFromEntity(self, 'tSave1');
+
+		SetVector(pos, 45.4999, 0.0443674, -26.9954);
+		SetVector(pos2, 48.1865, 2.35517, -26.7712);
+		CreateBoxTrigger(pos, pos2, 'tFirstLightCutScene');
+		SetEntityScriptsFromEntity(self, 'tFirstLightCutScene');
+
+		SetVector(pos, 44.2026, 0.211313, -11.0457);
+		SetVector(pos2, 48.7066, 1.68768, -10.3274);
+		CreateBoxTrigger(pos, pos2, 'tBarDoorCutscene2');
+		SetEntityScriptsFromEntity(self, 'tBarDoorCutscene2');
+		
+		SetVector(pos, 43.6714, -0.929487, -18.3358);
+		CreateSphereTrigger(pos, 0.15, 'tPedalTrig');
+		SetEntityScriptsFromEntity(self, 'tPedalTrig');
+	end;
+
+script CreateDiscoTriggers;
+	begin
+		if(GetEntity('tPedalTrig') <> nil) then DestroyEntity(GetEntity('tPedalTrig'));
+		if(GetEntity('tNeon') <> nil) then DestroyEntity(GetEntity('tNeon'));
+		if(GetEntity('tPedal') <> nil) then DestroyEntity(GetEntity('tPedal'));
+		if(GetEntity('tBrick') <> nil) then DestroyEntity(GetEntity('tBrick'));
+		if(GetEntity('tFlashback') <> nil) then DestroyEntity(GetEntity('tFlashback'));
+		if(GetEntity('tDoorEscape') <> nil) then DestroyEntity(GetEntity('tDoorEscape'));
+		if(GetEntity('tBarDoorCutscene2') <> nil) then DestroyEntity(GetEntity('tBarDoorCutscene2'));
+		if(GetEntity('tFirstLightCutScene') <> nil) then DestroyEntity(GetEntity('tFirstLightCutScene'));
+		
+		SetVector(pos, -0.266475, 0.0, -49.1202);
+		SetVector(pos2, 1.434, 2.45357, -47.3212);
+		CreateBoxTrigger(pos, pos2, 'tCheckHead');
+		{ Not a generic script - don't copy }
+
+		SetVector(pos, -1.09198, -3.65114, -66.8606);
+		SetVector(pos2, 1.94079, -0.485433, -66.7315);
+		CreateBoxTrigger(pos, pos2, 'tSave2');
+		SetEntityScriptsFromEntity(self, 'tSave2');
+		
+		SetVector(pos, 4.87691, 0.0, -9.80995);
+		SetVector(pos2, 5.90184, 1.90285, -8.65781);
+		CreateBoxTrigger(pos, pos2, 'tDiscoCutscene');
+		SetEntityScriptsFromEntity(self, 'tDiscoCutscene');
+		
+		SetVector(pos, -1.09198, -0.0549846, -62.0721);
+		SetVector(pos2, 1.94079, 3.11072, -61.943);
+		CreateBoxTrigger(pos, pos2, 'tRampFlash');
+		SetEntityScriptsFromEntity(self, 'tRampFlash');
+
+		SetVector(pos, -5.52971, 0.0, -44.9972);
+		SetVector(pos2, 6.47029, 2.0, -39.9972);
+		CreateBoxTrigger(pos, pos2, 'tSafeZone01');
+		SetEntityScriptsFromEntity(self, 'tSafeZone01');
+	end;
+
+script CreateDungeonTriggers;
+	begin
+		if(GetEntity('tSafeZone01') <> nil) then DestroyEntity(GetEntity('tSafeZone01'));
+		if(GetEntity('tStrobes') <> nil) then DestroyEntity(GetEntity('tStrobes'));
+		if(GetEntity('tCheckHead') <> nil) then DestroyEntity(GetEntity('tCheckHead'));
+		if(GetEntity('tDiscoCutscene') <> nil) then DestroyEntity(GetEntity('tDiscoCutscene'));
+
+		SetVector(pos, 3.40622, -4.86319, -73.42);
+		SetVector(pos2, 6.40622, -1.69749, -73.27);
+		CreateBoxTrigger(pos, pos2, 'tDungeonCutscene');
+		SetEntityScriptsFromEntity(self, 'tDungeonCutscene');
+		
+		SetVector(pos, 24.1964, -6.03068, -83.8856);
+		SetVector(pos2, 29.5086, -2.86497, -82.7758);
+		CreateBoxTrigger(pos, pos2, 'tCellTwoCut');
+		SetEntityScriptsFromEntity(self, 'tCellTwoCut');
+
+		SetVector(pos, 36.3051, -6.03068, -80.2324);
+		SetVector(pos2, 41.2051, -2.86497, -76.0383);
+		CreateBoxTrigger(pos, pos2, 'tCellThreeCut');
+		SetEntityScriptsFromEntity(self, 'tCellThreeCut');
+		
+		SetVector(pos, 27.2076, -6.03068, -53.5);
+		SetVector(pos2, 32.1076, -2.86497, -52.0587);
+		CreateBoxTrigger(pos, pos2, 'tWakeCell5');
+		SetEntityScriptsFromEntity(self, 'tWakeCell5');
+
+		SetVector(pos, 55.6309, -5.19544, -75.0432);
+		SetVector(pos2, 56.2398, -3.68545, -69.5379);
+		CreateBoxTrigger(pos, pos2, 'tJudySpeech');
+		SetEntityScriptsFromEntity(self, 'tJudySpeech');
+
+		SetVector(pos, 19.2971, -5.72909, -44.8294);
+		SetVector(pos2, 19.4397, -3.72856, -41.1235);
+		CreateBoxTrigger(pos, pos2, 'tPosterCutscene1');
+		SetEntityScriptsFromEntity(self, 'tPosterCutscene1');
+		
+		SetVector(pos, 26.4403, -5.72909, -92.4408);
+		SetVector(pos2, 26.5829, -3.72856, -88.7349);
+		CreateBoxTrigger(pos, pos2, 'tPosterCutscene2');
+		SetEntityScriptsFromEntity(self, 'tPosterCutscene2');
+		
+		SetVector(pos, 18.5345, -5.81484, -72.5418);
+		SetVector(pos2, 42.9616, -3.81484, -58.5911);
+		CreateBoxTrigger(pos, pos2, 'tBreakLight');
+		SetEntityScriptsFromEntity(self, 'tBreakLight');
+		
+		SetVector(pos, 33.2393, -6.03068, -54.9978);
+		SetVector(pos2, 46.1753, -2.86497, -41.003);
+		CreateBoxTrigger(pos, pos2, 'tCellCut05');
+		SetEntityScriptsFromEntity(self, 'tCellCut05');
+		
+		SetVector(pos, 26.412, -6.03068, -63.4654);
+		SetVector(pos2, 32.912, -3.03068, -46.4654);
+		CreateBoxTrigger(pos, pos2, 'tMirror5');
+		SetEntityScriptsFromEntity(self, 'tMirror5');
+	end;
+
+script OnEnterTrigger;
+	begin WriteDebug(self, ' entered...');
+		if(firstRun) then begin WriteDebug(self, ' entered (first time)...'); firstRun := false;
+			if(self = 'tWakeCell5') then begin
+				RunScript('hDungeon04(hunter)', 'StartCellFiveReverseMirror');
+				DestroyEntity(this);
+			end;
+			if(self = 'tBarDoorCutscene2') then begin
+				RunScript('leader(leader)', 'SneakedUpOnBar');
+				DestroyEntity(this);
+			end;
+			if(self = 'tDungeonCutscene') then begin
+				RunScript('leader(leader)', 'SawTortureScene');
+				DestroyEntity(this);
+			end;
+			if(self = 'tDiscoCutscene') then begin
+				RunScript('leader(leader)', 'DiscoCutscene');
+				DestroyEntity(this);
+			end;
+			if(self = 'tCellTwoCut') then begin
+				RunScript('hDungeon02(hunter)', 'StartCellTwoAmbush');
+				DestroyEntity(this);
+			end;
+			if(self = 'tCellThreeCut') then AIMakeEntityDeaf('hDungeon06(hunter)', 1);
+			if(self = 'tRampFlash') then begin
+				RunScript('player(player)', 'RampFlashback');
+				DestroyEntity(this);
+			end;
+			if(self = 'tGirlFailsafe') then RunScript('leader(leader)', 'HitGirlFailsafe');
+			if(self = 'tSave1') then begin
+				freshLoad := false;
+				SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSING);
+				TriggerSavePoint(GetEntity('Gen_Save_Point'), true);
+				RunScript('A04_SM_Nightclub', 'LoadFromSavePoint');
+				DestroyEntity(this);
+			end;
+			if(self = 'tSave2') then begin
+				freshLoad := false;
+				TriggerSavePoint(GetEntity('Gen_Save_Point01'), true);
+				RunScript('A04_SM_Nightclub', 'LoadFromSavePoint');
+				DestroyEntity(this);
+			end;
+			if(self = 'tDoorEscape') then begin
+				GraphModifyConnections(GetEntity('doorEscape_(D)'), AISCRIPT_GRAPHLINK_ALLOW_EVERYTHING);
+				UnlockEntity(GetEntity('doorEscape_(D)'));
+				DestroyEntity(this);
+			end;
+			if(self = 'tJudySpeech') then begin
+				if(GetEntity('hBar01(hunter)') <> nil) then DestroyEntity(GetEntity('hBar01(hunter)'));
+				if(GetEntity('hDungeon02(hunter)') <> nil) then DestroyEntity(GetEntity('hDungeon02(hunter)'));
+				ShowEntity(GetEntity('Judy(hunter)'));
+				Sleep(200);
+				SetVector(pos, 56.0455, -5.34246, -71.5796);
+				MoveEntity(GetPlayer, pos, 0);
+				SetPedOrientation(GetPlayer, 110);
+				CutSceneStart;
+					PlayerDropBody;
+					PlayScriptAudioStreamAuto('OUTRO', 127);
+					CutSceneRegisterSkipScript(this, 'Skip_Empty');
+					EntityPlayAnim(GetEntity('Judy(hunter)'), 'SM_JUDY_END', false);
+	{				AICutsceneEntityEnable('Judy(hunter)', true);
+					AIDefineGoalGotoNodeIdle('gGotoTalk', 'Judy(hunter)', AISCRIPT_HIGHPRIORITY, 'nJudy2', AISCRIPT_WALKMOVESPEED, true);
+					AIAddGoalForSubpack('leader(leader)', 'subJudy', 'gGotoTalk');}
+					CutSceneCameraInit;
+						CutSceneCameraSetPos(0.0, 53.0315, -3.98266, -71.5152);
+						CutSceneCameraSetPos(15.0, 53.0315, -3.98266, -72.5152);
+						CutSceneCameraSetTarget(0.0, 59.4155, -3.98266, -74.1855);
+						CutSceneCameraSetTarget(15.0, 59.4155, -3.98266, -72.1855);
+						CutSceneCameraSetFOV(0.0, 70.0);
+						CutSceneCameraSetFOV(10.0, 45.0);
+						CutSceneCameraSetHandyCam(false);
+					CutSceneCameraStart;
+					Sleep(4000);
+					PlayScriptAudioStreamFromEntityAux('HU06', 127, GetEntity('Judy(hunter)'), 100);
+					Sleep(6000);
+					SetColourRamp('FE_superdreamramps', 5, 2.0);
+					Sleep(2000);
+				CutSceneEnd(false);
+				SetLevelCompleted;
+			end;
+			if(self = 'tFirstLightCutScene') then begin
+				CutSceneCameraInit;
+					CutSceneCameraSetPos(0.0, 47.1038, 1.75441, -31.4683);
+					CutSceneCameraSetPos(3.0, 45.0736, 1.75441, -23.9793);
+					CutSceneCameraSetPos(5.0, 48.558, 1.75441, -22.6652);
+					CutSceneCameraSetTarget(0.0, 46.9121, 1.25375, -19.6443);
+					CutSceneCameraSetTarget(3.0, 49.0886, 1.25375, -19.2023);
+					CutSceneCameraSetTarget(5.0, 38.7787, 1.25375, -20.7617);
+					CutSceneCameraSetFOV(0.0, 70.0);	
+					CutSceneCameraSetHandyCam(true);
+				CutSceneStart;
+					CutSceneCameraStart;
+					CutSceneRegisterSkipScript(this, 'Skip_Empty');
+					Sleep(2000);
+					FrisbeeSpeechPlay('MUSIC', 127, 15);
+					Sleep(7000);
+				CutSceneEnd(false);
+				AIMakeEntityBlind('hBar02(hunter)', 1);
+				AIMakeEntityBlind('hBar03(hunter)', 1);
+				AIMakeEntityBlind('hBar04(hunter)', 1);
+				RunScript('player(player)', 'DisplayGameText_DEAFTT1');
+				DestroyEntity(this);
+			end;
+		end;
+		if((self = 'tPosterCutscene1') or (self = 'tPosterCutscene2')) then begin
+			if((not IsCutSceneInProgress) and (not IsExecutionInProgress) and (not IsPlayerPositionKnown)) then RunScript('leader(leader)', 'PosterCutscene');
+		end;
+		if(self = 'tFlashback') then begin
+			if((not IsPlayerPositionKnown) and (GetDoorState(GetEntity('BarDoor_(SD)')) = DOOR_OPEN)) then begin
+				RunScript('leader(leader)', 'DiscoFlashback');
+				DestroyEntity(this);
+			end;
+		end;
+		if(self = 'tBreakLight') then begin
+			if((not IsCutSceneInProgress) and (not IsExecutionInProgress) and (not IsPlayerPositionKnown)) then begin
+				RunScript('player(player)', 'DisplayGameText_BLIGHT');
+				DestroyEntity(this);
+			end;
+		end;
+		if(self = 'tCellThreeCut') then begin
+			if(stunProdPlaying) then PlayScriptAudioStreamFromEntityAutoLooped('PROD', 127, GetEntity('victim(hunter)01'), 13);
+		end;
+		if(self = 'tCellCut05') then begin
+			if(drillPlaying) then PlayScriptAudioStreamFromEntityAutoLooped('DRILL', 127, GetEntity('victim(hunter)03'), 12);
+		end;
+		if(self = 'tMirror5') then RunScript('mirror5', 'ShowCellRoomFive');
+		if(self = 'tSafeZone01') then BlockPathsAroundPlayer(false);
+	end;
+
+script OnLeaveTrigger;
+	begin WriteDebug(self, ' left...');
+		if((self = 'tCellThreeCut') or ((self = 'tCellCut05'))) then EndScriptAudioStream;
+		if(self = 'tMirror5') then RunScript('mirror5', 'ShowMonRoomFive');
+		if(self = 'tSafeZone01') then BlockPathsAroundPlayer(true);
+	end;
+
+end.
+  

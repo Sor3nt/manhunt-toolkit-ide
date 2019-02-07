@@ -1,0 +1,40 @@
+[
+    {
+        "name": "canplaycut2",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "68000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "playedcut1",
+        "nameGarbage": "000280cc2b02b8cd2b02b8ce2b0290cf2b02182e1202",
+        "offset": "60000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "playedcut2",
+        "nameGarbage": "0000143a0a030d0000000b0b127f3800010000ca3a0a",
+        "offset": "64000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "shownfacegoal",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            780
+        ]
+    }
+]

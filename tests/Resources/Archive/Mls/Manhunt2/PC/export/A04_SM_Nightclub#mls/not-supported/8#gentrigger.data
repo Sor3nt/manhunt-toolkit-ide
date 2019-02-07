@@ -1,0 +1,31 @@
+{
+    "const": [],
+    "strings": [
+        "SPOT_1",
+        "Spot_Dance01",
+        "SPOT_2",
+        "Spot_Dance02",
+        "SPOT_3",
+        "Spot_Dance03",
+        "SPOT_4",
+        "Spot_Dance04",
+        "SPOT_",
+        "strobe_R(L)",
+        "strobe_G(L)",
+        "strobe_B(L)",
+        "SM_DancefloorLOD",
+        "SM_DancefloorLOD",
+        "Creating spotlights and strobes...",
+        "strobe_R(L)",
+        "strobe_G(L)",
+        "strobe_B(L)",
+        "RunSpotlightSlowSweep",
+        "SPOT_1",
+        "SPOT_2",
+        "SPOT_3",
+        "SPOT_4",
+        "BlitzStrobes",
+        "nSha01,nSha02,nSha03,nSha04,nSha05,nSha06,nSha07,nSha08,nSha09"
+    ],
+    "byteReserved": 188
+}

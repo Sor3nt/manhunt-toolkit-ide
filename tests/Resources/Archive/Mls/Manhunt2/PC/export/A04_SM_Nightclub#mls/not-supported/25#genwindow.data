@@ -1,0 +1,13 @@
+{
+    "const": [],
+    "strings": [
+        "SM_Break_Window_Glass",
+        "PromptThrow",
+        "BT",
+        "player(player)",
+        "DisplayGameText_BRICK",
+        "GOAL1",
+        "BT"
+    ],
+    "byteReserved": 8
+}

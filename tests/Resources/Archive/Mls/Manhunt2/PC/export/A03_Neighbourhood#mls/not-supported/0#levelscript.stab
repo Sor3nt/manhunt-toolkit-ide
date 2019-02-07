@@ -1,0 +1,200 @@
+[
+    {
+        "name": "barrelenteredone",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "e00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "barrelenteredtwo",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "e40f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "behindlogs",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "a80f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "deadcopscount",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "c80f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "foundfence",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "c40f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "garagesopen",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "d00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "helichasepatrol",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ac0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "helipatrolling",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "f00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "helitargetplayer",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "b00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "itemsspawned",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "d40f0000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "lcurrentambientaudiotrack",
+        "nameGarbage": "00000000000000",
+        "offset": "a00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "llevelstate",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "980f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "tLevelState",
+        "occurrences": []
+    },
+    {
+        "name": "lloadingflag",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "9c0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "patrolling",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "a40f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "secondwavecount",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "cc0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "shearsspawned",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "e80f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "sound",
+        "nameGarbage": "0074726f6c6c696e67000000000000000000000000000000000000",
+        "offset": "8c0f0000",
+        "size": 8,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "specialstart",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "c00f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotlight1working",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "b40f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotlight2working",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "b80f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotlight3working",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "bc0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotted",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "ec0f0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

@@ -1,0 +1,20 @@
+{
+    "const": [],
+    "strings": [
+        "A03_Neighbourhood",
+        "OnLevelStateSwitch",
+        "triggerChase",
+        "ChaseScene",
+        "hChaser01(hunter)",
+        "hChaser02(hunter)",
+        "hChaser01(hunter)",
+        "hChaser02(hunter)",
+        "RunGoals",
+        "SkipMe",
+        "GUARD1",
+        "COP1",
+        "hChaser01(hunter)",
+        "hChaser02(hunter)"
+    ],
+    "byteReserved": 4
+}

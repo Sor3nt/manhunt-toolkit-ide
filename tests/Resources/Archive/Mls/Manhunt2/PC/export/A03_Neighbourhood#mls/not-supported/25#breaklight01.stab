@@ -1,0 +1,20 @@
+[
+    {
+        "name": "flickeron",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "30010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "me",
+        "nameGarbage": "000078013200000000000000000000000000000000000000000000000000",
+        "offset": "0c010000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

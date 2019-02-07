@@ -1,0 +1,23 @@
+[
+    {
+        "name": "rotate1",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "58000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "spotlight3working",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            396,
+            520
+        ]
+    }
+]

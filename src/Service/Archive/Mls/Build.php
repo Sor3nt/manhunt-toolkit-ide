@@ -9,14 +9,27 @@ class Build {
     /**
      * @param $scripts
      * @return string
+     * @throws \Exception
      */
-    public function build( $scripts){
+    public function build( $scripts , $game, $platform){
         $mls =
             "MHLS" .
             "\x03\x00\x09\x00"        // MHLS Version (3.9)
         ;
-
         ksort($scripts);
+
+        $levelScriptRecords = false;
+
+        foreach ($scripts as $index => $records) {
+            if ($records['ENTT']['type'] == "levelscript"){
+                $levelScriptRecords = $records;
+                break;
+            }
+        }
+
+        if ($levelScriptRecords === false){
+            throw new \Exception('Levelscript not found ?!');
+        }
 
         foreach ($scripts as $index => $records) {
 
@@ -24,9 +37,10 @@ class Build {
             $scriptCode .= $this->buildNAME( $records );
             $scriptCode .= $this->buildENTT( $records );
             $scriptCode .= $this->buildCODE( $records );
-            $scriptCode .= $this->buildDATA( $records );
+            $scriptCode .= $this->buildDATA( $records, $levelScriptRecords );
             $scriptCode .= $this->buildSMEM( $records );
             $scriptCode .= $this->buildDebug( $records );
+            $scriptCode .= $this->buildDMEM( $records );
             $scriptCode .= $this->buildSTAB( $records );
 
             $mls .= $this->buildLabelSizeData("MHSC", $scriptCode);
@@ -51,9 +65,14 @@ class Build {
 
     private function buildNAME( $records ){
 
-        $data = current(unpack("H*", $records['NAME']));
-        $length = strlen($data);
-        $name = Helper::pad($data, $length + (4 - $length % 4 ));
+        $name = bin2hex( $records['NAME']['name'] );
+
+        if (isset($records['NAME']['nameGarbage'])){
+            $name .= $records['NAME']['nameGarbage'];
+        }else{
+            $length = strlen($name) + (8 - strlen($name) % 8);
+            $name = Helper::pad($name, $length);
+        }
 
         return $this->buildLabelSizeData("NAME", hex2bin($name));
     }
@@ -61,7 +80,9 @@ class Build {
     private function buildENTT( $records ){
 
         $typeHex = "00000000";
-        if ($records['ENTT']['type'] == "levelscript") $typeHex = "02000000";
+        if (
+            $records['ENTT']['type'] == "levelscript"
+        ) $typeHex = "02000000";
 
         // ENTT Header
         $section = "ENTT";
@@ -75,55 +96,87 @@ class Build {
         $section .= hex2bin(Helper::pad(current(unpack("H*", $records['ENTT']['name'])), 128));
 
         return $section;
-
     }
 
     private function buildCODE( $records ){
         return $this->buildLabelSizeData("CODE", hex2bin(implode("", $records['CODE'])));
     }
 
-    private function buildDATA( $records ){
+    private function buildDATA( $records, $levelScriptRecords ){
 
         if (!isset($records['DATA'])) return "";
 
         $stringArraySizes = 0;
-
         if (isset($records['STAB'])){
-
             foreach ($records['STAB'] as $item) {
+
+                // level_vars inside a script block are not calculated
+                if (isset($item["isLevelVarFromScript"]) && $item["isLevelVarFromScript"] == true) continue;
+
                 if ($item["size"] !== "ffffffff"){
-                    $stringArraySizes += $item["size"];
+
+                    $size = $item["size"] + ($item["size"] % 4);
+
+                    $stringArraySizes += $size;
                 }else{
-                    if (isset($item['occurrences']) && count($item['occurrences']) > 0) {
-                        $stringArraySizes += 2 * count($item['occurrences']);
-                    }else {
-                        $stringArraySizes += 4;
+
+                    // we need the size from the levelscript
+                    foreach ($levelScriptRecords['STAB'] as $levelScriptStab) {
+                        if ($levelScriptStab['name'] == $item["name"]){
+
+                            $size = $levelScriptStab["size"] + ($levelScriptStab["size"] % 4);
+                            $stringArraySizes += $size;
+                            break;
+                        }
                     }
                 }
+
             }
         }
 
         $dataCode = "";
 
-        foreach ($records['DATA'] as $name) {
+        foreach ($records['DATA']['const'] as $const) {
+            $dataCode .= Helper::fromIntToHex($const);
+        }
+
+        foreach ($records['DATA']['strings'] as $name) {
 
             $name = current(unpack("H*", $name)) . "00";
             $nameLength = strlen($name);
 
             // add NAME size (its always / max 16)
-            $dataCodeTmp = Helper::pad($name);
+            $dataCodeTmp = Helper::pad($name, 8, false, 'da');
             $dataCode .= (Helper::pad($dataCodeTmp , $nameLength +  (8 - $nameLength % 8), false, 'da'));
         }
 
-        $dataCode .= str_repeat('da', $stringArraySizes);
 
-        $dataCodeLength = strlen($dataCode) ;
-
-        $dataCode = Helper::pad($dataCode, $dataCodeLength +  (8 - $dataCodeLength % 8), false, 'da');
-
-        if (substr($dataCode, -8) == "dadadada"){
-            $dataCode = substr($dataCode, 0, -8);
+        /**
+         * What the hack, i am not sure about this part, why they should just take "onlowsightingorabove" into account ?!
+         * Whatever, this solve the size error on 3 script files
+         */
+        if (isset($records['SCPT'])){
+            foreach ($records['SCPT'] as $scpt) {
+                if ($scpt['name'] == "onlowsightingorabove"){
+                    $stringArraySizes += 4;
+                }
+            }
         }
+
+//
+//        if ($records['DATA']['byteReserved'] != $stringArraySizes){
+////            var_dump($records['STAB']);
+//            var_dump($stringArraySizes);
+//            var_dump($records['DATA']['byteReserved']);
+//            var_dump($records['ENTT']['name']);
+//        }
+
+        if (isset($records['DATA']['byteReserved'])){
+            $dataCode .= str_repeat('da', $records['DATA']['byteReserved'] );
+        }else{
+            $dataCode .= str_repeat('da', $stringArraySizes );
+        }
+
 
         return $this->buildLabelSizeData("DATA", hex2bin($dataCode));
     }
@@ -131,6 +184,11 @@ class Build {
     private function buildSMEM( $records ){
 
         return $this->buildLabelSizeData("SMEM", pack("L", $records['SMEM']));
+    }
+
+    private function buildDMEM( $records ){
+
+        return $this->buildLabelSizeData("DMEM", pack("L", $records['DMEM']));
     }
 
 
@@ -145,9 +203,16 @@ class Build {
      */
     private function buildDebug( $records ){
 
+        $data = $this->buildLabelSizeData('SRCE', hex2bin( current( unpack( "H*", $records['SRCE'] ) ) ) );
+
+        if (isset($records['LINE']) && count($records['LINE']))
+            $data .= $this->buildLabelSizeData('LINE', hex2bin( implode('', $records['LINE'])) );
+
+        if (isset($records['TRCE']))
+            $data .= $this->buildLabelSizeData('TRCE', hex2bin( implode('', $records['TRCE'])) );
+
         return $this->buildLabelSizeData(
-            'DBUG',
-            $this->buildLabelSizeData('SRCE', hex2bin( current( unpack( "H*", $records['SRCE'] ) ) ) )
+            'DBUG', $data
         );
     }
 
@@ -158,7 +223,7 @@ class Build {
      */
     private function buildSTAB( $records ){
 
-        if (!isset($records['STAB'])) return "";
+        if (!isset($records['STAB']) || count($records['STAB']) == 0) return "";
 
         $stabData = $records['STAB'];
 
@@ -166,7 +231,12 @@ class Build {
         foreach ($stabData as $indexStab => $record) {
 
             // add name
-            $stabCode .= hex2bin(Helper::pad(current(unpack("H*", $record['name'])) , 64)) ;
+            if (isset($record['nameGarbage'])){
+                $stabCode .= hex2bin(current(unpack("H*", $record['name'])));
+                $stabCode .= hex2bin( $record['nameGarbage'] );
+            }else{
+                $stabCode .= hex2bin(Helper::pad(current(unpack("H*", $record['name'])) , 64)) ;
+            }
 
             // add offset
             $stabCode .= hex2bin( $record['offset'] );
@@ -192,6 +262,7 @@ class Build {
                 case 'boolean':
                     $stabCode .= "\x03\x00\x00\x00";
                     break;
+                case 'real': //is this correct ?
                 case 'level_var integer':
                     $stabCode .= "\x04\x00\x00\x00";
                     break;
@@ -218,8 +289,9 @@ class Build {
 //                    $stabCode .= "\xff\xff\xff\xff";
 //                    break;
                 default:
-                    throw new \Exception(sprintf('Unknown object type requested: %s', ($record['objectType']) ));
-                    break;
+                    $stabCode .= hex2bin($record['objectType']);
+//                    throw new \Exception(sprintf('Unknown object type requested: %s', ($record['objectType']) ));
+//                    break;
 
             }
 

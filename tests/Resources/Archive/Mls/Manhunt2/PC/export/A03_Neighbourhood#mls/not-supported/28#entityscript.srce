@@ -1,0 +1,16 @@
+scriptmain EntityScript;
+
+ENTITY
+    Wire_Blockage : et_name;
+
+
+
+script Onuseableused;
+begin
+	RadarPositionClearEntity(GetEntity('Wire_Blockage'));
+	EntityIgnoreCollisions(this, TRUE);
+	EntityIgnoreCollisions(GetEntity('FakeFence'), TRUE);
+	RemoveThisScript;
+end;
+
+end.

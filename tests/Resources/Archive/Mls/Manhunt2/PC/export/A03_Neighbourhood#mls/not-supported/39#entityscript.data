@@ -1,0 +1,24 @@
+{
+    "const": [],
+    "strings": [
+        "entered swimming pool",
+        "SwimmerA(hunter)",
+        "SwimmerB(hunter)",
+        "SwimmerC(hunter)",
+        "SwimmerD(hunter)",
+        "leader(leader)",
+        "subGuardCar2",
+        "gSwimAtPlayerA",
+        "gSwimAtPlayerB",
+        "gSwimAtPlayerC",
+        "gSwimAtPlayerD",
+        "triggerFlashyEffect",
+        "triggerSwimmingSection",
+        "WaitForDone",
+        "triggerFlashyEffect",
+        "FE_superdreamramps",
+        "LEO8",
+        "FE_colramps"
+    ],
+    "byteReserved": 0
+}

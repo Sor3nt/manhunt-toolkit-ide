@@ -1,0 +1,80 @@
+[
+    {
+        "name": "barrelenteredone",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8528
+        ]
+    },
+    {
+        "name": "barrelenteredtwo",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8668
+        ]
+    },
+    {
+        "name": "barrelover",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "6c050000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "llevelstate",
+        "nameGarbage": "00143a0a01160002000b127f4404010000573a0a01",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            244,
+            372,
+            496,
+            9792
+        ]
+    },
+    {
+        "name": "patrolling",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7476
+        ]
+    },
+    {
+        "name": "specialstart",
+        "nameGarbage": "0059000028590000146d00000000000002000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7448
+        ]
+    },
+    {
+        "name": "spotted",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            40
+        ]
+    }
+]

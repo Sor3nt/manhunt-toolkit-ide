@@ -1,0 +1,99 @@
+[
+    {
+        "name": "helichasepatrol",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "helipatrolling",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            1056,
+            4760,
+            6544,
+            13940,
+            14904,
+            15112,
+            15752
+        ]
+    },
+    {
+        "name": "helitargetplayer",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "llevelstate",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            7528,
+            8124,
+            9096,
+            10020,
+            10944,
+            11868,
+            12712
+        ]
+    },
+    {
+        "name": "patrolling",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            1028,
+            4620,
+            8692,
+            14228
+        ]
+    },
+    {
+        "name": "specialstart",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8008,
+            8332,
+            8720
+        ]
+    },
+    {
+        "name": "vector",
+        "nameGarbage": "0000000000000000000000000000000000000000000000000000",
+        "offset": "c4050000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    },
+    {
+        "name": "vector2",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "d0050000",
+        "size": 12,
+        "hierarchieType": "01000000",
+        "objectType": "vec3d",
+        "occurrences": []
+    }
+]

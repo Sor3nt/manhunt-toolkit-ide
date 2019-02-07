@@ -1,0 +1,13 @@
+{
+    "const": [],
+    "strings": [
+        "player being killed",
+        "heli",
+        "HeliMissIfLow",
+        "OnHeliSpottedEntity",
+        "StopHeliShoot",
+        "CheckLoop",
+        "player(player)"
+    ],
+    "byteReserved": 4
+}

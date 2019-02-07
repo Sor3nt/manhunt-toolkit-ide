@@ -1,0 +1,43 @@
+[
+    {
+        "name": "girlleft",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "leavecuttext",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7440,
+            8436
+        ]
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            6868
+        ]
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "0c050000",
+        "size": 20,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

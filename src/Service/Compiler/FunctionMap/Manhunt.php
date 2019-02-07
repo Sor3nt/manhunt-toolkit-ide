@@ -309,6 +309,73 @@ class Manhunt
             'offset' => "6F000000"
         ],
 
+        'aiscript_mediumpriority' => [
+            'offset' => "02000000"
+        ],
+
+        'aiscript_highpriority' => [
+            'offset' => "01000000"
+        ],
+
+        'aiscript_walkmovespeed' => [
+            'offset' => "01000000"
+        ],
+
+        'aiscript_lowpriority' => [
+            'offset' => "03000000"
+        ],
+
+        'combattypeid_melee' => [
+            'offset' => "00000000"
+        ],
+
+        'combattypeid_cover' => [
+            'offset' => "02000000"
+        ],
+
+        'combattypeid_open' => [
+            'offset' => "01000000"
+        ],
+        'combattypeid_open_melee' => [
+            'offset' => "03000000"
+        ],
+        'col_basic' => [
+            'offset' => "01000000"
+        ],
+        'door_closed' => [
+            'offset' => "02000000"
+        ],
+        'aiscript_graphlink_allow_everything' => [
+            'offset' => "03000000"
+        ],
+        'aiscript_graphlink_allow_nothing' => [
+            'offset' => "00000000"
+        ],
+        'voice_smiley3voice1' => [
+            'offset' => "1d000000"
+        ],
+        'aiscript_idle_patrol' => [
+            'offset' => "01000000"
+        ],
+        'aispeech_s3v1_asy_close_door' => [
+            'offset' => "11000000"
+        ],
+        'aispeech_s2v1_asy_close_door' => [
+            'offset' => "10000000"
+        ],
+        'voice_smiley2voice1' => [
+            'offset' => "1b000000"
+        ],
+        'voice_smiley1voice1' => [
+            'offset' => "19000000"
+        ],
+        'aispeech_s1v1_asy_close_door' => [
+            'offset' => "0f000000"
+        ],
+        'aiscript_idle_wandersearch' => [
+            'offset' => "00000000"
+        ],
+
     ];
 
     public static $functions = [
@@ -321,11 +388,376 @@ class Manhunt
             /**
              * Parameters
              * 1: Minutes
-             * 2: Seconds
+             * 2: Seconds>
              */
             'params' => ['Integer', 'Integer'],
             'return' => 'Void',
             'desc' => ''
+        ],
+
+        'getplayerlevelrestarts' => [
+            'name' => 'getplayerlevelrestarts',
+            'offset' => "89020000",
+            'return' => 'Integer'
+
+        ],
+
+
+        'aientitygohomeifidle' => [
+            'name' => 'aientitygohomeifidle',
+            'offset' => "15020000",
+        ],
+        'aisethunteridleactionminmaxradius' => [
+            'name' => 'aisethunteridleactionminmaxradius',
+            'offset' => "a3010000",
+        ],
+
+        'graphmodifyconnections' => [
+            'name' => 'graphmodifyconnections',
+            'offset' => "e8000000",
+        ],
+
+        'lockentity' => [
+            'name' => 'lockentity',
+            'offset' => "97000000",
+        ],
+
+        'ainumberinsubpack' => [
+            'name' => 'ainumberinsubpack',
+            'offset' => "66010000",
+            'return' => 'Integer'
+        ],
+
+
+
+        'aisethunterhomenodedirection' => [
+            'name' => 'aisethunterhomenodedirection',
+            'offset' => "9c010000",
+        ],
+        'airemovegoalfromsubpack' => [
+            'name' => 'airemovegoalfromsubpack',
+            'offset' => "56010000",
+        ],
+        'setentityinvulnerable' => [
+            'name' => 'setentityinvulnerable',
+            'offset' => "5d010000",
+        ],
+        'setpeddonotdecay' => [
+            'name' => 'setpeddonotdecay',
+            'offset' => "68020000",
+        ],
+        'playhunterspeech' => [
+            'name' => 'playhunterspeech',
+            'offset' => "99020000",
+        ],
+
+        'destroyentity' => [
+            'name' => 'destroyentity',
+            'offset' => "9d020000",
+        ],
+
+        'aisetidlepatrolstop' => [
+            'name' => 'aisetidlepatrolstop',
+            'offset' => "a5010000",
+        ],
+
+        'aisethunteridlepatrol' => [
+            'name' => 'aisethunteridlepatrol',
+            'offset' => "a2010000",
+        ],
+
+
+        'sethunterhidehealth' => [
+            'name' => 'sethunterhidehealth',
+            'offset' => "ed010000",
+        ],
+
+
+
+        'sethunterhitaccuracy' => [
+            'name' => 'sethunterhitaccuracy',
+            'offset' => "aa010000",
+        ],
+
+
+        'aisetidlehomenode' => [
+            'name' => 'aisetidlehomenode',
+            'offset' => "82010000",
+        ],
+
+        'aisetentityvoiceid' => [
+            'name' => 'aisetentityvoiceid',
+            'offset' => "6f020000",
+        ],
+
+
+        'sethunterheadskin' => [
+            'name' => 'sethunterheadskin',
+            'offset' => "45020000",
+        ],
+
+        'sethunterskin' => [
+            'name' => 'sethunterskin',
+            'offset' => "42020000",
+        ],
+
+        'entityignorecollisions' => [
+            'name' => 'entityignorecollisions',
+            'offset' => "9f020000",
+        ],
+
+        'cutsceneend' => [
+            'name' => 'cutsceneend',
+            'offset' => "48010000",
+        ],
+
+
+        'removeentity' => [
+            'name' => 'removeentity',
+            'offset' => "80000000",
+        ],
+
+        'setdooroverrideangle' => [
+            'name' => 'setdooroverrideangle',
+            'offset' => "95020000",
+        ],
+
+        'setcameraview' => [
+            'name' => 'setcameraview',
+            'offset' => "8e010000",
+        ],
+
+        'setcameraposition' => [
+            'name' => 'setcameraposition',
+            'offset' => "91010000",
+        ],
+        'cutscenestart' => [
+            'name' => 'cutscenestart',
+            'offset' => "47010000",
+        ],
+
+        'isexecutioninprogress' => [
+            'name' => 'isexecutioninprogress',
+            'offset' => "4e020000",
+        ],
+
+        'aiisgoalnameinsubpack' => [
+            'name' => 'aiisgoalnameinsubpack',
+            'offset' => "a2020000",
+        ],
+
+        'setdooropenangleout' => [
+            'name' => 'setdooropenangleout',
+            'offset' => "d3010000",
+        ],
+
+        'unlockentity' => [
+            'name' => 'unlockentity',
+            'offset' => "98000000",
+        ],
+
+
+        'setdoorstate' => [
+            'name' => 'setdoorstate',
+            'offset' => "96000000",
+        ],
+
+
+        'killentity' => [
+            'name' => 'killentity',
+            'offset' => "7f000000",
+        ],
+
+
+        'unfreezeentity' => [
+            'name' => 'unfreezeentity',
+            'offset' => "37010000",
+        ],
+
+        'runscript' => [
+            'name' => 'runscript',
+            'offset' => "e3000000",
+        ],
+
+        'createboxtrigger' => [
+            'name' => 'createboxtrigger',
+            'offset' => "27010000",
+        ],
+
+        'triggeraddentityclass' => [
+            'name' => 'triggeraddentityclass',
+            'offset' => "0d020000",
+        ],
+
+        'createspheretrigger' => [
+            'name' => 'createspheretrigger',
+            'offset' => "a2000000",
+        ],
+
+        'aiassociatefouractiveareaswithplayerarea' => [
+            'name' => 'aiassociatefouractiveareaswithplayerarea',
+            'offset' => "bd010000",
+        ],
+
+        'aiassociatethreeactiveareaswithplayerarea' => [
+            'name' => 'aiassociatethreeactiveareaswithplayerarea',
+            'offset' => "bc010000",
+        ],
+
+        'aiclearallactiveareaassociations' => [
+            'name' => 'aiclearallactiveareaassociations',
+            'offset' => "b9010000",
+        ],
+
+        'aisubpackstayinterritory' => [
+            'name' => 'aisubpackstayinterritory',
+            'offset' => "d4010000",
+        ],
+
+        'aiaddgoalforsubpack' => [
+            'name' => 'aiaddgoalforsubpack',
+            'offset' => "55010000",
+        ],
+
+        'aiaddareaforsubpack' => [
+            'name' => 'aiaddareaforsubpack',
+            'offset' => "77010000",
+        ],
+
+        'aisetleaderinvisible' => [
+            'name' => 'aisetleaderinvisible',
+            'offset' => "6a020000",
+        ],
+
+
+        'aidefinegoalgotonode' => [
+            'name' => 'aidefinegoalgotonode',
+            'offset' => "6e010000",
+        ],
+
+
+        'aidefinegoalguarddirection' => [
+            'name' => 'aidefinegoalguarddirection',
+            'offset' => "af010000",
+        ],
+
+        'aiguardmodifyshootoutsideradius' => [
+            'name' => 'aiguardmodifyshootoutsideradius',
+            'offset' => "cc010000",
+        ],
+
+        'aidefinegoalhuntenemy' => [
+            'name' => 'aidefinegoalhuntenemy',
+            'offset' => "57010000",
+        ],
+
+        'getplayerareaname' => [
+            'name' => 'getplayerareaname',
+            'offset' => "1c010000",
+            'return' => 'String'
+        ],
+
+        'spawnmovingentity' => [
+            'name' => 'spawnmovingentity',
+            'offset' => "79000000"
+        ],
+
+        'isentityalive' => [
+            'name' => 'isentityalive',
+            'offset' => "a9010000"
+        ],
+
+        'setentityscriptsfromentity' => [
+            'name' => 'setentityscriptsfromentity',
+            'offset' => "d8010000"
+        ],
+        'writedebugflush' => [
+            'name' => 'writedebugflush',
+            'offset' => "73000000"
+        ],
+        'writedebugstring' => [
+            'name' => 'writedebugstring',
+            'offset' => "72000000"
+        ],
+        'writedebuginteger' => [
+            'name' => 'writedebuginteger',
+            'offset' => "6d000000"
+        ],
+        'switchlightoff' => [
+            'name' => 'switchlightoff',
+            'offset' => "d9000000"
+        ],
+        'writedebuglevelvarinteger' => [
+            'name' => 'writedebuglevelvarinteger',
+            'offset' => "6d000000"
+        ],
+        'setnumberofkillablehuntersinlevel' => [
+            'name' => 'SetNumberOfKillableHuntersInLevel',
+            'offset' => "e6020000"
+        ],
+        'aicutsceneentityenable' => [
+            'name' => 'aicutsceneentityenable',
+            'offset' => "a6020000"
+        ],
+        'isscriptaudioslotloaded' => [
+            'name' => 'isscriptaudioslotloaded',
+            'offset' => "bf020000"
+        ],
+        'aisetentityidleoverride' => [
+            'name' => 'aisetentityidleoverride',
+            'offset' => "b4010000"
+        ],
+        'playscriptaudioslotoneshotfromentity' => [
+            'name' => 'playscriptaudioslotoneshotfromentity',
+            'offset' => "c0020000"
+        ],
+        'aitriggersoundlocationknown' => [
+            'name' => 'aitriggersoundlocationknown',
+            'offset' => "6e020000"
+        ],
+        'createkillablemhfx' => [
+            'name' => 'createkillablemhfx',
+            'offset' => "f1020000"
+        ],
+        'createmhfx' => [
+            'name' => 'createmhfx',
+            'offset' => "8d020000"
+        ],
+        'getentityposition' => [
+            'name' => 'getentityposition',
+            'offset' => "77000000"
+        ],
+        'setdooropenanglein' => [
+            'name' => 'setdooropenanglein',
+            'offset' => "d2010000"
+        ],
+        'createandfireweapon' => [
+            'name' => 'createandfireweapon',
+            'offset' => "9b020000"
+        ],
+        'killmhfx' => [
+            'name' => 'killmhfx',
+            'offset' => "f2020000"
+        ],
+        'switchlighton' => [
+            'name' => 'switchlighton',
+            'offset' => "da000000"
+        ],
+        'setlightflicker' => [
+            'name' => 'setlightflicker',
+            'offset' => "de000000"
+        ],
+        'entityplayanim' => [
+            'name' => 'entityplayanim',
+            'offset' => "a0010000"
+        ],
+        'rotateentityleft' => [
+            'name' => 'rotateentityleft',
+            'offset' => "4d000000"
+        ],
+        'setmaxnumberofrats' => [
+            'name' => 'setmaxnumberofrats',
+            'offset' => "a5020000"
         ],
 
         'starttimer' => [
@@ -373,18 +805,7 @@ class Manhunt
 
         ],
 
-        'setnumberofkillablehuntersinlevel' => [
-            'name' => 'SetNumberOfKillableHuntersInLevel',
-            'offset' => "e6020000",
-            /**
-             * Parameters
-             * 1:  to kill
-             * 2:  to execute
-             */
-            'params' => ['Integer', 'Integer'],
-            'return' => 'Void',
-            'desc' => ''
-        ],
+
         'handcamsetvideoeffecttimecode' => [
             'name' => 'HandCamSetVideoEffectTimeCode',
             'offset' => "5f020000",
@@ -466,7 +887,8 @@ class Manhunt
         ],
         'getentity' => [
             'name' => 'GetEntity',
-            'offset' => "76000000"
+            'offset' => "76000000",
+            'return' => 'Entity'
         ],
 
         "getplayerposition" => [

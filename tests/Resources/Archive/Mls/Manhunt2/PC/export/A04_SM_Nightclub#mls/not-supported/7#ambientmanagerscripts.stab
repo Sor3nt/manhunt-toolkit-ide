@@ -1,0 +1,71 @@
+[
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            11144,
+            11180,
+            11484,
+            11520,
+            11876,
+            11912,
+            12268,
+            12304,
+            12608,
+            12644,
+            12948,
+            12984,
+            13340,
+            13376,
+            13548,
+            13760,
+            13980,
+            14284,
+            14320,
+            14492,
+            14664,
+            14836,
+            15008,
+            15180,
+            15352,
+            15708,
+            15744,
+            16100,
+            16136,
+            16492,
+            16528,
+            16832,
+            16868,
+            17172,
+            17208,
+            17512,
+            17548,
+            17904,
+            17940
+        ]
+    },
+    {
+        "name": "incutscene",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            10752
+        ]
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "44030000",
+        "size": 22,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

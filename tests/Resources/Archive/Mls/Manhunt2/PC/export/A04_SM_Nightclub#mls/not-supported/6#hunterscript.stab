@@ -1,0 +1,11 @@
+[
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "58000000",
+        "size": 16,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

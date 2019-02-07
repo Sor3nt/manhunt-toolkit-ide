@@ -1,0 +1,78 @@
+[
+    {
+        "name": "blitzing",
+        "nameGarbage": "000000000000000000000000000000000000000000000000",
+        "offset": "a0010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "donediscocutscene",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7704
+        ]
+    },
+    {
+        "name": "slowsweep",
+        "nameGarbage": "0000000000000000000000000000000000000000000000",
+        "offset": "bc010000",
+        "size": 128,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "slowsweepsleep",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "4c020000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "slowsweepwp",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "3c020000",
+        "size": 16,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "strobes",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "a4010000",
+        "size": 24,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "strobesbuilt",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2460
+        ]
+    },
+    {
+        "name": "swap",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "9c010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

@@ -8,11 +8,14 @@ class T_SWITCH {
 
     static public function map( $node, \Closure $getLine, \Closure $emitter, $data ){
 
+        $debugMsg = sprintf('[T_SWITCH] map: ');
+
         $code = [];
 
         //evaluate the switch variable
         $result = $emitter($node['switch']);
         foreach ($result as $item) {
+            $item->debug = '[T_SWITCH] map: ' . $item->debug;
             $code[] = $item;
         }
 
@@ -24,31 +27,32 @@ class T_SWITCH {
 
         foreach ($casesRev as $index => $case) {
 
-            $code[] = $getLine('24000000', $forceLineNumber);
+            $code[] = $getLine('24000000', $forceLineNumber, $debugMsg . ' case');
             $forceLineNumber = false;
 
-            $code[] = $getLine('01000000');
-            $code[] = $getLine( self::toIndex($case['index'], $data, $node['switch']) );
+            $code[] = $getLine('01000000', false, $debugMsg . ' case');
+            $code[] = $getLine( self::toIndex($case['index'], $data, $node['switch']), false, $debugMsg . ' case' );
 
-            $code[] = $getLine('3f000000');
-            $code[] = $getLine(Helper::fromIntToHex( $calc['cases'][$index] ));
+            $code[] = $getLine('3f000000', false, $debugMsg . ' case');
+            $code[] = $getLine(Helper::fromIntToHex( $calc['cases'][$index] ), false, $debugMsg . ' case');
 
         }
 
-        $code[] = $getLine('3c000000');
-        $code[] = $getLine(Helper::fromIntToHex( $calc['end'] ));
+        $code[] = $getLine('3c000000', false, $debugMsg . ' finalize (1)');
+        $code[] = $getLine(Helper::fromIntToHex( $calc['end'] ), false, $debugMsg . ' offset ' . $calc['end']);
 
         foreach ($casesRev as $case) {
 
             foreach ($case['body'] as $bodyNode) {
                 $result = $emitter($bodyNode);
                 foreach ($result as $item) {
+                    $item->debug = '[T_SWITCH] map: ' . $item->debug;
                     $code[] = $item;
                 }
             }
 
-            $code[] = $getLine('3c000000');
-            $code[] = $getLine(Helper::fromIntToHex( $calc['end'] ));
+            $code[] = $getLine('3c000000', false, $debugMsg . ' finalize (2)');
+            $code[] = $getLine(Helper::fromIntToHex( $calc['end'] ), false, $debugMsg . ' offset ' . $calc['end']);
 
         }
 
@@ -64,27 +68,19 @@ class T_SWITCH {
 
         $casesRev = array_reverse($node['cases']);
 
-        foreach ($casesRev as $case) {
-            $line += 5;
-        }
-
-        $line += 2;
+        $line += (count($node['cases']) * 5) + 2;
 
         foreach ($casesRev as $case) {
             $calc['cases'][] = $line * 4;
 
             $code = [];
             foreach ($case['body'] as $bodyNode) {
-                $result = $emitter($bodyNode, false);
-                foreach ($result as $item) {
+                foreach ($emitter($bodyNode, false) as $item){
                     $code[] = $item;
                 }
-
             }
 
-            $line += count($code);
-
-            $line += 2;
+            $line += count($code) + 2;
         }
 
         $calc['end'] = $line * 4;
@@ -96,27 +92,27 @@ class T_SWITCH {
 
         switch ($node['type']){
             case Token::T_VARIABLE:
-                $mapping = T_VARIABLE::getMapping($switchVar, null, $data);
+                $mapping = T_VARIABLE::getMapping($switchVar, $data);
                 if (isset($data['types'][ $mapping['type'] ])){
 
                     $mapping = $data['types'][ $mapping['type'] ];
                     $mapping = $mapping[ strtolower($node['value']) ];
 
                 }else{
-                    $mapping = T_VARIABLE::getMapping($node, null, $data);
+                    $mapping = T_VARIABLE::getMapping($node, $data);
                 }
 
                 return $mapping['offset'];
 
                 break;
+            case Token::T_BOOLEAN:
             case Token::T_INT:
+
+                //just a hack: todo, boolean transform failed
+                if ($node['value'] == "true") $node['value'] = 1;
+                if ($node['value'] == "false") $node['value'] = 0;
+
                 return Helper::fromIntToHex($node['value']);
-                break;
-            case Token::T_FALSE:
-                return Helper::fromIntToHex(0);
-                break;
-            case Token::T_TRUE:
-                return Helper::fromIntToHex(1);
                 break;
             default:
                 throw new \Exception('T_SWITCH: can not convert index from ' . $node['type']);

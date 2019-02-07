@@ -1,0 +1,40 @@
+scriptmain SpotlightGuardThree;
+
+ENTITY
+	triggerSpotlightGuard3 : et_name;
+
+VAR
+	spotlight3working : level_var boolean;
+	
+script OnCreate;
+begin
+	TriggerAddEntityClass(this, COL_HUNTER);
+	TriggerRemoveEntityClass(this, COL_PLAYER);
+	spotlight3working := TRUE;
+end;
+
+
+script OnEnterTrigger;
+begin
+	spotlight3working := TRUE;
+	
+	if GetEntity('triggerSpotlight03') <> NIL then
+	begin
+		RunScript('triggerSpotlight03', 'Spot1Patrol');
+		if InsideTriggerType(GetEntity('triggerSpotlight03'), EC_PLAYER) then
+			RunScript('triggerSpotlight03', 'OnEnterTrigger');
+	end;
+end;
+
+script OnLeaveTrigger;
+begin
+	if NOT InsideTriggerType(this, EC_HUNTER) then
+	begin
+		spotlight3working := FALSE;
+		KillScript('triggerSpotlight03', 'Spot1Patrol');
+		SetSpotlightMode('SPOT_3', 'Freeze'); 
+	end;
+end;
+
+end.
+	

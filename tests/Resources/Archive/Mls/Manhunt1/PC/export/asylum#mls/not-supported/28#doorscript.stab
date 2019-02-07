@@ -1,0 +1,18 @@
+[
+    {
+        "name": "workshopdoor",
+        "nameGarbage": "006f6a616b5c6c6576656c735c4173796c756d5c",
+        "offset": "a8000000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "workshopdoor2",
+        "nameGarbage": "00000000000000000000000000000000000000",
+        "offset": "ac000000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]

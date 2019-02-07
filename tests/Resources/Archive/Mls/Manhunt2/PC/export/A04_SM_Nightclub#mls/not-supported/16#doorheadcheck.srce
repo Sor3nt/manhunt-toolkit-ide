@@ -1,0 +1,20 @@
+scriptmain doorHeadCheck;
+entity SM_HeadIDDoor_(S) : et_name;
+var index : integer;
+
+script OnCreate;
+	begin
+		if(GetEntityName(this) = 'SM_HeadIDDoor_(S)') then begin
+			index := 1;
+			SetEntityScriptsFromEntity('SM_HeadIDDoor_(S)', 'SM_HeadIDDoor_(S)01');
+		end else begin
+			index := 2;
+			HideEntity(this);
+			EnableUseable(this, false);
+		end;
+	end;
+
+script OnUseableUsed;
+	begin CallScript('leader(leader)', 'CheckHeadAtDoor') : index; end;
+
+end.

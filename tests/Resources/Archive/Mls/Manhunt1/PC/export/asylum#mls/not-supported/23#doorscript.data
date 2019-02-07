@@ -1,0 +1,17 @@
+{
+    "const": [],
+    "strings": [
+        "der_meshgate_(D)",
+        "Gen_Save_Point",
+        "Gen_Save_Point01",
+        "Open",
+        "Save points have gone so open door",
+        "der_meshgate_(D)",
+        "der_meshgate_(D)",
+        "CLOSE - WAITING FOR THE DOOR TO CLOSE",
+        "CLOSE - DOOR HAS NOW CLOSED",
+        "WORKSHOPHUNTER",
+        "aiward2"
+    ],
+    "byteReserved": 12
+}

@@ -1,0 +1,402 @@
+scriptmain PlayerScript;
+
+ENTITY
+	player(player): et_name;
+	
+TYPE
+	tLevelState = ( StartOfLevel, GasCan, Chase, EndChase );
+	
+VAR
+	{ This tells what level the state is in. After setting (increasing) it, call OnLevelStateSwitch. }
+	lLevelState : level_var tLevelState;
+	SpecialStart : level_var boolean;
+	patrolling : level_var boolean;
+	barrelOver : boolean;
+	barrelEnteredOne : level_var boolean;
+	barrelEnteredTwo : level_var boolean;
+	spotted : level_var boolean;
+	
+script OnPlayerSpotted;
+begin
+	spotted := TRUE;
+end;
+	
+script OnCreate;
+begin
+{	RunScript('player(player)', 'GasCanTargetter');}
+end;
+	
+script OnPickUpInventoryItem;
+begin
+	
+	if (GetLastItemPickedUp(GetPlayer) = CT_PLIERS) AND (lLevelState = StartOfLevel) then
+	begin
+	
+		if lLevelState <> GasCan then
+		begin
+			lLevelState := GasCan;
+			RunScript('A03_Neighbourhood', 'OnLevelStateSwitch');
+		end;
+		
+		{RadarPositionSetEntity(GetEntity('Wire_Blockage'), MAP_COLOR_BLUE);}
+		ClearLevelGoal('OBJ5');
+		RadarPositionClearEntity(GetEntity('Home_Box_(O)'));
+		RadarPositionClearEntity(GetEntity('Home_Box_(O)01'));
+		RadarPositionClearEntity(GetEntity('Home_Box_(O)02'));
+		
+		RemoveThisScript;
+	end;
+end;
+
+script OnDeath;
+begin
+	writeDebug('player(player): OnDeath: Start Script');
+	
+	KillScript('StopHeliShoot', 'CheckLoop');
+	
+	if GetEntity('heli') <> NIL then
+	begin
+		HeliOpenFire(GetEntity('heli'), false, 0.0);
+	end;
+end;
+
+script Intro;
+VAR
+	pos, vector, vector2 : vec3d;
+	loop : boolean;
+begin
+	
+	writedebug ('SCRIPT INTRO started');
+	
+	{loop := FALSE;
+	while loop = FALSE do
+	begin
+		sleep(10);
+		if GetEntity('Heli') <> NIL then loop := TRUE;
+	end;}
+	
+	cutscenestart;
+	
+		SetColourRamp('FE_colramps', 5, 0.1);
+	
+		{SetVector(vector, -3.15266, 9.4, -37.2307);
+		SetVector(pos, 5.97539, 0.961357, -31.2796);
+		HeliSetLight(GetEntity('Heli'), false);
+		HeliSetEnemy(GetEntity('Heli'), 'player(player)', false);}
+		CutSceneRegisterSkipScript(this, 'SkipMe1');
+
+		SetVector(pos, -0.845259, 2.69253, -83.6299);
+		MoveEntity(GetEntity('h11(hunter)'), pos, 1);
+		SetVector(pos, -2.72181, 2.69412, -83.7119);
+		MoveEntity(GetEntity('h11b(hunter)'), pos, 1);
+		SetVector(pos, 8.1371, 2.75999, -85.3973);
+		MoveEntity(GetEntity('h12(hunter)'), pos, 1);
+		SetPedOrientation(GetEntity('h11(hunter)'), -90);
+		SetPedOrientation(GetEntity('h11b(hunter)'), 90);
+		
+		{ === Cutscene Camera Animation Block (Camera07) === }
+		CutsceneCameraInit;
+		CutscenecameraSetPos(0.0, -8.29731, 2.45042, -20.2481);
+		CutscenecameraSetPos(10.9, -7.03439, 2.22461, -33.3433);
+		CutscenecameraSetTarget(0.0, -2.37172, 2.50235, -19.6775);
+		CutscenecameraSetTarget(10.9, -1.1088, 2.27654, -32.7727);
+		CutsceneCameraSetFOV(0.0, 50.0);
+		CutsceneCameraSetRoll(0.0, 0.0);
+		CutSceneCameraSetHandyCam(false);
+
+		while IsWhiteNoiseDisplaying do sleep(10);
+		
+		CutscenecameraStart;
+		{ === End Cutscene Camera Animation Block (Camera05) === }
+		
+		sleep(500);
+		SetColourRamp('FE_colramps', 1, 4.0);	
+		sleep(400);
+		FrisbeeSpeechPlay('WHYTE', 127, 127);
+		sleep(9750);
+		
+		{HideEntity(GetEntity('hCarCop21(hunter)'));
+		HideEntity(GetEntity('hCarCop22(hunter)'));}
+		
+		AIEntityPlayAnimLooped('h11(hunter)', 'BAT_IDLELOOP_IDLE_ANIM', 0.0);
+		AIEntityPlayAnimLooped('h11b(hunter)', 'BAT_IDLELOOP_IDLE_ANIM', 0.0);
+		
+		FrisbeeSpeechPlay('INTRO', 127, 127);
+		
+		SetStreamLipsyncSpeaker(GetEntity('h11(hunter)'),true);	
+		PlayScriptAudioStreamAuto('COP7', 127);
+
+		AIDefineGoalGotoNodeIdle('gIntroGoto', 'h12(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'INTROGOTO', AISCRIPT_WALKMOVESPEED,true);
+		AICutSceneEntityEnable('h12(hunter)', true);
+		AiAddGoalForSubpack('leader(leader)', 'subBack1', 'gIntroGoto');
+		
+		CutsceneCameraInit;
+		CutscenecameraSetPos(0.0, 2.40142, 6.47101, -76.1467);
+		CutscenecameraSetPos(4.86667, -2.7302, 6.47101, -76.0367);
+		CutscenecameraSetTarget(0.0, -5.01368, -6.59303, -112.921);
+		CutscenecameraSetTarget(3.86667, 2.79811, -5.60654, -113.475);
+		CutsceneCameraSetFOV(0.0, 50.0);
+		CutsceneCameraSetRoll(0.0, 0.0);
+		CutsceneCameraSetRoll(4.86667, 0.0);
+		CutSceneCameraSetHandyCam(false);
+		CutscenecameraStart;
+		{ === End Cutscene Camera Animation Block (Camera01) === }
+
+		sleep(4000);
+		
+		CutsceneCameraInit;
+		CutscenecameraSetPos(0.0, 7.58891, 4.16467, -86.3012);
+		CutscenecameraSetTarget(0.0, -13.0856, 2.19087, -78.4477);
+		CutsceneCameraSetFOV(0.0, 35.0);
+		CutsceneCameraSetRoll(0.0, 0.0);
+		CutSceneCameraSetHandyCam(false);
+		CutscenecameraStart;
+		
+		sleep(3000);
+
+		RunScript('heli', 'IntroFlyBy');
+		
+		CutsceneCameraInit;
+		CutscenecameraSetPos(0.0, -8.96016, 3.86763, -87.9452);
+		CutscenecameraSetTarget(0.0, 12.9994, 4.21999, -79.5596);
+		CutsceneCameraSetFOV(0.0, 55.0);
+		CutsceneCameraSetRoll(0.0, 0.0);
+		CutSceneCameraSetHandyCam(false);
+		CutscenecameraStart;
+		
+		while (NOT IsScriptAudioStreamCompleted) do sleep(10);
+
+		{PlayDirectorSpeechPlaceholder('TAR1_A');}
+		
+		
+
+	cutsceneend(false);
+	
+	SetVector(pos, -2.39272, 2.83108, -90.1726);
+	MoveEntity(GetEntity('hCarCop21(hunter)'), pos, 1);
+	SetVector(pos, 0.966857, 2.86522, -92.0543);
+	MoveEntity(GetEntity('hCarCop22(hunter)'), pos ,1);
+	AIEntityCancelAnim ('h11(hunter)', 'BAT_IDLELOOP_IDLE_ANIM');
+	AIEntityCancelAnim ('h11b(hunter)', 'BAT_IDLELOOP_IDLE_ANIM');
+	
+	SetVector(pos, -48.244, 3.92494, -101.106);
+	MoveEntity(GetEntity('h11(hunter)'), pos, 1);
+	SetVector(pos, -30.5272, 2.45896, -80.883);
+	MoveEntity(GetEntity('h11b(hunter)'), pos, 1);
+	SetVector(pos, 2.96306, 1.4804, -59.6368);
+	MoveEntity(GetEntity('h12(hunter)'), pos, 1);
+	
+	HeliSetLight(GetEntity('heli'), true);
+	
+	{Set colouramp for Normal}
+	SetColourRamp('FE_colramps', 1, 4.0);	
+	
+		
+	FrisbeeSpeechStop('LEO1');
+	
+	SpecialStart := TRUE;
+	patrolling := TRUE;
+	
+	RunScript('heli', 'PatrolTheStreet');
+	sleep(2000);
+	HeliSetEnemy(GetEntity('Heli'), 'player(player)', true);
+	
+	{SPEECH}
+	FrisbeeSpeechPlay('LEO1', 100, 100);
+	While (NOT FrisbeeSpeechIsFinished('LEO1')) do sleep(10);
+	
+	FrisbeeSpeechPlay('DAN1', 100, 100);
+	While (NOT FrisbeeSpeechIsFinished('DAN1')) do sleep(10);
+	
+	FrisbeeSpeechPlay('LEO2', 100, 100);
+			
+end;
+
+script OnEnteredSafeZone;
+begin
+	if GetEntity('triggerGetToSafe') <> NIL then
+	begin
+		RadarPositionClearEntity(GetEntity('triggerGetToSafe'));
+		RemoveThisScript;
+	end;
+end;
+
+script EndChaser;
+VAR
+	pos,pos2 : vec3d;
+begin
+		while (barrelEnteredOne <> TRUE) do sleep(10);
+		while (barrelEnteredTwo <> TRUE) do sleep(10);
+		writedebug('all hunters over the wall');
+	
+		barrelOver := TRUE;
+	
+		sleep(1000);
+	
+		DestroyEntity(GetEntity('hChaser09s(hunter)'));
+		DestroyEntity(GetEntity('hChaser10s(hunter)'));
+		DestroyEntity(GetEntity('triggerKillPlayer'));
+		DestroyEntity(GetEntity('triggerKillPlayer02'));
+{		DestroyEntity(GetEntity('triggerKillPlayer03'));
+		DestroyEntity(GetEntity('triggerKillPlayer04'));
+		DestroyEntity(GetEntity('triggerKillPlayer05'));}
+		
+		removethisscript;
+
+end;
+
+script ChaseCheat;
+begin
+	{Always tell the hunters where the player is during the chase}
+	while TRUE do
+	begin
+		if NOT IsPlayerPositionKnown then
+		begin
+			AITriggerSoundKnownLocationNoRadar('LURE_HIGH', GetPlayer);
+			sleep(3000);
+			writedebug('luring');
+		end;
+		
+	{	if IsPlayerPositionKnown then
+			writedebug('COMBAT');}
+		
+	end;
+end;
+
+script SkipMe1;
+begin
+	
+end;
+
+script SkipMe2;
+begin
+	if barrelOver = FALSE then
+		EntityPlayAnim(GetEntity('Falling_barrel'), 'EAT_FALLING_BARREL_ANIM', false);
+end;
+
+script HeliMissIfLow;
+begin
+	while (lLevelState <> EndChase) AND (NOT InsideTrigger(GetEntity('triggerKillPlayer'), GetPlayer)) do
+	begin
+		if GetDamage(GetPlayer) < 15 then
+			HeliOpenFire(GetEntity('heli'), true, 0.0)
+		{else
+			HeliOpenFire(GetEntity('heli'), true, 0.5);}
+	end;
+end;
+
+script WaveCountOne;
+VAR
+	vector : vec3d;
+begin
+	SetVector(vector, 0,1,0);
+ 	AIDefineGoalGuardDirection('gSecWaveD', AISCRIPT_MEDIUMPRIORITY, 'WAVED', 0.5, 0.5, 1, vector);
+ 	AIDefineGoalGuardDirection('gSecWaveE', AISCRIPT_MEDIUMPRIORITY, 'WAVEE', 0.5, 0.5, 1, vector);
+ 	   	
+ 	{Add the goal}
+ 	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveD');
+  AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveE');   
+  
+  AiAddEntity('hSecondWaveD(hunter)');
+  setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveD(hunter)');
+	RunScript('hSecondWaveD(hunter)', 'Init');
+	
+	AiAddEntity('hSecondWaveE(hunter)');
+  setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveE(hunter)');
+	RunScript('hSecondWaveE(hunter)', 'Init');
+	
+	AIDefineGoalGotoNode('gWaveDGoto', 'hSecondWaveD(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVED', AISCRIPT_RUNMOVESPEED,true);
+ 	AIDefineGoalGotoNode('gWaveEGoto', 'hSecondWaveE(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVEE', AISCRIPT_RUNMOVESPEED,true);
+	
+	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveDGoto');
+  
+  sleep(1000);
+  
+  AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveEGoto');
+  
+  RemoveThisScript;
+end;
+ 
+script WaveCountTwo;
+VAR
+	vector : vec3d;
+begin
+	sleep(1500);
+		
+		SetVector(vector, 0,1,0);
+   	AIDefineGoalGuardDirection('gSecWaveF', AISCRIPT_MEDIUMPRIORITY, 'WAVEA', 0.5, 0.5, 1, vector);
+   	AIDefineGoalGuardDirection('gSecWaveG', AISCRIPT_MEDIUMPRIORITY, 'WAVEG', 0.5, 0.5, 1, vector);
+   	   	
+   	{Add the goal}
+   	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveF');
+        
+    AiAddEntity('hSecondWaveF(hunter)');
+    setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveF(hunter)');
+		RunScript('hSecondWaveF(hunter)', 'Init');
+		
+		
+		AIDefineGoalGotoNode('gWaveFGoto', 'hSecondWaveF(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVEF', AISCRIPT_RUNMOVESPEED,true);
+  		
+		AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveFGoto');
+		
+		RemoveThisScript;
+end; 
+
+script WaveCountThree;
+VAR
+	vector : vec3d;
+begin
+	sleep(1000);
+		        
+  AiAddEntity('hSecondWaveG(hunter)');
+  setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveG(hunter)');
+	RunScript('hSecondWaveG(hunter)', 'Init');
+	
+	
+	AIDefineGoalGotoNode('gWaveGGoto', 'hSecondWaveG(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVEG', AISCRIPT_RUNMOVESPEED,true);
+		
+	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveGGoto');
+	
+	RemoveThisScript;
+end;
+
+script WaveCountFour;
+VAR
+	vector : vec3d;
+begin
+	sleep(1500);
+		
+	SetVector(vector, 0,1,0);
+ 	AIDefineGoalGuardDirection('gSecWaveH', AISCRIPT_MEDIUMPRIORITY, 'WAVEH', 0.5, 0.5, 1, vector);
+ 	   	
+ 	{Add the goal}
+ 	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gSecWaveH');
+      
+  AiAddEntity('hSecondWaveH(hunter)');
+  setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveH(hunter)');
+	RunScript('hSecondWaveH(hunter)', 'Init');
+	
+	AIDefineGoalGotoNode('gWaveHGoto', 'hSecondWaveH(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVEH', AISCRIPT_RUNMOVESPEED,true);
+		
+	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveHGoto');
+	
+	RemoveThisScript;
+end;
+
+script WaveCountFive;
+VAR
+	vector : vec3d;
+begin
+	AiAddEntity('hSecondWaveI(hunter)');
+  setentityscriptsfromentity('hSecondWave(hunter)', 'hSecondWaveI(hunter)');
+	RunScript('hSecondWaveI(hunter)', 'Init');
+	
+	{GO GUARD G}		
+	AIDefineGoalGotoNode('gWaveIGoto', 'hSecondWaveI(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'WAVEG', AISCRIPT_RUNMOVESPEED,true);
+		
+	AiAddGoalForSubpack('leader(leader)', 'subPostChase', 'gWaveIGoto');
+	
+	RemoveThisScript;
+end;
+
+end.

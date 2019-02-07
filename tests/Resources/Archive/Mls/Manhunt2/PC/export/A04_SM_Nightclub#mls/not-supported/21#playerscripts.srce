@@ -1,0 +1,758 @@
+scriptmain playerScripts;
+entity player(player) : et_name;
+type tLevelState = ( Bar, Disco, Dungeon );
+var	levelState : level_var tLevelState;
+	doneWithPedal : level_var boolean;
+	inCutscene : level_var boolean;
+	ambientForceChange : level_var boolean;
+	ambientLocationID : level_var integer;
+	ambientYardWindowSmashed : level_var boolean;
+	numBricks : level_var integer;
+	showBrick, gotHead, firstPickedBrick, firstPickedAxe : boolean;
+	brickPos : vec3d;
+	brickName : string[32];
+	leaveCutText, shownFaceGoal : level_var boolean;
+	seeDeadPlayed : boolean;
+
+script OnCreate;
+	var pos : vec3d;
+		i : integer;
+	begin
+		brickName := '';
+		gotHead := false;
+		firstPickedBrick := true;
+		firstPickedAxe := true;
+		showBrick := true;
+		seeDeadPlayed := false;
+		SetVector(brickPos, 51.8554, 0.322598, -22.4404);
+		EntityPlayAnim(GetEntity('PFX'), 'PAT_MOTHS01', true);
+		EntityPlayAnim(GetEntity('PFX11'), 'PAT_MOTHS01', true);
+	end;
+
+script OnPickUpInventoryItem;
+	begin
+		if(GetLastItemPickedUp(GetPlayer) = CT_HEAD) then gotHead := true;
+		if((GetLastItemPickedUp(GetPlayer) = CT_BRICK_HALF) and (firstPickedBrick) and (GetEntity('tBrick') <> nil)) then begin
+			firstPickedBrick := false;
+			RunScript('SM_Break_Window_Glass', 'PromptThrow');
+		end;
+		if((GetLastItemPickedUp(GetPlayer) = CT_FIRE_AXE) and (firstPickedAxe)) then begin
+			firstPickedAxe := false;
+			RunScript('player(player)', 'PromptHead');
+		end;
+	end;
+
+script PromptHead;
+	begin
+		ClearLevelGoal('GOAL5');
+		if(shownFaceGoal) then ClearLevelGoal('GOAL4');
+		Sleep(100);
+		SetLevelGoal('EXECT');
+		Sleep(100);
+		SetLevelGoal('GOAL5');
+		Sleep(100);
+		if(shownFaceGoal) then SetLevelGoal('GOAL4');
+		Sleep(2000);
+		RunScript('player(player)', 'DisplayGameText_EXEC4');
+	end;
+
+script MonitorBricks;
+	var brickEnt, brick : entityptr;
+		i : integer;
+		pos, drop : vec3d;
+	begin
+		brickEnt := GetEntity('Half_Brick_(CT)11');
+		EntityIgnoreCollisions(brickEnt, true);
+		HideEntity(brickEnt);
+		while(not ambientYardWindowSmashed) do begin
+			MoveEntity(brickEnt, brickPos, 0);
+			if(numBricks < 4) then begin
+				GetDropPosForPlayerPickups(brickEnt, drop);
+				drop.y := drop.y - 0.6;
+				brick := SpawnMovingEntity('Half_Brick_(CT)', drop, 'ScriptCreateName');
+				brickName := GetEntityName(brick);
+				SetEntityScriptsFromEntity('brickTemplate', brickName);
+				Sleep(1000);
+			end;
+			Sleep(10);
+		end;
+		DestroyEntity(brickEnt);
+	end;
+
+procedure BarExitHunter(name : string);
+	begin
+		if(IsEntityAlive(name)) then begin
+			AIMakeEntityDeaf(name, 0);
+			AIMakeEntityBlind(name, 0);
+		end;
+	end;
+
+script MonitorBarExit;
+	var pos, pos2 : vec3d;
+	begin
+		while(true) do begin
+			pos := GetPlayerPosition;
+			if(pos.x < 21.5) then begin
+				doneWithPedal := true;
+				SetVector(pos2, 22.1030, 0.2, -22.7033);
+				MoveEntity(GetEntity('colDummy'), pos2, 0);
+				SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSING);
+				if(GetEntity('hBar01(hunter)') <> nil) then BarExitHunter('hBar01(hunter)');
+				if(GetEntity('hBar02(hunter)') <> nil) then BarExitHunter('hBar02(hunter)');
+				if(GetEntity('hBar03(hunter)') <> nil) then BarExitHunter('hBar03(hunter)');
+				if(GetEntity('hBar04(hunter)') <> nil) then BarExitHunter('hBar04(hunter)');
+				KillThisScript;
+			end;
+			Sleep(10);
+		end;
+	end;
+
+script DancefloorSpawn;
+	var pos : vec3d;
+	begin
+		while(true) do begin
+			while(AINumberInSubPack('leader(leader)', 'subHuntDisco') > 0) do Sleep(1000);
+			Sleep(30000 + randnum(20000));
+			if(ambientLocationID = 6) then begin
+				WriteDebug('Spawing new dancefloor hunter');
+				if(GetEntity('hDisco02(hunter)') <> nil) then DestroyEntity(GetEntity('hDisco02(hunter)'));
+				Sleep(2000);
+				SetVector(pos, 22.406, 1.11084, -5.38054);
+				if(randnum(10) > 5) then AIAddEntity(GetEntityName(SpawnMovingEntity('sm_bodD', pos, 'hDisco02(hunter)')))
+				else AIAddEntity(GetEntityName(SpawnMovingEntity('sm_bodB', pos, 'hDisco02(hunter)')));
+				Sleep(100);
+				SetEntityScriptsFromEntity('hDisco01(hunter)', 'hDisco02(hunter)');
+				RunScript('hDisco02(hunter)', 'CreateMe');
+				Sleep(1000);
+				RunScript('hDisco02(hunter)', 'HackSpawnedWander');
+				Sleep(1000);
+			end;
+		end;
+	end;
+
+script Skip_HunterPissing;
+	begin
+		KillScript('hBar01(hunter)', 'PissLoopCutscene');
+		AIEntityCancelAnim('hBar01(hunter)', 'BAT_IDLE_PISS_ANIM');
+		if(AIIsGoalNameInSubpack('leader(leader)', 'subPiss', 'Goto_Piss')) then AIRemoveGoalFromSubpack('leader(leader)', 'subPiss', 'Goto_Piss');
+	end;
+
+script HunterPissing;
+	var pos, dir : vec3d;
+		dis : real;
+	begin
+		ClearLevelGoal('GOAL1');
+		ClearLevelGoal('BT');
+		SetLevelGoal('GOAL2');
+		DisableUserInput;
+		SwitchLightOn(GetEntity('SM_flicker_(L)_01'));
+		AISetHunterOnRadar('hBar01(hunter)', true);
+		CutsceneStart;
+			inCutscene := true;
+			AICutsceneEntityEnable('hBar01(hunter)', true);
+			AISetIdleHomeNode('hBar01(hunter)', '');
+			ambientLocationID := 3;
+			ambientForceChange := true;
+			CutsceneCameraInit;
+				CutsceneCameraSetFOV(0.0, 70.0);
+				CutsceneCameraSetFOV(2.0, 50.0);
+				CutsceneCameraSetPos(0.0, 47.2039, 1.53165, -19.6074);
+				CutsceneCameraSetPos(4.4, 47.653, 1.53165, -27.8148);
+				CutsceneCameraSetPos(6.66667, 49.2002, 1.53165, -29.0974);
+				CutsceneCameraSetTarget(0.0, 48.0295, 1.53165, -32.3682);
+				CutsceneCameraSetTarget(2.8, 48.0816, 1.53165, -32.2074);
+				CutsceneCameraSetTarget(6.66667, 52.8186, 1.53165, -29.1995);
+				CutsceneCameraSetRoll(0.0, 0.984524);
+				CutsceneCameraSetRoll(0.9, -2.00754);
+				CutsceneCameraSetRoll(2.33333, 2.47436);
+				CutsceneCameraSetRoll(3.66667, -0.444834);
+				CutsceneCameraSetHandyCam(true);
+			CutscenecameraStart;
+				PlayScriptAudioStreamAuto('TOILET', 127);
+				CutsceneRegisterSkipScript(this, 'Skip_HunterPissing');
+				SetVector(pos, 51.0, 0.0, -24.67);
+				AIDefineGoalGotoVector('Goto_Piss', 'hBar01(hunter)', AISCRIPT_HIGHPRIORITY, 'nPiss', pos, AISCRIPT_WALKMOVESPEED, true);
+				AIAddGoalForSubpack('leader(leader)', 'subPiss', 'Goto_Piss');
+				Sleep(2000);
+				RunScript('hBar01(hunter)', 'PissLoopCutscene');
+				UnfreezeEntity(GetEntity('SM_doorA_(D)'));
+				SetDoorOverrideAngle('SM_doorA_(D)', -100);
+				SwitchLightOff(GetEntity('SM_flicker_(L)_01'));
+				Sleep(2000);
+			CutsceneCameraInit;
+				CutsceneCameraSetPos(0.0, 53.3907, 3.16203, -30.9244);
+				CutscenecameraSetTarget(0.0, 49.8296, 1.21325, -26.4109);
+				CutsceneCameraSetTarget(5.0, 53.1077, 1.21325, -25.4686);
+				CutsceneCameraSetFOV(0.0, 68.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(300);
+				if(GetDifficultyLevel = DIFFICULTY_EASY) then RunScript('player(player)', 'DisplayGameText_EE1') else RunScript('player(player)', 'DisplayGameText_EE1_HARD');
+				Sleep(13500);
+		CutsceneEnd(false);
+		if(GetEntity('Executor_02(envex)') <> nil) then ActivateEnvExec(GetEntity('Executor_02(envex)'), true);
+		KillScript('hBar01(hunter)', 'PissLoopCutscene');
+		AIEntityCancelAnim('hBar01(hunter)', 'BAT_IDLE_PISS_ANIM');
+		if(AIIsGoalNameInSubpack('leader(leader)', 'subPiss', 'Goto_Piss')) then AIRemoveGoalFromSubpack('leader(leader)', 'subPiss', 'Goto_Piss');
+		EndScriptAudioStream;
+		inCutscene := false;
+		leaveCutText := false;
+		ambientLocationID := 2;
+		ambientForceChange := true;
+		AICutsceneEntityEnable('hBar01(hunter)', false);
+		SetHunterMute(GetEntity('hBar01(hunter)'), false);
+		EnableUserInput;
+		SetVector(pos, 51.0, 0.0, -24.67);
+		MoveEntity(GetEntity('hBar01(hunter)'), pos, 1);
+		SetPedOrientation(GetEntity('hBar01(hunter)'), 0);
+		Sleep(10);
+		RunScript('hBar01(hunter)', 'PissLoop');
+		RunScript('tNeon', 'InitFirstLight');
+		SetVector(pos, 54.84, 0.1, -26.13);
+		MoveEntity(GetPlayer, pos, 1);
+		SetPedOrientation(GetPlayer, 205);
+		Sleep(1500);
+		ClearDoorOverrideAngle('SM_doorA_(D)');
+		RemoveThisScript;
+	end;
+
+script Skip_Intro;
+	begin WriteDebug('Skipping'); end;
+	
+script RunIntro;
+	begin
+		while(IsWhiteNoiseDisplaying) do Sleep(10);
+		CutsceneStart;
+			inCutscene := true;
+			CutsceneRegisterSkipScript(this, 'Skip_Intro');
+			ambientLocationID := 3;
+			ambientForceChange := true;
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 37.4776, 1.09524, -17.6756);
+				CutscenecameraSetPos(20.0, 36.4757, 1.09524, -26.4687);
+				CutscenecameraSetTarget(0.0, 55.996, -1.69026, -19.7855);
+				CutscenecameraSetTarget(20.0, 54.9941, -1.69026, -28.5786);
+				CutsceneCameraSetFOV(0.0, 45.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				while(IsWhiteNoiseDisplaying) do Sleep(10);
+				Sleep(4000);
+				FrisbeeSpeechPlay('LEO11', 127, 20);
+				Sleep(3000);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 40.0655,  0.4, -23.0919);
+				CutscenecameraSetPos(4.0, 39.4367, 0.4, -24.8675);
+				CutscenecameraSetPos(9.0, 38.5141, 0.4, -27.656);
+				CutscenecameraSetTarget(0.0, 19.2064, 2.0, -17.5027);
+				CutscenecameraSetTarget(4.0, 19.1218, 2.0, -15.3945);
+				CutscenecameraSetTarget(9.0, 21.6217, 2.0, -13.731);
+				CutsceneCameraSetFOV(0.0, 65.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(7000);
+				SetColourRamp('FE_superdreamramps', 5, 2);
+				Sleep(2000);
+		CutsceneEnd(false);
+		SetColourRamp('FE_colramps', 1, 1.0);
+		FrisbeeSpeechStop('LEO11');
+		inCutscene := false;
+		ambientLocationID := 1;
+		ambientForceChange := true;
+		Sleep(2000);
+		FrisbeeSpeechPlay('LEO4', 127, 20);
+		while(not FrisbeeSpeechIsFinished('LEO4')) do Sleep(10);
+		Sleep(400);		
+		FrisbeeSpeechPlay('V01', 127, 20);
+		while(not FrisbeeSpeechIsFinished('V01')) do Sleep(10);
+	end;
+
+procedure RampChooseCam(num : integer);
+	begin
+		case num of
+			0 : begin
+				CutscenecameraSetPos(0.0, 25.7322, -1.93919, -72.8987);
+				CutscenecameraSetTarget(0.0, 24.1632, -4.80675, -71.8607);
+			end;
+			1 : begin
+				CutscenecameraSetPos(0.0, 9.89572, -2.70234, -69.6714);
+				CutscenecameraSetTarget(0.0, 10.4204, -4.55062, -67.0688);
+			end;
+			2 : begin
+				CutscenecameraSetPos(0.0, 11.2994, -1.43816, -70.6703);
+				CutscenecameraSetTarget(0.0, 13.1721, -4.92106, -69.2739);
+			end;
+			3 : begin
+				CutscenecameraSetPos(0.0, 27.9363, -2.04789, -86.2679);
+				CutscenecameraSetTarget(0.0, 25.918, -4.20983, -84.203);
+			end;
+			4 : begin
+				CutscenecameraSetPos(0.0, 56.108, -3.33789, -70.7396);
+				CutscenecameraSetTarget(0.0, 57.8857, -4.74991, -75.0834);
+			end;
+			5 : begin
+				CutscenecameraSetPos(0.0, 40.0417, -4.72288, -47.9912);
+				CutscenecameraSetTarget(0.0, 38.2143, -1.86392, -41.0684);
+			end;
+			6 : begin
+				CutscenecameraSetPos(0.0, 43.6841, -3.73806, -49.2364);
+				CutscenecameraSetTarget(0.0, 41.7578, -5.40543, -44.9343);
+			end;
+			7 : begin
+				CutscenecameraSetPos(0.0, 48.75, -4.25559, -75.4211);
+				CutscenecameraSetTarget(0.0, 49.0852, -4.2, -75.3188);
+			end;
+		end;
+	end;
+
+procedure DestroyThing(name : string);
+	begin
+		if(GetEntity(name) <> nil) then DestroyEntity(GetEntity(name));
+	end;
+
+script Skip_Ramp; begin WriteDebug('Skipping'); end;
+
+script RampFlashback;
+	var pos : vec3d;
+		i, time : integer;
+	begin
+		{	DestroyThing('Bar_TableA');
+			DestroyThing('Bar_TableA01');
+			DestroyThing('CJ_GREENHSHELVES');
+			DestroyThing('cigarette_machine04');
+			DestroyThing('SA_Rubbish_D');
+			DestroyThing('SA_Rubbish_B04');
+			DestroyThing('DiscoLightA_Off02');
+			DestroyThing('DiscoLightB_Off02');
+			DestroyThing('DiscoLightB_Off03');
+			DestroyThing('DiscoLightA_Off03');
+			DestroyThing('DiscoLightB_Off04');
+			DestroyThing('DiscoLightB_Off05');
+			DestroyThing('DiscoLightA_Off04');
+			DestroyThing('DiscoLightB_Off06');
+			DestroyThing('SpeakerC');
+			DestroyThing('SpeakerC01');
+			DestroyThing('SpeakerC03');
+			DestroyThing('SA_Rubbish_D11');
+			DestroyThing('sm_barbottles');
+			DestroyThing('sm_barbottles01');
+			DestroyThing('SA_Rubbish_B09');
+			DestroyThing('Bar_Table_High');
+			DestroyThing('Bar_Stool_Tall17');
+			DestroyThing('Bar_Stool_Tall18');
+			DestroyThing('Bar_Stool_Tall19');
+			DestroyThing('SA_Rubbish_D25');
+			DestroyThing('SA_Rubbish_B12');
+			DestroyThing('Bar_TableA03');
+			DestroyThing('Bar_TableA04');
+			DestroyThing('Bar_Stool_Tall39');
+			DestroyThing('Bar_Stool_Tall40');
+			DestroyThing('coffee_table01_food07');
+			DestroyThing('Bar_Table_High01');
+			DestroyThing('DiscoLightA_Off01');
+			DestroyThing('DiscoLightA_Off05');
+			DestroyThing('DiscoLightB_Off27');
+			DestroyThing('DiscoLightA_Off06');
+			DestroyThing('DiscoLightB_Off28');
+			DestroyThing('DiscoLightB_Off01');
+			DestroyThing('DiscoLightA_Off07');
+			DestroyThing('DiscoLightB_Off12');
+			DestroyThing('DiscoLightB_Off25');
+			DestroyThing('DiscoLightC_Off09');
+			DestroyThing('DiscoLightC_Off10');
+			DestroyThing('DiscoLightB_Off08');
+			DestroyThing('DiscoLightB_Off14');
+			DestroyThing('DiscoLightB_Off24');
+			DestroyThing('DiscoLightB_Off15');
+			DestroyThing('DiscoLightB_Off10');
+			DestroyThing('DiscoLightC_Off12');
+			DestroyThing('DiscoLightC_Off13');
+			DestroyThing('DiscoLightB_Off17');
+			DestroyThing('DiscoLightB_Off26');
+			DestroyThing('DiscoLightB_Off11');
+			DestroyThing('DiscoLightC_Off14');
+			DestroyThing('DiscoLightC_Off01');
+			DestroyThing('DiscoLightB_Off18');
+			DestroyThing('DiscoLightB_Off19');
+			DestroyThing('DiscoLightB_Off20');
+			DestroyThing('Bar_Stool_Tall10');
+			DestroyThing('Bar_TableC02');
+			DestroyThing('Bar_Stool_Tall11');
+			DestroyThing('SA_BEER_C04');
+			DestroyThing('SA_BEER_C05');
+			DestroyThing('coffee_table01_food02');
+			DestroyThing('CJ_WSHELF20');
+			DestroyThing('cigarette_machine02');
+			DestroyThing('SA_Rubbish_D04');
+			DestroyThing('SA_Rubbish_D05');
+			DestroyThing('SA_Rubbish_D08');
+			DestroyThing('SA_Rubbish_I04');
+			DestroyThing('SA_Rubbish_I05');
+			DestroyThing('SA_Rubbish_B05');
+			DestroyThing('SA_Rubbish_B06');
+			DestroyThing('SA_Rubbish_D10');
+			DestroyThing('SpeakerC04');
+			DestroyThing('SpeakerC05');
+			DestroyThing('SpeakerC07');
+			DestroyThing('SpeakerC09');
+			DestroyThing('SpeakerC10');
+			DestroyThing('SpeakerC11');
+			DestroyThing('DiscoLightC_Off07');
+			DestroyThing('DiscoLightC_Off15');
+			DestroyThing('DiscoLightB_Off21');
+			DestroyThing('DiscoLightC_Off16');
+			DestroyThing('DiscoLightC_Off17');
+			DestroyThing('SpeakerC14');
+			DestroyThing('DiscoLightB_Off31');
+			DestroyThing('DiscoLightA_Off09');
+			DestroyThing('DiscoLightA_Off10');
+			DestroyThing('DiscoLightA_Off11');
+			DestroyThing('DiscoLightA_Off12');
+			DestroyThing('DiscoLightA_Off13');
+			DestroyThing('DiscoLightA_Off14');
+			DestroyThing('sm_barbottles10');
+			DestroyThing('sm_barbottles13');
+			DestroyThing('CJ_WSHELF28');
+			DestroyThing('CJ_WSHELF29');
+			DestroyThing('DiscoLightA_Off15');
+			DestroyThing('DiscoLightA_Off16');
+			DestroyThing('DiscoLightA_Off17');
+			DestroyThing('DiscoLightA_Off18');
+			DestroyThing('DiscoLightB_Off33');
+			DestroyThing('DiscoLightA_Off19');
+			DestroyThing('DiscoLightB_Off34');
+			DestroyThing('DiscoLightA_Off20');
+			DestroyThing('DiscoLightA_Off21');
+			DestroyThing('DiscoLightA_Off22');
+			DestroyThing('SA_Rubbish_B10');
+			DestroyThing('SM_DiscoSpinnyBeam');
+			DestroyThing('Bar_Stool_Tall28');
+			DestroyThing('Bar_Stool_Tall29');
+			DestroyThing('Bar_Stool_Tall30');
+			DestroyThing('rope_border_stand02');
+			DestroyThing('rope_border02');
+			DestroyThing('rope_border_stand03');
+			DestroyThing('rope_border03');
+			DestroyThing('SMPersoncage');
+			DestroyThing('SMHangingbars01');
+			DestroyThing('SMCage03');
+			DestroyThing('SMPersoncage01');
+			DestroyThing('SMPersoncage02');
+			DestroyThing('SMHangingbars03');
+			DestroyThing('CJ_WSHELF42');
+			DestroyThing('CJ_WSHELF44');
+			DestroyThing('CJ_WSHELF45');
+			DestroyThing('CJ_WSHELF46');
+			DestroyThing('coffee_table01_food05');
+			DestroyThing('sm_barbottles17');
+			DestroyThing('SA_Rubbish_I36');
+			DestroyThing('coffee_table01_food06');
+			DestroyThing('sm_barbottles18');
+			DestroyThing('SA_Rubbish_D21');
+			DestroyThing('CJ_WSHELF47');
+			DestroyThing('SA_Rubbish_D22');
+			DestroyThing('CJ_WSHELF48');
+			DestroyThing('SA_Rubbish_D23');
+			DestroyThing('SpeakerC18');
+			DestroyThing('CJ_WSHELF50');
+			DestroyThing('SA_Rubbish_D06');
+			DestroyThing('Bar_TableC03');
+			DestroyThing('Bar_Stool_Tall23');
+			DestroyThing('Bar_Stool_Tall24');
+			DestroyThing('Bar_Stool_Tall25');
+			DestroyThing('Bar_Stool_Tall26');
+			DestroyThing('Bar_Stool_Tall27');
+			DestroyThing('SMManaclesBar07');
+			DestroyThing('SMManaclesBarHands07');
+			DestroyThing('SA_Rubbish_I02');
+			DestroyThing('Bar_Stool_Tall14');
+			DestroyThing('CURTAINS_HalfOpen03');
+			DestroyThing('CURTAINS_HalfOpen04');
+			DestroyThing('SA_SPIRIT_B29');
+			DestroyThing('SA_SPIRIT_B30');
+			DestroyThing('SA_WINE_BIG23');
+			DestroyThing('SA_SPIRIT_B31');
+			DestroyThing('CJ_WSHELF53');
+			DestroyThing('SA_SPIRIT_B32');
+			DestroyThing('SA_SPIRIT_B33');
+			DestroyThing('SA_WINE_BIG24');
+			DestroyThing('SA_WINE_BIG25');
+			DestroyThing('SA_WINE_BIG26');
+			DestroyThing('SA_SPIRIT_C14');
+			DestroyThing('CJ_WSHELF54');
+			DestroyThing('sm_barbottles22');
+			DestroyThing('sm_barbottles23');
+			DestroyThing('Bar_Stool_Tall01');
+			DestroyThing('Bar_Stool_Tall02');
+			DestroyThing('Bar_Stool_Tall03');
+			DestroyThing('LM_BbottleB');
+			DestroyThing('LM_BbottleD');
+			DestroyThing('LM_BbottleA01');
+			DestroyThing('LM_BbottleB01');
+			DestroyThing('LM_BbottleD01');
+			DestroyThing('LM_BbottleB02');
+			DestroyThing('LM_BbottleA02');
+			DestroyThing('SA_BarTowelA');
+			DestroyThing('SA_SPIRIT_C');
+			DestroyThing('SA_WINE_BIG01');
+			DestroyThing('SA_WINE_BIG02');
+			DestroyThing('SA_SPIRIT_B02');
+			DestroyThing('SA_SPIRIT_B03');
+			DestroyThing('SA_WINE_BIG03');
+			DestroyThing('SA_WINE_BIG04');
+			DestroyThing('SA_SPIRIT_C03');
+			DestroyThing('SA_WINE_BIG05');
+			DestroyThing('SA_SPIRIT_B04');
+			DestroyThing('SA_SPIRIT_B05');
+			DestroyThing('SA_SPIRIT_C04');
+			DestroyThing('SA_SPIRIT_C05');
+			DestroyThing('SA_WINE_BIG08');
+			DestroyThing('SA_SPIRIT_B07');
+			DestroyThing('SA_SPIRIT_B08');
+			DestroyThing('SA_WINE_BIG09');
+			DestroyThing('SA_WINE_BIG10');
+			DestroyThing('SA_WINE_BIG11');
+			DestroyThing('SA_SPIRIT_B11');
+			DestroyThing('SA_SPIRIT_B12');
+			DestroyThing('SA_SPIRIT_B13');
+			DestroyThing('SA_SPIRIT_B14');
+			DestroyThing('SA_SPIRIT_B15');
+			DestroyThing('cigarette_machine');
+			DestroyThing('SA_Rubbish_B');
+			DestroyThing('SA_Rubbish_B01');
+			DestroyThing('SA_Rubbish_B02');
+			DestroyThing('SA_Rubbish_D01');
+			DestroyThing('SA_Rubbish_D02');
+			DestroyThing('SpeakerC02');
+			DestroyThing('CJ_GREENHSHELVES01');
+			DestroyThing('CJ_Bin_Liner05');
+			DestroyThing('SA_Rubbish_B07');
+			DestroyThing('SA_Rubbish_B08');
+			DestroyThing('sm_barbottles02');
+			DestroyThing('sm_barbottles04');
+			DestroyThing('sm_barbottles05');
+			DestroyThing('sm_barbottles06');
+			DestroyThing('sm_barbottles07');
+			DestroyThing('sm_barbottles08');
+			DestroyThing('SA_Rubbish_I18');
+			DestroyThing('cash_register');
+			DestroyThing('cash_register01');
+			DestroyThing('SA_Rubbish_D26');
+			DestroyThing('CJ_GREENHSHELVES06');
+			DestroyThing('CJ_GREENHSHELVES07');
+			DestroyThing('Bar_Stool_Tall42');
+			DestroyThing('Bar_Stool_Tall43');
+			DestroyThing('Bar_Stool_Tall45');
+			DestroyThing('SA_Rubbish_D27');
+			DestroyThing('SA_Rubbish_D28');
+			DestroyThing('SA_WINE_BIG27');
+			DestroyThing('SA_WINE_BIG28');
+			DestroyThing('SA_WINE_BIG29');
+			DestroyThing('cigarette_machine01');
+			DestroyThing('Bar_Stool_Tall35');
+			DestroyThing('SA_Rubbish_D20');
+			DestroyThing('SA_Rubbish_B11');
+			DestroyThing('CURTAINS_HalfOpen01');
+			DestroyThing('CURTAINS_HalfOpen02');
+			DestroyThing('SA_Rubbish_D03');
+			DestroyThing('sm_barbottles11');
+			DestroyThing('SpeakerC15');
+			DestroyThing('SpeakerC16');
+			DestroyThing('Bar_Stool_Tall36');
+			DestroyThing('Bar_Stool_Tall37');
+			DestroyThing('SA_Rubbish_I35');
+			DestroyThing('CJ_WSHELF43');
+			DestroyThing('CURTAINS_HalfOpen');
+			DestroyThing('sm_barbottles20');
+			DestroyThing('sm_barbottles21');
+			DestroyThing('SA_SPIRIT_C08');
+			DestroyThing('SA_SPIRIT_B17');
+			DestroyThing('SA_WINE_BIG12');
+			DestroyThing('SA_SPIRIT_B18');
+			DestroyThing('SA_WINE_BIG14');
+			DestroyThing('SA_SPIRIT_B20');
+			DestroyThing('SA_SPIRIT_B21');
+			DestroyThing('SA_WINE_BIG15');
+			DestroyThing('SA_WINE_BIG17');
+			DestroyThing('SA_SPIRIT_C10');
+			DestroyThing('CJ_WSHELF49');
+			DestroyThing('SA_SPIRIT_B23');
+			DestroyThing('SA_SPIRIT_B24');
+			DestroyThing('SA_WINE_BIG18');
+			DestroyThing('SA_SPIRIT_C11');
+			DestroyThing('SA_SPIRIT_B26');
+			DestroyThing('CJ_WSHELF51');
+			DestroyThing('SA_SPIRIT_B27');
+			DestroyThing('SA_SPIRIT_B28');
+			DestroyThing('SA_WINE_BIG19');
+			DestroyThing('SA_WINE_BIG20');
+			DestroyThing('SA_WINE_BIG22');
+			DestroyThing('SA_SPIRIT_C12');
+			DestroyThing('CJ_WSHELF52');
+			DestroyThing('cash_register02');
+			DestroyThing('cash_register03');
+			DestroyThing('CJ_Dumpster');
+			DestroyThing('SA_Rubbish_B03');
+			DestroyThing('CJ_Bin_Liner01');
+			DestroyThing('CJ_Bin_Liner02');
+			DestroyThing('CJ_Bin_Liner03');
+			DestroyThing('CJ_Bin_Liner04');
+			DestroyThing('Bar_TableA02');
+			DestroyThing('voodoo');
+			DestroyThing('trashbin_A');
+			DestroyThing('trashbin_A03');
+			DestroyThing('skybox_tolerancezone');
+			DestroyThing('voodoo01');
+			DestroyThing('ram_bushB');
+			DestroyThing('ram_bushB01');
+			DestroyThing('ram_bushB02');
+			DestroyThing('DE_aircon');
+			DestroyThing('ram_bushB03');
+			DestroyThing('DE_aircon03');
+			DestroyThing('DE_aircon06');
+			DestroyThing('DE_aircon07');
+			DestroyThing('Bar_Stool_Tall41');
+			DestroyThing('rope_border_stand04');
+			DestroyThing('rope_border_stand05');
+			DestroyThing('CJ_ELCTRICBOX03');
+			DestroyThing('CJ_ELCTRICBOX04');}
+		time := 350;
+		if(GetEntity('hBar01(hunter)') <> nil) then DestroyEntity(GetEntity('hBar01(hunter)'));
+		if(GetEntity('hBar02(hunter)') <> nil) then DestroyEntity(GetEntity('hBar02(hunter)'));
+		if(GetEntity('hBar03(hunter)') <> nil) then DestroyEntity(GetEntity('hBar03(hunter)'));
+		if(GetEntity('hBar04(hunter)') <> nil) then DestroyEntity(GetEntity('hBar04(hunter)'));
+		if(GetEntity('hDisco01(hunter)') <> nil) then DestroyEntity(GetEntity('hDisco01(hunter)'));
+		if(GetEntity('hDisco02(hunter)') <> nil) then DestroyEntity(GetEntity('hDisco02(hunter)'));
+		if(GetEntity('hDisco04(hunter)') <> nil) then DestroyEntity(GetEntity('hDisco04(hunter)'));
+		if(GetEntity('hCounter(hunter)01') <> nil) then DestroyEntity(GetEntity('hCounter(hunter)01'));
+		Sleep(100);
+		ShowEntity(GetEntity('Judy(hunter)flash'));
+		CutsceneStart;
+			PlayScriptAudioStreamAuto('FLASH2', 127);
+			CutSceneRegisterSkipScript(this, 'Skip_Ramp');
+			for i := 0 to 7 do begin
+				SetColourRamp('FE_superdreamramps', 4, 0.05);
+				CutsceneCameraInit;
+					RampChooseCam(i);
+					if(i = 7) then begin
+						CutsceneCameraSetFOV(0.0, 45.0);
+						CutsceneCameraSetRoll(0.0, 0.0);
+					end else begin
+						CutsceneCameraSetFOV(0.0, 45.0 + randnum(20));
+						CutsceneCameraSetFOV(0.2, 45.0 + randnum(20));
+						CutsceneCameraSetFOV(0.4, 45.0 + randnum(20));
+						CutsceneCameraSetRoll(0.0, 5 + randnum(10));
+						CutsceneCameraSetRoll(0.2, 5 + randnum(10));
+						CutsceneCameraSetRoll(0.4, 5 + randnum(10));
+					end;
+					CutsceneCameraSetRoll(0.0, 0.0);
+					CutSceneCameraSetHandyCam(true);
+				CutscenecameraStart;
+				Sleep(50);
+				SetColourRamp('FE_dreamramps', 1, 1.0);
+				Sleep(time);
+			end;
+			Sleep(1000);
+		CutsceneEnd(false);
+		FrisbeeSpeechPlay('JUDY', 127, 20);
+		DestroyEntity(GetEntity('Judy(hunter)flash'));
+		SetColourRamp('FE_colramps', 1, 4.0);
+		Sleep(2000);
+		RemoveThisScript;
+	end;
+
+procedure WaitForBlankHUD;
+	begin
+		Sleep(500);
+		while((IsCutSceneInProgress) or (IsExecutionInProgress) or (IsGameTextDisplaying)) do Sleep(10);
+		Sleep(500);
+	end;
+
+procedure WaitForGameText;
+	begin
+		Sleep(200);
+		while(IsGameTextDisplaying) do Sleep(10);
+		Sleep(200);
+	end;
+
+script DisplayGameText_DEADB;
+	begin
+		WaitForBlankHUD;
+		WriteDebug('------------------------- TESTING FOR THE DEAD BODY GAME TEXT ---------------------------------');
+		if(levelState = Bar) then DisplayGameText('DEADB');
+	end;
+
+script DisplayGameText_EXEC3;
+	begin
+		WaitForBlankHUD;
+		DisplayGameText('EXEC3');
+	end;
+
+script DisplayGameText_EXEC4;
+	begin
+		WaitForBlankHUD;
+		DisplayGameText('EXEC4');
+		Sleep(5000);
+		WaitForBlankHUD;
+		DisplayGameText('EXEC5');
+	end;
+
+script DisplayGameText_EE1;
+	begin
+		HUDToggleFlashFlags(HID_RADAR, true);
+		WaitForGameText;
+		DisplayGameText('EE1');
+		Sleep(4000);
+		WaitForGameText;
+		DisplayGameText('EE2');
+		WaitForGameText;
+		HUDToggleFlashFlags(HID_RADAR, false);
+	end;
+
+script DisplayGameText_EE1_HARD;
+	begin
+		WaitForGameText;
+		DisplayGameText('EE1A');
+		Sleep(4000);
+		WaitForGameText;
+		DisplayGameText('EE2');
+		WaitForGameText;
+	end;
+
+script DisplayGameText_BRICK;
+	begin
+		WaitForBlankHUD;
+		DisplayGameText('BK');
+	end;
+
+script DisplayGameText_DEAFTT1;
+	begin
+		WaitForBlankHUD;
+		DisplayGameText('DEAFTT1');
+		if(GetDifficultyLevel = DIFFICULTY_EASY) then begin
+			Sleep(5000);
+			WaitForBlankHUD;
+			DisplayGameText('DEAFTT2');
+		end;
+	end;
+
+script DisplayGameText_BLIGHT;
+	begin
+		WaitForBlankHUD;
+		DisplayGameText('BLIGHT');
+		FrisbeeSpeechPlay('CF03', 127, 50);
+	end;
+
+script DisplayGameText_SEEDED;
+	begin
+		if((not seeDeadPlayed) and (levelState = Bar)) then begin
+			seeDeadPlayed := true;
+			Sleep(2000);
+			WaitForBlankHUD;
+			DisplayGameText('SEEDED');
+		end;
+	end;
+
+end.  

@@ -1,0 +1,55 @@
+[
+    {
+        "name": "detectedplayer",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "a8090000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "drillplaying",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            20468,
+            21028,
+            25452,
+            26548
+        ]
+    },
+    {
+        "name": "sample",
+        "nameGarbage": "0000000000000000000000000000000000000000000000000000",
+        "offset": "a4090000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "84090000",
+        "size": 22,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    },
+    {
+        "name": "stunprodplaying",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            11924,
+            15860
+        ]
+    }
+]

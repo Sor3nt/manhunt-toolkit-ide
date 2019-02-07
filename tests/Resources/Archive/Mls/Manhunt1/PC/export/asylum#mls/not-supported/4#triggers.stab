@@ -1,0 +1,24 @@
+[
+    {
+        "name": "vpos",
+        "nameGarbage": "0001bc00000000000000000000000000000000000000000000000000",
+        "offset": "7c010000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "willie_game_int",
+        "nameGarbage": "0077697463685f74726967676572000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "feffffff",
+        "occurrences": [
+            328,
+            696,
+            3044,
+            7212,
+            13488
+        ]
+    }
+]

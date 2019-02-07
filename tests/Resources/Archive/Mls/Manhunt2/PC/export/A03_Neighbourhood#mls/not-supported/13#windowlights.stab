@@ -1,0 +1,20 @@
+[
+    {
+        "name": "chatter",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "bc010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "thisobj",
+        "nameGarbage": "00000000000000000000000000000000000000000000000000",
+        "offset": "b8010000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    }
+]

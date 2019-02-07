@@ -1,0 +1,25 @@
+[
+    {
+        "name": "flag_player_spotted",
+        "nameGarbage": "00000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            1984,
+            2108,
+            2168,
+            2704,
+            2828,
+            2888
+        ]
+    },
+    {
+        "name": "number_dead_searchlight",
+        "nameGarbage": "000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    }
+]

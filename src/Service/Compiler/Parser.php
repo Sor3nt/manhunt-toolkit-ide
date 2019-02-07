@@ -11,6 +11,7 @@ class Parser {
         'T_DEFINE_SECTION_ENTITY' => Parser\T_DEFINE_SECTION_ENTITY::class,
         'T_DEFINE_SECTION_CONST' => Parser\T_DEFINE_SECTION_CONST::class,
         'T_DEFINE_SECTION_VAR' => Parser\T_DEFINE_SECTION_VAR::class,
+        'T_DEFINE_SECTION_ARG' => Parser\T_DEFINE_SECTION_ARG::class,
         'T_BRACKET_OPEN' => Parser\T_BRACKET_OPEN::class,
         'T_PROCEDURE' => Parser\T_PROCEDURE::class,
         'T_CUSTOM_FUNCTION' => Parser\T_CUSTOM_FUNCTION::class,
@@ -42,7 +43,8 @@ class Parser {
                 $ast['body'][] = $node;
             }
         }
-
+//var_dump($ast);
+//        exit;
         return $ast;
     }
 
@@ -152,13 +154,11 @@ class Parser {
              *
              *********************************/
             case Token::T_NIL :
-            case Token::T_TRUE :
             case Token::T_IS_EQUAL :
             case Token::T_IS_NOT_EQUAL :
             case Token::T_IS_GREATER_EQUAL :
             case Token::T_IS_SMALLER :
             case Token::T_IS_GREATER :
-            case Token::T_FALSE :
             case Token::T_STRING:
             case Token::T_INT:
             case Token::T_FLOAT:
@@ -178,6 +178,15 @@ class Parser {
                     $current + 1, $tokens[$current]
                 ];
 
+
+            case Token::T_BOOLEAN:
+                return [
+                    $current + 1, [
+                        'type' => Token::T_BOOLEAN,
+                        'value' => $tokens[$current]['value'] == 'true'
+                    ]
+                ];
+
             /**********************************
              *
              *
@@ -194,6 +203,8 @@ class Parser {
                     });
 
                 }else{
+//                    var_dump($tokens[$current - 2], $tokens[$current - 1], $tokens[$current]);
+//                    exit;
                     throw new \Exception(sprintf('Parser: unable to handle %s', $token['type']));
                 }
 

@@ -1,0 +1,39 @@
+scriptmain chase03;
+
+ENTITY
+	triggerChase03 : et_name;
+	
+script OnEnterTrigger;
+
+VAR
+	pos, pos2 : vec3d;
+
+begin
+	{CREATE TWO HUNTERS TO HERD PLAYER ON}
+	
+	
+{	AIAddEntity('hChaser06(hunter)');
+	setentityscriptsfromentity('hChaser01(hunter)', 'hChaser06(hunter)');
+	RunScript('hChaser06(hunter)', 'Init');}
+
+	sleep(200);
+	RunScript('hChaser05(hunter)', 'Init');
+	sleep(200);
+	RunScript('hChaser05(hunter)', 'RunGoals');
+{	RunScript('hChaser06(hunter)', 'RunGoals');}
+	
+	SetVector(pos, 53.8309, -1.55123, -65.3361);
+	SetVector(pos2, 127.486, 3.34062, -63.2993);
+	CreateBoxTrigger(pos, pos2, 'triggerChase04');
+	
+	pos:= GetEntityPosition(GetEntity('heli'));
+  PlayScriptAudioStreamFromPosAuto('HP7', 127,pos,127);
+  
+  if IsScriptAudioStreamCompleted then
+		PlayScriptAudioStreamFromEntityAuto('COP4', 127, GetEntity('hChaser05(hunter)'), 50);
+	{while NOT IsScriptAudioStreamCompleted do sleep(10);}
+
+	RemoveThisScript;
+end;
+
+end.

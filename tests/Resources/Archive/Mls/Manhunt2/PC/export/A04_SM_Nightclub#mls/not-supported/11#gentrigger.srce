@@ -1,0 +1,119 @@
+scriptmain genTrigger;
+entity tNeon : et_name;
+type tLevelState = ( Bar, Disco, Dungeon );
+var levelState : level_var tLevelState;
+	ambientLocationID : level_var integer;
+	inCutscene : level_var boolean;
+	flicker : boolean;
+
+function DoorIsOpen(name : string) : boolean;
+	begin if(GetDoorState(GetEntity(name)) = DOOR_CLOSED) then DoorIsOpen := false else DoorIsOpen := true; end;
+
+procedure TurnOnRed;
+	begin
+		SwitchLightOn(GetEntity('SM_flicker_(L)_01'));
+		SetCurrentLod(GetEntity('SM_HallDynLight'), 1);
+		if(not flicker) then SetNodeShadow('N05,N06,N07', false);
+	end;
+
+procedure TurnOffRed;
+	begin
+		SwitchLightOff(GetEntity('SM_flicker_(L)_01'));
+		SetCurrentLod(GetEntity('SM_HallDynLight'), 0);
+		SetNodeShadow('N05,N06,N07', true);
+	end;
+
+procedure TurnOnBlue;
+	begin
+		SwitchLightOn(GetEntity('SM_flicker_(L)_02'));
+		SetCurrentLod(GetEntity('SM_HallDynLight'), 2);
+		if(not flicker) then SetNodeShadow('N02,N03,N04', false);
+	end;
+
+procedure TurnOffBlue;
+	begin
+		SwitchLightOff(GetEntity('SM_flicker_(L)_02'));
+		SetCurrentLod(GetEntity('SM_HallDynLight'), 0);
+		SetNodeShadow('N02,N03,N04', true);
+	end;
+
+procedure TurnOffBoth;
+	begin
+		SwitchLightOff(GetEntity('SM_flicker_(L)_01'));
+		SwitchLightOff(GetEntity('SM_flicker_(L)_02'));
+		SetCurrentLod(GetEntity('SM_HallDynLight'), 0);
+		SetNodeShadow('N02,N03,N04,N05,N06,N07', true);
+	end;
+
+procedure TurnBathroomLightOn;
+	begin
+		if(ambientLocationID <> 1) then SwitchLightOn(GetEntity('Basement_Lamp_(L)23'));
+		SetCurrentLod(GetEntity('SM_wc_flicker'), 0);
+	end;
+
+procedure TurnBathroomLightOff;
+	begin
+		SwitchLightOff(GetEntity('Basement_Lamp_(L)23'));
+		SetCurrentLod(GetEntity('SM_wc_flicker'), 1);
+	end;
+
+script OnCreate;
+	begin
+		TurnOffBoth;
+		RunScript('tNeon', 'BathroomFlicker');
+	end;
+
+script InitFirstLight;
+	var pos, pos2 : vec3d;
+		i : integer;
+	begin
+		flicker := false;
+		while(levelState = Bar) do begin
+			while(ambientLocationID = 3) do begin
+				flicker := true;
+				for i := 1 to (4 + randnum(3)) do begin
+					TurnOnRed;  Sleep(randnum(8));
+					TurnOffRed; Sleep(randnum(8));
+				end;
+				flicker := false;
+				TurnOnRed;
+				Sleep(3000);
+				TurnOffRed;
+				flicker := true;
+				for i := 1 to (4 + randnum(3)) do begin
+					TurnOnBlue;  Sleep(randnum(8));
+					TurnOffBlue; Sleep(randnum(8));
+				end;
+				flicker := false;
+				TurnOnBlue;
+				Sleep(3000);
+				TurnOffBoth;
+				Sleep(1000);
+			end;
+		end;
+	end;
+
+script BathroomFlicker;
+	begin
+		while(levelState = Bar) do begin
+			while((ambientLocationID = 1) or (ambientLocationID = 2) or ((ambientLocationID = 3) and (DoorIsOpen('SM_doorA_(D)')))) do begin
+				if(inCutscene)then TurnBathroomLightOff
+				else begin
+					if(CalcDistanceToEntity(GetEntity('Basement_Lamp_(L)23'), GetPlayerPosition) > 11.5) then TurnBathroomLightOn else TurnBathroomLightOn;
+					Sleep(1250 + randnum(100));
+					if(randnum(10) > 6) then begin
+						if(CalcDistanceToEntity(GetEntity('Basement_Lamp_(L)23'), GetPlayerPosition) > 11.5) then TurnBathroomLightOn else TurnBathroomLightOff;
+					end;
+					Sleep(100 + randnum(300));
+					if(CalcDistanceToEntity(GetEntity('Basement_Lamp_(L)23'), GetPlayerPosition) > 11.5) then TurnBathroomLightOn else TurnBathroomLightOn;
+					Sleep(1150 + randnum(250));
+					if(CalcDistanceToEntity(GetEntity('Basement_Lamp_(L)23'), GetPlayerPosition) > 11.5) then TurnBathroomLightOn else TurnBathroomLightOff;
+					Sleep(100 + randnum(300));
+				end;
+			end;
+			TurnBathroomLightOff;
+			Sleep(10);
+		end;
+	end;
+
+end.

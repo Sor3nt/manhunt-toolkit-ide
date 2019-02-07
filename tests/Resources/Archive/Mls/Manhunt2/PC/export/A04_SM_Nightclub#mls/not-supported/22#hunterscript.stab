@@ -1,0 +1,154 @@
+[
+    {
+        "name": "ambientforcechange",
+        "nameGarbage": "0000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            2940,
+            3132,
+            8332,
+            16324
+        ]
+    },
+    {
+        "name": "ambientlocationid",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            2144,
+            2280,
+            2376,
+            2488,
+            2884,
+            3076,
+            3160
+        ]
+    },
+    {
+        "name": "ambientlocationlastid",
+        "nameGarbage": "0000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "integer",
+        "occurrences": [
+            2912,
+            3104
+        ]
+    },
+    {
+        "name": "ambientmusicoffinbar",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8360,
+            16352
+        ]
+    },
+    {
+        "name": "donediscocutscene",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            33800
+        ]
+    },
+    {
+        "name": "girlfailsafehit",
+        "nameGarbage": "0000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            7864,
+            8744,
+            8852,
+            9012,
+            9208,
+            9404,
+            9576
+        ]
+    },
+    {
+        "name": "girlleft",
+        "nameGarbage": "000202000000000300000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            8304,
+            16196
+        ]
+    },
+    {
+        "name": "incutscene",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            20988,
+            26488
+        ]
+    },
+    {
+        "name": "isbaralerted",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "600e0000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "leavecuttext",
+        "nameGarbage": "0000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "boolean",
+        "occurrences": [
+            55104,
+            57076
+        ]
+    },
+    {
+        "name": "levelstate",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "hierarchieType": "ffffffff",
+        "objectType": "tLevelState",
+        "occurrences": [
+            1192,
+            2552,
+            2760,
+            2952,
+            3204
+        ]
+    },
+    {
+        "name": "notentered",
+        "nameGarbage": "00000000000000000000000000000000000000000000",
+        "offset": "640e0000",
+        "size": 80,
+        "hierarchieType": "01000000",
+        "objectType": "integer",
+        "occurrences": []
+    }
+]

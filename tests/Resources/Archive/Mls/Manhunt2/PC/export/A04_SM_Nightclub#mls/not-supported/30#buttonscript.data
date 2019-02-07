@@ -1,0 +1,21 @@
+{
+    "const": [],
+    "strings": [
+        "b11_(s)",
+        "b12_(s)",
+        "b21_(s)",
+        "b22_(s)",
+        "b31_(s)",
+        "b32_(s)",
+        "b41_(s)",
+        "b42_(s)",
+        "b51_(s)",
+        "b52_(s)",
+        "b61_(s)",
+        "b62_(s)",
+        "CheckButtonLOD",
+        "Door_Indicator08",
+        "ButtonUsed"
+    ],
+    "byteReserved": 20
+}

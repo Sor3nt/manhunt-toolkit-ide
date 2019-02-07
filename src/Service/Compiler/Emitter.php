@@ -15,11 +15,11 @@ class Emitter {
 
     private $types;
     private $const;
+    private $game;
 
     private $emitters = [
         'T_FOR' => Emitter\T_FOR::class,
-        'T_FALSE' => Emitter\T_FALSE::class,
-        'T_TRUE' => Emitter\T_TRUE::class,
+        'T_BOOLEAN' => Emitter\T_BOOLEAN::class,
         'T_NIL' => Emitter\T_NIL::class,
         'T_SCRIPT' => Emitter\T_SCRIPT::class,
         'T_PROCEDURE' => Emitter\T_PROCEDURE::class,
@@ -39,11 +39,12 @@ class Emitter {
         'T_SWITCH' => Emitter\T_SWITCH::class,
     ];
 
-    public function __construct( $combinedVariables, $combinedStrings, $variables, $types, $const, $lineCount = 1 )
+    public function __construct( $combinedVariables, $combinedStrings, $variables, $types, $const, $lineCount = 1, $game )
     {
 
         $this->combinedVariables = $combinedVariables;
         $this->combinedStrings = $combinedStrings;
+        $this->game = $game;
 
 
         $this->variables = $variables;
@@ -60,8 +61,8 @@ class Emitter {
         return (new $this->emitters[ $node['type'] ]($customData))->map(
             $node,
 
-            function( $hex, $forceNewIndex = false ) use ($calculateLineNumber){
-                return $this->lines->get($hex, $calculateLineNumber, $forceNewIndex);
+            function( $hex, $forceNewIndex = false, $debug = false ) use ($calculateLineNumber){
+                return $this->lines->get($hex, $calculateLineNumber, $forceNewIndex, $debug);
             },
 
             function($token, $calculateLineNumber = true, $customDataInner = []) use ($customData) {
@@ -78,7 +79,8 @@ class Emitter {
                 'types' => $this->types,
                 'variables' => $this->variables,
                 'const' => $this->const,
-                'customData' => $customData
+                'customData' => $customData,
+                'game' => $this->game
             ]
         );
     }

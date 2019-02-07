@@ -1,0 +1,47 @@
+scriptmain EntityScript;
+
+ENTITY
+	triggerSwimmingSection : et_name;
+	
+script OnEnterTrigger;
+VAR
+	pos, pos2 : vec3d;
+begin
+	writedebug('entered swimming pool');
+	
+	AISetEntityIdleOverRide('SwimmerA(hunter)', FALSE, FALSE);
+	AISetEntityIdleOverRide('SwimmerB(hunter)', FALSE, FALSE);
+	AISetEntityIdleOverRide('SwimmerC(hunter)', FALSE, FALSE);
+	AISetEntityIdleOverRide('SwimmerD(hunter)', FALSE, FALSE);
+	
+	AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gSwimAtPlayerA');
+	AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gSwimAtPlayerB');
+	AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gSwimAtPlayerC');
+	AiAddGoalForSubpack('leader(leader)', 'subGuardCar2', 'gSwimAtPlayerD');
+	
+	SetVector(pos, 108.547, -1.96024, 4.48438);
+	SetVector(pos2, 133.283, 0.2847, 6.22339);
+	CreateBoxTrigger(pos, pos2, 'triggerFlashyEffect');
+	
+	RunScript('triggerSwimmingSection', 'WaitForDone');
+	
+	RemoveThisScript;
+end;
+
+script WaitForDone;
+begin
+	while (NOT InsideTrigger(GetEntity('triggerFlashyEffect') ,GetPlayer)) do sleep(10);
+	SetColourRamp('FE_superdreamramps', 6, 0.1);
+	sleep(100);                        
+	SetColourRamp('FE_superdreamramps', 1, 0.1);
+	sleep(100);                        
+	SetColourRamp('FE_superdreamramps', 4, 0.1);
+	sleep(100);                     
+	SetColourRamp('FE_superdreamramps', 1, 5.0);
+	sleep(1000);
+	FrisbeeSpeechPlay('LEO8', 127, 127);
+	sleep(4500);                            
+	SetColourRamp('FE_colramps', 1, 4.0);
+end;
+
+end.

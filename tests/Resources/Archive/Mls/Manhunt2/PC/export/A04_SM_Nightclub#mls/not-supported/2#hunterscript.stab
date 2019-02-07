@@ -1,0 +1,20 @@
+[
+    {
+        "name": "playinganim",
+        "nameGarbage": "000000000000000000000000000000000000000000",
+        "offset": "bc000000",
+        "size": 4,
+        "hierarchieType": "01000000",
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "self",
+        "nameGarbage": "00013200000000000000000000000000000000000000000000000000",
+        "offset": "98000000",
+        "size": 32,
+        "hierarchieType": "01000000",
+        "objectType": "string",
+        "occurrences": []
+    }
+]

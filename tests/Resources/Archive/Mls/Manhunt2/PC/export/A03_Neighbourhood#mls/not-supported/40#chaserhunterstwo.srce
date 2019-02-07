@@ -1,0 +1,78 @@
+scriptmain chaserHuntersTwo;
+
+ENTITY
+	hSecondWave(hunter) : et_name;
+
+const
+	{ global definitions }
+	playerName = 'player(player)';
+	leaderName = 'leader(leader)';
+	
+	
+	{ global goals }
+	goalHuntPlayer = 'goalHuntPlayer';
+
+var
+	me : string[32];
+	addedGoals : boolean;
+	secondWaveCount : level_var integer;
+	
+	
+script Init;
+VAR
+	pPos : vec3d;
+begin
+	addedGoals := FALSE;
+	
+	me := GetEntityName(this);
+			
+	{AISetIdleHomeNode(me, '');}
+	{SetHunterRunTime(me, 20);}
+
+	AISetHunterOnRadar(me, true);
+
+	AiAddHunterToLeaderSubpack(leaderName, 'subPostChase', me);
+
+	AiEnableClimbingInIdle(this, true);
+
+	writedebug(me,' added');
+	
+	addedGoals := TRUE;
+	
+end;
+
+script OnDeath;
+VAR
+	vector : vec3d;
+begin
+	secondWaveCount := secondWaveCount + 1;
+	
+	{Add new hunters when others die}
+	if secondWaveCount = 1 then
+	begin
+		RunScript('player(player)', 'WaveCountOne');
+	end;
+	
+	if secondWaveCount = 3 then
+	begin
+		RunScript('player(player)', 'WaveCountTwo');   
+	end;
+	
+	if secondWaveCount = 4 then
+	begin
+		RunScript('player(player)', 'WaveCountThree');   
+	end;
+	
+	if secondWaveCount = 5 then
+	begin
+		RunScript('player(player)', 'WaveCountFour');   
+	end;
+	
+	if secondWaveCount = 6 then
+	begin
+    RunScript('player(player)', 'WaveCountFive');   
+	end;
+	
+end;
+
+end.

@@ -1,0 +1,924 @@
+scriptmain hunterScript;
+entity leader(leader) : et_name;
+const playerName = 'player(player)';
+	  leaderName = 'leader(leader)';
+type tLevelState = ( Bar, Disco, Dungeon );
+var	levelState : level_var tLevelState;
+	girlLeft : level_var boolean;
+	inCutscene : level_var boolean;
+	ambientForceChange : level_var boolean;
+	ambientLocationID, ambientLocationLastID : level_var integer;
+	ambientMusicOffInBar : level_var boolean;
+	doneDiscoCutscene : level_var boolean;
+	girlFailsafeHit : level_var boolean;
+	leaveCutText : level_var boolean;
+	isBarAlerted : boolean;
+	notEntered : array [1..20] of boolean;
+	
+procedure TurnDreamRampOn;  begin SetColourRamp('FE_superdreamramps', 4, 0.05); Sleep(50); SetColourRamp('FE_dreamramps', 1, 1.0); end;
+procedure TurnDreamRampOff; begin SetColourRamp('FE_superdreamramps', 4, 0.05); Sleep(50); SetColourRamp('FE_colramps', 1, 4.0); end;
+
+script Skip_Empty; begin WriteDebug('Skipping'); end;
+
+script OnCreate;
+	var i : integer;
+	begin
+		isBarAlerted := false;
+		for i := 1 to 20 do notEntered[i] := true;
+	end;
+
+{ ========= Yard (1) ========= }
+{ ========= Bathroom (2) ========= }
+{ ========= Main Bar (3) ========= }
+{ ========= Bar Storeroom (4) ========= }
+{ ========= Front Entrance Corridor (5) ========= }
+{ ========= Dancefloor (6) ========= }
+{ ========= Dungeon descent stage one (7) ========= }
+{ ========= Dungeon descent stage two (8) ========= }
+{ ========= Dungeon descent stage two (9) ========= }
+{ ========= Main quiet dungeon area (10) ========= }
+{ ========= Locked gate - very quiet classical hint (11) ========= }
+{ ========= Nearest classical ramp (12) ========= }
+{ ========= Furthest classical ramp (13) ========= }
+{ ========= Cell six - and behind mirror(14) ========= }
+{ ========= Cell five - main cell (15) ========= }
+{ ========= Cell four (16) ========= }
+{ ========= Secret corridor (17) ========= }
+{ ========= Main classical corridor (18) ========= }
+{ ========= Cell five - behind mirror (19) ========= }
+
+script AmbientOnLeaveLocation;
+	arg leftLocation : integer;
+	begin WriteDebug('(', leftLocation, ') Leaving location...');
+		case leftLocation of
+			1 : begin
+				if(levelState = Bar) then begin
+					WriteDebug('Adding hunt player goal');
+					if(not AIIsGoalNameInSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer')) then AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+					if(not AIIsGoalNameInSubpack(leaderName, 'subPiss', 'goalHuntPlayer')) then AIAddGoalForSubpack(leaderName, 'subPiss', 'goalHuntPlayer');
+				end;
+			end;
+		end;
+	end;
+		
+script AmbientOnEnterLocation;
+	var i : integer;
+		hName : string[32];
+	begin
+		hName := '';
+		if(notEntered[ambientLocationID]) then begin
+			WriteDebug('(', ambientLocationID, ') Entered for the first time...');
+			notEntered[ambientLocationID] := false;
+			case ambientLocationID of
+				1 : begin
+					if(levelState = Disco) then begin
+						ambientLocationID := 5;
+						ambientLocationLastID := 5;
+						ambientForceChange := true;
+					end;
+					if(levelState = Dungeon) then begin
+						ambientLocationID := 8;
+						ambientLocationLastID := 8;
+						ambientForceChange := true;
+					end;
+				end;
+				2 : begin
+					if(levelState = Bar) then RunScript('player(player)', 'HunterPissing');
+				end;
+			end;
+		end else begin
+			case ambientLocationID of
+				1 : begin
+					if(levelState = Bar) then begin
+						WriteDebug('Removing hunt player goal');
+						if(AIIsGoalNameInSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer')) then AIRemoveGoalFromSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+						if(AIIsGoalNameInSubpack(leaderName, 'subPiss', 'goalHuntPlayer')) then AIRemoveGoalFromSubpack(leaderName, 'subPiss', 'goalHuntPlayer');
+						for i := 1 to GetNumberOfTypesInsideTrigger(GetEntity('tTransition01H'), EC_HUNTER) do begin
+							hName := GetNameOfTypeInTriggerFromIndex(GetEntity('tTransition01H'), EC_HUNTER, i);
+							if(hName <> '') then begin
+								SetHunterMute(GetEntity(hName), false);
+								AIPlayCommunication(hName, 'ChaseTaunt', 'Taunt');
+							end;
+						end;
+					end;
+				end;
+			end;
+		end;
+	end;
+
+script BarAlerted;
+	var pos, pos2 : vec3d;
+	begin
+		if(not isBarAlerted) then begin
+			SetNoisyEntity(GetEntity('leader(leader)'), 0.1);
+			SetVector(pos, 41.2615, 0.211313, -11.0508);
+			SetVector(pos2, 41.9371, 1.68768, -7.3125);
+			CreateBoxTrigger(pos, pos2, 'tGirlFailsafe');
+			SetEntityScriptsFromEntity('genTrigger', 'tGirlFailsafe');
+			SetLevelGoal('GOAL21');
+			DestroyEntity(GetEntity('tBarDoorCutscene2'));
+			isBarAlerted := true;
+			EndScriptAudioStream;
+			{PlayScriptAudioStreamFromEntityAuto('PERV13', 127, GetEntity('hBar02(hunter)'), 60);}
+			PlayScriptAudioStreamAuto('PERV13', 127);
+			if(IsEntityAlive('hBar01(hunter)')) then begin
+				RunScript('hBar01(hunter)', 'CancelPissLoop');
+				SetHunterMute(GetEntity('hBar01(hunter)'), false);
+				AISetHunterIdleActionMinMaxRadius('hBar01(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 240, 20.0);
+			end;
+			if(IsEntityAlive('hBar04(hunter)')) then begin
+				GraphModifyConnections(GetEntity('doorEscape_(D)'), AISCRIPT_GRAPHLINK_ALLOW_EVERYTHING);
+				AIEntityCancelAnim('hBar04(hunter)', 'BAT_IDLE_BARDRINK_ANIM');
+				AIDefineGoalGotoNode('gAlert03', 'hBar04(hunter)', AISCRIPT_HIGHPRIORITY, 'nDoorEscape', AISCRIPT_RUNMOVESPEED, true);
+				AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'gAlert03');
+			end;
+			if(IsEntityAlive('hBar02(hunter)')) then begin
+				AIEntityCancelAnim('hBar02(hunter)', 'SM_BARMAN_IDLE');
+				SetHunterMute(GetEntity('hBar02(hunter)'), false);
+				AISetHunterIdlePatrol('hBar02(hunter)', AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 120, 240, 'ppBarAfter');
+				AIDefineGoalGotoNode('gAlert01', 'hBar02(hunter)', AISCRIPT_HIGHPRIORITY, 'N03', AISCRIPT_RUNMOVESPEED, true);
+				AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'gAlert01');
+			end;
+			if(IsEntityAlive('hBar03(hunter)')) then begin
+				AIEntityCancelAnim('hBar03(hunter)', 'BAT_IDLE_BARDRINK_ANIM');
+				AISetHunterIdleActionMinMaxRadius('hBar03(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 240, 20.0);
+				AIDefineGoalGotoNode('gAlert02', 'hBar03(hunter)', AISCRIPT_VERYHIGHPRIORITY, 'nPissHome2', AISCRIPT_RUNMOVESPEED, true);
+				AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'gAlert02');
+			end;
+			AITriggerSoundLocationKnown('LURE_HIGH', GetPlayer);
+			if(not girlFailsafeHit) then begin
+				SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_OPENING);
+				DestroyEntity(GetEntity('StripGirlDancing'));
+				DestroyEntity(GetEntity('StripGirlLeaving'));
+				RunScript('leader(leader)', 'GirlWalkToFade');
+			end;
+			Sleep(5000);
+			DestroyEntity(GetEntity('tGirlFailsafe'));
+			girlLeft := true;
+			ambientForceChange := true;
+			ambientMusicOffInBar := true;
+			Sleep(15000);
+			if(IsEntityAlive('hBar04(hunter)')) then begin
+				SetHunterMute(GetEntity('hBar04(hunter)'), false);
+				AISetHunterIdleActionMinMaxRadius('hBar04(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_HIGHPRIORITY, 120, 240, 20.0);
+			end;
+		end;
+		RemoveThisScript;
+	end;
+
+script GirlWalkToFade;
+	begin
+		if(not girlFailsafeHit) then ShowEntity(GetEntity('StripGirlLeaving01'));
+		if(not girlFailsafeHit) then SetEntityFade(GetEntity('StripGirlLeaving01'), 1, 0.1);
+		if(not girlFailsafeHit) then EntityPlayAnim(GetEntity('StripGirlLeaving01'), 'SM_STRIPPER_EXIT_ANIM', true);
+		Sleep(3000);
+		if(not girlFailsafeHit) then SetEntityFade(GetEntity('StripGirlLeaving01'), 0, 3);
+		Sleep(3000);
+		if(not girlFailsafeHit) then DestroyEntity(GetEntity('StripGirlLeaving01'));
+	end;
+
+script HitGirlFailsafe;
+	begin
+		girlFailsafeHit := true;
+		if(GetEntity('StripGirlDancing') <> nil) then DestroyEntity(GetEntity('StripGirlDancing'));
+		if(GetEntity('StripGirlLeaving') <> nil) then DestroyEntity(GetEntity('StripGirlLeaving'));
+		if(GetEntity('StripGirlLeaving01') <> nil) then DestroyEntity(GetEntity('StripGirlLeaving01'));
+		SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSING);
+		GraphModifyConnections(GetEntity('BarDoor_(SD)'), AISCRIPT_GRAPHLINK_ALLOW_NOTHING);
+	end;
+
+script SneakedUpOnBar;
+	var pos : vec3d;
+	begin
+		GraphModifyConnections(GetEntity('BarDoor_(SD)'), AISCRIPT_GRAPHLINK_ALLOW_EVERYTHING);
+		AIRemoveGoalFromSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+		AIRemoveGoalFromSubpack(leaderName, 'subPiss', 'goalHuntPlayer');
+		AIEntityCancelAnim('hBar02(hunter)', 'SM_BARMAN_IDLE');
+		CutsceneStart;
+			CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			PlayScriptAudioStreamAuto('DANCE', 127);
+			AICutsceneEntityEnable('hBar02(hunter)', true);
+			SetPedOrientation(GetEntity('hBar03(hunter)'), -90);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 36.082, 2.29984, -15.7419);
+				CutscenecameraSetTarget(0.0, 30.4656, 0.604938, -20.498);
+				CutsceneCameraSetFOV(0.0, 35.0);
+				CutsceneCameraSetFOV(10.0, 55.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			Sleep(5000);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 44.0626, 0.404971, -19.2314);
+				CutscenecameraSetTarget(0.0, 30.4615, 0.850903, -20.498);
+				CutsceneCameraSetFOV(0.0, 45.0);
+				CutsceneCameraSetFOV(7.0, 25.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			Sleep(5000);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 35.8662, 0.670144, -17.1522);
+				CutscenecameraSetTarget(0.0, 30.3258, 0.546466, -17.7877);
+				CutscenecameraSetPos(7.0, 35.8662, 0.670144, -23.9446);
+				CutscenecameraSetTarget(7.0, 30.3258, 0.546466, -22.8977);
+				CutsceneCameraSetFOV(0.0, 45.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			Sleep(3000);
+			AICutsceneEntityEnable('hBar02(hunter)', true);
+			SetPedOrientation(GetEntity('hBar02(hunter)'), 0);
+			AIMakeEntityDeaf('hBar02(hunter)', 0);
+			AIMakeEntityBlind('hBar02(hunter)', 0);
+			SetVector(pos, 42.2, -0.952, -18.2282);
+			MoveEntity(GetEntity('hBar02(hunter)'), pos, 0);
+			Sleep(2000);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 41.23, 1.27, -16.48);
+				CutscenecameraSetTarget(0.0, 43.82, -0.18, -19.06);
+				CutsceneCameraSetFOV(0.0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			AISetIdleHomeNode('hBar02(hunter)', 'nPeddle');
+			AIEntityGoHomeIfIdle('hBar02(hunter)');
+			Sleep(3000);
+			SetPedOrientation(GetEntity('hBar03(hunter)'), -90);
+			HideEntity(GetEntity('StripGirlDancing'));
+			ShowEntity(GetEntity('StripGirlLeaving'));
+			EntityPlayAnim(GetEntity('StripGirlLeaving'), 'SM_STRIPPER_EXIT_ANIM', false);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 25.1182, 0.971721, -21.2378);
+				CutscenecameraSetTarget(0.0, 22.8197, 0.971721, -22.3495);
+				CutsceneCameraSetFOV(0.0, 70.0);
+				CutsceneCameraSetFOV(6.0, 90.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_OPENING);
+			Sleep(1000);
+			PlayScriptAudioStreamAuto('STRIP1', 90);
+			Sleep(5000);
+		CutsceneEnd(false);
+		SetDoorState(GetEntity('BarDoor_(SD)'), DOOR_CLOSING);
+		EndScriptAudioStream;
+		AIAddGoalForSubpack(leaderName, 'subHuntMelee', 'goalHuntPlayer');
+		AIAddGoalForSubpack(leaderName, 'subPiss', 'goalHuntPlayer');
+		AIMakeEntityDeaf('hBar02(hunter)', 1);
+		AIMakeEntityBlind('hBar02(hunter)', 1);
+		SetVector(pos, 42.2, -0.952, -20.25);
+		MoveEntity(GetEntity('hBar02(hunter)'), pos, 1);
+		SetPedOrientation(GetEntity('hBar02(hunter)'), -118);
+		SetPedOrientation(GetEntity('hBar03(hunter)'), 90);
+		if(GetEntity('StripGirlDancing') <> nil) then DestroyEntity(GetEntity('StripGirlDancing'));
+		if(GetEntity('StripGirlLeaving') <> nil) then DestroyEntity(GetEntity('StripGirlLeaving'));
+		if(IsEntityAlive('hBar02(hunter)')) then begin
+			SetHunterMute(GetEntity('hBar02(hunter)'), false);
+			AISetIdleHomeNode('hBar02(hunter)', 'nBartender2');
+			AIEntityPlayAnimLooped('hBar02(hunter)', 'SM_BARMAN_IDLE', 0);
+		end;
+		KillGameText;
+		KillSubtitleText;
+		girlLeft := true;
+		isBarAlerted := true;
+		SetLevelGoal('GOAL21');
+		Sleep(3000);
+		ambientForceChange := true;
+		ambientMusicOffInBar := true;
+		RunScript('leader(leader)', 'PervTalk');
+		GraphModifyConnections(GetEntity('BarDoor_(SD)'), AISCRIPT_GRAPHLINK_ALLOW_NOTHING);
+		if(IsEntityAlive('hBar01(hunter)')) then begin
+			RunScript('hBar01(hunter)', 'CancelPissLoop');
+			SetHunterMute(GetEntity('hBar01(hunter)'), false);
+		end;
+		if(IsEntityAlive('hBar04(hunter)')) then begin
+			RunScript('hBar04(hunter)', 'CleanupLoop');
+		end;
+		RemoveThisScript;
+	end;
+
+function BarIdle() : boolean;
+	var b : boolean;
+	begin
+		b := true;
+		if(IsEntityAlive('hBar01(hunter)')) then begin if(not AIIsIdle('hBar01(hunter)')) then b := false; end;
+		if(IsEntityAlive('hBar02(hunter)')) then begin if(not AIIsIdle('hBar02(hunter)')) then b := false; end;
+		if(IsEntityAlive('hBar03(hunter)')) then begin if(not AIIsIdle('hBar03(hunter)')) then b := false; end;
+		if(IsEntityAlive('hBar04(hunter)')) then begin if(not AIIsIdle('hBar04(hunter)')) then b := false; end;
+		BarIdle := b;
+	end;
+
+script PervTalk;
+	begin
+		Sleep(2000);
+		if((IsEntityAlive('hBar03(hunter)')) and (BarIdle)) then RunScript('hBar03(hunter)', 'LockupLoop');
+		Sleep(4000);
+		FrisbeeSpeechPlay('LEO10', 127, 20);
+		if(IsEntityAlive('hBar01(hunter)')) then SetHunterMute(GetEntity('hBar01(hunter)'), false);
+		if(IsEntityAlive('hBar02(hunter)')) then SetHunterMute(GetEntity('hBar02(hunter)'), false);
+		if(IsEntityAlive('hBar03(hunter)')) then SetHunterMute(GetEntity('hBar03(hunter)'), false);
+		if(IsEntityAlive('hBar04(hunter)')) then SetHunterMute(GetEntity('hBar04(hunter)'), false);
+		RemoveThisScript;
+	end;
+
+procedure DiscoChooseCam(num : integer);
+	var pos : vec3d;
+	begin
+		case num of
+		{	0 : begin
+				CutscenecameraSetPos(0.0, 3.8352, -2.48231, -24.867);
+				CutscenecameraSetPos(1.0, 3.8352, 0.48231, -24.867);
+				CutscenecameraSetTarget(0.0, 2.69317, 0.7838, -24.8614);
+			end;
+			1 : begin
+				CutscenecameraSetPos(0.0, 1.98006, 0.51199, -23.6194);
+				CutscenecameraSetPos(1.0, -1.30186, 2.13735, -25.0597);
+				CutscenecameraSetTarget(0.0, 1.77673, 1.00095, -26.3901);
+			end;
+			2 : begin
+				CutscenecameraSetPos(0.0, -1.30186, 2.13735, -25.0597);
+				CutscenecameraSetPos(1.0, -1.30186, 2.13735, -25.0597);
+				CutscenecameraSetTarget(0.0, -0.211161, 1.295191, -24.9697);
+			end;
+			3 : begin
+				CutscenecameraSetPos(0.0, 3.8352, -2.48231, -24.867);
+				CutscenecameraSetPos(1.0, 3.8352, 0.48231, -24.867);
+				CutscenecameraSetTarget(0.0, 2.69317, 0.7838, -24.8614);
+			end;
+			4 : begin
+				CutscenecameraSetPos(0.0, -0.435587, 1.48148, -25.7408);
+				CutscenecameraSetPos(1.0, 3.8352, 0.48231, -24.867);
+				CutscenecameraSetTarget(0.0, 0.655113, 0.639327, -25.6508);
+			end;
+			5 : begin
+				CutscenecameraSetPos(0.0, -1.30186, 2.13735, -25.0597);
+				CutscenecameraSetPos(1.0, -1.30186, 2.13735, -25.0597);
+				CutscenecameraSetTarget(0.0, -0.211161, 1.195191, -24.9697);
+			end;
+			6 : begin
+				CutscenecameraSetPos(0.0, 3.8352, -2.48231, -24.867);
+				CutscenecameraSetPos(1.0, 3.8352, 0.48231, -24.867);
+				CutscenecameraSetTarget(0.0, 2.69317, 0.5838, -24.8614);
+			end;}
+			0 : begin
+				CutscenecameraSetPos(0.0, 1.04091, 0.209598, -26.8636);
+				CutscenecameraSetTarget(0.0, 6.32014, -2.55463, -22.5117);
+			end;
+			1 : begin
+				CutscenecameraSetPos(0.0, 4.28937, -1.17328, -28.3684);
+				CutscenecameraSetTarget(0.0, 2.64769, -0.0825886, -21.2575);
+			end;
+			2 : begin
+				CutscenecameraSetPos(0.0, 3.61318, 2.9976, -25.4786);
+				CutscenecameraSetTarget(0.0, 3.46601, -4.34098, -24.7214);
+			end;
+			3 : begin
+				CutscenecameraSetPos(0.0, 5.62021, -1.43339, -22.8837);
+				CutscenecameraSetTarget(0.0, 0.727246, -0.0254032, -27.3432);
+			end;
+			4 : begin
+				CutscenecameraSetPos(0.0, 1.04091, 0.209598, -26.8636);
+				CutscenecameraSetTarget(0.0, 6.32014, -2.55463, -22.5117);
+			end;
+			5 : begin
+				CutscenecameraSetPos(0.0, 3.61318, 2.9976, -25.4786);
+				CutscenecameraSetTarget(0.0, 3.46601, -4.34098, -24.7214);
+			end;
+			6 : begin
+				CutscenecameraSetPos(0.0, 5.62021, -1.43339, -22.8837);
+				CutscenecameraSetTarget(0.0, 0.727246, -0.0254032, -27.3432);
+			end;
+		end;
+	end;
+
+script DiscoFlashback;
+	var pos : vec3d;
+		spawn : string[16];
+		i, time : integer;
+		rot : real;
+	begin
+		inCutscene := true;
+		Sleep(100);
+		AIAddSubPackForLeader(leaderName, 'subDancers');
+		AISetSubpackCombatType(leaderName, 'subDancers', COMBATTYPEID_OPEN_MELEE);
+		CutSceneStart;
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 0.971858, 4.10175, -25.9467);
+				CutscenecameraSetTarget(0.0, 0.395741, 7.29787, -26.3067);
+				CutsceneCameraSetFOV(0.0, 35.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(true);
+			CutscenecameraStart;
+			EntityIgnoreCollisions(GetEntity('smdancer01'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer02'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer03'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer04'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer05'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer06'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer07'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer08'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer09'), true);
+			EntityIgnoreCollisions(GetEntity('smdancer10'), true);
+			SetVector(pos, 2.13652, -1.7, -26.0349);
+			SetSpotlightTarget('SPOT_1', pos);
+			SetSpotlightTransitionTime('SPOT_1', 0.1);
+			SetVector(pos, 0.911432, -1.7, -25.5669);
+			SetSpotlightTarget('SPOT_2', pos);
+			SetSpotlightTransitionTime('SPOT_2', 0.1);
+			SetVector(pos, 2.36921, -1.7, -24.8826);
+			SetSpotlightTarget('SPOT_3', pos);
+			SetSpotlightTransitionTime('SPOT_3', 0.1);
+			SetVector(pos, 1.29082, -1.7, -24.4651);
+			SetSpotlightTarget('SPOT_4', pos);
+			SetSpotlightTransitionTime('SPOT_4', 0.1);
+			PlayScriptAudioStreamAuto('FLASH1', 127);
+			EntityPlayAnim(GetEntity('smdancer01'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer02'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer03'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer04'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer05'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer06'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer07'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer08'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer09'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			EntityPlayAnim(GetEntity('smdancer10'), 'BAT_INDUSTRIAL_DANCING_1_ANIM', true); Sleep(randnum(15));
+			time := 400;
+			SetColourRamp('FE_superdreamramps', 6, 0.05);
+			Sleep(50);
+			CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			for i := 0 to 6 do begin
+				SetColourRamp('FE_superdreamramps', 4, 0.05);
+				Sleep(20);
+				CutsceneCameraInit;
+					DiscoChooseCam(i);
+					CutsceneCameraSetFOV(0.0, 10.0 + randnum(40));
+					CutsceneCameraSetFOV(0.2, 10.0 + randnum(40));
+					CutsceneCameraSetFOV(0.4, 10.0 + randnum(40));
+					CutsceneCameraSetRoll(0.0, 15 + randnum(20));
+					CutsceneCameraSetRoll(0.2, 15 + randnum(30));
+					CutsceneCameraSetRoll(0.4, 15 + randnum(20));
+					CutSceneCameraSetHandyCam(true);
+				CutscenecameraStart;
+				SetColourRamp('FE_dreamramps', 1, 1.0);
+				Sleep(time);
+			end;
+			Sleep(500);
+		CutsceneEnd(false);
+		EndScriptAudioStream;
+		inCutscene := false;
+		FrisbeeSpeechPlay('V03', 127, 20);
+		SetColourRamp('FE_colramps', 1, 4.0);
+		DestroyEntity(GetEntity('smdancer01'));
+		DestroyEntity(GetEntity('smdancer02'));
+		DestroyEntity(GetEntity('smdancer03'));
+		DestroyEntity(GetEntity('smdancer04'));
+		DestroyEntity(GetEntity('smdancer05'));
+		DestroyEntity(GetEntity('smdancer06'));
+		DestroyEntity(GetEntity('smdancer07'));
+		DestroyEntity(GetEntity('smdancer08'));
+		DestroyEntity(GetEntity('smdancer09'));
+		DestroyEntity(GetEntity('smdancer10'));
+		RemoveThisScript;
+	end;
+
+script DiscoCutscene;
+	var cam : vec3d;
+	begin
+		SwitchLightOn(GetEntity('strobe_W(L)cut'));
+		RunScript('A04_SM_Nightclub', 'RemoveBarHunters');
+		AIAddEntity('hDisco01(hunter)');
+		RunScript('hDisco01(hunter)', 'CreateMe');
+		AIAddEntity('hDisco02(hunter)');
+		SetEntityScriptsFromEntity('hDisco01(hunter)', 'hDisco02(hunter)');
+		RunScript('hDisco02(hunter)', 'CreateMe');
+		AIAddEntity('hDisco04(hunter)');
+		SetEntityScriptsFromEntity('hDisco01(hunter)', 'hDisco04(hunter)');
+		RunScript('hDisco04(hunter)', 'CreateMe');
+		SetHunterHideHealth('hDisco04(hunter)', 1);
+		RunScript('player(player)', 'DancefloorSpawn');
+		AIAddEntity('hDiscoN01(hunter)');
+		AIAddEntity('hDiscoN02(hunter)');
+		AIAddSubPackForLeader('leader(leader)', 'subDud');
+		AISetSubpackCombatType('leader(leader)', 'subDud', COMBATTYPEID_OPEN_MELEE);
+		Sleep(500);
+		AIAddHunterToLeaderSubpack('leader(leader)', 'subDud', 'hDiscoN01(hunter)');
+		AIAddHunterToLeaderSubpack('leader(leader)', 'subDud', 'hDiscoN02(hunter)');
+		SetHunterMute(GetEntity('hDiscoN01(hunter)'), true);
+		SetHunterMute(GetEntity('hDiscoN02(hunter)'), true);
+		AISetHunterIdleActionMinMax('hDiscoN01(hunter)', AISCRIPT_IDLE_STANDSTILL, AISCRIPT_LOWPRIORITY, 1, 2);
+		AISetHunterIdleActionMinMax('hDiscoN02(hunter)', AISCRIPT_IDLE_STANDSTILL, AISCRIPT_LOWPRIORITY, 1, 2);
+		SetEntityFade(GetEntity('judy(hunter)actor'), 0, 0.01);
+		CutsceneCameraInit;
+			CutscenecameraSetPos(0.0, -1.34971, 2.708935, -29.1284);
+			CutscenecameraSetPos(15.5, 6.56854, 1.708935, -29.1284);
+			CutscenecameraSetTarget(0.0, 2.27148, 1.17474, -35.9172);
+			CutscenecameraSetTarget(13.0, -0.674347, 1.5202, -40.433);
+			CutsceneCameraSetFOV(0.0, 65.0);
+			CutsceneCameraSetFOV(3.0, 45.0);
+			CutsceneCameraSetFOV(10.0, 25.0);
+			CutsceneCameraSetRoll(0.0, 0.0);
+			CutSceneCameraSetHandyCam(false);
+		CutSceneStart;
+			CutscenecameraStart;
+			PlayScriptAudioStreamAuto('ENT', 127);
+			CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			AICutsceneEntityEnable('hDiscoN01(hunter)', true);
+			AICutsceneEntityEnable('hDiscoN02(hunter)', true);
+			Sleep(1000);
+			CreateSphereTrigger(GetCameraPosition, 1, 'tTmp1');
+			PlayScriptAudioStreamFromEntityAux('DJ06', 127, GetEntity('hDiscoN01(hunter)'), 127);
+			Sleep(7000);
+			SetEntityFade(GetEntity('judy(hunter)actor'), 1, 2);
+			EntityPlayAnim(GetEntity('judy(hunter)actor'), 'SM_JUDY_NIS', false);
+			Sleep(1500);
+			SetDoorState(GetEntity('DiscoGateR_(SD)'), DOOR_OPENING);
+			SetDoorState(GetEntity('DiscoGateL_(SD)'), DOOR_OPENING);
+			EnableGraphConnection('nGate1', 'nGate2', true, true);
+			Sleep(1000);
+			SetColourRamp('FE_superdreamramps', 4, 0.05);
+			Sleep(50);
+			cam := GetCameraPosition;
+		CutsceneCameraInit;
+			CutscenecameraSetPos(0.0, cam.x, cam.y, cam.z);
+			CutscenecameraSetTarget(0.0, -0.674347, 1.5202, -40.433);
+			CutsceneCameraSetFOV(0.0, 45.0);
+			CutsceneCameraSetFOV(1.5, 7.0);
+			CutsceneCameraSetRoll(0.0, 0.0);
+			CutSceneCameraSetHandyCam(false);
+		CutscenecameraStart;
+			SetColourRamp('FE_colramps', 1, 4.0);
+			Sleep(1800);
+		CutsceneCameraInit;
+			CutscenecameraSetPos(0.0, cam.x, cam.y, cam.z);
+			CutscenecameraSetTarget(0.0, -0.674347, 1.5202, -40.433);
+			CutsceneCameraSetFOV(0.0, 7.0);
+			CutsceneCameraSetFOV(10, 45.0);
+			CutsceneCameraSetRoll(0.0, 0.0);
+			CutSceneCameraSetHandyCam(false);
+		CutscenecameraStart;
+			CreateSphereTrigger(GetCameraPosition, 1, 'tCamHack');
+			SetStreamLipsyncSpeaker(GetEntity('judy(hunter)actor'), true);
+			PlayScriptAudioStreamFromEntityAux('JUDY1', 127, GetEntity('tCamHack'), 127);
+			Sleep(1000);
+			AIDefineGoalGotoNodeStayOnPath('gHuntMove',  'hDiscoN01(hunter)', AISCRIPT_HIGHPRIORITY, 'nHatch', AISCRIPT_WALKMOVESPEED, true);
+			AIDefineGoalGotoNodeStayOnPath('gHuntMove2', 'hDiscoN02(hunter)', AISCRIPT_HIGHPRIORITY, 'nHatch', AISCRIPT_WALKMOVESPEED, true);
+			Sleep(1500);
+			AIAddGoalForSubpack('leader(leader)', 'subDud', 'gHuntMove');
+			Sleep(2000);
+			AIAddGoalForSubpack('leader(leader)', 'subDud', 'gHuntMove2');
+			Sleep(4000);
+		CutsceneEnd(false);
+		FrisbeeSpeechStop('DJ06');
+		FrisbeeSpeechStop('JUDY1');
+		EndScriptAudioStream;
+		doneDiscoCutscene := true;
+		if(GetDoorState(GetEntity('DiscoGateR_(SD)')) = DOOR_CLOSED) then SetDoorState(GetEntity('DiscoGateR_(SD)'), DOOR_OPENING);
+		if(GetDoorState(GetEntity('DiscoGateL_(SD)')) = DOOR_CLOSED) then SetDoorState(GetEntity('DiscoGateL_(SD)'), DOOR_OPENING);
+		EnableGraphConnection('nGate1', 'nGate2', true, true);
+		SwitchLightOff(GetEntity('strobe_W(L)cut'));
+		ClearLevelGoal('GOAL2');
+		SetLevelGoal('GOAL5');
+		Sleep(100);
+		if(GetEntity('tTmp1') <> nil) then DestroyEntity(GetEntity('tTmp1'));
+		if(GetEntity('tTmp2') <> nil) then DestroyEntity(GetEntity('tTmp2'));
+		DestroyEntity(GetEntity('hDiscoN01(hunter)'));
+		DestroyEntity(GetEntity('hDiscoN02(hunter)'));
+		DestroyEntity(GetEntity('judy(hunter)actor'));
+		RunScript('hDisco01(hunter)', 'AllTakeUpPositions');
+		SetHunterMute(GetEntity('hDisco01(hunter)'), false);
+		SetHunterMute(GetEntity('hDisco02(hunter)'), false);
+		SetHunterMute(GetEntity('hDisco04(hunter)'), false);
+		if(GetEntity('smdancer01') <> nil) then DestroyEntity(GetEntity('smdancer01'));
+		if(GetEntity('smdancer02') <> nil) then DestroyEntity(GetEntity('smdancer02'));
+		if(GetEntity('smdancer03') <> nil) then DestroyEntity(GetEntity('smdancer03'));
+		if(GetEntity('smdancer04') <> nil) then DestroyEntity(GetEntity('smdancer04'));
+		if(GetEntity('smdancer05') <> nil) then DestroyEntity(GetEntity('smdancer05'));
+		if(GetEntity('smdancer06') <> nil) then DestroyEntity(GetEntity('smdancer06'));
+		if(GetEntity('smdancer07') <> nil) then DestroyEntity(GetEntity('smdancer07'));
+		if(GetEntity('smdancer08') <> nil) then DestroyEntity(GetEntity('smdancer08'));
+		if(GetEntity('smdancer09') <> nil) then DestroyEntity(GetEntity('smdancer09'));
+		if(GetEntity('smdancer10') <> nil) then DestroyEntity(GetEntity('smdancer10'));
+		RemoveThisScript;
+	end;
+
+script CheckHeadAtDoor;
+	arg index : integer;
+	var pos, vel : vec3d;
+		speed : real;
+		i, time : integer;
+		ent : entityptr;
+	begin
+		if(index = 1) then ent := GetEntity('SM_HeadIDDoor_(S)') else ent := GetEntity('SM_HeadIDDoor_(S)01');
+		SetVector(pos, 0.4, 0.012, -48);
+		MoveEntity(GetPlayer, pos, 0);
+		SetPedOrientation(GetPlayer, 180);
+		CutSceneStart;
+			CutSceneCameraInit;
+				CutscenecameraSetPos(0.0, 1.38929, 1.49844, -47.5348);
+				CutscenecameraSetTarget(0.0, 0.436399, 1.50501, -48.7221);
+				CutscenecameraSetPos(10.0, 1.38929, 1.49844, -46.6853);
+				CutscenecameraSetTarget(10.0, 0.436399, 1.50501, -48.7221);
+				CutsceneCameraSetFOV(0.0, 45.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+			while(IsWhiteNoiseDisplaying) do Sleep(10);
+			CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			PlayScriptAudioStreamAuto('HEAD', 127);
+			EntityIgnoreCollisions(ent, true);
+			PlayerPlayFullBodyAnim('SM_DOOR_START');
+			Sleep(1800);
+			PlayerFullBodyAnimDone;
+			EntityPlayAnim(ent, 'SM_HeadIDDoor_ANIM', false);
+			PlayScriptAudioStreamFromEntityAux('PERV32', 127, ent, 100);
+			PlayerPlayFullBodyAnim('SM_DOOR_IDLE');
+			Sleep(1100);
+			PlayerPlayFullBodyAnim('SM_DOOR_NOD');
+			Sleep(1000);
+			PlayerPlayFullBodyAnim('SM_DOOR_IDLE');
+			Sleep(1100 * 2);
+			PlayerPlayFullBodyAnim('SM_DOOR_NOD');
+			Sleep(1000);
+			PlayerPlayFullBodyAnim('SM_DOOR_IDLE');
+			Sleep(1000);
+			PlayerPlayFullBodyAnim('SM_DOOR_END');
+			Sleep(1000);
+		CutsceneEnd(false);
+		CutSceneStart;
+			CutscenecameraStart;
+			PlayerFullBodyAnimDone;
+			FrisbeeSpeechStop('PERV32');
+			EndScriptAudioStream;
+			AIAddEntity('hGate(hunter)');
+			AISetHunterIdlePatrol('hGate(hunter)', AISCRIPT_IDLE_PATROL, AISCRIPT_MEDIUMPRIORITY, 3000, 5000, 'hGatePath');
+			SetHunterMute(GetEntity('hGate(hunter)'), true);
+			Sleep(100);
+			DestroyEntity(GetEntity('tCheckHead'));
+			DestroyEntity(ent);
+			ShowEntity(GetEntity('SM_HeadIDDoor_(D)'));
+			EnableGraphConnection('nHatch', 'nHatch2', true, true);
+			ClearLevelGoal('GOAL4');
+			ClearLevelGoal('GOAL5');
+			ClearLevelGoal('EXECT');
+			SetLevelGoal('GOAL6');
+			SetVector(pos, 0.4, 0.012, -47);
+			MoveEntity(GetPlayer, pos, 0);
+			WhiteNoiseSetVal(10000);
+			Sleep(1500);
+		CutsceneEnd(false);
+		EndScriptAudioStream;
+		Sleep(200);
+		RunScript('hGate(hunter)', 'Init');
+		Sleep(1800);
+		FrisbeeSpeechPlay('LEO12', 127, 20);
+		Sleep(5000);
+		SetHunterMute(GetEntity('hGate(hunter)'), false);
+		RemoveThisScript;
+	end;
+
+script ShowDoorCutscene;
+	begin
+		CutsceneStart;
+			CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 46.1995, -3.00368, -74.852);
+				CutscenecameraSetTarget(0.0, 51.8938, -4.53315, -72.3247);
+				CutsceneCameraSetFOV(0.0, 55.0);
+				CutsceneCameraSetRoll(0.0, 0.0);
+				CutSceneCameraSetHandyCam(true);
+			CutscenecameraStart;
+				Sleep(2500);
+		CutsceneEnd(false);
+	end;
+
+script SawTortureScene;
+	var pos : vec3d;
+		rot : real;
+		pSaw : entityptr;
+	begin
+		{ Setup the saw torture }
+		SetEntityFade(GetEntity('victim(hunter)02'), 0, 0.05);
+		SetEntityFade(GetEntity('hDungeon01(hunter)'), 0, 0.05);
+		HideEntity(GetEntity('mirror2'));
+		HideEntity(GetEntity('SM_MirrorRoomTwo'));
+		SetVector(pos, 26.5, -5.727, -83.0);
+		MoveEntity(GetEntity('hDungeon01(hunter)'), pos, 0);
+		CutsceneStart;
+			PlayScriptAudioStreamAuto('SAW', 127);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 28.8025, -3.51355, -73.6488);
+				CutscenecameraSetTarget(0, 26.748, -4.11744, -79.1774);
+				CutsceneCameraSetFOV(0, 65.0);
+				CutsceneCameraSetFOV(2, 45.0);
+				CutsceneCameraSetRoll(0, -0.213692);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(1600); { Sleep for SFX stream timing }
+				AIEntityPlayAnimLooped('victim(hunter)02', 'SM_SAW_TORTURE_START_V', 0);
+				AIEntityPlayAnimLooped('hDungeon01(hunter)', 'SM_SAW_TORTURE_START_A', 0);
+				EntityPlayAnim(GetEntity('SM_TortureTable'), 'SM_SAW_TORTURE_START_O', false);
+				EntityPlayAnim(GetEntity('A04_Power_Saw(EAT)'), 'SM_SAW_TORTURE_START_B', false);
+				Sleep(40);
+				SetEntityFade(GetEntity('victim(hunter)02'), 1, 0.3);
+				SetEntityFade(GetEntity('hDungeon01(hunter)'), 1, 1.0);
+				Sleep(160);
+				CutSceneRegisterSkipScript(this, 'Skip_Empty');
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 27.2476, -4.11024, -82.5114);
+				CutscenecameraSetTarget(0, 25.1029, -4.73422, -83.3885);
+				CutsceneCameraSetRoll(0, -1.14543);
+				CutsceneCameraSetFOV(0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(2600);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 24.3502, -4.67842, -83.5937);
+				CutscenecameraSetTarget(0, 25.1029, -4.73422, -83.3885);
+				CutsceneCameraSetRoll(0, 15.0);
+				CutsceneCameraSetFOV(0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(4000);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 26.9319, -4.59614, -82.974);
+				CutscenecameraSetTarget(0, 25.1029, -4.73422, -83.3885);
+				CutsceneCameraSetRoll(0, -0.213692);
+				CutsceneCameraSetFOV(0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(2600);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 26.8476, -3.90226, -87.3462);
+				CutscenecameraSetTarget(0, 25.1029, -4.73422, -83.3885);
+				CutsceneCameraSetRoll(0, -0.213692);
+				CutsceneCameraSetFOV(0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(800); { PSP Sleep(1500); }
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0, 28.8025, -3.51355, -73.6488);
+				CutscenecameraSetPos(3, 28.8025, -3.51355, -73.6488);
+				CutscenecameraSetPos(6, 28.8025, -3.51355, -73.6488);
+				CutscenecameraSetTarget(0, 26.748, -4.11744, -79.1774);
+				CutscenecameraSetTarget(3, 26.748, -4.11744, -79.1774);
+				CutscenecameraSetTarget(6, 12.9435, -5.15856, -74.2975);
+				CutsceneCameraSetFOV(0, 15.0);
+				CutsceneCameraSetFOV(5, 70.0);
+				CutsceneCameraSetFOV(8, 30.0);
+				CutsceneCameraSetRoll(0, -0.213692);
+				CutSceneCameraSetHandyCam(false);
+			CutscenecameraStart;
+				Sleep(300);
+				{SetCurrentLOD(GetEntity('CellDoor_(SD)02'), 1);}
+				Sleep(200);
+				{SetCurrentLOD(GetEntity('CellDoor_(SD)02'), 2);}
+				Sleep(100);
+				{SetCurrentLOD(GetEntity('CellDoor_(SD)02'), 3);}
+				Sleep(3800);
+				SetVector(pos, 3.64227, -3.71248, -75.6732);
+				MoveEntity(GetPlayer, pos, 0);
+				SetPlayerControllable(true);
+				SetVector(pos, 5.86694, -5, -75.635);
+				MoveEntity(GetPlayer, pos, 0);
+				SetPedOrientation(GetPlayer, 90);
+				SetVector(pos, 9.97453, -5.816, -74.5314);
+				SetPlayerGoToNode('nSawPlayer', pos, true);
+				Sleep(3500);
+				SetPlayerControllable(false);
+				SetPedOrientation(GetPlayer, 90);
+				SetPlayerControllable(true);
+		CutsceneEnd(false);
+		EndScriptAudioStream;
+		AIEntityCancelAnim('victim(hunter)02', 'SM_SAW_TORTURE_START_V');
+		AIEntityCancelAnim('hDungeon01(hunter)', 'SM_SAW_TORTURE_START_A');
+		CallScript('Door_Indicator08', 'ButtonUsed') : 'b21_(s)', 0;
+		SetPlayerControllable(false);
+		SetVector(pos, 8.5, -5.8, -75.3);
+		MoveEntity(GetPlayer, pos, 0);
+		SetPedOrientation(GetPlayer, 90);
+		SetDoorState(GetEntity('CellDoor_(SD)02'), DOOR_OPENING);
+		GraphModifyConnections(GetEntity('CellDoor_(SD)02'), AISCRIPT_GRAPHLINK_ALLOW_EVERYTHING);
+		DestroyEntity(GetEntity('victim(hunter)02'));
+		DestroyEntity(GetEntity('A04_Power_Saw(EAT)'));
+		EntityIgnoreCollisions(GetEntity('SM_TortureTable'), false);
+		ShowEntity(GetEntity('SM_TortureTableCorpse'));
+		ShowEntity(GetEntity('mirror2'));
+		ShowEntity(GetEntity('SM_MirrorRoomTwo'));
+		RunScript('leader(leader)', 'TortureSetups');
+		AIMakeEntityDeaf('hDungeon01(hunter)', 1);
+		AIMakeEntityBlind('hDungeon01(hunter)', 1);
+		Sleep(800);
+		AIEntityCancelAnim('hDungeon01(hunter)', 'SM_SAW_TORTURE_START_A');
+		SetVector(pos, 26.5, -5.727, -83.0);
+		MoveEntity(GetEntity('hDungeon01(hunter)'), pos, 0);
+		Sleep(800);
+		AISetIdleHomeNode('hDungeon01(hunter)', 'DUNGEON02_START');
+		{AIDefineGoalGotoNode('Goto_Pat01', 'hDungeon01(hunter)', AISCRIPT_LOWPRIORITY, 'DUNGEON02_START', AISCRIPT_WALKMOVESPEED, true);
+		AIAddGoalForSubpack('leader(leader)', 'subHuntDungeon', 'Goto_Pat01');}
+		AIEntityGoHomeIfIdle('hDungeon01(hunter)');
+		Sleep(800);
+		CreateInventoryItem(CT_CIRCULAR_SAW, GetEntity('hDungeon01(hunter)'), true);
+		AISetHunterIdleActionMinMaxRadius('hDungeon01(hunter)', AISCRIPT_IDLE_WANDERSEARCH, AISCRIPT_MEDIUMPRIORITY, 1000, 4000, 20.0);
+		SetHunterMute(GetEntity('hDungeon04(hunter)'), false);
+		EntityPlayAnim(GetEntity('PFXBloodDrip'), 'PAT_DRIPSBLD01', true);
+		EntityPlayAnim(GetEntity('PFXBloodDrip01'), 'PAT_DRIPSBLD01', true);
+		EntityPlayAnim(GetEntity('PFXBloodDrip02'), 'PAT_DRIPSBLD01', true);
+	end;
+
+script TortureSetups;
+	var pos : vec3d;
+	begin
+		{ Setup the driller }
+		AIAddEntity('victim(hunter)03');
+		SetPedLockonable(GetEntity('victim(hunter)03'), false);
+		AIAddHunterToLeaderSubpack('victimleader(leader)', 'subVictims', 'victim(hunter)03');
+		AIMakeEntityBlind('victim(hunter)03', 0);
+		AIMakeEntityDeaf('victim(hunter)03', 0);
+		SetVector(pos, 43.541, -5.743, -45.041);
+		MoveEntity(GetEntity('victim(hunter)03'), pos, 0);
+		SetVector(pos, 42.835, -5.743, -46.053);
+		MoveEntity(GetEntity('hDungeon07(hunter)'), pos, 0);
+		SetVector(pos, 43.21, -5.743, -45.404);
+		MoveEntity(GetEntity('Drill_2'), pos, 0);
+		RunScript('hDungeon07(hunter)', 'DrillTortureLoop');
+		SetPedOrientation(GetEntity('victim(hunter)03'), 210);
+		{ Setup up the stun prodder}
+		AIAddEntity('victim(hunter)01');
+		AIAddHunterToLeaderSubpack('victimleader(leader)', 'subVictims', 'victim(hunter)01');
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromPlayer', 'victim(hunter)01', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD01', 'hDungeon01(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD02', 'hDungeon02(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		{AIDefineGoalHideNamedHunter('gVictim01_HideFromD03', 'hDungeon03(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);}
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD04', 'hDungeon04(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD05', 'hDungeon05(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD06', 'hDungeon06(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIDefineGoalHideNamedHunter('gVictim01_HideFromD07', 'hDungeon07(hunter)', AISCRIPT_HIGHPRIORITY, 'player(player)', 15.0, 5);
+		AIMakeEntityBlind('victim(hunter)01', 0);
+		AIMakeEntityDeaf('victim(hunter)01', 0);
+		SetVector(pos, 38.9528, -5.743, -84.9597);
+		MoveEntity(GetEntity('victim(hunter)01'), pos, 0);
+		SetVector(pos, 38.6548, -5.743, -83.7087);
+		MoveEntity(GetEntity('hDungeon06(hunter)'), pos, 0);
+		RunScript('hDungeon06(hunter)', 'StunprodTortureLoop');
+		SetPedOrientation(GetEntity('victim(hunter)01'), 340);
+		{ Run the chair idle loop }
+		EntityPlayAnim(GetEntity('vic_3_maleWhedE'), 'SM_ELEC_RESTLOOP', true);
+		if(GetEntity('vic_3_maleWhedEref') <> nil) then EntityPlayAnim(GetEntity('vic_3_maleWhedEref'), 'SM_ELEC_RESTLOOP', true);
+		{ Unmute all hunters }
+		Sleep(2000);
+		SetHunterMute(GetEntity('hDungeon01(hunter)'), false);
+		SetHunterMute(GetEntity('hDungeon02(hunter)'), false);
+		{SetHunterMute(GetEntity('hDungeon03(hunter)'), false);}
+		SetHunterMute(GetEntity('hDungeon04(hunter)'), false);
+		SetHunterMute(GetEntity('hDungeon05(hunter)'), false);
+		SetHunterMute(GetEntity('hDungeon06(hunter)'), false);
+		SetHunterMute(GetEntity('hDungeon07(hunter)'), false);
+		RemoveThisScript;
+	end;
+
+script PosterCutscene;
+	var pos : vec3d;
+	begin
+		leaveCutText := true;
+		SetLevelGoal('GOAL7');
+		pos:= GetEntityPosition(GetPlayer);
+		if(pos.z > -74.54) then begin
+			WriteDebug('First poster');
+			Setvector(pos, 19.32, -5.74, -44.27);
+			MoveEntity(GetPlayer, pos, 1);
+			SetPedorientation(GetPlayer, 180);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 17.89, -3.82, -43.09);
+				CutscenecameraSetTarget(0.0, 20.21, -4.26, -47.38);
+				CutsceneCameraSetFOV(0.0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutsceneStart;
+				CutscenecameraStart;
+				CutSceneRegisterSkipScript(this, 'Skip_Empty');
+				Sleep(500);
+				DisplayGameText('POSTE3');
+				Sleep(10000);
+		end else begin
+			WriteDebug('Second poster');
+			Setvector(pos, 26.53, -5.76, -89.47);
+			MoveEntity(GetPlayer, pos, 1);
+			SetPedorientation(GetPlayer, 180);
+			CutsceneCameraInit;
+				CutscenecameraSetPos(0.0, 27.41, -3.88, -88.38);
+				CutscenecameraSetTarget(0.0, 26.54, -4.0, -91.31);
+				CutsceneCameraSetFOV(0.0, 70.0);
+				CutSceneCameraSetHandyCam(false);
+			CutsceneStart;
+			CutscenecameraStart;
+				CutSceneRegisterSkipScript(this, 'Skip_Empty');
+				Sleep(500);
+				DisplayGameText('POSTE3');
+				Sleep(10000);
+		end;
+		CutsceneEnd(false);
+		leaveCutText := false;
+		if(GetEntity('tPosterCutscene1') <> nil) then DestroyEntity(GetEntity('tPosterCutscene1'));
+		if(GetEntity('tPosterCutscene2') <> nil) then DestroyEntity(GetEntity('tPosterCutscene2'));
+		RemoveThisScript;
+	end;
+
+end.

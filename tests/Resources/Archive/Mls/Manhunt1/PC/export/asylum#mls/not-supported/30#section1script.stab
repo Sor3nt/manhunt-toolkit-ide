@@ -1,0 +1,115 @@
+[
+    {
+        "name": "doingdoorclose",
+        "nameGarbage": "000000000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "flag_doing_wandersearch",
+        "nameGarbage": "000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "flag_go_home_idle",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "flag_goto_first_time",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            5904,
+            9192
+        ]
+    },
+    {
+        "name": "flag_hunter_in_switch_trigger",
+        "nameGarbage": "000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            9396
+        ]
+    },
+    {
+        "name": "flag_hunter_link_blocked",
+        "nameGarbage": "0000000000000000",
+        "offset": "04050000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "flag_hunter_react",
+        "nameGarbage": "000000000000000000000000000000",
+        "offset": "f8040000",
+        "size": 4,
+        "objectType": "boolean",
+        "occurrences": []
+    },
+    {
+        "name": "flag_investigate_machine",
+        "nameGarbage": "0000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            1624,
+            6388,
+            7008
+        ]
+    },
+    {
+        "name": "flag_level_goals",
+        "nameGarbage": "00000000000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": []
+    },
+    {
+        "name": "flag_warddoor_closed",
+        "nameGarbage": "000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            2480,
+            10392
+        ]
+    },
+    {
+        "name": "machine_switched_on",
+        "nameGarbage": "00000000000000000000000000",
+        "offset": "ffffffff",
+        "size": "ffffffff",
+        "objectType": "ffffffff",
+        "occurrences": [
+            2372,
+            5524,
+            7340,
+            9288
+        ]
+    },
+    {
+        "name": "vpoz",
+        "nameGarbage": "0001bc00000000000000000000000000000000000000000000000000",
+        "offset": "ec040000",
+        "size": 12,
+        "objectType": "boolean",
+        "occurrences": []
+    }
+]
